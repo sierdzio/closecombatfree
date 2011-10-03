@@ -1,0 +1,8 @@
+# .gitignore for QWebService project
+# Tells git to ignore build-related files.
+build/
+lib/
+*.autosave
+*.pro.user*
+*.kate-swp
+*~

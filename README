@@ -1,0 +1,7 @@
+This is a global README file for Close Combat Free game. Everything described here can change at any time, as this is a VERY early stage of development.
+
+CCF is meant to be a free (as in freedom) alternative to the Close Combat RTW series. CC itself is now old, and there are serious problems in running it on modern systems, being it either Windows or Linux + Wine. CCF is meant to solve that by being based on a modern cross-platform framework, Qt5. This will enable the game to be available on Linux, Windows, Mac OS, Android, iOS, Symbian and others.
+
+As a base for the UI, QtQuick 2 and/or QtQuick 3D will be used. Game logic will be programmed in C++, while in-game scripting, maps and scenarios will be (probably) left to QML and JavaScript.
+
+CCF will be distributed under licence which is yet to be decided. Most probably under GNU GPL or LGPL. There is a possibility the artwork will be licenced on other licence terms than the source code.
