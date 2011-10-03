@@ -51,21 +51,39 @@ Rectangle {
         }
 
         function movementRotationAngle(x, y, positionX, positionY) {
-            var angle;
+            var result = 0;
 
-            angle = (Math.atan(Math.abs(positionX - x) / Math.abs(positionY - y)) * 180 / Math.PI);
-            if ((positionY > y) && (positionX > x))
-                angle += 90;
-            else if ((positionY > y) && (positionX < x))
-                angle += 180;
-            else if ((positionY < y) && (positionX < x))
-                angle += 270;
+            if (positionX == x) {
+                if (positionY > y)
+                    result = 0;
+                else
+                    result = 180;
+                return result;
+            }
+            else if (positionY == y) {
+                if (positionX > x)
+                    result = 90;
+                else
+                    result = 270;
+                return result;
+            }
 
-            console.log("Angle: " + angle);
-            return angle;
+            var angle = (Math.atan(Math.abs(positionX - x) / Math.abs(positionY - y)) * 180 / Math.PI);
+
+            if ((positionY > y) && (positionX > x)) // 2. quarter
+                result = 180 - angle;
+            else if ((positionY > y) && (positionX < x)) // 3. quarter
+                result = 180 + angle;
+            else if ((positionY < y) && (positionX < x)) // 4. quarter
+                result = 360 - angle;
+            else // 1. quarter
+                result = angle;
+
+            console.log("Angle: " + result);
+            return result;
         }
 
-        ParallelAnimation {
+        SequentialAnimation {
             id: moveAction
             objectName: "moveAction"
             RotationAnimation {
@@ -74,6 +92,7 @@ Rectangle {
                 properties: "rotation"
                 duration: 300; direction: RotationAnimation.Shortest
             }
+            ParallelAnimation {
             NumberAnimation {
                 target: tank4
                 to: mouseAreaMain.mouseX
@@ -83,6 +102,7 @@ Rectangle {
                 target: tank4
                 to: mouseAreaMain.mouseY
                 properties: "y"; duration: 2000; easing.type: Easing.InOutQuad
+            }
             }
         }
     }
