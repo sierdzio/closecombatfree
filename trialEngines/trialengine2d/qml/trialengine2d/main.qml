@@ -77,7 +77,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: tank2
-//                x: root.width - 500
+//                x: root.width - 500 // Does not work well, currently. Only one property at a time is fine.
                 rotation: 90
             }
         }

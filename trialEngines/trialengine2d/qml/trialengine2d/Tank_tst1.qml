@@ -10,15 +10,23 @@ Rectangle {
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
-        rotation = movementRotationAngle(x, y, newX, newY);
-        __tempX = newX;
-        __tempY = newY;
+        if (x == newX) {
+            y = newY;
+        } else if (y == newY) {
+            x = newX;
+        } else {
+            __tempX = newX - (width/2);
+            __tempY = newY - (height/2);
+            rotation = movementRotationAngle(x, y, __tempX, __tempY);
+        }
     }
 
     id: root
     color: "#00000000"
     width: hull.width
     height: hull.height
+    x: width/2
+    y: height/2
 
     Tank_tst1_hull {
         id: hull
