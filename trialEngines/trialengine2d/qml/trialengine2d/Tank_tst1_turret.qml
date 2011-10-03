@@ -3,6 +3,7 @@ import QtQuick 1.0
 Rectangle {
     property int centerX: body.width/2
     property int centerY: (body.height/2) + barrel.height
+    property string bodyTexture: "img/tank_tst1_turret_main.png"
 
     id: root
     color: "#00000000"
@@ -15,7 +16,7 @@ Rectangle {
         height: 60
         sourceSize.height: 60
         sourceSize.width: 60
-        source: "img/tank_tst1_turret_main.png"
+        source: bodyTexture
         anchors.bottom: parent.bottom
         anchors.left: parent.left
     }
