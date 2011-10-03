@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Qt.labs.particles 1.0
 
 Rectangle {
     property int centerX: hull.width/2
@@ -15,18 +16,17 @@ Rectangle {
         } else if (y == newY) {
             x = newX;
         } else {
-            __tempX = newX - (width/2);
-            __tempY = newY - (height/2);
+            __tempX = newX - (centerX);
+            __tempY = newY - (centerY);
             rotation = movementRotationAngle(x, y, __tempX, __tempY);
         }
+        exhaust.burst(30);
     }
 
     id: root
     color: "#00000000"
     width: hull.width
     height: hull.height
-    x: width/2
-    y: height/2
 
     Tank_tst1_hull {
         id: hull
@@ -74,6 +74,22 @@ Rectangle {
         NumberAnimation {
             duration: 2500; easing.type: Easing.InOutQuad
         }
+    }
+
+    Particles {
+        id: exhaust
+
+        width: 1; height: 1
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 3
+        anchors.right: parent.right
+        anchors.rightMargin: 3
+
+        emissionRate: 0; emissionVariance: 3
+        lifeSpan: 1000; lifeSpanDeviation: 400
+        angle: rotation; angleDeviation: 40;
+        velocity: 60; velocityDeviation: 60
+        source: "img/tank_tst1_turret_main.png"
     }
 
     function movementRotationAngle(oldX, oldY, newX, newY) {
