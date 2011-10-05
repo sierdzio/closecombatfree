@@ -1,5 +1,5 @@
-import QtQuick 1.0
-import QtWebKit 1.0
+import QtQuick 1.1
+import "tanks"
 
 Rectangle {
     id: root
@@ -45,6 +45,9 @@ Rectangle {
         onClicked: {
 //            console.log("Mouse: " + mouseAreaMain.mouseX + ", " + mouseAreaMain.mouseY)
             tank4.moveTo(mouseAreaMain.mouseX, mouseAreaMain.mouseY)
+            tank1.moveTo(tank1.x, 300)
+            tank1.turretRotation = 170
+            tank2.rotation = 90
 
             if (root.state == "")
                 root.state = "afterClick"
@@ -60,6 +63,14 @@ Rectangle {
             tank3.turretRotation = 180
         }
     }
+    MouseArea {
+        id: ma1
+        anchors.fill: tank2
+        onClicked: {
+            tank2.state = "firing";
+//            tank2.state = "base";
+        }
+    }
 
     states: [
         State {
@@ -69,16 +80,6 @@ Rectangle {
                 color: "#730909"
                 font.bold: true
                 font.pointSize: 15
-            }
-            PropertyChanges {
-                target: tank1
-                y: 300
-                turretRotation: 170
-            }
-            PropertyChanges {
-                target: tank2
-//                x: root.width - 500 // Does not work well, currently. Only one property at a time is fine.
-                rotation: 90
             }
         }
     ]

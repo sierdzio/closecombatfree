@@ -1,11 +1,11 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import Qt.labs.particles 1.0
 
-Rectangle {
+Item {
     property int centerX: hull.width/2
     property int centerY: hull.height/2
     property int turretRotation: turret.rotation
-    property string turretBodyTexture: "img/tank_tst1_turret_main.png"
+    property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
 
@@ -20,11 +20,11 @@ Rectangle {
             __tempY = newY - (centerY);
             rotation = movementRotationAngle(x, y, __tempX, __tempY);
         }
-        exhaust.burst(30);
+        exhaust.burst(20);
+        exhaustLater.burst(40);
     }
 
     id: root
-    color: "#00000000"
     width: hull.width
     height: hull.height
 
@@ -80,17 +80,45 @@ Rectangle {
         id: exhaust
 
         width: 1; height: 1
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 3
-        anchors.right: parent.right
-        anchors.rightMargin: 3
+        x: (2 * centerX) - 3
+        y: (2 * centerY) - 3
+
+        emissionRate: 0; emissionVariance: 6
+        lifeSpan: 600; lifeSpanDeviation: 800
+        angle: rotation + 90; angleDeviation: 60;
+        velocity: 5; velocityDeviation: 10
+        source: "../img/effects/vehicle_smoke.png"
+    }
+    Particles {
+        id: exhaustLater
+
+        width: 1; height: 1
+        x: (2 * centerX) - 3
+        y: (2 * centerY) - 3
 
         emissionRate: 0; emissionVariance: 3
         lifeSpan: 1000; lifeSpanDeviation: 400
-        angle: rotation; angleDeviation: 40;
-        velocity: 60; velocityDeviation: 60
-        source: "img/tank_tst1_turret_main.png"
+        angle: rotation + 90; angleDeviation: 60;
+        velocity: 40; velocityDeviation: 60
+        source: "../img/effects/vehicle_smoke.png"
     }
+
+    states: [
+        State {
+            name: "base"
+            PropertyChanges {
+                target: turret
+                state: "base"
+            }
+        },
+        State {
+            name: "firing"
+            PropertyChanges {
+                target: turret
+                state: "firing"
+            }
+        }
+    ]
 
     function movementRotationAngle(oldX, oldY, newX, newY) {
         var result = 0;
