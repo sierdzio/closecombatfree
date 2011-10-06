@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "tanks"
+import "gui"
 
 Rectangle {
     id: root
@@ -36,12 +37,12 @@ Rectangle {
         x: parent.width - 600
         y: 100
         rotation: 0
-//        turretBodyTexture: ""
     }
 
     MouseArea {
         id: mouseAreaMain
         anchors.fill: parent
+
         onClicked: {
 //            console.log("Mouse: " + mouseAreaMain.mouseX + ", " + mouseAreaMain.mouseY)
             tank4.moveTo(mouseAreaMain.mouseX, mouseAreaMain.mouseY)
@@ -50,25 +51,18 @@ Rectangle {
             tank2.rotation = 90
 
             if (root.state == "")
-                root.state = "afterClick"
+                root.state = "afterClick";
             else
-                root.state = ""
+                root.state = "";
         }
     }
     MouseArea {
         id: mouseAreaTank3
         anchors.fill: tank3
         onClicked: {
+            tank3.fireTo(tank3.x, tank3.y + 50)
             tank3.moveTo(tank3.x, 300)
             tank3.turretRotation = 180
-        }
-    }
-    MouseArea {
-        id: ma1
-        anchors.fill: tank2
-        onClicked: {
-            tank2.state = "firing";
-//            tank2.state = "base";
         }
     }
 

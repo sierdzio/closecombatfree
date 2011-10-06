@@ -5,11 +5,11 @@ Item {
     property int centerX: body.width/2
     property int centerY: (body.height/2) + barrelBase.height + barrelSegment1.height
     property string bodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
+    property bool firing: false
 
     id: root
     width: body.width
     height: body.height + barrelBase.height + barrelSegment1.height
-    state: "base"
 
     Image {
         id: body
@@ -50,7 +50,6 @@ Item {
                 id: fireImage
                 visible: true
                 source: ""
-//                cache: false
                 scale: 2
                 anchors.bottom: barrelSegment1.top
                 anchors.horizontalCenter: barrelSegment1.horizontalCenter
@@ -89,14 +88,8 @@ Item {
 
     states: [
         State {
-            name: "base"
-            PropertyChanges {
-                target: barrelSegment1
-                anchors.bottomMargin: 0
-            }
-        },
-        State {
             name: "firing"
+            when: (firing == true)
             PropertyChanges {
                 target: barrelSegment1
                 anchors.bottomMargin: -25
@@ -106,7 +99,6 @@ Item {
 
     transitions: [
         Transition {
-            from: "base"
             to: "firing"
             ParallelAnimation {
                 ScriptAction {
@@ -124,7 +116,13 @@ Item {
                         target: barrelSegment1
                         property: "anchors.bottomMargin"
                         to: 0
-                        duration: 200
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                    ScriptAction {
+                        script: {
+                            firing = false;
+                        }
                     }
                 }
             }

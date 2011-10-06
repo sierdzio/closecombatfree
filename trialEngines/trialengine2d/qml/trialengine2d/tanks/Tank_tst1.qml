@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
+import "../gui"
 
 Item {
     property int centerX: hull.width/2
@@ -22,6 +23,11 @@ Item {
         }
         exhaust.burst(20);
         exhaustLater.burst(40);
+    }
+
+    signal fireTo (real targetX, real targetY)
+    onFireTo: {
+        turret.firing = true;
     }
 
     id: root
@@ -52,7 +58,6 @@ Item {
             duration: 2000; direction: RotationAnimation.Shortest
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
                 if (!rotationAnimation.running) {
-//                    moveAnimation.start(); // Strange, but it does not work!
                     x = __tempX;
                     y = __tempY;
                 }
@@ -103,22 +108,41 @@ Item {
         source: "../img/effects/vehicle_smoke.png"
     }
 
-    states: [
-        State {
-            name: "base"
-            PropertyChanges {
-                target: turret
-                state: "base"
-            }
-        },
-        State {
-            name: "firing"
-            PropertyChanges {
-                target: turret
-                state: "firing"
-            }
-        }
-    ]
+//    states: [
+//        State {
+//            name: "base"
+//            PropertyChanges {
+//                target: turret
+//                state: "base"
+//            }
+//        },
+//        State {
+//            name: "firing"
+//            when: (firing)
+//            PropertyChanges {
+//                target: turret
+//                state: "firing"
+//            }
+//            PropertyChanges {
+//                target: root
+//                firing: false
+//            }
+//        }
+//    ]
+
+//    transitions: [
+//        Transition {
+////            from: "base"
+//            to: "firing"
+//            ScriptAction {
+//                script: {
+//                    console.log("Changing state back in Tank");
+//                    root.state = "base";
+//                }
+//            }
+
+//        }
+//    ]
 
     function movementRotationAngle(oldX, oldY, newX, newY) {
         var result = 0;
