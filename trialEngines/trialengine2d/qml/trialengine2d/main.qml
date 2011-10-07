@@ -3,10 +3,20 @@ import "tanks"
 import "gui"
 
 Rectangle {
+    property variant __handledObject // Keeps currently handled object. Very bad implementation,
+                                     // to be fixed later. At the very least, move it into JS script.
+    property string __scheduledOperation
+
     id: root
     width: 1000
     height: 800
     color: "lightgray"
+
+    Loader {
+        id: contextLoader
+        rotation: 0
+        z: root.z + 1
+    }
 
     Text {
         id: textHello
@@ -42,27 +52,53 @@ Rectangle {
     MouseArea {
         id: mouseAreaMain
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        z: -1
 
         onClicked: {
-//            console.log("Mouse: " + mouseAreaMain.mouseX + ", " + mouseAreaMain.mouseY)
-            tank4.moveTo(mouseAreaMain.mouseX, mouseAreaMain.mouseY)
-            tank1.moveTo(tank1.x, 300)
-            tank1.turretRotation = 170
-            tank2.rotation = 90
+            if (mouse.button == Qt.LeftButton) {
+                if (contextLoader.source != "") {
+                    performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+                    return;
+                }
 
-            if (root.state == "")
-                root.state = "afterClick";
-            else
-                root.state = "";
+                if (root.state == "")
+                    root.state = "afterClick";
+                else
+                    root.state = "";
+            }
+            else if (mouse.button == Qt.RightButton) {
+                // "Hide" context menu. This is suboptimal and should be changed.
+                if (contextLoader.source != "") {
+                    cleanContextAction();
+                    return; // Makes app 'eat' this mouse click.
+                }
+
+                var child;
+                child = root.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+
+                if ((child == mouseAreaMain) || (child == mouseAreaTank3)) {
+                    return;
+                }
+                if (child.centerX != "undefined") {
+                    contextLoader.y = child.y + child.centerY;
+                    contextLoader.x = child.x + child.centerX;
+                    contextLoader.source = "gui/ContextMenu.qml";
+                    __handledObject = child;
+                    contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+                }
+            }
         }
     }
     MouseArea {
         id: mouseAreaTank3
         anchors.fill: tank3
+        acceptedButtons: Qt.LeftButton
         onClicked: {
-            tank3.fireTo(tank3.x, tank3.y + 50)
-            tank3.moveTo(tank3.x, 300)
-            tank3.turretRotation = 180
+            if (mouse.button == Qt.LeftButton) {
+                tank3.fireTo(tank4.x, tank4.y);
+                tank3.moveTo(600, 300);
+            }
         }
     }
 
@@ -77,4 +113,26 @@ Rectangle {
             }
         }
     ]
+
+    function scheduleContextAction(operation) {
+        __scheduledOperation = operation;
+        contextLoader.visible = false;
+    }
+
+    function performContextAction(targetX, targetY) {
+        if (__scheduledOperation == "Move") {
+            __handledObject.moveTo(targetX, targetY);
+        } else if (__scheduledOperation == "Attack") {
+            __handledObject.fireTo(targetX, targetY);
+        }
+
+        cleanContextAction();
+    }
+
+    function cleanContextAction() {
+        contextLoader.source = "";
+        contextLoader.visible = true;
+        __scheduledOperation = "";
+        __handledObject = 0;
+    }
 }

@@ -5,21 +5,22 @@ import "../gui"
 Item {
     property int centerX: hull.width/2
     property int centerY: hull.height/2
-    property int turretRotation: turret.rotation
+    property int turretRotation: 0//rotation //turret.
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
+    property bool __firing: false // Ugly, too.
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
-        if (x == newX) {
+        /*if (x == newX) {
             y = newY;
         } else if (y == newY) {
             x = newX;
-        } else {
+        } else*/ {
             __tempX = newX - (centerX);
             __tempY = newY - (centerY);
-            rotation = movementRotationAngle(x, y, __tempX, __tempY);
+            rotation = rotationAngle(x, y, __tempX, __tempY);
         }
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -27,7 +28,8 @@ Item {
 
     signal fireTo (real targetX, real targetY)
     onFireTo: {
-        turret.firing = true;
+        turretRotation = rotationAngle(x, y, targetX, targetY) - rotation;
+        /*turret.*/__firing = true;
     }
 
     id: root
@@ -65,9 +67,19 @@ Item {
         }
     }
     Behavior on turretRotation {
-        RotationAnimation {
-            duration: 3000
-            direction: RotationAnimation.Shortest
+        SequentialAnimation {
+            RotationAnimation {
+                duration: 3000
+                direction: RotationAnimation.Shortest
+            }
+            ScriptAction {
+                script: {
+                    if (__firing) {
+                        turret.firing = true;
+                        __firing = false;
+                    }
+                }
+            }
         }
     }
     Behavior on x {
@@ -108,43 +120,7 @@ Item {
         source: "../img/effects/vehicle_smoke.png"
     }
 
-//    states: [
-//        State {
-//            name: "base"
-//            PropertyChanges {
-//                target: turret
-//                state: "base"
-//            }
-//        },
-//        State {
-//            name: "firing"
-//            when: (firing)
-//            PropertyChanges {
-//                target: turret
-//                state: "firing"
-//            }
-//            PropertyChanges {
-//                target: root
-//                firing: false
-//            }
-//        }
-//    ]
-
-//    transitions: [
-//        Transition {
-////            from: "base"
-//            to: "firing"
-//            ScriptAction {
-//                script: {
-//                    console.log("Changing state back in Tank");
-//                    root.state = "base";
-//                }
-//            }
-
-//        }
-//    ]
-
-    function movementRotationAngle(oldX, oldY, newX, newY) {
+    function rotationAngle(oldX, oldY, newX, newY) {
         var result = 0;
 
         if (newX == oldX) {
