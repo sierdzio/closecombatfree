@@ -1,11 +1,13 @@
 import QtQuick 1.1
 import "tanks"
 import "gui"
+import "engineLogicCore.js" as LogicCore
 
 Rectangle {
     property variant __handledObject // Keeps currently handled object. Very bad implementation,
                                      // to be fixed later. At the very least, move it into JS script.
     property string __scheduledOperation
+    property int __aimLineRotation: 0
 
     id: root
     width: 1000
@@ -16,6 +18,35 @@ Rectangle {
         id: contextLoader
         rotation: 0
         z: root.z + 1
+    }
+    Rectangle {
+        id: aimLine
+        z: root.z + 1
+        visible: false
+        width: 3
+        height: 150
+
+        transform: Rotation {
+            origin.x: 1
+            origin.y: 0
+            angle: __aimLineRotation
+        }
+    }
+    Timer {
+        id: aimLineRotationTimer
+        interval: 100
+        running: false
+        repeat: true
+        onTriggered: {
+            __aimLineRotation = LogicCore.rotationAngle(mouseAreaMain.mouseX,
+                                                        mouseAreaMain.mouseY,
+                                                        __handledObject.x,
+                                                        __handledObject.y);
+            aimLine.height = LogicCore.targetDistance(mouseAreaMain.mouseX,
+                                                      mouseAreaMain.mouseY,
+                                                      __handledObject.x,
+                                                      __handledObject.y);
+        }
     }
 
     Text {
@@ -53,6 +84,7 @@ Rectangle {
         id: mouseAreaMain
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
         z: -1
 
         onClicked: {
@@ -68,24 +100,26 @@ Rectangle {
                     root.state = "";
             }
             else if (mouse.button == Qt.RightButton) {
+//                cleanContextAction();
+
                 // "Hide" context menu. This is suboptimal and should be changed.
                 if (contextLoader.source != "") {
                     cleanContextAction();
                     return; // Makes app 'eat' this mouse click.
-                }
+                } else {
+                    var child;
+                    child = root.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-                var child;
-                child = root.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
-
-                if ((child == mouseAreaMain) || (child == mouseAreaTank3)) {
-                    return;
-                }
-                if (child.centerX != "undefined") {
-                    contextLoader.y = child.y + child.centerY;
-                    contextLoader.x = child.x + child.centerX;
-                    contextLoader.source = "gui/ContextMenu.qml";
-                    __handledObject = child;
-                    contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+                    if ((child == mouseAreaMain) || (child == mouseAreaTank3)) {
+                        return;
+                    }
+                    if (child.centerX != "undefined") {
+                        contextLoader.y = child.y + child.centerY;
+                        contextLoader.x = child.x + child.centerX;
+                        contextLoader.source = "gui/ContextMenu.qml";
+                        __handledObject = child;
+                        contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+                    }
                 }
             }
         }
@@ -117,6 +151,28 @@ Rectangle {
     function scheduleContextAction(operation) {
         __scheduledOperation = operation;
         contextLoader.visible = false;
+
+        // Draw aim line for all move/attack operations.
+        if ((operation != "Ambush") && (operation != "Defend")) {
+            // Alternative approaches, both havbe positive sides.
+//            aimLine.x = __handledObject.x + __handledObject.centerX;
+//            aimLine.y = __handledObject.y + __handledObject.centerY;
+            aimLine.anchors.top = __handledObject.top;
+            aimLine.anchors.topMargin = __handledObject.centerY;
+            aimLine.anchors.left = __handledObject.left;
+            aimLine.anchors.leftMargin = __handledObject.centerX;
+
+            if (operation == "Move")
+                aimLine.color = "#22ff22";
+            else if (operation == "Attack")
+                aimLine.color = "#ff2222";
+
+            aimLineRotationTimer.start();
+            aimLine.visible = true;
+
+        } else { // Draw defense 'spheres'
+            ;
+        }
     }
 
     function performContextAction(targetX, targetY) {
@@ -130,6 +186,9 @@ Rectangle {
     }
 
     function cleanContextAction() {
+        aimLineRotationTimer.stop();
+        aimLine.visible = false;
+        aimLine.height = 150;
         contextLoader.source = "";
         contextLoader.visible = true;
         __scheduledOperation = "";

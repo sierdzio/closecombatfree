@@ -1,11 +1,12 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
 import "../gui"
+import "../engineLogicCore.js" as LogicCore
 
 Item {
     property int centerX: hull.width/2
     property int centerY: hull.height/2
-    property int turretRotation: 0//rotation //turret.
+    property int turretRotation: 0
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
@@ -20,7 +21,7 @@ Item {
         } else*/ {
             __tempX = newX - (centerX);
             __tempY = newY - (centerY);
-            rotation = rotationAngle(x, y, __tempX, __tempY);
+            rotation = LogicCore.rotationAngle(x, y, __tempX, __tempY);
         }
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -28,8 +29,8 @@ Item {
 
     signal fireTo (real targetX, real targetY)
     onFireTo: {
-        turretRotation = rotationAngle(x, y, targetX, targetY) - rotation;
-        /*turret.*/__firing = true;
+        turretRotation = LogicCore.rotationAngle(x, y, targetX, targetY) - rotation;
+        __firing = true;
     }
 
     id: root
@@ -118,38 +119,5 @@ Item {
         angle: rotation + 90; angleDeviation: 60;
         velocity: 40; velocityDeviation: 60
         source: "../img/effects/vehicle_smoke.png"
-    }
-
-    function rotationAngle(oldX, oldY, newX, newY) {
-        var result = 0;
-
-        if (newX == oldX) {
-            if (newY > oldY)
-                result = 0;
-            else
-                result = 180;
-            return result;
-        }
-        else if (newY == oldY) {
-            if (newX > oldX)
-                result = 90;
-            else
-                result = 270;
-            return result;
-        }
-
-        var angle = (Math.atan(Math.abs(newX - oldX) / Math.abs(newY - oldY)) * 180 / Math.PI);
-
-        if ((newY > oldY) && (newX > oldX)) // 2. quarter
-            result = 180 - angle;
-        else if ((newY > oldY) && (newX < oldX)) // 3. quarter
-            result = 180 + angle;
-        else if ((newY < oldY) && (newX < oldX)) // 4. quarter
-            result = 360 - angle;
-        else // 1. quarter
-            result = angle;
-
-//            console.log("Angle: " + result);
-        return result;
     }
 }
