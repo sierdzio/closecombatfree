@@ -40,12 +40,12 @@ Rectangle {
         onTriggered: {
             __aimLineRotation = LogicCore.rotationAngle(mouseAreaMain.mouseX,
                                                         mouseAreaMain.mouseY,
-                                                        __handledObject.x,
-                                                        __handledObject.y);
-            aimLine.height = LogicCore.targetDistance(mouseAreaMain.mouseX,
-                                                      mouseAreaMain.mouseY,
-                                                      __handledObject.x,
-                                                      __handledObject.y);
+                                                        __handledObject.x + __handledObject.centerX,
+                                                        __handledObject.y + __handledObject.centerY);
+            aimLine.height = LogicCore.targetDistance(__handledObject.x + __handledObject.centerX,
+                                                      __handledObject.y + __handledObject.centerY,
+                                                      mouseAreaMain.mouseX,
+                                                      mouseAreaMain.mouseY);
         }
     }
 
@@ -114,8 +114,10 @@ Rectangle {
                         return;
                     }
                     if (child.centerX != "undefined") {
+                        // Fixes context menu at the centre of child object.
                         contextLoader.y = child.y + child.centerY;
                         contextLoader.x = child.x + child.centerX;
+                        // Displays the context menu. This is suboptimal.
                         contextLoader.source = "gui/ContextMenu.qml";
                         __handledObject = child;
                         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);

@@ -29,7 +29,7 @@ Item {
 
     signal fireTo (real targetX, real targetY)
     onFireTo: {
-        turretRotation = LogicCore.rotationAngle(x, y, targetX, targetY) - rotation;
+        turretRotation = LogicCore.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
         __firing = true;
     }
 
