@@ -89,9 +89,11 @@ Rectangle {
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                if (contextLoader.source != "") {
+                if (contextLoader.visible == false) {//(contextLoader.source != "") {
                     performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
                     return;
+                } else {
+                    cleanContextAction();
                 }
 
                 if (root.state == "")
@@ -100,26 +102,27 @@ Rectangle {
                     root.state = "";
             }
             else if (mouse.button == Qt.RightButton) {
-//                cleanContextAction();
+                cleanContextAction();
 
                 // "Hide" context menu. This is suboptimal and should be changed.
-                if (contextLoader.source != "") {
+                /*if (contextLoader.source != "") {
                     cleanContextAction();
                     return; // Makes app 'eat' this mouse click.
-                } else {
+                } else*/ {
                     var child;
                     child = root.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
                     if ((child == mouseAreaMain) || (child == mouseAreaTank3)) {
                         return;
                     }
-                    if (child.centerX != "undefined") {
+                    if (child.centerX != undefined) {
                         // Fixes context menu at the centre of child object.
                         contextLoader.y = child.y + child.centerY;
                         contextLoader.x = child.x + child.centerX;
+
+                        __handledObject = child;
                         // Displays the context menu. This is suboptimal.
                         contextLoader.source = "gui/ContextMenu.qml";
-                        __handledObject = child;
                         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
                     }
                 }
@@ -152,28 +155,39 @@ Rectangle {
 
     function scheduleContextAction(operation) {
         __scheduledOperation = operation;
+        contextLoader.source = "";
         contextLoader.visible = false;
 
-        // Draw aim line for all move/attack operations.
-        if ((operation != "Ambush") && (operation != "Defend")) {
-            // Alternative approaches, both havbe positive sides.
-//            aimLine.x = __handledObject.x + __handledObject.centerX;
-//            aimLine.y = __handledObject.y + __handledObject.centerY;
-            aimLine.anchors.top = __handledObject.top;
-            aimLine.anchors.topMargin = __handledObject.centerY;
-            aimLine.anchors.left = __handledObject.left;
-            aimLine.anchors.leftMargin = __handledObject.centerX;
+        // Prevents some strange errors in certain situations.
+        if (__handledObject.centerY != undefined) {
+            // Draw aim line for all move/attack operations.
+            if ((operation != "Ambush") && (operation != "Defend")) {
+                // Alternative approaches, both havbe positive sides.
+                aimLine.anchors.top = __handledObject.top;
+                aimLine.anchors.topMargin = __handledObject.centerY;
+                aimLine.anchors.left = __handledObject.left;
+                aimLine.anchors.leftMargin = __handledObject.centerX;
 
-            if (operation == "Move")
-                aimLine.color = "#22ff22";
-            else if (operation == "Attack")
-                aimLine.color = "#ff2222";
+                if (operation == "Move fast")
+                    aimLine.color = "#771b91";
+                else if (operation == "Move")
+                    aimLine.color = "#22ff22";
+                else if (operation == "Sneak")
+                    aimLine.color = "#f0dd0c";
+                else if (operation == "Smoke")
+                    aimLine.color = "#ffa000";
+                else if (operation == "Attack")
+                    aimLine.color = "#ff2222";
 
-            aimLineRotationTimer.start();
-            aimLine.visible = true;
+                aimLineRotationTimer.start();
+                aimLine.visible = true;
 
-        } else { // Draw defense 'spheres'
-            ;
+            } else { // Draw defense 'spheres'
+                //            if (operation == "Ambush")
+                //                aimLine.color = "#22ff22";
+                //            else if (operation == "Defend")
+                //                aimLine.color = "#411df8";
+            }
         }
     }
 
