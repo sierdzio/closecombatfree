@@ -144,6 +144,10 @@ Rectangle {
                 }
             }
             else if (mouse.button == Qt.RightButton) {
+                if ((__scheduledOperation == "Ambush") || (__scheduledOperation == "Defend")) {
+                    __handledObject.defenceSphereColor = "";
+                }
+
                 cleanContextAction();
 
                 // "Hide" context menu. This is suboptimal and should be changed.
