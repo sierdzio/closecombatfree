@@ -33,27 +33,39 @@ Rectangle {
         }
     }
     Timer {
-        id: aimLineRotationTimer
+        id: aimLineRotationTimer // this should be changed
         interval: 120
         running: false
         repeat: true
         onTriggered: {
-            __aimLineRotation = LogicCore.rotationAngle(mouseAreaMain.mouseX,
-                                                        mouseAreaMain.mouseY,
-                                                        __handledObject.x + __handledObject.centerX,
-                                                        __handledObject.y + __handledObject.centerY);
-            aimLine.height = LogicCore.targetDistance(__handledObject.x + __handledObject.centerX,
-                                                      __handledObject.y + __handledObject.centerY,
-                                                      mouseAreaMain.mouseX,
-                                                      mouseAreaMain.mouseY);
+            if (aimLine.visible == true) {
+                __aimLineRotation = LogicCore.rotationAngle(mouseAreaMain.mouseX,
+                                                            mouseAreaMain.mouseY,
+                                                            __handledObject.x + __handledObject.centerX,
+                                                            __handledObject.y + __handledObject.centerY);
+                aimLine.height = LogicCore.targetDistance(__handledObject.x + __handledObject.centerX,
+                                                          __handledObject.y + __handledObject.centerY,
+                                                          mouseAreaMain.mouseX,
+                                                          mouseAreaMain.mouseY);
+            } else {
+                var tempRotation;
+                tempRotation = LogicCore.rotationAngle(__handledObject.x + __handledObject.centerX,
+                                                       __handledObject.y + __handledObject.centerY,
+                                                       mouseAreaMain.mouseX,
+                                                       mouseAreaMain.mouseY);
+                __handledObject.defenceSphereRotation = __handledObject.rotation
+                        + LogicCore.angleTo8Step(tempRotation);
+            }
         }
     }
+
     Image {
         property int imageNumber: 0
         id: fireImage
         visible: true
         source: ""
         scale: 3
+        z: 5
     }
     Timer {
         id: fireTimer
@@ -130,11 +142,6 @@ Rectangle {
                 } else {
                     cleanContextAction();
                 }
-
-                if (root.state == "")
-                    root.state = "afterClick";
-                else
-                    root.state = "";
             }
             else if (mouse.button == Qt.RightButton) {
                 cleanContextAction();
@@ -147,7 +154,7 @@ Rectangle {
                     var child;
                     child = root.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-                    if ((child == mouseAreaMain) || (child == mouseAreaTank3)) {
+                    if (child == mouseAreaMain) {
                         return;
                     }
                     if (child.centerX != undefined) {
@@ -164,29 +171,6 @@ Rectangle {
             }
         }
     }
-    MouseArea {
-        id: mouseAreaTank3
-        anchors.fill: tank3
-        acceptedButtons: Qt.LeftButton
-        onClicked: {
-            if (mouse.button == Qt.LeftButton) {
-                tank3.fireTo(tank4.x, tank4.y);
-                tank3.moveTo(600, 300);
-            }
-        }
-    }
-
-    states: [
-        State {
-            name: "afterClick"
-            PropertyChanges {
-                target: textHello
-                color: "#730909"
-                font.bold: true
-                font.pointSize: 15
-            }
-        }
-    ]
 
     function scheduleContextAction(operation) {
         __scheduledOperation = operation;
@@ -197,7 +181,6 @@ Rectangle {
         if (__handledObject.centerY != undefined) {
             // Draw aim line for all move/attack operations.
             if ((operation != "Ambush") && (operation != "Defend")) {
-                // Alternative approaches, both havbe positive sides.
                 aimLine.anchors.top = __handledObject.top;
                 aimLine.anchors.topMargin = __handledObject.centerY;
                 aimLine.anchors.left = __handledObject.left;
@@ -218,20 +201,28 @@ Rectangle {
                 aimLine.visible = true;
 
             } else { // Draw defense 'spheres'
-                //            if (operation == "Ambush")
-                //                aimLine.color = "#22ff22";
-                //            else if (operation == "Defend")
-                //                aimLine.color = "#411df8";
+                if (operation == "Ambush") {
+                    __handledObject.defenceSphereColor = "green";
+                }
+                else if (operation == "Defend") {
+                    __handledObject.defenceSphereColor = "blue";
+                }
+                aimLineRotationTimer.start();
             }
         }
     }
 
     function performContextAction(targetX, targetY) {
-        if (__scheduledOperation == "Move") {
-            __handledObject.moveTo(targetX, targetY);
-        } else if (__scheduledOperation == "Attack") {
-            __handledObject.fireTo(targetX, targetY);
-            __handledObject.actionFinished.connect(firingActionFinished);
+        if ((__scheduledOperation != "Ambush") && (__scheduledOperation != "Defend")) {
+            // Clear defence, if it is on.
+            __handledObject.defenceSphereColor = "";
+
+            if (__scheduledOperation == "Move") {
+                __handledObject.moveTo(targetX, targetY);
+            } else if (__scheduledOperation == "Attack") {
+                __handledObject.fireTo(targetX, targetY);
+                __handledObject.actionFinished.connect(firingActionFinished);
+            }
         }
 
         cleanContextAction();

@@ -8,6 +8,8 @@ Item {
     property int centerY: hull.height/2
     property int turretRotation: 0
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
+    property int defenceSphereRotation: 0
+    property string defenceSphereColor: ""
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
     property bool __firing: false // Ugly, too.
@@ -54,6 +56,38 @@ Item {
         bodyTexture: turretBodyTexture
 
         transform: Rotation { origin.x: turret.centerX; origin.y: turret.centerY; angle: turretRotation}
+    }
+
+    DefenceSphere {
+        id: defenceSphere
+        z: hull.z - 1
+
+        visible: {
+            if (defenceSphereColor == "") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        imageSource: {
+            if (defenceSphereColor == "")
+                return "";
+            else
+                return "../img/gui/defenceSphere_" + defenceSphereColor + ".png"
+
+        }
+        anchors {
+            top: hull.top
+            left: hull.left
+            topMargin: 0
+            leftMargin: centerX
+        }
+
+        transform: Rotation {
+            origin.x: 0
+            origin.y: defenceSphere.height/2
+            angle: defenceSphereRotation
+        }
     }
 
     Behavior on rotation {

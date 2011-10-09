@@ -48,3 +48,23 @@ function targetDistance(originX, originY, targetX, targetY) {
 
     return result;
 }
+
+function angleTo8Step(angle) {
+    if ((angle <= 22) || (angle > 337)) {
+        return 270;
+    } else if (angle <= 67) {
+        return 315;
+    } else if (angle <= 112) {
+        return 0;
+    } else if (angle <= 157) {
+        return 45;
+    } else if (angle <= 202) {
+        return 90;
+    } else if (angle <= 247) {
+        return 135;
+    } else if (angle <= 292) {
+        return 180;
+    } else if (angle <= 337) {
+        return 225;
+    }
+}
