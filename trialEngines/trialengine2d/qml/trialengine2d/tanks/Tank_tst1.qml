@@ -26,12 +26,14 @@ Item {
         exhaust.burst(20);
         exhaustLater.burst(40);
     }
-
     signal fireTo (real targetX, real targetY)
     onFireTo: {
+        __tempX = targetX;
+        __tempY = targetY;
         turretRotation = LogicCore.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
         __firing = true;
     }
+    signal actionFinished(real targetX, real targetY)
 
     id: root
     width: hull.width
@@ -78,6 +80,7 @@ Item {
                     if (__firing) {
                         turret.firing = true;
                         __firing = false;
+                        actionFinished(__tempX, __tempY);
                     }
                 }
             }

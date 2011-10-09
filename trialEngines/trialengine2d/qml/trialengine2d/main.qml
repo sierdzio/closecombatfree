@@ -34,7 +34,7 @@ Rectangle {
     }
     Timer {
         id: aimLineRotationTimer
-        interval: 100
+        interval: 120
         running: false
         repeat: true
         onTriggered: {
@@ -46,6 +46,41 @@ Rectangle {
                                                       __handledObject.y + __handledObject.centerY,
                                                       mouseAreaMain.mouseX,
                                                       mouseAreaMain.mouseY);
+        }
+    }
+    Image {
+        property int imageNumber: 0
+        id: fireImage
+        visible: true
+        source: ""
+        scale: 3
+    }
+    Timer {
+        id: fireTimer
+        interval: 80
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: {
+            if (fireImage.imageNumber == 0) {
+                fireImage.imageNumber = 1;
+                fireImage.source = "img/effects/gun_fire1.png";
+            } else if (fireImage.imageNumber == 1) {
+                fireImage.imageNumber = 2;
+                fireImage.source = "img/effects/gun_fire2.png";
+            } else if (fireImage.imageNumber == 2) {
+                fireImage.imageNumber = 3;
+                fireImage.source = "img/effects/gun_fire3.png";
+            } else if (fireImage.imageNumber == 3) {
+                fireImage.imageNumber = 4;
+                fireImage.source = "img/effects/gun_fire4.png";
+            } else if (fireImage.imageNumber == 4) {
+                fireImage.imageNumber = 5;
+                fireImage.source = "img/effects/gun_fire5.png";
+            } else if (fireImage.imageNumber == 5) {
+                fireImage.imageNumber = 0;
+                fireImage.source = "";
+                fireTimer.stop();
+            }
         }
     }
 
@@ -196,9 +231,18 @@ Rectangle {
             __handledObject.moveTo(targetX, targetY);
         } else if (__scheduledOperation == "Attack") {
             __handledObject.fireTo(targetX, targetY);
+            __handledObject.actionFinished.connect(firingActionFinished);
         }
 
         cleanContextAction();
+    }
+
+    function firingActionFinished(targetX, targetY) {
+        // A good place to include terrain recognition
+        // for landing shells
+        fireImage.x = targetX;
+        fireImage.y = targetY;
+        fireTimer.start();
     }
 
     function cleanContextAction() {
