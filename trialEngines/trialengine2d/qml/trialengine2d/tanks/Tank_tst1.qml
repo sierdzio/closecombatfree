@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
 import "../gui"
-import "../engineLogicCore.js" as LogicCore
+import "../engineLogicHelpers.js" as Logic
 
 Item {
     property int centerX: hull.width/2
@@ -23,7 +23,7 @@ Item {
         } else*/ {
             __tempX = newX - (centerX);
             __tempY = newY - (centerY);
-            rotation = LogicCore.rotationAngle(x, y, __tempX, __tempY);
+            rotation = Logic.rotationAngle(x, y, __tempX, __tempY);
         }
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -32,7 +32,7 @@ Item {
     onFireTo: {
         __tempX = targetX;
         __tempY = targetY;
-        turretRotation = LogicCore.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
+        turretRotation = Logic.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
         __firing = true;
     }
     signal actionFinished(real targetX, real targetY)

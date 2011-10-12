@@ -1,70 +1,77 @@
-.pragma library
+var __handledObject // Keeps currently handled object. Very bad implementation,
+                    // to be fixed later. At the very least, move it into JS script.
+var __scheduledOperation
 
-function rotationAngle(oldX, oldY, newX, newY) {
-    var result = 0;
+function scheduleContextAction(operation) {
+    __scheduledOperation = operation;
+    contextLoader.source = "";
+    contextLoader.visible = false;
 
-    if (newX == oldX) {
-        if (newY > oldY)
-            result = 0;
-        else
-            result = 180;
-        return result;
+    // Prevents some strange errors in certain situations.
+    if (__handledObject.centerY != undefined) {
+        // Draw aim line for all move/attack operations.
+        if ((operation != "Ambush") && (operation != "Defend")) {
+            aimLine.anchors.top = __handledObject.top;
+            aimLine.anchors.topMargin = __handledObject.centerY;
+            aimLine.anchors.left = __handledObject.left;
+            aimLine.anchors.leftMargin = __handledObject.centerX;
+
+            if (operation == "Move fast")
+                aimLine.color = "#771b91";
+            else if (operation == "Move")
+                aimLine.color = "#22ff22";
+            else if (operation == "Sneak")
+                aimLine.color = "#f0dd0c";
+            else if (operation == "Smoke")
+                aimLine.color = "#ffa000";
+            else if (operation == "Attack")
+                aimLine.color = "#ff2222";
+
+            aimLineRotationTimer.start();
+            aimLine.visible = true;
+
+        } else { // Draw defense 'spheres'
+            if (operation == "Ambush") {
+                __handledObject.defenceSphereColor = "green";
+            }
+            else if (operation == "Defend") {
+                __handledObject.defenceSphereColor = "blue";
+            }
+            aimLineRotationTimer.start();
+        }
     }
-    else if (newY == oldY) {
-        if (newX > oldX)
-            result = 90;
-        else
-            result = 270;
-        return result;
-    }
-
-    var angle = (Math.atan(Math.abs(newX - oldX) / Math.abs(newY - oldY)) * 180 / Math.PI);
-
-    if ((newY > oldY) && (newX > oldX)) // 2. quarter
-        result = 180 - angle;
-    else if ((newY > oldY) && (newX < oldX)) // 3. quarter
-        result = 180 + angle;
-    else if ((newY < oldY) && (newX < oldX)) // 4. quarter
-        result = 360 - angle;
-    else // 1. quarter
-        result = angle;
-
-    return result;
 }
 
-function targetDistance(originX, originY, targetX, targetY) {
-    var result = 0;
+function performContextAction(targetX, targetY) {
+    if ((__scheduledOperation != "Ambush") && (__scheduledOperation != "Defend")) {
+        // Clear defence, if it is on.
+        __handledObject.defenceSphereColor = "";
 
-    if (targetX == originX) {
-        result = Math.abs(originY - targetY);
-        return result;
+        if (__scheduledOperation == "Move") {
+            __handledObject.moveTo(targetX, targetY);
+        } else if (__scheduledOperation == "Attack") {
+            __handledObject.fireTo(targetX, targetY);
+            __handledObject.actionFinished.connect(firingActionFinished);
+        }
     }
-    else if (targetY == originY) {
-        result = Math.abs(originX - targetX);
-        return result;
-    }
 
-    result = Math.sqrt(Math.pow((originX - targetX), 2) + Math.pow((originY - targetY), 2));
-
-    return result;
+    cleanContextAction();
 }
 
-function angleTo8Step(angle) {
-    if ((angle <= 22) || (angle > 337)) {
-        return 270;
-    } else if (angle <= 67) {
-        return 315;
-    } else if (angle <= 112) {
-        return 0;
-    } else if (angle <= 157) {
-        return 45;
-    } else if (angle <= 202) {
-        return 90;
-    } else if (angle <= 247) {
-        return 135;
-    } else if (angle <= 292) {
-        return 180;
-    } else if (angle <= 337) {
-        return 225;
-    }
+function firingActionFinished(targetX, targetY) {
+    // A good place to include terrain recognition
+    // for landing shells
+    fireImage.x = targetX;
+    fireImage.y = targetY;
+    fireTimer.start();
+}
+
+function cleanContextAction() {
+    aimLineRotationTimer.stop();
+    aimLine.visible = false;
+    aimLine.height = 150;
+    contextLoader.source = "";
+    contextLoader.visible = true;
+    __scheduledOperation = "";
+    __handledObject = 0;
 }

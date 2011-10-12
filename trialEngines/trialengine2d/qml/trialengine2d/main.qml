@@ -1,12 +1,10 @@
 import QtQuick 1.1
 import "tanks"
 import "gui"
+import "engineLogicHelpers.js" as LogicHelpers
 import "engineLogicCore.js" as LogicCore
 
 Rectangle {
-    property variant __handledObject // Keeps currently handled object. Very bad implementation,
-                                     // to be fixed later. At the very least, move it into JS script.
-    property string __scheduledOperation
     property int __aimLineRotation: 0
 
     id: root
@@ -39,22 +37,22 @@ Rectangle {
         repeat: true
         onTriggered: {
             if (aimLine.visible == true) {
-                __aimLineRotation = LogicCore.rotationAngle(mouseAreaMain.mouseX,
+                __aimLineRotation = LogicHelpers.rotationAngle(mouseAreaMain.mouseX,
                                                             mouseAreaMain.mouseY,
-                                                            __handledObject.x + __handledObject.centerX,
-                                                            __handledObject.y + __handledObject.centerY);
-                aimLine.height = LogicCore.targetDistance(__handledObject.x + __handledObject.centerX,
-                                                          __handledObject.y + __handledObject.centerY,
+                                                            LogicCore.__handledObject.x + LogicCore.__handledObject.centerX,
+                                                            LogicCore.__handledObject.y + LogicCore.__handledObject.centerY);
+                aimLine.height = LogicHelpers.targetDistance(LogicCore.__handledObject.x +LogicCore. __handledObject.centerX,
+                                                          LogicCore.__handledObject.y + LogicCore.__handledObject.centerY,
                                                           mouseAreaMain.mouseX,
                                                           mouseAreaMain.mouseY);
             } else {
                 var tempRotation;
-                tempRotation = LogicCore.rotationAngle(__handledObject.x + __handledObject.centerX,
-                                                       __handledObject.y + __handledObject.centerY,
+                tempRotation = LogicHelpers.rotationAngle(LogicCore.__handledObject.x + LogicCore.__handledObject.centerX,
+                                                       LogicCore.__handledObject.y + LogicCore.__handledObject.centerY,
                                                        mouseAreaMain.mouseX,
                                                        mouseAreaMain.mouseY);
-                __handledObject.defenceSphereRotation = __handledObject.rotation
-                        + LogicCore.angleTo8Step(tempRotation);
+                LogicCore.__handledObject.defenceSphereRotation = LogicCore.__handledObject.rotation
+                        + LogicHelpers.angleTo8Step(tempRotation);
             }
         }
     }
@@ -137,18 +135,18 @@ Rectangle {
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
                 if (contextLoader.visible == false) {//(contextLoader.source != "") {
-                    performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+                    LogicCore.performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
                     return;
                 } else {
-                    cleanContextAction();
+                    LogicCore.cleanContextAction();
                 }
             }
             else if (mouse.button == Qt.RightButton) {
-                if ((__scheduledOperation == "Ambush") || (__scheduledOperation == "Defend")) {
-                    __handledObject.defenceSphereColor = "";
+                if ((LogicCore.__scheduledOperation == "Ambush") || (LogicCore.__scheduledOperation == "Defend")) {
+                    LogicCore.__handledObject.defenceSphereColor = "";
                 }
 
-                cleanContextAction();
+                LogicCore.cleanContextAction();
 
                 // "Hide" context menu. This is suboptimal and should be changed.
                 /*if (contextLoader.source != "") {
@@ -166,87 +164,13 @@ Rectangle {
                         contextLoader.y = child.y + child.centerY;
                         contextLoader.x = child.x + child.centerX;
 
-                        __handledObject = child;
+                        LogicCore.__handledObject = child;
                         // Displays the context menu. This is suboptimal.
                         contextLoader.source = "gui/ContextMenu.qml";
-                        contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+                        contextLoader.item.menuEntryClicked.connect(LogicCore.scheduleContextAction);
                     }
                 }
             }
         }
-    }
-
-    function scheduleContextAction(operation) {
-        __scheduledOperation = operation;
-        contextLoader.source = "";
-        contextLoader.visible = false;
-
-        // Prevents some strange errors in certain situations.
-        if (__handledObject.centerY != undefined) {
-            // Draw aim line for all move/attack operations.
-            if ((operation != "Ambush") && (operation != "Defend")) {
-                aimLine.anchors.top = __handledObject.top;
-                aimLine.anchors.topMargin = __handledObject.centerY;
-                aimLine.anchors.left = __handledObject.left;
-                aimLine.anchors.leftMargin = __handledObject.centerX;
-
-                if (operation == "Move fast")
-                    aimLine.color = "#771b91";
-                else if (operation == "Move")
-                    aimLine.color = "#22ff22";
-                else if (operation == "Sneak")
-                    aimLine.color = "#f0dd0c";
-                else if (operation == "Smoke")
-                    aimLine.color = "#ffa000";
-                else if (operation == "Attack")
-                    aimLine.color = "#ff2222";
-
-                aimLineRotationTimer.start();
-                aimLine.visible = true;
-
-            } else { // Draw defense 'spheres'
-                if (operation == "Ambush") {
-                    __handledObject.defenceSphereColor = "green";
-                }
-                else if (operation == "Defend") {
-                    __handledObject.defenceSphereColor = "blue";
-                }
-                aimLineRotationTimer.start();
-            }
-        }
-    }
-
-    function performContextAction(targetX, targetY) {
-        if ((__scheduledOperation != "Ambush") && (__scheduledOperation != "Defend")) {
-            // Clear defence, if it is on.
-            __handledObject.defenceSphereColor = "";
-
-            if (__scheduledOperation == "Move") {
-                __handledObject.moveTo(targetX, targetY);
-            } else if (__scheduledOperation == "Attack") {
-                __handledObject.fireTo(targetX, targetY);
-                __handledObject.actionFinished.connect(firingActionFinished);
-            }
-        }
-
-        cleanContextAction();
-    }
-
-    function firingActionFinished(targetX, targetY) {
-        // A good place to include terrain recognition
-        // for landing shells
-        fireImage.x = targetX;
-        fireImage.y = targetY;
-        fireTimer.start();
-    }
-
-    function cleanContextAction() {
-        aimLineRotationTimer.stop();
-        aimLine.visible = false;
-        aimLine.height = 150;
-        contextLoader.source = "";
-        contextLoader.visible = true;
-        __scheduledOperation = "";
-        __handledObject = 0;
     }
 }
