@@ -7,7 +7,7 @@ Item {
     // Tank properties.
     property int rotationSpeed: 20 // seconds needed for half rotation (180 deg)
     property int turretRotationSpeed: 25 // seconds needed for half rotation (180 deg)
-    property int maxSpeed: 40 // km/h
+    property int maxSpeed: 20 // km/h - not really, this will be tweaked later
     property int acceleration: 2 // m/s^2 (maybe... could be arbitrary - to be decided later)
     property int frontArmour: 100 // mm
     property int sideArmour: 80 // mm
@@ -33,6 +33,10 @@ Item {
         var newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
         rotationAnimation.duration = Logic.rotationDuration(rotation, newRotation, rotationSpeed);
         rotation = newRotation;
+
+        xMoveAnimation.duration = Logic.targetDistance(x, y, __tempX, __tempY) * maxSpeed;
+        yMoveAnimation.duration = Logic.targetDistance(x, y, __tempX, __tempY) * maxSpeed;
+
         exhaust.burst(20);
         exhaustLater.burst(40);
     }
@@ -106,6 +110,7 @@ Item {
             property: "rotation"
             duration: 2000
             direction: RotationAnimation.Shortest
+            easing.type: Easing.InOutQuad
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
                 if (!rotationAnimation.running) {
                     x = __tempX;
@@ -120,6 +125,7 @@ Item {
                 id: turretRotationAnimation
                 duration: 3000
                 direction: RotationAnimation.Shortest
+                easing.type: Easing.InOutQuad
             }
             ScriptAction {
                 script: {
@@ -134,12 +140,16 @@ Item {
     }
     Behavior on x {
         NumberAnimation {
-            duration: 2500; easing.type: Easing.InOutQuad
+            id: xMoveAnimation
+            duration: 2500
+            easing.type: Easing.InOutQuad
         }
     }
     Behavior on y {
         NumberAnimation {
-            duration: 2500; easing.type: Easing.InOutQuad
+            id: yMoveAnimation
+            duration: 2500
+            easing.type: Easing.InOutQuad
         }
     }
 
