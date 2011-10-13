@@ -4,6 +4,17 @@ import "../gui"
 import "../engineLogicHelpers.js" as Logic
 
 Item {
+    // Tank properties.
+    property int rotationSpeed: 20 // seconds needed for half rotation (180 deg)
+    property int turretRotationSpeed: 25 // seconds needed for half rotation (180 deg)
+    property int maxSpeed: 40 // km/h
+    property int acceleration: 2 // m/s^2 (maybe... could be arbitrary - to be decided later)
+    property int frontArmour: 100 // mm
+    property int sideArmour: 80 // mm
+    property int backArmour: 60 // mm
+    property int turretArmout: 80 // mm - might evolve into {front, side, back} triplet, too
+
+    // Additional properties, not important for on-developers.
     property int centerX: hull.width/2
     property int centerY: hull.height/2
     property int turretRotation: 0
@@ -13,6 +24,8 @@ Item {
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
     property bool __firing: false // Ugly, too.
+    property int __newRotation: 0
+    property int __oldRotation: 0
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
@@ -23,7 +36,9 @@ Item {
         } else*/ {
             __tempX = newX - (centerX);
             __tempY = newY - (centerY);
-            rotation = Logic.rotationAngle(x, y, __tempX, __tempY);
+            __oldRotation = rotation;
+            __newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
+            rotation = __newRotation;
         }
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -94,7 +109,29 @@ Item {
         RotationAnimation {
             id: rotationAnimation
             property: "rotation"
-            duration: 2000; direction: RotationAnimation.Shortest
+            duration: {
+                var newRotation = __newRotation;
+                var oldRotation = __oldRotation;
+                var rotationChange = newRotation - oldRotation;
+
+                if (oldRotation == newRotation)
+                    return 0;
+
+                if (oldRotation == 0)
+                    oldRotation = 360;
+
+                if ((__newRotation > 180) && (__oldRotation < 180)) {
+                    rotationChange = newRotation - oldRotation;
+                } else if ((__oldRotation > 180) && (__newRotation < 180)) {
+                    rotationChange = oldRotation - newRotation;
+                }
+
+                var dur = (rotationSpeed * Math.abs(rotationChange));//newRotation - oldRotation));
+                console.log(dur);
+                return Math.round(dur);
+            }
+
+            direction: RotationAnimation.Shortest
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
                 if (!rotationAnimation.running) {
                     x = __tempX;
