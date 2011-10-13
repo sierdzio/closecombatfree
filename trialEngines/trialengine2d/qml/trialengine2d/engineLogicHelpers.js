@@ -68,3 +68,24 @@ function angleTo8Step(angle) {
         return 225;
     }
 }
+
+function rotationDuration(oldRotation, newRotation, rotationSpeed) {
+    var tempNewRotation = newRotation;
+    var tempOldRotation = oldRotation;
+    var rotationChange = newRotation - oldRotation;
+
+    if (oldRotation == tempNewRotation)
+        return 0;
+
+    if (tempOldRotation == 0)
+        tempOldRotation = 360;
+
+    if ((newRotation > 180) && (oldRotation < 180)) {
+        rotationChange = tempNewRotation - tempOldRotation;
+    } else if ((oldRotation > 180) && (newRotation < 180)) {
+        rotationChange = tempOldRotation - tempNewRotation;
+    }
+
+    var dur = (rotationSpeed * Math.abs(rotationChange));
+    return Math.round(dur);
+}

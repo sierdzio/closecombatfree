@@ -24,22 +24,15 @@ Item {
     property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
     property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
     property bool __firing: false // Ugly, too.
-    property int __newRotation: 0
-    property int __oldRotation: 0
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
-        /*if (x == newX) {
-            y = newY;
-        } else if (y == newY) {
-            x = newX;
-        } else*/ {
-            __tempX = newX - (centerX);
-            __tempY = newY - (centerY);
-            __oldRotation = rotation;
-            __newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
-            rotation = __newRotation;
-        }
+        __tempX = newX - (centerX);
+        __tempY = newY - (centerY);
+
+        var newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
+        rotationAnimation.duration = Logic.rotationDuration(rotation, newRotation, rotationSpeed);
+        rotation = newRotation;
         exhaust.burst(20);
         exhaustLater.burst(40);
     }
@@ -47,7 +40,9 @@ Item {
     onFireTo: {
         __tempX = targetX;
         __tempY = targetY;
-        turretRotation = Logic.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
+        var newRotation = Logic.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
+        turretRotationAnimation.duration = Logic.rotationDuration(turretRotation, newRotation, turretRotationSpeed);
+        turretRotation = newRotation;
         __firing = true;
     }
     signal actionFinished(real targetX, real targetY)
@@ -109,28 +104,7 @@ Item {
         RotationAnimation {
             id: rotationAnimation
             property: "rotation"
-            duration: {
-                var newRotation = __newRotation;
-                var oldRotation = __oldRotation;
-                var rotationChange = newRotation - oldRotation;
-
-                if (oldRotation == newRotation)
-                    return 0;
-
-                if (oldRotation == 0)
-                    oldRotation = 360;
-
-                if ((__newRotation > 180) && (__oldRotation < 180)) {
-                    rotationChange = newRotation - oldRotation;
-                } else if ((__oldRotation > 180) && (__newRotation < 180)) {
-                    rotationChange = oldRotation - newRotation;
-                }
-
-                var dur = (rotationSpeed * Math.abs(rotationChange));//newRotation - oldRotation));
-                console.log(dur);
-                return Math.round(dur);
-            }
-
+            duration: 2000
             direction: RotationAnimation.Shortest
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
                 if (!rotationAnimation.running) {
@@ -143,6 +117,7 @@ Item {
     Behavior on turretRotation {
         SequentialAnimation {
             RotationAnimation {
+                id: turretRotationAnimation
                 duration: 3000
                 direction: RotationAnimation.Shortest
             }
