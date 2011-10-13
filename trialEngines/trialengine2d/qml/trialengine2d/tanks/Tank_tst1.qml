@@ -21,33 +21,41 @@ Item {
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
-    property int __tempX: x // Ugly, but I couldn't make it better, yet. Will retry later.
-    property int __tempY: y // Ugly, but I couldn't make it better, yet. Will retry later.
-    property bool __firing: false // Ugly, too.
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
-        __tempX = newX - (centerX);
-        __tempY = newY - (centerY);
+        xMoveAnimation.__tempX = newX - (centerX);
+        yMoveAnimation.__tempY = newY - (centerY);
 
-        var newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
-        rotationAnimation.duration = Logic.rotationDuration(rotation, newRotation, rotationSpeed);
+        var newRotation = Logic.rotationAngle(x, y,
+                                              xMoveAnimation.__tempX,
+                                              yMoveAnimation.__tempY);
+        rotationAnimation.duration = Logic.rotationDuration(rotation,
+                                                            newRotation, rotationSpeed);
         rotation = newRotation;
 
-        xMoveAnimation.duration = Logic.targetDistance(x, y, __tempX, __tempY) * maxSpeed;
-        yMoveAnimation.duration = Logic.targetDistance(x, y, __tempX, __tempY) * maxSpeed;
+        xMoveAnimation.duration = Logic.targetDistance(x, y,
+                                                       xMoveAnimation.__tempX,
+                                                       yMoveAnimation.__tempY) * maxSpeed;
+        yMoveAnimation.duration = Logic.targetDistance(x, y,
+                                                       xMoveAnimation.__tempX,
+                                                       yMoveAnimation.__tempY) * maxSpeed;
 
         exhaust.burst(20);
         exhaustLater.burst(40);
     }
     signal fireTo (real targetX, real targetY)
     onFireTo: {
-        __tempX = targetX;
-        __tempY = targetY;
-        var newRotation = Logic.rotationAngle(x, y, targetX - centerX, targetY - centerY) - rotation;
-        turretRotationAnimation.duration = Logic.rotationDuration(turretRotation, newRotation, turretRotationSpeed);
+        xMoveAnimation.__tempX = targetX;
+        yMoveAnimation.__tempY = targetY;
+        var newRotation = Logic.rotationAngle(x, y,
+                                              targetX - centerX,
+                                              targetY - centerY) - rotation;
+        turretRotationAnimation.duration = Logic.rotationDuration(turretRotation,
+                                                                  newRotation,
+                                                                  turretRotationSpeed);
         turretRotation = newRotation;
-        __firing = true;
+        turret.__firing = true;
     }
     signal actionFinished(real targetX, real targetY)
 
@@ -62,6 +70,8 @@ Item {
     }
 
     Tank_tst1_turret {
+        property bool __firing: false
+
         id: turret
         anchors.top: hull.top
         anchors.left: hull.left
@@ -69,7 +79,9 @@ Item {
         anchors.leftMargin: 1
         bodyTexture: turretBodyTexture
 
-        transform: Rotation { origin.x: turret.centerX; origin.y: turret.centerY; angle: turretRotation}
+        transform: Rotation {
+            origin.x: turret.centerX; origin.y: turret.centerY; angle: turretRotation
+        }
     }
 
     DefenceSphere {
@@ -113,8 +125,8 @@ Item {
             easing.type: Easing.InOutQuad
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
                 if (!rotationAnimation.running) {
-                    x = __tempX;
-                    y = __tempY;
+                    x = xMoveAnimation.__tempX;
+                    y = yMoveAnimation.__tempY;
                 }
             }
         }
@@ -129,10 +141,10 @@ Item {
             }
             ScriptAction {
                 script: {
-                    if (__firing) {
+                    if (turret.__firing) {
                         turret.firing = true;
-                        __firing = false;
-                        actionFinished(__tempX, __tempY);
+                        turret.__firing = false;
+                        actionFinished(xMoveAnimation.__tempX, yMoveAnimation.__tempY);
                     }
                 }
             }
@@ -140,6 +152,8 @@ Item {
     }
     Behavior on x {
         NumberAnimation {
+            property int __tempX: x
+
             id: xMoveAnimation
             duration: 2500
             easing.type: Easing.InOutQuad
@@ -147,6 +161,8 @@ Item {
     }
     Behavior on y {
         NumberAnimation {
+            property int __tempY: y
+
             id: yMoveAnimation
             duration: 2500
             easing.type: Easing.InOutQuad
