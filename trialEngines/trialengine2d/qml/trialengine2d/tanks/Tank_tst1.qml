@@ -13,12 +13,15 @@ Item {
     property int sideArmour: 80 // mm
     property int backArmour: 60 // mm
     property int turretArmout: 80 // mm - might evolve into {front, side, back} triplet, too
+    property int tankWidth: 62 // mm - should be properly recalculated later on
+    property int tankHeight: 100 // mm - should be properly recalculated later on
 
     // Additional properties, not important for on-developers.
-    property int centerX: hull.width/2
-    property int centerY: hull.height/2
+    property int centerX: tankWidth/2
+    property int centerY: tankHeight/2
     property int turretRotation: 0
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
+    property color hullColor: "#7b8259"
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
 
@@ -60,13 +63,16 @@ Item {
     signal actionFinished(real targetX, real targetY)
 
     id: root
-    width: hull.width
-    height: hull.height
+    width: tankWidth
+    height: tankHeight
 
     Tank_tst1_hull {
         id: hull
         anchors.top: parent.top
         anchors.left: parent.left
+        hullColor: root.hullColor
+        tankWidth: root.tankWidth
+        tankHeight: root.tankHeight
     }
 
     Tank_tst1_turret {
@@ -76,7 +82,7 @@ Item {
         anchors.top: hull.top
         anchors.left: hull.left
         anchors.topMargin: hull.centerY - turret.centerY
-        anchors.leftMargin: 1
+        anchors.leftMargin: hull.centerX - turret.centerX
         bodyTexture: turretBodyTexture
 
         transform: Rotation {

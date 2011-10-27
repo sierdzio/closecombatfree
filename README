@@ -5,3 +5,7 @@ CCF is meant to be a free (as in freedom) alternative to the Close Combat RTW se
 As a base for the UI, QtQuick 2 and/or QtQuick 3D will be used. Game logic will be programmed in C++, while in-game scripting, maps and scenarios will be (probably) left to QML and JavaScript.
 
 CCF will be distributed under licence which is yet to be decided. Most probably under GNU GPL or LGPL. There is a possibility the artwork will be licenced on other licence terms than the source code.
+
+---------------- NOTE ---------------
+Some images used (at leas temporarily) were done by NASA. They are released into public domain, AFAIK. Here's a list:
+1. Filename: "test1.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
