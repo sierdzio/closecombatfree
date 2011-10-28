@@ -1,20 +1,18 @@
-var __handledObject; // Keeps currently handled object. Bad implementation,
+var handledObject; // Keeps currently handled object. Bad implementation,
                     // to be fixed later. At the very least, move it into JS script.
-var __scheduledOperation;
+var scheduledOperation;
 
 function scheduleContextAction(operation) {
-    __scheduledOperation = operation;
+    scheduledOperation = operation;
     contextLoader.source = "";
     contextLoader.visible = false;
 
     // Prevents some strange errors in certain situations.
-    if (__handledObject.centerY != undefined) {
+    if (handledObject.centerY != undefined) {
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
-            aimLine.anchors.top = __handledObject.top;
-            aimLine.anchors.topMargin = __handledObject.centerY;
-            aimLine.anchors.left = __handledObject.left;
-            aimLine.anchors.leftMargin = __handledObject.centerX;
+            aimLine.x = handledObject.x + handledObject.centerX;
+            aimLine.y = handledObject.y + handledObject.centerY;
 
             if (operation == "Move fast")
                 aimLine.color = "#771b91";
@@ -32,10 +30,10 @@ function scheduleContextAction(operation) {
 
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
-                __handledObject.defenceSphereColor = "green";
+                handledObject.defenceSphereColor = "green";
             }
             else if (operation == "Defend") {
-                __handledObject.defenceSphereColor = "blue";
+                handledObject.defenceSphereColor = "blue";
             }
             aimLineRotationTimer.start();
         }
@@ -43,15 +41,15 @@ function scheduleContextAction(operation) {
 }
 
 function performContextAction(targetX, targetY) {
-    if ((__scheduledOperation != "Ambush") && (__scheduledOperation != "Defend")) {
+    if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
         // Clear defence, if it is on.
-        __handledObject.defenceSphereColor = "";
+        handledObject.defenceSphereColor = "";
 
-        if (__scheduledOperation == "Move") {
-            __handledObject.moveTo(targetX, targetY);
-        } else if (__scheduledOperation == "Attack") {
-            __handledObject.fireTo(targetX, targetY);
-            __handledObject.actionFinished.connect(firingActionFinished);
+        if (scheduledOperation == "Move") {
+            handledObject.moveTo(targetX, targetY);
+        } else if (scheduledOperation == "Attack") {
+            handledObject.fireTo(targetX, targetY);
+            handledObject.actionFinished.connect(firingActionFinished);
         }
     }
 
@@ -72,27 +70,30 @@ function cleanContextAction() {
     aimLine.height = 150;
     contextLoader.source = "";
     contextLoader.visible = true;
-    __scheduledOperation = "";
-    __handledObject = 0;
+    scheduledOperation = "";
+    handledObject = 0;
 }
 
 function rotateAimLine() {
     if (aimLine.visible == true) {
+        aimLine.x = handledObject.x + handledObject.centerX;
+        aimLine.y = handledObject.y + handledObject.centerY;
+
         __aimLineRotation = LogicHelpers.rotationAngle(mouseAreaMain.mouseX,
                                                     mouseAreaMain.mouseY,
-                                                    __handledObject.x + __handledObject.centerX,
-                                                    __handledObject.y + __handledObject.centerY);
-        aimLine.height = LogicHelpers.targetDistance(__handledObject.x +  __handledObject.centerX,
-                                                  __handledObject.y + __handledObject.centerY,
+                                                    handledObject.x + handledObject.centerX,
+                                                    handledObject.y + handledObject.centerY);
+        aimLine.height = LogicHelpers.targetDistance(handledObject.x +  handledObject.centerX,
+                                                  handledObject.y + handledObject.centerY,
                                                   mouseAreaMain.mouseX,
                                                   mouseAreaMain.mouseY);
     } else {
         var tempRotation;
-        tempRotation = LogicHelpers.rotationAngle(__handledObject.x + __handledObject.centerX,
-                                               __handledObject.y + __handledObject.centerY,
+        tempRotation = LogicHelpers.rotationAngle(handledObject.x + handledObject.centerX,
+                                               handledObject.y + handledObject.centerY,
                                                mouseAreaMain.mouseX,
                                                mouseAreaMain.mouseY);
-        __handledObject.defenceSphereRotation = __handledObject.rotation
+        handledObject.defenceSphereRotation = handledObject.rotation
                 + LogicHelpers.angleTo8Step(tempRotation);
     }
 }
@@ -107,8 +108,8 @@ function handleMouseClick(mouse) {
         }
     }
     else if (mouse.button == Qt.RightButton) {
-        if ((__scheduledOperation == "Ambush") || (__scheduledOperation == "Defend")) {
-            __handledObject.defenceSphereColor = "";
+        if ((scheduledOperation == "Ambush") || (scheduledOperation == "Defend")) {
+            handledObject.defenceSphereColor = "";
         }
 
         cleanContextAction();
@@ -119,7 +120,7 @@ function handleMouseClick(mouse) {
             return; // Makes app 'eat' this mouse click.
         } else*/ {
             var child;
-            child = currentScenario.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+            child = scenario.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
             if (child == mouseAreaMain) {
                 return;
@@ -129,7 +130,7 @@ function handleMouseClick(mouse) {
                 contextLoader.y = child.y + child.centerY;
                 contextLoader.x = child.x + child.centerX;
 
-                __handledObject = child;
+                handledObject = child;
                 // Displays the context menu. This is suboptimal.
                 contextLoader.source = "gui/ContextMenu.qml";
                 contextLoader.item.menuEntryClicked.connect(scheduleContextAction);

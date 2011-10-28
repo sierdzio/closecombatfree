@@ -2,45 +2,28 @@ import QtQuick 1.1
 import "../tanks"
 import "../gui"
 import "../maps"
+import "../engineLogicHelpers.js" as LogicHelpers
+import "../engineLogicCore.js" as LogicCore
 
 Item {
+    property string scenarioFile: "Scenario_tst1.qml"
+
     id: root
-    height: mapObject.height
-    width: mapObject.width
+    height: map.height
+    width: map.width
 
     Map {
-        id: mapObject
-        anchors.fill: root
+        id: map
+        anchors.fill: parent
     }
 
-    Tank_tst1 {
-        id: tank1
-        x: parent.width - 150
-        y: 400
+    Loader {
+        id: units
+        source: scenarioFile
+        anchors.fill: parent
     }
-    Tank_tst1 {
-        id: tank2
-        x: parent.width - 300
-        y: 400
-    }
-    Tank_tst1 {
-        id: tank3
-        x: parent.width - 450
-        y: 400
-        rotation: 180
-        hullColor: "#ffffff"
-    }
-    Tank_tst1 {
-        id: tank4
-        x: parent.width - 600
-        y: 400
-        rotation: 0
-    }
-    Tank_tst2 {
-        id: tank5
-        x: parent.width - 750
-        y: 400
-        rotation: 0
-        hullColor: "#f5f5f5"
+
+    function childAt(x, y) {
+        return units.item.childAt(x, y);
     }
 }

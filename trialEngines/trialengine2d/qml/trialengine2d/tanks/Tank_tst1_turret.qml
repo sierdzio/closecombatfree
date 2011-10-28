@@ -6,6 +6,7 @@ Item {
     property int centerY: (body.height/2) + barrelBase.height + barrelSegment1.height
     property string bodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property bool firing: false
+    property color turretColor: "#7b8259"
 
     id: root
     width: body.width
@@ -26,7 +27,7 @@ Item {
         id: barrelBase
         width: 5
         height: 30
-        color: "#7b8259"
+        color: turretColor
         border.width: 1
         border.color: "#4f5e1f"
         anchors.bottom: body.top
@@ -37,7 +38,7 @@ Item {
             id: barrelSegment1 // Some tanks have 2 recoil segments.
             width: 3
             height: 42
-            color: "#7b8259"
+            color: turretColor
             border.width: 1
             border.color: "#4f5e1f"
             anchors.bottom: barrelBase.top
@@ -63,22 +64,12 @@ Item {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            if (fireImage.imageNumber == 0) {
-                fireImage.imageNumber = 1;
-                fireImage.source = "../img/effects/gun_fire1.png";
-            } else if (fireImage.imageNumber == 1) {
-                fireImage.imageNumber = 2;
-                fireImage.source = "../img/effects/gun_fire2.png";
-            } else if (fireImage.imageNumber == 2) {
-                fireImage.imageNumber = 3;
-                fireImage.source = "../img/effects/gun_fire3.png";
-            } else if (fireImage.imageNumber == 3) {
-                fireImage.imageNumber = 4;
-                fireImage.source = "../img/effects/gun_fire4.png";
-            } else if (fireImage.imageNumber == 4) {
-                fireImage.imageNumber = 5;
-                fireImage.source = "../img/effects/gun_fire5.png";
-            } else if (fireImage.imageNumber == 5) {
+            var imgNumber = fireImage.imageNumber;
+
+            if (imgNumber != 5) {
+                fireImage.imageNumber = imgNumber + 1;
+                fireImage.source = "../img/effects/gun_fire" + (imgNumber + 1) + ".png";
+            } else if (imgNumber == 5) {
                 fireImage.imageNumber = 0;
                 fireImage.source = "";
                 fireTimer.stop();
