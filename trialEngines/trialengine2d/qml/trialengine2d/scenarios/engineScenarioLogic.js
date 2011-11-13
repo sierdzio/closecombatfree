@@ -121,8 +121,11 @@ function handleMouseClick(mouse) {
         }
         if (child.centerX != undefined) {
             // Fixes context menu at the centre of child object.
-            contextLoader.y = child.y + child.centerY;
-            contextLoader.x = child.x + child.centerX;
+            setContextMenuPosition(contextLoader,
+                                   child.x + child.centerX,
+                                   child.y + child.centerY);
+//            contextLoader.y = child.y + child.centerY;
+//            contextLoader.x = child.x + child.centerX;
 
             handledObject = child;
             // Displays the context menu. This is suboptimal.
@@ -157,8 +160,6 @@ function handleMouseClickRoster(mouse) {
             setContextMenuPosition(contextLoader,
                                    roster.x + child.x + (roster.entryWidth/2),
                                    roster.y + child.y + (roster.entryHeight/2));
-//            contextLoader.y = roster.y + child.y + (roster.entryHeight/2);
-//            contextLoader.x = roster.x + child.x + (roster.entryWidth/2);
 
             handledObject = unit;
             // Displays the context menu. This is suboptimal.
@@ -182,12 +183,12 @@ function switchFireFrame(fileName) {
 }
 
 function setContextMenuPosition(menu, x, y) {
-    if ((x + menu.x) > root.width)
+    if ((x + menu.width) > root.width)
         menu.x = root.width - menu.width;
     else
         menu.x = x;
 
-    if ((y + menu.y) > root.height)
+    if ((y + menu.height) > root.height)
         menu.y = root.height - menu.height;
     else
         menu.y = y;
