@@ -7,6 +7,7 @@ Item {
     property string bodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
     property bool firing: false
     property color turretColor: "#7b8259"
+    property int turretBodySize: 60
 
     id: root
     width: body.width
@@ -14,11 +15,11 @@ Item {
 
     Image {
         id: body
-        width: 60
-        height: 60
+        width: turretSize
+        height: turretSize
         source: bodyTexture
-        sourceSize.height: 60
-        sourceSize.width: 60
+        sourceSize.height: turretSize
+        sourceSize.width: turretSize
         anchors.bottom: parent.bottom
         anchors.left: parent.left
     }

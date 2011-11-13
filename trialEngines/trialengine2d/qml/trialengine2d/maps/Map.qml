@@ -1,20 +1,16 @@
+// Currently, this file is not being used!
 import QtQuick 1.1
-import "../tanks"
-import "../gui"
-import "../engineLogicHelpers.js" as LogicHelpers
-import "../engineLogicCore.js" as LogicCore
 
 Item {
-    property string backgroundImage: "../img/maps/test1.jpg"
-    property string terrainMap: "" // this may hold obstacles and terrain info. We'll see.
+    property string mapFile: ""
 
     id: root
-    width: background.sourceSize.width
-    height: background.sourceSize.height
+    width: map.width
+    height: map.height
 
-    Image {
-        id: background
-        source: backgroundImage
+    Loader {
+        id: map
+        source: mapFile
         anchors.fill: parent
     }
 }

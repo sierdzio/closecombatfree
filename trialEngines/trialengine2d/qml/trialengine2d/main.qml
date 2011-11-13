@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import "gui"
 import "scenarios"
 import "engineLogicHelpers.js" as LogicHelpers
 import "engineLogicCore.js" as LogicCore

@@ -1,19 +1,11 @@
 import QtQuick 1.1
-import "../tanks"
-import "../gui"
-import "../maps"
-import "../engineLogicHelpers.js" as LogicHelpers
-import "../engineLogicCore.js" as LogicCore
 
 Item {
     property string scenarioFile: "Scenario_tst1.qml"
 
-    id: root
-    height: map.height
-    width: map.width
-
-    Map {
+    Loader {
         id: map
+        source: units.item.mapFile
         anchors.fill: parent
     }
 

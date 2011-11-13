@@ -67,7 +67,7 @@ function firingActionFinished(targetX, targetY) {
 function cleanContextAction() {
     aimLineRotationTimer.stop();
     aimLine.visible = false;
-    aimLine.height = 150;
+    aimLine.height = 5;
     contextLoader.source = "";
     contextLoader.visible = true;
     scheduledOperation = "";

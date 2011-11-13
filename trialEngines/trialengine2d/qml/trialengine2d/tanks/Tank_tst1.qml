@@ -5,8 +5,8 @@ import "../engineLogicHelpers.js" as Logic
 
 Item {
     // Tank properties.
-    property int rotationSpeed: 20 // seconds needed for half rotation (180 deg)
-    property int turretRotationSpeed: 25 // seconds needed for half rotation (180 deg)
+    property int rotationSpeed: 40 // seconds needed for half rotation (180 deg)
+    property int turretRotationSpeed: 35 // seconds needed for half rotation (180 deg)
     property int maxSpeed: 20 // km/h - not really, this will be tweaked later
     property int acceleration: 2 // m/s^2 (maybe... could be arbitrary - to be decided later)
     property int frontArmour: 100 // mm
@@ -21,6 +21,7 @@ Item {
     property int centerY: tankHeight/2
     property int turretRotation: 0
     property string turretBodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
+    property int turretSize: 60
     property color hullColor: "#7b8259"
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
@@ -37,12 +38,11 @@ Item {
                                                             newRotation, rotationSpeed);
         rotation = newRotation;
 
-        xMoveAnimation.duration = Logic.targetDistance(x, y,
-                                                       xMoveAnimation.__tempX,
-                                                       yMoveAnimation.__tempY) * maxSpeed;
-        yMoveAnimation.duration = Logic.targetDistance(x, y,
-                                                       xMoveAnimation.__tempX,
-                                                       yMoveAnimation.__tempY) * maxSpeed;
+        var moveDuration = Logic.targetDistance(x, y,
+                                                xMoveAnimation.__tempX,
+                                                yMoveAnimation.__tempY) * 800 / (maxSpeed);
+        xMoveAnimation.duration = moveDuration;
+        yMoveAnimation.duration = moveDuration;
 
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -79,6 +79,7 @@ Item {
         property bool __firing: false
 
         id: turret
+        turretBodySize: turretSize
         anchors.top: hull.top
         anchors.left: hull.left
         anchors.topMargin: hull.centerY - turret.centerY

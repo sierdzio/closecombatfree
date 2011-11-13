@@ -2,6 +2,8 @@ import QtQuick 1.1
 import "../tanks"
 
 Item {
+    property string mapFile: "../maps/Map_tst1.qml"
+
     Tank_tst1 {
         id: tank1
         x: parent.width - 150
@@ -30,6 +32,6 @@ Item {
         x: parent.width - 750
         y: 400
         rotation: 0
-        hullColor: "#f5f5f5"
+//        hullColor: "#f5f5f5"
     }
 }
