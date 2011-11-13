@@ -7,25 +7,54 @@ Item {
     property string scenarioFile: "Scenario_tst1.qml"
     property int __aimLineRotation: 0
 
-    Loader {
-        id: map
-        source: units.item.mapFile
-        anchors.fill: parent
-    }
+    Item {
+        id: gameArea
+        height: parent.height - roster.height
+        width: parent.width
 
-    Loader {
-        id: units
-        source: scenarioFile
-        anchors.fill: parent
+        Loader {
+            id: map
+            source: units.item.mapFile
+            anchors.fill: parent
+        }
+        Loader {
+            id: units
+            source: scenarioFile
+            anchors.fill: parent
+        }
+
+        MouseArea {
+            id: mouseAreaMain
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            hoverEnabled: true
+            z: -1
+
+            onClicked: {
+                ScenarioLogic.handleMouseClick(mouse);
+            }
+        }
     }
 
     RosterMenu {
-        id: rosterMenu
+        id: roster
         width: parent.width
-        anchors.bottom: parent.bottom
+        anchors.top: gameArea.bottom
 
         Component.onCompleted: {
             populateUnits(units.item.children);
+        }
+
+        MouseArea {
+            id: mouseAreaRoster
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            hoverEnabled: true
+            z: -1
+
+            onClicked: {
+                ScenarioLogic.handleMouseClickRoster(mouse);
+            }
         }
     }
 
@@ -73,18 +102,6 @@ Item {
         triggeredOnStart: true
         onTriggered: {
             ScenarioLogic.switchFireFrame("gun_fire");
-        }
-    }
-
-    MouseArea {
-        id: mouseAreaMain
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        hoverEnabled: true
-        z: -1
-
-        onClicked: {
-            ScenarioLogic.handleMouseClick(mouse);
         }
     }
 

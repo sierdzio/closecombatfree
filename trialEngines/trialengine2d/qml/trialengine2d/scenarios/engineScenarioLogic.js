@@ -111,30 +111,59 @@ function handleMouseClick(mouse) {
         if ((scheduledOperation == "Ambush") || (scheduledOperation == "Defend")) {
             handledObject.defenceSphereColor = "";
         }
-
         cleanContextAction();
 
-        // "Hide" context menu. This is suboptimal and should be changed.
-        /*if (contextLoader.source != "") {
+        var child;
+        child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+
+        if (child == mouseAreaMain) {
+            return;
+        }
+        if (child.centerX != undefined) {
+            // Fixes context menu at the centre of child object.
+            contextLoader.y = child.y + child.centerY;
+            contextLoader.x = child.x + child.centerX;
+
+            handledObject = child;
+            // Displays the context menu. This is suboptimal.
+            contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+        }
+    }
+}
+
+function handleMouseClickRoster(mouse) {
+    if (mouse.button == Qt.LeftButton) {
+        if (contextLoader.visible == false) {//(contextLoader.source != "") {
+//            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+//            return;
+        } else {
             cleanContextAction();
-            return; // Makes app 'eat' this mouse click.
-        } else*/ {
-            var child;
-            child = scenario.childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+        }
+    }
+    else if (mouse.button == Qt.RightButton) {
+        if ((scheduledOperation == "Ambush") || (scheduledOperation == "Defend")) {
+            handledObject.defenceSphereColor = "";
+        }
+        cleanContextAction();
 
-            if (child == mouseAreaMain) {
-                return;
-            }
-            if (child.centerX != undefined) {
-                // Fixes context menu at the centre of child object.
-                contextLoader.y = child.y + child.centerY;
-                contextLoader.x = child.x + child.centerX;
+        var child;
+        child = roster.childAt(mouseAreaRoster.mouseX, mouseAreaRoster.mouseY);
+        var unit;
+        unit = roster.getUnitAt(mouseAreaRoster.mouseX, mouseAreaRoster.mouseY);
 
-                handledObject = child;
-                // Displays the context menu. This is suboptimal.
-                contextLoader.source = "../gui/ContextMenu.qml";
-                contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
-            }
+        if (unit.centerX != undefined) {
+            // Fixes context menu at the centre of child object.
+            setContextMenuPosition(contextLoader,
+                                   roster.x + child.x + (roster.entryWidth/2),
+                                   roster.y + child.y + (roster.entryHeight/2));
+//            contextLoader.y = roster.y + child.y + (roster.entryHeight/2);
+//            contextLoader.x = roster.x + child.x + (roster.entryWidth/2);
+
+            handledObject = unit;
+            // Displays the context menu. This is suboptimal.
+            contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
     }
 }
@@ -150,4 +179,16 @@ function switchFireFrame(fileName) {
         fireImage.source = "";
         fireTimer.stop();
     }
+}
+
+function setContextMenuPosition(menu, x, y) {
+    if ((x + menu.x) > root.width)
+        menu.x = root.width - menu.width;
+    else
+        menu.x = x;
+
+    if ((y + menu.y) > root.height)
+        menu.y = root.height - menu.height;
+    else
+        menu.y = y;
 }

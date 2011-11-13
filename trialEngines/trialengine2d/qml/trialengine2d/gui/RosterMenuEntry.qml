@@ -3,6 +3,8 @@ import QtQuick 1.1
 Rectangle {
     property string entryText: ""
     property string entryLogo: ""
+    property int index: 0
+
     signal entryClicked(string entryName)
 
     id: root
@@ -28,7 +30,7 @@ Rectangle {
         anchors.top: parent.top
         color: "#000000"
         text: entryText
-        font.pointSize: 11
+        font.pointSize: 9
         style: Text.Raised
         font.bold: true
         font.family: "FreeMono"
@@ -39,11 +41,10 @@ Rectangle {
     MouseArea {
         id: moveFastMouseArea
         anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
         hoverEnabled: true
 
         onEntered: parent.color = "#2e3c24";
         onExited: parent.color = "#5e6c24";
-        onClicked: entryClicked(entryText);
+//        onClicked: mouse.accepted = false;//entryClicked(entryText);
     }
 }
