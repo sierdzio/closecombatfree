@@ -1,5 +1,4 @@
 import QtQuick 1.1
-// Temporarily unused, at least until I find a way to make nested MouseAreas.
 
 Rectangle {
     property string buttonText: ""

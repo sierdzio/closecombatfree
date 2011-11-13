@@ -132,7 +132,7 @@ function handleMouseClick(mouse) {
 
                 handledObject = child;
                 // Displays the context menu. This is suboptimal.
-                contextLoader.source = "gui/ContextMenu.qml";
+                contextLoader.source = "../gui/ContextMenu.qml";
                 contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
             }
         }
@@ -144,7 +144,7 @@ function switchFireFrame(fileName) {
 
     if (imgNumber != 5) {
         fireImage.imageNumber = imgNumber + 1;
-        fireImage.source = "img/effects/" + fileName + (imgNumber + 1) + ".png";
+        fireImage.source = "../img/effects/" + fileName + (imgNumber + 1) + ".png";
     } else if (imgNumber == 5) {
         fireImage.imageNumber = 0;
         fireImage.source = "";

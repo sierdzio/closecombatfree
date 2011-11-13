@@ -5,7 +5,6 @@ Rectangle {
     property int __buttonHeight: 19
 
     signal menuEntryClicked(string menuEntry)
-//    onMenuEntryClicked: { console.log("Signal fired inside ContextMenu. Name: " + menuEntry); }
 
     id: root
     width: 90

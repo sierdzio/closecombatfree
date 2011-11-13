@@ -5,6 +5,7 @@ import "../engineLogicHelpers.js" as Logic
 
 Item {
     // Tank properties.
+    property string unitType: "Test tank 1"
     property int rotationSpeed: 40 // seconds needed for half rotation (180 deg)
     property int turretRotationSpeed: 35 // seconds needed for half rotation (180 deg)
     property int maxSpeed: 20 // km/h - not really, this will be tweaked later
@@ -16,7 +17,7 @@ Item {
     property int tankWidth: 62 // mm - should be properly recalculated later on
     property int tankHeight: 100 // mm - should be properly recalculated later on
 
-    // Additional properties, not important for on-developers.
+    // Additional properties, not important for non-developers/ modders.
     property int centerX: tankWidth/2
     property int centerY: tankHeight/2
     property int turretRotation: 0
@@ -25,6 +26,7 @@ Item {
     property color hullColor: "#7b8259"
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
+    property string unitLogo: "../img/tanks/generic/tank_tst1_logo.png"
 
     signal moveTo (real newX, real newY)
     onMoveTo: {

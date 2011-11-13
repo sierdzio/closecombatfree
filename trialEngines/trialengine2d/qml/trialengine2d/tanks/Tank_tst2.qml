@@ -4,7 +4,8 @@ Tank_tst1 {
     tankWidth: 50
     tankHeight: 80
     turretBodyTexture: "../img/tanks/generic/tank_tst2_turret_main.png"
+    unitLogo: "../img/tanks/generic/tank_tst2_logo.png"
     turretSize: 44
     maxSpeed: 50
-    hullColor: "#303030"
+    hullColor: "#505050"
 }

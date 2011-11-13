@@ -1,7 +1,11 @@
 import QtQuick 1.1
+import "../gui"
+import "../engineLogicHelpers.js" as LogicHelpers
+import "engineScenarioLogic.js" as ScenarioLogic
 
 Item {
     property string scenarioFile: "Scenario_tst1.qml"
+    property int __aimLineRotation: 0
 
     Loader {
         id: map
@@ -13,6 +17,75 @@ Item {
         id: units
         source: scenarioFile
         anchors.fill: parent
+    }
+
+    RosterMenu {
+        id: rosterMenu
+        width: parent.width
+        anchors.bottom: parent.bottom
+
+        Component.onCompleted: {
+            populateUnits(units.item.children);
+        }
+    }
+
+    Rectangle {
+        id: aimLine
+        z: root.z + 1
+        visible: false
+        width: 3
+        height: 150
+
+        transform: Rotation {
+            origin.x: 1
+            origin.y: 0
+            angle: __aimLineRotation
+        }
+    }
+
+    Loader {
+        id: contextLoader
+        rotation: 0
+        z: root.z + 1
+    }
+    Timer {
+        id: aimLineRotationTimer // this should be changed
+        interval: 120
+        running: false
+        repeat: true
+        onTriggered: {
+            ScenarioLogic.rotateAimLine();
+        }
+    }
+
+    Image {
+        property int imageNumber: 0
+        id: fireImage
+        visible: true
+        source: ""
+        scale: 3
+        z: 5
+    }
+    Timer {
+        id: fireTimer
+        interval: 80
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: {
+            ScenarioLogic.switchFireFrame("gun_fire");
+        }
+    }
+
+    MouseArea {
+        id: mouseAreaMain
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
+        z: -1
+
+        onClicked: {
+            ScenarioLogic.handleMouseClick(mouse);
+        }
     }
 
     function childAt(x, y) {
