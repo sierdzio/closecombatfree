@@ -6,6 +6,7 @@ Item {
     property int centerY: (body.height/2) + barrelBase.height + barrelSegment1.height
     property string bodyTexture: "../../img/units/tanks/generic/tank_tst1_turret_main.png"
     property bool firing: false
+    property bool smoking: false
     property color turretColor: "#7b8259"
     property int turretBodySize: 60
 
@@ -81,7 +82,7 @@ Item {
     states: [
         State {
             name: "firing"
-            when: (firing == true)
+            when: ((firing == true) || (smoking == true))
             PropertyChanges {
                 target: barrelSegment1
                 anchors.bottomMargin: -25
@@ -114,6 +115,7 @@ Item {
                     ScriptAction {
                         script: {
                             firing = false;
+                            smoking = false;
                         }
                     }
                 }

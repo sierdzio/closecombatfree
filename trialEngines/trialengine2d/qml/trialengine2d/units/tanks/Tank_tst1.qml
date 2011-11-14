@@ -26,10 +26,10 @@ Unit {
     }
 
     signal fireTo (real targetX, real targetY)
-    onFireTo: ActionLogic.fireTo(targetX, targetY);
+    onFireTo: ActionLogic.turretFireTo(targetX, targetY);
 
     signal smokeTo (real targetX, real targetY)
-    onSmokeTo: ActionLogic.fireTo(targetX, targetY);
+    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
 
     id: root
     unitType: "Test tank 1"
@@ -80,6 +80,11 @@ Unit {
                     if (turret.__firing) {
                         turret.firing = true;
                         turret.__firing = false;
+                        actionFinished(__tempX, __tempY);
+                        changeStatus("READY");
+                    } else if (turret.__smoking) {
+                        turret.smoking = true;
+                        turret.__smoking = false;
                         actionFinished(__tempX, __tempY);
                         changeStatus("READY");
                     }

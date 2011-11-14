@@ -31,17 +31,17 @@ function performMovement (newX, newY, factor) {
     yMoveAnimation.duration = moveDuration;
 }
 
-function smokeTo (targetX, targetY) {
-    performShooting(targetX, targetY);
+function turretSmokeTo (targetX, targetY) {
+    performTurretShooting(targetX, targetY);
     turret.__smoking = true;
 }
 
-function fireTo (targetX, targetY) {
-    performShooting(targetX, targetY);
+function turretFireTo (targetX, targetY) {
+    performTurretShooting(targetX, targetY);
     turret.__firing = true;
 }
 
-function performShooting (targetX, targetY) {
+function performTurretShooting (targetX, targetY) {
     __tempX = targetX;
     __tempY = targetY;
     var newRotation = Logic.rotationAngle(x, y,

@@ -62,7 +62,7 @@ function performContextAction(targetX, targetY) {
         } else if (scheduledOperation == "Smoke") {
             handledObject.smokeTo(targetX, targetY);
             // Seting the smoke animation.
-            fireTimer.interval = 120;
+            fireTimer.interval = 150;
             fireTimer.__fireAnimationString = "smoke_fire";
             handledObject.actionFinished.connect(firingActionFinished);
         }
