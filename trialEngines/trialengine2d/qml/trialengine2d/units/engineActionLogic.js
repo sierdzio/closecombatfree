@@ -32,10 +32,16 @@ function performMovement (newX, newY, factor) {
 }
 
 function smokeTo (targetX, targetY) {
-
+    performShooting(targetX, targetY);
+    turret.__smoking = true;
 }
 
 function fireTo (targetX, targetY) {
+    performShooting(targetX, targetY);
+    turret.__firing = true;
+}
+
+function performShooting (targetX, targetY) {
     __tempX = targetX;
     __tempY = targetY;
     var newRotation = Logic.rotationAngle(x, y,
@@ -46,5 +52,4 @@ function fireTo (targetX, targetY) {
                                                               turretRotationSpeed);
     turretRotation = newRotation;
     changeStatus("ROTATING");
-    turret.__firing = true;
 }

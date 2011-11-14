@@ -5,3 +5,4 @@
 
  - add active pause
  - add order cancelling
+ - make scripts (especially engineActionLogic) less dependant on QML variables and objects.

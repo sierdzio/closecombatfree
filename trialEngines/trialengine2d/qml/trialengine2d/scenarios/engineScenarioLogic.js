@@ -56,6 +56,14 @@ function performContextAction(targetX, targetY) {
             handledObject.sneakTo(targetX, targetY);
         } else if (scheduledOperation == "Attack") {
             handledObject.fireTo(targetX, targetY);
+            fireTimer.interval = 80;
+            fireTimer.__fireAnimationString = "gun_fire";
+            handledObject.actionFinished.connect(firingActionFinished);
+        } else if (scheduledOperation == "Smoke") {
+            handledObject.smokeTo(targetX, targetY);
+            // Seting the smoke animation.
+            fireTimer.interval = 120;
+            fireTimer.__fireAnimationString = "smoke_fire";
             handledObject.actionFinished.connect(firingActionFinished);
         }
     }

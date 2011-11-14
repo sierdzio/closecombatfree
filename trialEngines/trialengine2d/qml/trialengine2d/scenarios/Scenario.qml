@@ -96,12 +96,14 @@ Item {
         z: 5
     }
     Timer {
+        property string __fireAnimationString: "gun_fire"
+
         id: fireTimer
         interval: 80
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            ScenarioLogic.switchFireFrame("gun_fire");
+            ScenarioLogic.switchFireFrame(__fireAnimationString);
         }
     }
 

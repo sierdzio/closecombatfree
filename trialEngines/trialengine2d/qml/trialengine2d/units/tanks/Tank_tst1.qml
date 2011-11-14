@@ -28,6 +28,9 @@ Unit {
     signal fireTo (real targetX, real targetY)
     onFireTo: ActionLogic.fireTo(targetX, targetY);
 
+    signal smokeTo (real targetX, real targetY)
+    onSmokeTo: ActionLogic.fireTo(targetX, targetY);
+
     id: root
     unitType: "Test tank 1"
     unitLogo: "../img/units/tanks/generic/tank_tst1_logo.png"
@@ -49,6 +52,7 @@ Unit {
 
     Tank_tst1_turret {
         property bool __firing: false
+        property bool __smoking: false
 
         id: turret
         turretBodySize: turretSize
