@@ -9,3 +9,25 @@ CCF will be distributed under licence which is yet to be decided. Most probably 
 ---------------- NOTE ---------------
 Some images used (at leas temporarily) were done by NASA. They are released into public domain, AFAIK. Here's a list:
 1. Filename: "test1.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
+
+Unit statuses (might be good to split them ito two lists):
+1. READY
+2. MOVING
+3. MOVING FAST
+4. SNEAKING
+5. AMBUSHING
+6. DEFENDING
+7. KIA
+8. DAMAGED
+9. WOUNDED
+10. INCAPACITATED
+
+11. AIMING
+12. FIRING
+13. LOADING
+14. FIXING
+15. ROTATING
+
+16. COVERING
+17. BROKEN
+18. BERSERK

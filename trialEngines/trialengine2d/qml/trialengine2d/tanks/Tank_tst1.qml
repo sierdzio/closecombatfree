@@ -27,6 +27,9 @@ Item {
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
     property string unitLogo: "../img/tanks/generic/tank_tst1_logo.png"
+    property string unitStatus: "READY"
+
+    signal unitStatusChanged(string newStatus)
 
     signal moveTo (real newX, real newY)
     onMoveTo: {
@@ -45,6 +48,7 @@ Item {
                                                 yMoveAnimation.__tempY) * 800 / (maxSpeed);
         xMoveAnimation.duration = moveDuration;
         yMoveAnimation.duration = moveDuration;
+        changeStatus("MOVING");
 
         exhaust.burst(20);
         exhaustLater.burst(40);
@@ -60,9 +64,15 @@ Item {
                                                                   newRotation,
                                                                   turretRotationSpeed);
         turretRotation = newRotation;
+        changeStatus("ROTATING");
         turret.__firing = true;
     }
     signal actionFinished(real targetX, real targetY)
+
+    function changeStatus(newStatusMessage) {
+        unitStatus = newStatusMessage;
+        unitStatusChanged(newStatusMessage);
+    }
 
     id: root
     width: tankWidth
@@ -154,6 +164,7 @@ Item {
                         turret.firing = true;
                         turret.__firing = false;
                         actionFinished(xMoveAnimation.__tempX, yMoveAnimation.__tempY);
+                        changeStatus("READY");
                     }
                 }
             }
@@ -166,6 +177,10 @@ Item {
             id: xMoveAnimation
             duration: 2500
             easing.type: Easing.InOutQuad
+            onRunningChanged: {
+                if (!xMoveAnimation.running)
+                    changeStatus("READY");
+            }
         }
     }
     Behavior on y {

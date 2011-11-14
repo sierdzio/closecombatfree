@@ -31,9 +31,11 @@ function scheduleContextAction(operation) {
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
                 handledObject.defenceSphereColor = "green";
+                handledObject.changeStatus("AMBUSHING");
             }
             else if (operation == "Defend") {
                 handledObject.defenceSphereColor = "blue";
+                handledObject.changeStatus("DEFENDING");
             }
             aimLineRotationTimer.start();
         }
@@ -44,6 +46,7 @@ function performContextAction(targetX, targetY) {
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
         // Clear defence, if it is on.
         handledObject.defenceSphereColor = "";
+        handledObject.changeStatus("READY");
 
         if (scheduledOperation == "Move") {
             handledObject.moveTo(targetX, targetY);

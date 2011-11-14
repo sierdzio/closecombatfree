@@ -2,7 +2,7 @@ import QtQuick 1.1
 import "engineRosterLogic.js" as RosterLogic
 
 Rectangle {
-    property int entryWidth: 125
+    property int entryWidth: 175
     property int entryHeight: 50
 
     id: root
@@ -18,6 +18,8 @@ Rectangle {
             var currentUnit = RosterLogic.unitsList[i];
             root.children[i].entryText = currentUnit.unitType;
             root.children[i].entryLogo = currentUnit.unitLogo;
+            root.children[i].changeStatus(currentUnit.unitStatus);
+            currentUnit.unitStatusChanged.connect(root.children[i].changeStatus);
         }
     }
 

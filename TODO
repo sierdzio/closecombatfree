@@ -1,0 +1,4 @@
+ - move generic tank properties into a C++ QObject
+ - add status messages to units
+ - add generic unit (with, yes, a status)
+ - all of the above might be cleverly connected together

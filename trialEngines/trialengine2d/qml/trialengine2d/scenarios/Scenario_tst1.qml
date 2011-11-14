@@ -5,6 +5,8 @@ Item {
     property string mapFile: "../maps/Map_tst1.qml"
 
     id: root
+    width: 800
+    height: 800
 
     Tank_tst1 {
         objectName: "tank1"
