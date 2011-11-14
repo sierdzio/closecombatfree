@@ -50,6 +50,10 @@ function performContextAction(targetX, targetY) {
 
         if (scheduledOperation == "Move") {
             handledObject.moveTo(targetX, targetY);
+        } else if (scheduledOperation == "Move fast") {
+            handledObject.moveFastTo(targetX, targetY);
+        } else if (scheduledOperation == "Sneak") {
+            handledObject.sneakTo(targetX, targetY);
         } else if (scheduledOperation == "Attack") {
             handledObject.fireTo(targetX, targetY);
             handledObject.actionFinished.connect(firingActionFinished);

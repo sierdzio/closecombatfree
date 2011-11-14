@@ -1,4 +1,19 @@
 function moveTo (newX, newY) {
+    performMovement(newX, newY, 1);
+    changeStatus("MOVING");
+}
+
+function moveFastTo (newX, newY) {
+    performMovement(newX, newY, moveFastFactor);
+    changeStatus("MOVING FAST");
+}
+
+function sneakTo (newX, newY) {
+    performMovement(newX, newY, sneakFactor);
+    changeStatus("SNEAKING");
+}
+
+function performMovement (newX, newY, factor) {
     __tempX = newX - (centerX);
     __tempY = newY - (centerY);
 
@@ -11,10 +26,13 @@ function moveTo (newX, newY) {
 
     var moveDuration = Logic.targetDistance(x, y,
                                             __tempX,
-                                            __tempY) * 800 / (maxSpeed);
+                                            __tempY) * 800 / (maxSpeed * factor);
     xMoveAnimation.duration = moveDuration;
     yMoveAnimation.duration = moveDuration;
-    changeStatus("MOVING");
+}
+
+function smokeTo (targetX, targetY) {
+
 }
 
 function fireTo (targetX, targetY) {

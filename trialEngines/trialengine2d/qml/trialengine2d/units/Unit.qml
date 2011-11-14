@@ -15,6 +15,8 @@ Item {
     property int unitWidth: 1 // mm - should be properly recalculated later on
     property int unitHeight: 1 // mm - should be properly recalculated later on
 
+    property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
+    property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
     property int centerX: unitWidth/2
     property int centerY: unitHeight/2
 
@@ -23,8 +25,15 @@ Item {
 
     signal unitStatusChanged(string newStatus)
     signal actionFinished(real targetX, real targetY)
+
     signal moveTo (real newX, real newY)
     onMoveTo: ActionLogic.moveTo(newX, newY);
+
+    signal moveFastTo (real newX, real newY)
+    onMoveFastTo: ActionLogic.moveFastTo(newX, newY);
+
+    signal sneakTo (real newX, real newY)
+    onSneakTo: ActionLogic.sneakTo(newX, newY);
 
     width: unitWidth
     height: unitHeight

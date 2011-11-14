@@ -1,3 +1,11 @@
 CHANGELOG for Close Combat Free.
 
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
+
+=== === === ===
+14.11.2011:
+ - add moving fast, sneaking movements implementation
+ - add generic unit object, move most of the code from test tank
+ - add status messages
+ - (and all the rest from git, that is everything older than
+   commit 35de2ddac6d3118c0bfcd5f86328ca71fe22a1c5)
