@@ -6,15 +6,15 @@ function colorForStatus(statusMessage) {
     if (statusMessage == "READY") {
         result = "#115511";
     } else if (statusMessage == "MOVING") {
-        result = "#118811";
+        result = "#11aa11";
     } else if (statusMessage == "MOVING FAST") {
-        result = "#118811";
+        result = "#11aa11";
     } else if (statusMessage == "SNEAKING") {
-        result = "#118811";
+        result = "#11aa11";
     } else if (statusMessage == "AMBUSHING") {
-        result = "#888888";
+        result = "#aaaaaa";
     } else if (statusMessage == "DEFENDING") {
-        result = "#888888";
+        result = "#aaaaaa";
     } else if (statusMessage == "KIA") {
         result = "#000000";
     } else if (statusMessage == "DAMAGED") {
@@ -24,9 +24,9 @@ function colorForStatus(statusMessage) {
     } else if (statusMessage == "INCAPACITATED") {
         result = "#885511";
     } else if (statusMessage == "ROTATING") {
-        result = "#118811";
+        result = "#11aa11";
     } else if (statusMessage == "FIRING") {
-        result = "#881111";
+        result = "#aa1111";
     }
 
     return result;

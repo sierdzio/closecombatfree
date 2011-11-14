@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../tanks"
+import "../units/tanks"
 
 Item {
     property string mapFile: "../maps/Map_tst1.qml"

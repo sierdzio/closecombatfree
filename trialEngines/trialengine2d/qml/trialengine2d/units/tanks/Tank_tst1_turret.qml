@@ -4,7 +4,7 @@ import Qt.labs.particles 1.0
 Item {
     property int centerX: body.width/2
     property int centerY: (body.height/2) + barrelBase.height + barrelSegment1.height
-    property string bodyTexture: "../img/tanks/generic/tank_tst1_turret_main.png"
+    property string bodyTexture: "../../img/units/tanks/generic/tank_tst1_turret_main.png"
     property bool firing: false
     property color turretColor: "#7b8259"
     property int turretBodySize: 60
@@ -69,7 +69,7 @@ Item {
 
             if (imgNumber != 5) {
                 fireImage.imageNumber = imgNumber + 1;
-                fireImage.source = "../img/effects/gun_fire" + (imgNumber + 1) + ".png";
+                fireImage.source = "../../img/effects/gun_fire" + (imgNumber + 1) + ".png";
             } else if (imgNumber == 5) {
                 fireImage.imageNumber = 0;
                 fireImage.source = "";
