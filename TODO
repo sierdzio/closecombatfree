@@ -1,12 +1,13 @@
- - move generic tank properties into a C++ QObject
- - add status messages to units
- - add generic unit (with, yes, a status)
- - all of the above might be cleverly connected together
+ +/- move generic tank properties into a C++ QObject
+ + add status messages to units
+ + add generic unit (with, yes, a status)
 
  - add active pause
  - add order cancelling
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading
- - fix order mixing (either add a queue, or make orders more tightly connected with objects)
- - add more fire timers (list-based) - it will be required to have multiple fires/ smoke animations
+ + fix order mixing (either add a queue, or make orders more tightly connected with objects)
+ + add more fire timers (list-based) - it will be required to have multiple fires/ smoke animations
    rendered OR make all those things unit-based (probably a bad idea) OR make them unit-connected
+ - add unit selection
+ - try running Effect.qml animations by sending signals, not modifying the object itself

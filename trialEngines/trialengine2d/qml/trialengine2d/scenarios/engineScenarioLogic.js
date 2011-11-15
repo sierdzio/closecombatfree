@@ -1,6 +1,4 @@
-//var handledObject; // Keeps currently handled object. Bad implementation,
-                    // to be fixed later. At the very least, move it into JS script.
-//var scheduledOperation;
+var effectsContainer = new Array();
 
 function scheduleContextAction(index, operation) {
     var child = units.item.children[index];
@@ -71,22 +69,72 @@ function performContextAction(index, targetX, targetY) {
 }
 
 function firingActionFinished(index, targetX, targetY) {
+    // This component renders in=game effects (not all,
+    // but for example muzzle flashes, explosions etc.)
+    var component = Qt.createComponent("Effect.qml");
+
     // A good place to include terrain recognition
     // for landing shells
-
     var unit = units.item.children[index];
+    var effectIndex;
+
+    if (component.status == Component.Ready) {
+        var effect = component.createObject(effectsItemContainer);
+    }
+
+    effectsContainer.push(effect);
+    effectIndex = effectsContainer.length - 1;
+
     if (unit.scheduledOperation == "Attack") {
-        fireTimer.interval = 80;
-        fireTimer.__fireAnimationString = "gun_fire";
+        effectsContainer[effectIndex].animationString = "gun_fire";
     }
     else if(unit.scheduledOperation == "Smoke") {
-        fireTimer.interval = 150;
-        fireTimer.__fireAnimationString = "smoke_fire";
+        effectsContainer[effectIndex].animationString = "smoke_fire";
     }
 
-    fireImage.x = targetX;
-    fireImage.y = targetY;
-    fireTimer.start();
+    effectsContainer[effectIndex].x = targetX;
+    effectsContainer[effectIndex].y = targetY;
+    effectsContainer[effectIndex].running = true;
+
+    if (effectsTimer.running == false)
+        effectsTimer.start();
+}
+
+
+function updateEffects() {
+    var haveAllEffectsFinished = true;
+    for (var i = 0; i < effectsContainer.length; i++) {
+        if (effectsContainer[i].running == true) {
+            switchFireFrame(i);
+            haveAllEffectsFinished = false;
+        }
+    }
+
+    // Clear list if all effects have finished.
+    // Crude, but might optimise the code a bit.
+    if (haveAllEffectsFinished == true) {
+        for (var i = 0; i <= effectsContainer.length; i++) {
+            effectsContainer.pop();
+        }
+        effectsTimer.stop();
+    }
+
+//    console.log("Running animations: " + effectsContainer.length
+//                + ". Timer running: " + effectsTimer.running);
+}
+
+function switchFireFrame(effectIndex) {
+    var i = effectIndex;
+    var imgNumber = effectsContainer[i].imageNumber;
+
+    if (imgNumber != 5) {
+        effectsContainer[i].imageNumber = imgNumber + 1;
+        effectsContainer[i].source = "../img/effects/" + effectsContainer[i].animationString + (imgNumber + 1) + ".png";
+    } else if (imgNumber == 5) {
+        effectsContainer[i].imageNumber = 0;
+        effectsContainer[i].source = "";
+        effectsContainer[i].running = false;
+    }
 }
 
 function cleanContextAction() {
@@ -96,15 +144,10 @@ function cleanContextAction() {
     __unitIndex = -1;
     contextLoader.source = "";
     contextLoader.visible = true;
-//    if (handledObject != undefined) {
-//        handledObject.scheduledOperation = "";
-//    }
-//    handledObject = 0;
 }
 
 function rotateAimLine() {
-    var index = __unitIndex;
-    var child = units.item.children[index];
+    var child = units.item.children[__unitIndex];
 
     if (aimLine.visible == true) {
         aimLine.x = child.x + child.centerX;
@@ -153,7 +196,6 @@ function handleMouseClick(mouse) {
                                    child.x + child.centerX,
                                    child.y + child.centerY);
 
-//            handledObject = child;
             __unitIndex = childIndex(child);
             // Displays the context menu. This is suboptimal.
             contextLoader.source = "../gui/ContextMenu.qml";
@@ -165,7 +207,7 @@ function handleMouseClick(mouse) {
 
 function handleMouseClickRoster(mouse) {
     if (mouse.button == Qt.LeftButton) {
-        if (contextLoader.visible == false) {//(contextLoader.source != "") {
+        if (contextLoader.visible == false) {
 //            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 //            return;
         } else {
@@ -192,19 +234,6 @@ function handleMouseClickRoster(mouse) {
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
-    }
-}
-
-function switchFireFrame(fileName) {
-    var imgNumber = fireImage.imageNumber;
-
-    if (imgNumber != 5) {
-        fireImage.imageNumber = imgNumber + 1;
-        fireImage.source = "../img/effects/" + fileName + (imgNumber + 1) + ".png";
-    } else if (imgNumber == 5) {
-        fireImage.imageNumber = 0;
-        fireImage.source = "";
-        fireTimer.stop();
     }
 }
 

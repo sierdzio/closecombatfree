@@ -84,8 +84,10 @@ Item {
         rotation: 0
         z: root.z + 1
     }
+
+    // Timer for aimline rotation updates.
     Timer {
-        id: rotationTimer // this should be changed
+        id: rotationTimer
         interval: 120
         running: false
         repeat: true
@@ -94,23 +96,22 @@ Item {
         }
     }
 
-    Image {
-        property int imageNumber: 0
-        id: fireImage
+    // Needed for effectsContainer in JS file.
+    // Would be neat to rethink and optimise that.
+    Item {
+        id: effectsItemContainer
         visible: true
-        source: ""
-        scale: 3
-        z: 5
+        anchors.fill: parent
     }
-    Timer {
-        property string __fireAnimationString: "gun_fire"
 
-        id: fireTimer
+    // Timer for on-screen animations..
+    Timer {
+        id: effectsTimer
         interval: 80
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            ScenarioLogic.switchFireFrame(__fireAnimationString);
+            ScenarioLogic.updateEffects();
         }
     }
 

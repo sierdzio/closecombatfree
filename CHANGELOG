@@ -3,6 +3,12 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+15.11.2011:
+ - add smoke implementation
+ - fix mixing fire commands by game logic
+ - add support for multiple Effect animations playing at the same time
+   (using one Timer and multiple Effect.qml objects)
+
 14.11.2011:
  - add moving fast, sneaking movements implementation
  - add generic unit object, move most of the code from test tank
