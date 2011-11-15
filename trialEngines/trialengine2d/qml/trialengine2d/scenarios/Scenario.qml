@@ -6,6 +6,7 @@ import "engineScenarioLogic.js" as ScenarioLogic
 Item {
     property string scenarioFile: "Scenario_tst1.qml"
     property int __aimLineRotation: 0
+    property int __unitIndex: -1
 
     Item {
         id: gameArea
@@ -21,6 +22,12 @@ Item {
             id: units
             source: scenarioFile
             anchors.fill: parent
+
+            Component.onCompleted: {
+                for (var i = 0; i < units.item.children.length; i++) {
+                    units.item.children[i].unitIndex = i;
+                }
+            }
         }
 
         MouseArea {
@@ -78,7 +85,7 @@ Item {
         z: root.z + 1
     }
     Timer {
-        id: aimLineRotationTimer // this should be changed
+        id: rotationTimer // this should be changed
         interval: 120
         running: false
         repeat: true
@@ -109,5 +116,32 @@ Item {
 
     function childAt(x, y) {
         return units.item.childAt(x, y);
+    }
+
+    function childIndexAt(x, y) {
+        var result = 0;
+        var child = units.item.childAt(x, y);
+
+        for (var i = 0; i < units.item.children.length; i++) {
+            if (child == units.item.children[i]) {
+                result = i;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    function childIndex(child) {
+        var result = 0;
+
+        for (var i = 0; i < units.item.children.length; i++) {
+            if (child == units.item.children[i]) {
+                result = i;
+                break;
+            }
+        }
+
+        return result;
     }
 }

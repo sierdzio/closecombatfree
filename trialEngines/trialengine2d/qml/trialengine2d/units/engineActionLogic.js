@@ -1,3 +1,5 @@
+//var scheduledOperation;
+
 function moveTo (newX, newY) {
     performMovement(newX, newY, 1);
     changeStatus("MOVING");

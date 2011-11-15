@@ -7,6 +7,7 @@ Item {
     property string unitType: "Generic unit"
     property string unitLogo: "../img/units/generic_unit_logo.png"
     property string unitStatus: "READY"
+    property int unitIndex: -1
 
     property int rotationSpeed: 1 // seconds needed for half rotation (180 deg)
     property int turretRotationSpeed: 1 // seconds needed for half rotation (180 deg)
@@ -22,9 +23,10 @@ Item {
 
     property int __tempX: x
     property int __tempY: y
+    property string scheduledOperation;
 
     signal unitStatusChanged(string newStatus)
-    signal actionFinished(real targetX, real targetY)
+    signal actionFinished(int index, real targetX, real targetY)
 
     signal moveTo (real newX, real newY)
     onMoveTo: ActionLogic.moveTo(newX, newY);

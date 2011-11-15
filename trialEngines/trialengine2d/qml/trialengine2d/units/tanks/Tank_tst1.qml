@@ -80,12 +80,12 @@ Unit {
                     if (turret.__firing) {
                         turret.firing = true;
                         turret.__firing = false;
-                        actionFinished(__tempX, __tempY);
+                        actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
                     } else if (turret.__smoking) {
                         turret.smoking = true;
                         turret.__smoking = false;
-                        actionFinished(__tempX, __tempY);
+                        actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
                     }
                 }

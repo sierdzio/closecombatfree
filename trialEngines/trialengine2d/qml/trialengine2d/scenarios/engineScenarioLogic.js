@@ -1,18 +1,19 @@
-var handledObject; // Keeps currently handled object. Bad implementation,
+//var handledObject; // Keeps currently handled object. Bad implementation,
                     // to be fixed later. At the very least, move it into JS script.
-var scheduledOperation;
+//var scheduledOperation;
 
-function scheduleContextAction(operation) {
-    scheduledOperation = operation;
+function scheduleContextAction(index, operation) {
+    var child = units.item.children[index];
+    child.scheduledOperation = operation;
     contextLoader.source = "";
     contextLoader.visible = false;
 
     // Prevents some strange errors in certain situations.
-    if (handledObject.centerY != undefined) {
+    if (child.centerY != undefined) {
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
-            aimLine.x = handledObject.x + handledObject.centerX;
-            aimLine.y = handledObject.y + handledObject.centerY;
+            aimLine.x = child.x + child.centerX;
+            aimLine.y = child.y + child.centerY;
 
             if (operation == "Move fast")
                 aimLine.color = "#771b91";
@@ -25,107 +26,119 @@ function scheduleContextAction(operation) {
             else if (operation == "Attack")
                 aimLine.color = "#ff2222";
 
-            aimLineRotationTimer.start();
+            rotationTimer.start();
             aimLine.visible = true;
 
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
-                handledObject.defenceSphereColor = "green";
-                handledObject.changeStatus("AMBUSHING");
+                child.defenceSphereColor = "green";
+                child.changeStatus("AMBUSHING");
             }
             else if (operation == "Defend") {
-                handledObject.defenceSphereColor = "blue";
-                handledObject.changeStatus("DEFENDING");
+                child.defenceSphereColor = "blue";
+                child.changeStatus("DEFENDING");
             }
-            aimLineRotationTimer.start();
+            rotationTimer.start();
         }
     }
 }
 
-function performContextAction(targetX, targetY) {
+function performContextAction(index, targetX, targetY) {
+    var child = units.item.children[index];
+    var scheduledOperation = child.scheduledOperation;
+
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
         // Clear defence, if it is on.
-        handledObject.defenceSphereColor = "";
-        handledObject.changeStatus("READY");
+        child.defenceSphereColor = "";
+        child.changeStatus("READY");
 
         if (scheduledOperation == "Move") {
-            handledObject.moveTo(targetX, targetY);
+            child.moveTo(targetX, targetY);
         } else if (scheduledOperation == "Move fast") {
-            handledObject.moveFastTo(targetX, targetY);
+            child.moveFastTo(targetX, targetY);
         } else if (scheduledOperation == "Sneak") {
-            handledObject.sneakTo(targetX, targetY);
+            child.sneakTo(targetX, targetY);
         } else if (scheduledOperation == "Attack") {
-            handledObject.fireTo(targetX, targetY);
-            fireTimer.interval = 80;
-            fireTimer.__fireAnimationString = "gun_fire";
-            handledObject.actionFinished.connect(firingActionFinished);
+            child.fireTo(targetX, targetY);
+            child.actionFinished.connect(firingActionFinished);
         } else if (scheduledOperation == "Smoke") {
-            handledObject.smokeTo(targetX, targetY);
-            // Seting the smoke animation.
-            fireTimer.interval = 150;
-            fireTimer.__fireAnimationString = "smoke_fire";
-            handledObject.actionFinished.connect(firingActionFinished);
+            child.smokeTo(targetX, targetY);
+            child.actionFinished.connect(firingActionFinished);
         }
     }
 
     cleanContextAction();
 }
 
-function firingActionFinished(targetX, targetY) {
+function firingActionFinished(index, targetX, targetY) {
     // A good place to include terrain recognition
     // for landing shells
+
+    var unit = units.item.children[index];
+    if (unit.scheduledOperation == "Attack") {
+        fireTimer.interval = 80;
+        fireTimer.__fireAnimationString = "gun_fire";
+    }
+    else if(unit.scheduledOperation == "Smoke") {
+        fireTimer.interval = 150;
+        fireTimer.__fireAnimationString = "smoke_fire";
+    }
+
     fireImage.x = targetX;
     fireImage.y = targetY;
     fireTimer.start();
 }
 
 function cleanContextAction() {
-    aimLineRotationTimer.stop();
+    rotationTimer.stop();
     aimLine.visible = false;
     aimLine.height = 5;
+    __unitIndex = -1;
     contextLoader.source = "";
     contextLoader.visible = true;
-    scheduledOperation = "";
-    handledObject = 0;
+//    if (handledObject != undefined) {
+//        handledObject.scheduledOperation = "";
+//    }
+//    handledObject = 0;
 }
 
 function rotateAimLine() {
+    var index = __unitIndex;
+    var child = units.item.children[index];
+
     if (aimLine.visible == true) {
-        aimLine.x = handledObject.x + handledObject.centerX;
-        aimLine.y = handledObject.y + handledObject.centerY;
+        aimLine.x = child.x + child.centerX;
+        aimLine.y = child.y + child.centerY;
 
         __aimLineRotation = LogicHelpers.rotationAngle(mouseAreaMain.mouseX,
                                                     mouseAreaMain.mouseY,
-                                                    handledObject.x + handledObject.centerX,
-                                                    handledObject.y + handledObject.centerY);
-        aimLine.height = LogicHelpers.targetDistance(handledObject.x +  handledObject.centerX,
-                                                  handledObject.y + handledObject.centerY,
+                                                    child.x + child.centerX,
+                                                    child.y + child.centerY);
+        aimLine.height = LogicHelpers.targetDistance(child.x +  child.centerX,
+                                                  child.y + child.centerY,
                                                   mouseAreaMain.mouseX,
                                                   mouseAreaMain.mouseY);
     } else {
         var tempRotation;
-        tempRotation = LogicHelpers.rotationAngle(handledObject.x + handledObject.centerX,
-                                               handledObject.y + handledObject.centerY,
+        tempRotation = LogicHelpers.rotationAngle(child.x + child.centerX,
+                                               child.y + child.centerY,
                                                mouseAreaMain.mouseX,
                                                mouseAreaMain.mouseY);
-        handledObject.defenceSphereRotation = handledObject.rotation
+        child.defenceSphereRotation = child.rotation
                 + LogicHelpers.angleTo8Step(tempRotation);
     }
 }
 
 function handleMouseClick(mouse) {
     if (mouse.button == Qt.LeftButton) {
-        if (contextLoader.visible == false) {//(contextLoader.source != "") {
-            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+        if (contextLoader.visible == false) {
+            performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
             return;
         } else {
             cleanContextAction();
         }
     }
     else if (mouse.button == Qt.RightButton) {
-        if ((scheduledOperation == "Ambush") || (scheduledOperation == "Defend")) {
-            handledObject.defenceSphereColor = "";
-        }
         cleanContextAction();
 
         var child;
@@ -139,12 +152,12 @@ function handleMouseClick(mouse) {
             setContextMenuPosition(contextLoader,
                                    child.x + child.centerX,
                                    child.y + child.centerY);
-//            contextLoader.y = child.y + child.centerY;
-//            contextLoader.x = child.x + child.centerX;
 
-            handledObject = child;
+//            handledObject = child;
+            __unitIndex = childIndex(child);
             // Displays the context menu. This is suboptimal.
             contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
     }
@@ -160,9 +173,6 @@ function handleMouseClickRoster(mouse) {
         }
     }
     else if (mouse.button == Qt.RightButton) {
-        if ((scheduledOperation == "Ambush") || (scheduledOperation == "Defend")) {
-            handledObject.defenceSphereColor = "";
-        }
         cleanContextAction();
 
         var child;
@@ -176,9 +186,10 @@ function handleMouseClickRoster(mouse) {
                                    roster.x + child.x + (roster.entryWidth/2),
                                    roster.y + child.y + (roster.entryHeight/2));
 
-            handledObject = unit;
+            __unitIndex = childIndex(unit);
             // Displays the context menu. This is suboptimal.
             contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
     }

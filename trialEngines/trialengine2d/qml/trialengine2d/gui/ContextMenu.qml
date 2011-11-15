@@ -3,8 +3,13 @@ import QtQuick 1.1
 Rectangle {    
     property int __buttonWidth: 86
     property int __buttonHeight: 19
+    property int unitIndex: -1
 
-    signal menuEntryClicked(string menuEntry)
+    signal menuEntryClicked(int currentUnitIndex, string menuEntry)
+
+    function prepareSignal(menuEntry) {
+        menuEntryClicked(unitIndex, menuEntry);
+    }
 
     id: root
     width: 90
@@ -23,7 +28,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: moveFastButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: moveFastButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: moveButton
@@ -34,7 +39,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: moveButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: moveButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: sneakButton
@@ -45,7 +50,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: sneakButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: sneakButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: smokeButton
@@ -56,7 +61,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: smokeButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: smokeButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: attackButton
@@ -67,7 +72,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: attackButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: attackButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: ambushButton
@@ -78,7 +83,7 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: ambushButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: ambushButton.entryClicked.connect(prepareSignal);
     }
     ContextMenuEntry {
         id: defendButton
@@ -89,6 +94,6 @@ Rectangle {
         anchors.topMargin: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Component.onCompleted: defendButton.entryClicked.connect(menuEntryClicked);
+        Component.onCompleted: defendButton.entryClicked.connect(prepareSignal);
     }
 }
