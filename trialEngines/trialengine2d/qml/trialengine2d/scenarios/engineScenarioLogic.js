@@ -114,7 +114,8 @@ function updateEffects() {
     // Crude, but might optimise the code a bit.
     if (haveAllEffectsFinished == true) {
         for (var i = 0; i <= effectsContainer.length; i++) {
-            effectsContainer.pop();
+            var effect = effectsContainer.pop();
+            effect.destroy();
         }
         effectsTimer.stop();
     }
