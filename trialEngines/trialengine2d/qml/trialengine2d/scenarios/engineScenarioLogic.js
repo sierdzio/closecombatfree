@@ -279,8 +279,15 @@ function selectUnit(index, mouse) {
         deselectAllUnits();
         units.item.children[index].selected = true;
     } else if (modifier == Qt.ControlModifier) {
-        units.item.children[index].selected = true;
+        if (units.item.children[index].selected == true)
+            units.item.children[index].selected = false;
+        else if (units.item.children[index].selected == false)
+            units.item.children[index].selected = true;
     }
+}
+
+function deselectUnit(index) {
+    units.item.children[index].selected = false;
 }
 
 function deselectAllUnits() {
@@ -311,8 +318,16 @@ function selectedUnits() {
 }
 
 function groupUnits(groupNumber) {
-    if (selectedUnitsCount == 0) {
+    if (selectedUnitsCount() == 0) {
         return;
+    }
+
+    // Remove old members.
+    if (unitGroups[groupNumber] != undefined) {
+        for (var i = 0; i < unitGroups[groupNumber].length; i++) {
+            if (unitGroups[groupNumber][i].selected == false)
+                unitGroups[groupNumber][i].groupNumber = 0;
+        }
     }
 
     var group = selectedUnits();
@@ -322,6 +337,20 @@ function groupUnits(groupNumber) {
         group[i].groupNumber = groupNumber;
     }
     console.log("Group " + groupNumber + " created.");
+}
+
+function selectGroup(groupNumber) {
+    var group = unitGroups[groupNumber];
+
+    if (group != undefined) {
+        deselectAllUnits();
+    } else {
+        return;
+    }
+
+    for (var i = 0; i < group.length; i++) {
+        group[i].selected = true;
+    }
 }
 
 function setContextMenuPosition(menu, x, y) {

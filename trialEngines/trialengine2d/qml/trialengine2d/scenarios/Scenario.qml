@@ -13,28 +13,42 @@ Item {
 
     Keys.onPressed: {
         if (event.modifiers == Qt.ControlModifier) {
-            if (event.key == Qt.Key_1)
-                ScenarioLogic.groupUnits(1);
-            if (event.key == Qt.Key_2)
-                ScenarioLogic.groupUnits(2);
-            if (event.key == Qt.Key_3)
-                ScenarioLogic.groupUnits(3);
-            if (event.key == Qt.Key_4)
-                ScenarioLogic.groupUnits(4);
-            if (event.key == Qt.Key_5)
-                ScenarioLogic.groupUnits(5);
-            if (event.key == Qt.Key_6)
-                ScenarioLogic.groupUnits(6);
-            if (event.key == Qt.Key_7)
-                ScenarioLogic.groupUnits(7);
-            if (event.key == Qt.Key_8)
-                ScenarioLogic.groupUnits(8);
-            if (event.key == Qt.Key_9)
-                ScenarioLogic.groupUnits(9);
-            if (event.key == Qt.Key_0)
-                ScenarioLogic.groupUnits(10);
+            var digit = digitPressed(event);
+            if (digit != -1)
+                ScenarioLogic.groupUnits(digit);
 //            event.accepted = true;
+        } else {
+            var digit = digitPressed(event);
+            if (digit != -1)
+                ScenarioLogic.selectGroup(digit);
         }
+    }
+
+    function digitPressed(event) {
+        var result = -1;
+
+        if (event.key == Qt.Key_1)
+            result = 1;
+        else if (event.key == Qt.Key_2)
+            result = 2;
+        else if (event.key == Qt.Key_3)
+            result = 3;
+        else if (event.key == Qt.Key_4)
+            result = 4;
+        else if (event.key == Qt.Key_5)
+            result = 5;
+        else if (event.key == Qt.Key_6)
+            result = 6;
+        else if (event.key == Qt.Key_7)
+            result = 7;
+        else if (event.key == Qt.Key_8)
+            result = 8;
+        else if (event.key == Qt.Key_9)
+            result = 9;
+        else if (event.key == Qt.Key_0)
+            result = 10;
+
+        return result;
     }
 
     Item {
