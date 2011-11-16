@@ -1,4 +1,5 @@
 var effectsContainer = new Array();
+var unitGroups = new Array(10);
 
 function scheduleContextAction(index, operation) {
     var child = units.item.children[index];
@@ -189,7 +190,8 @@ function handleMouseClick(mouse) {
         var child;
         child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-        if (child == mouseAreaMain) {
+        if (child == mouseAreaMain || child == null) {
+            deselectAllUnits();
             return;
         }
         if (child.centerX != undefined) {
@@ -287,12 +289,39 @@ function deselectAllUnits() {
         children[i].selected = false;
     }
 }
-function areAnyUnitsSelected() {
+
+function selectedUnitsCount() {
+    var result = 0;
     var children = units.item.children;
     for (var i = 0; i < children.length; i++) {
         if (children[i].selected == true)
-            return true;
+            result ++;
     }
+    return result;
+}
+
+function selectedUnits() {
+    var result = new Array();
+    var children = units.item.children;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].selected == true)
+            result.push(children[i]);
+    }
+    return result;
+}
+
+function groupUnits(groupNumber) {
+    if (selectedUnitsCount == 0) {
+        return;
+    }
+
+    var group = selectedUnits();
+    unitGroups[groupNumber] = group;
+
+    for (var i = 0; i < group.length; i++) {
+        group[i].groupNumber = groupNumber;
+    }
+    console.log("Group " + groupNumber + " created.");
 }
 
 function setContextMenuPosition(menu, x, y) {

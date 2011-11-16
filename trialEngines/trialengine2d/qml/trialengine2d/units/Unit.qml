@@ -7,6 +7,7 @@ Item {
     property string unitType: "Generic unit"
     property string unitLogo: "../img/units/generic_unit_logo.png"
     property string unitStatus: "READY"
+    property int groupNumber: 0 // For now, a unit can be only in one group
     property int unitIndex: -1
 
     property int rotationSpeed: 1 // seconds needed for half rotation (180 deg)
@@ -44,6 +45,26 @@ Item {
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage);
+    }
+
+    Text {
+        id: groupMembership
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        z: 50
+
+        height: 10
+        width: 10
+        color: "#ffffff"
+        text: (groupNumber == 0) ? "" : groupNumber
+        font.pointSize: 10
+        style: Text.Raised
+        font.bold: true
+        font.family: "Ubuntu Condensed"
+        verticalAlignment: Text.Bottom
+        horizontalAlignment: Text.AlignRight
     }
 
     UnitSelectionBox {
