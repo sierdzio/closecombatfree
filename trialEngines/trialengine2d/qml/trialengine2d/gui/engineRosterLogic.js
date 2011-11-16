@@ -1,4 +1,4 @@
-var unitsList;
+var unitsList = new Array();
 
 function colorForStatus(statusMessage) {
     var result = "ERROR";

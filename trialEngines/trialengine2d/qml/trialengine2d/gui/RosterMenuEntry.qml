@@ -32,11 +32,9 @@ Rectangle {
         anchors.left: logo.right
         anchors.top: parent.top
         anchors.right: parent.right
-//        anchors.bottom: parent.bottom
         color: "#000000"
         text: entryText
         font.pointSize: 9
-//        style: Text.Raised
         font.bold: true
         font.family: "Ubuntu Condensed"
         verticalAlignment: Text.Top

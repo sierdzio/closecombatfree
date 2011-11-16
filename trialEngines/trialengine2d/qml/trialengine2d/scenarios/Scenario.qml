@@ -5,6 +5,7 @@ import "engineScenarioLogic.js" as ScenarioLogic
 
 Item {
     property string scenarioFile: "Scenario_tst1.qml"
+    property string selectionMode: "DEFAULT" // Will be used for mobiles
     property int __aimLineRotation: 0
     property int __unitIndex: -1
 
@@ -56,8 +57,6 @@ Item {
             id: mouseAreaRoster
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
-            hoverEnabled: true
-            z: -1
 
             onClicked: {
                 ScenarioLogic.handleMouseClickRoster(mouse);
@@ -99,7 +98,7 @@ Item {
     // Needed for effectsContainer in JS file.
     // Would be neat to rethink and optimise that.
     Item {
-        id: effectsItemContainer
+        id: itemContainer
         visible: true
         anchors.fill: parent
     }

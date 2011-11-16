@@ -24,6 +24,7 @@ Item {
     property int __tempX: x
     property int __tempY: y
     property string scheduledOperation;
+    property bool selected: false
 
     signal unitStatusChanged(string newStatus)
     signal actionFinished(int index, real targetX, real targetY)
@@ -43,6 +44,13 @@ Item {
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage);
+    }
+
+    UnitSelectionBox {
+        id: selectionBox
+        unitWidth: parent.unitWidth
+        unitHeight: parent.unitHeight
+        visible: selected
     }
 
     DefenceSphere {

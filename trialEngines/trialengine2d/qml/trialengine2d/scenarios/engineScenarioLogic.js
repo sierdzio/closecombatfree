@@ -79,7 +79,7 @@ function firingActionFinished(index, targetX, targetY) {
     var effectIndex;
 
     if (component.status == Component.Ready) {
-        var effect = component.createObject(effectsItemContainer);
+        var effect = component.createObject(itemContainer);
     }
 
     effectsContainer.push(effect);
@@ -105,7 +105,7 @@ function updateEffects() {
     var haveAllEffectsFinished = true;
     for (var i = 0; i < effectsContainer.length; i++) {
         if (effectsContainer[i].running == true) {
-            switchFireFrame(i);
+            switchEffectFrame(i);
             haveAllEffectsFinished = false;
         }
     }
@@ -124,7 +124,7 @@ function updateEffects() {
 //                + ". Timer running: " + effectsTimer.running);
 }
 
-function switchFireFrame(effectIndex) {
+function switchEffectFrame(effectIndex) {
     var i = effectIndex;
     var imgNumber = effectsContainer[i].imageNumber;
 
@@ -180,6 +180,7 @@ function handleMouseClick(mouse) {
             return;
         } else {
             cleanContextAction();
+            selectUnitFromGameArea(mouse);
         }
     }
     else if (mouse.button == Qt.RightButton) {
@@ -192,6 +193,10 @@ function handleMouseClick(mouse) {
             return;
         }
         if (child.centerX != undefined) {
+            if (child.selected == false) {
+                selectUnitFromGameArea(mouse);
+            }
+
             // Fixes context menu at the centre of child object.
             setContextMenuPosition(contextLoader,
                                    child.x + child.centerX,
@@ -213,17 +218,21 @@ function handleMouseClickRoster(mouse) {
 //            return;
         } else {
             cleanContextAction();
+            selectUnitFromRoster(mouse);
         }
     }
     else if (mouse.button == Qt.RightButton) {
         cleanContextAction();
 
         var child;
-        child = roster.childAt(mouseAreaRoster.mouseX, mouseAreaRoster.mouseY);
+        child = roster.childAt(mouse.x, mouse.y);
         var unit;
-        unit = roster.getUnitAt(mouseAreaRoster.mouseX, mouseAreaRoster.mouseY);
+        unit = roster.getUnitAt(mouse.x, mouse.y);
 
         if (unit.centerX != undefined) {
+            if (unit.selected == false) {
+                selectUnitFromRoster(mouse);
+            }
             // Fixes context menu at the centre of child object.
             setContextMenuPosition(contextLoader,
                                    roster.x + child.x + (roster.entryWidth/2),
@@ -235,6 +244,54 @@ function handleMouseClickRoster(mouse) {
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
+    }
+}
+
+function selectUnitFromGameArea(mouse) {
+    var child = childAt(mouse.x, mouse.y);
+
+    if (child == null) {
+        deselectAllUnits();
+        return;
+    }
+
+    if (child.unitStatus != undefined) {
+        selectUnit(child.unitIndex, mouse);
+    } else {
+        deselectAllUnits();
+    }
+}
+
+function selectUnitFromRoster(mouse) {
+    var child = roster.getUnitAt(mouse.x, mouse.y);
+
+    if (child != 0) {
+        selectUnit(child.unitIndex, mouse);
+    }
+}
+
+function selectUnit(index, mouse) {
+    var modifier = mouse.modifiers;
+
+    if (modifier == Qt.NoModifier) {
+        deselectAllUnits();
+        units.item.children[index].selected = true;
+    } else if (modifier == Qt.ControlModifier) {
+        units.item.children[index].selected = true;
+    }
+}
+
+function deselectAllUnits() {
+    var children = units.item.children;
+    for (var i = 0; i < children.length; i++) {
+        children[i].selected = false;
+    }
+}
+function areAnyUnitsSelected() {
+    var children = units.item.children;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].selected == true)
+            return true;
     }
 }
 
