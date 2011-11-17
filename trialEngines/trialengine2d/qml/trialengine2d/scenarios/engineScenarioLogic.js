@@ -70,7 +70,7 @@ function performContextAction(index, targetX, targetY) {
 }
 
 function firingActionFinished(index, targetX, targetY) {
-    // This component renders in=game effects (not all,
+    // This component renders in-game effects (not all,
     // but for example muzzle flashes, explosions etc.)
     var component = Qt.createComponent("Effect.qml");
 
@@ -148,7 +148,7 @@ function cleanContextAction() {
     contextLoader.visible = true;
 }
 
-function rotateAimLine() {
+function updateAimLine() {
     var child = units.item.children[__unitIndex];
 
     if (aimLine.visible == true) {
@@ -249,6 +249,107 @@ function handleMouseClickRoster(mouse) {
     }
 }
 
+function handlePressAndHold(mouse) {
+    rubberBand.x = mouse.x;
+    rubberBand.y = mouse.y;
+    rubberBand.height = 2;
+    rubberBand.width = 2;
+    rubberBand.visible = true;
+
+    // Saves the state of modifiers.
+//    rubberBandTimer.__modifiers = mouse.modifiers;
+
+    if (mouse.modifiers == Qt.NoModifier)
+        deselectAllUnits();
+
+    if (rubberBandTimer.running == false)
+        rubberBandTimer.start();
+}
+
+function handleMouseReleased() {
+    if (rubberBandTimer.running == true) {
+        rubberBandTimer.stop();
+        rubberBand.visible = false;
+        rubberBand.height = 2;
+        rubberBand.width = 2;
+    }
+}
+
+function updateRubberBand(x, y) {
+    var rubberX, rubberY, rubberX2, rubberY2; // 2 edges of the rubber band,
+                                              // in root's coordinates.
+
+    // Adjusting rubber band's shape:
+    if ((x > rubberBand.x) && (y > rubberBand.y)) {
+        // Bottom-right quarter
+        __rubberBandRotation = 0;
+        rubberBand.width = x - rubberBand.x;
+        rubberBand.height = y - rubberBand.y;
+
+        rubberX = rubberBand.x;
+        rubberY = rubberBand.y;
+        rubberX2 = rubberBand.x + rubberBand.width;
+        rubberY2 = rubberBand.y + rubberBand.height;
+    } else if ((x > rubberBand.x) && (y < rubberBand.y)) {
+        // Top-right quarter
+        __rubberBandRotation = 270;
+        rubberBand.width = rubberBand.y - y;
+        rubberBand.height = x - rubberBand.x;
+
+        rubberX = rubberBand.x;
+        rubberY = rubberBand.y - rubberBand.width;
+        rubberX2 = rubberBand.x + rubberBand.height;
+        rubberY2 = rubberBand.y;
+    } else if ((x < rubberBand.x) && (y > rubberBand.y)) {
+        // Bottom-left quarter
+        __rubberBandRotation = 90;
+        rubberBand.width = y - rubberBand.y;
+        rubberBand.height = rubberBand.x - x;
+
+        rubberX = rubberBand.x - rubberBand.height;
+        rubberY = rubberBand.y;
+        rubberX2 = rubberBand.x;
+        rubberY2 = rubberBand.y + rubberBand.width;
+    } else if ((x < rubberBand.x) && (y < rubberBand.y)) {
+        // Top-left quarter
+        __rubberBandRotation = 180;
+        rubberBand.width = rubberBand.x - x;
+        rubberBand.height = rubberBand.y - y;
+
+        rubberX = rubberBand.x - rubberBand.width;
+        rubberY = rubberBand.y - rubberBand.height;
+        rubberX2 = rubberBand.x;
+        rubberY2 = rubberBand.y;
+    } else if ((x == rubberBand.x) || (y == rubberBand.y)) {
+        rubberBand.height = 2;
+        rubberBand.width = 2;
+
+        rubberX = rubberBand.x;
+        rubberY = rubberBand.y;
+        rubberX2 = rubberBand.x;
+        rubberY2 = rubberBand.y;
+    }
+
+//    test1.x = rubberX;
+//    test1.y = rubberY;
+//    test2.x = rubberX2;
+//    test2.y = rubberY2;
+
+    // Selecting units:
+    var children = units.item.children;
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+
+        if (child.selected == true)
+            continue;
+
+        if ((child.x <= rubberX2) && (child.x >= rubberX)
+                && (child.y <= rubberY2) && (child.y >= rubberY)) {
+            selectUnit(child.unitIndex, Qt.ControlModifier);
+        }
+    }
+}
+
 function selectUnitFromGameArea(mouse) {
     var child = childAt(mouse.x, mouse.y);
 
@@ -258,7 +359,7 @@ function selectUnitFromGameArea(mouse) {
     }
 
     if (child.unitStatus != undefined) {
-        selectUnit(child.unitIndex, mouse);
+        selectUnit(child.unitIndex, mouse.modifiers);
     } else {
         deselectAllUnits();
     }
@@ -268,12 +369,12 @@ function selectUnitFromRoster(mouse) {
     var child = roster.getUnitAt(mouse.x, mouse.y);
 
     if (child != 0) {
-        selectUnit(child.unitIndex, mouse);
+        selectUnit(child.unitIndex, mouse.modifiers);
     }
 }
 
-function selectUnit(index, mouse) {
-    var modifier = mouse.modifiers;
+function selectUnit(index, modifier) {
+//    var modifier = mouse.modifiers;
 
     if (modifier == Qt.NoModifier) {
         deselectAllUnits();
@@ -363,4 +464,31 @@ function setContextMenuPosition(menu, x, y) {
         menu.y = root.height - menu.height;
     else
         menu.y = y;
+}
+
+function digitPressed(event) {
+    var result = -1;
+
+    if (event.key == Qt.Key_1)
+        result = 1;
+    else if (event.key == Qt.Key_2)
+        result = 2;
+    else if (event.key == Qt.Key_3)
+        result = 3;
+    else if (event.key == Qt.Key_4)
+        result = 4;
+    else if (event.key == Qt.Key_5)
+        result = 5;
+    else if (event.key == Qt.Key_6)
+        result = 6;
+    else if (event.key == Qt.Key_7)
+        result = 7;
+    else if (event.key == Qt.Key_8)
+        result = 8;
+    else if (event.key == Qt.Key_9)
+        result = 9;
+    else if (event.key == Qt.Key_0)
+        result = 10;
+
+    return result;
 }

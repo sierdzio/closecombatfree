@@ -3,8 +3,11 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+17.11.2011:
+ - add rubber band unit selection, with modifiers
+
 16.11.2011:
- - add unit selection
+ - add unit selection, with support for modifiers
 
 15.11.2011:
  - add smoke implementation

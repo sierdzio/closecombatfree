@@ -9,7 +9,10 @@
  + fix order mixing (either add a queue, or make orders more tightly connected with objects)
  + add more fire timers (list-based) - it will be required to have multiple fires/ smoke animations
    rendered OR make all those things unit-based (probably a bad idea) OR make them unit-connected
+   (fixed in an yet another way, much better than those)
  + add unit selection
- - add rubber band selection of units
+ + add rubber band selection of units
  - make tanks more flexible (make it easier to add new, modified ones based on the existing)
  + add unit grouping (with Ctrl + digit)
+ - add desktop mode and mobile mode (UI will be more mobile-friendly in the second one. Leave option
+   to change it by hand in options/ config script)

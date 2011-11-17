@@ -7,48 +7,22 @@ Item {
     property string scenarioFile: "Scenario_tst1.qml"
     property string selectionMode: "DEFAULT" // Will be used for mobiles
     property int __aimLineRotation: 0
+    property int __rubberBandRotation: 0
     property int __unitIndex: -1
 
+    id: root
     focus: true;
 
     Keys.onPressed: {
         if (event.modifiers == Qt.ControlModifier) {
-            var digit = digitPressed(event);
+            var digit = ScenarioLogic.digitPressed(event);
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
-//            event.accepted = true;
         } else {
-            var digit = digitPressed(event);
+            var digit = ScenarioLogic.digitPressed(event);
             if (digit != -1)
                 ScenarioLogic.selectGroup(digit);
         }
-    }
-
-    function digitPressed(event) {
-        var result = -1;
-
-        if (event.key == Qt.Key_1)
-            result = 1;
-        else if (event.key == Qt.Key_2)
-            result = 2;
-        else if (event.key == Qt.Key_3)
-            result = 3;
-        else if (event.key == Qt.Key_4)
-            result = 4;
-        else if (event.key == Qt.Key_5)
-            result = 5;
-        else if (event.key == Qt.Key_6)
-            result = 6;
-        else if (event.key == Qt.Key_7)
-            result = 7;
-        else if (event.key == Qt.Key_8)
-            result = 8;
-        else if (event.key == Qt.Key_9)
-            result = 9;
-        else if (event.key == Qt.Key_0)
-            result = 10;
-
-        return result;
     }
 
     Item {
@@ -82,6 +56,12 @@ Item {
 
             onClicked: {
                 ScenarioLogic.handleMouseClick(mouse);
+            }
+            onPressAndHold: {
+                ScenarioLogic.handlePressAndHold(mouse);
+            }
+            onReleased: {
+                ScenarioLogic.handleMouseReleased();
             }
         }
     }
@@ -120,6 +100,31 @@ Item {
         }
     }
 
+    RubberBand {
+        id: rubberBand
+        visible: false
+
+        transform: Rotation {
+            origin.x: 0
+            origin.y: 0
+            angle: __rubberBandRotation
+        }
+    }
+
+//    Rectangle {
+//        id: test1
+//        color: "#ffff22"
+//        width: 15
+//        height: 15
+//    }
+
+//    Rectangle {
+//        id: test2
+//        color: "#ff22ff"
+//        width: 15
+//        height: 15
+//    }
+
     Loader {
         id: contextLoader
         rotation: 0
@@ -133,7 +138,20 @@ Item {
         running: false
         repeat: true
         onTriggered: {
-            ScenarioLogic.rotateAimLine();
+            ScenarioLogic.updateAimLine();
+        }
+    }
+
+    // Timer for rubber band
+    Timer {
+//        property int __modifiers: Qt.NoModifier
+
+        id: rubberBandTimer
+        interval: 120
+        running: false
+        repeat: true
+        onTriggered: {
+            ScenarioLogic.updateRubberBand(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         }
     }
 
