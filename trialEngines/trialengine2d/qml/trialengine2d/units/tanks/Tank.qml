@@ -16,16 +16,31 @@ Unit {
     property int turretRotation: 0
     property int turretSize: 60
     property color hullColor: "#7b8259"
-    property bool firing: false
-    property bool smoking: false
+//    property bool firing: false
+//    property bool smoking: false
 
     // Structural properties.
-    property string tankHull: ""
-    property string tankTurret: ""
+//    property string tankHull: ""
+//    property string tankTurret: ""
 
     onMoveTo: {
         exhaust.burst(20);
         exhaustLater.burst(40);
+    }
+
+    onTurretRotationChanged: turret.turretRotation = turretRotation;
+//    onTurretSizeChanged: turret.turretSize = turretSize;
+//    onUnitWidthChanged: hull.hullWidth = unitWidth;
+//    onUnitHeightChanged: hull.hullHeight = unitHeight;
+
+    Component.onCompleted: {
+        turret.turretSize = turretSize;
+        hull.hullHeight = unitHeight;
+        hull.hullWidth = unitWidth;
+        hull.hullColor = hullColor;
+
+        turret.x = centerX - turret.centerX;
+        turret.y = centerY - turret.centerY;
     }
 
     signal fireTo (real targetX, real targetY)
@@ -43,38 +58,6 @@ Unit {
     acceleration: 1
     unitWidth: 1
     unitHeight: 1
-
-    HullLoader {
-        id: hull
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        width: unitWidth
-        height: unitHeight
-
-        hullColor: root.hullColor
-        hullWidth: root.unitWidth
-        hullHeight: root.unitHeight
-
-        hullFile: tankHull
-    }
-
-    TurretLoader {
-        id: turret
-
-        anchors.top: hull.top
-        anchors.left: hull.left
-        anchors.topMargin: hull.centerY - turret.centerY
-        anchors.leftMargin: hull.centerX - turret.centerX
-
-        turretBodySize: turretSize
-
-        turretFile: tankTurret
-
-        transform: Rotation {
-            origin.x: turret.centerX; origin.y: turret.centerY; angle: turretRotation
-        }
-    }
 
     Behavior on turretRotation {
         SequentialAnimation {

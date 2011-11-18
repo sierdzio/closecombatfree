@@ -1,25 +1,30 @@
 import QtQuick 1.1
 
 Item {
-    property int centerX: turretBodySize/2
-    property int centerY: turretBodySize/2
+    property int centerX: turretSize/2
+    property int centerY: turretSize/2
     property string bodyTexture: ""
     property bool firing: false
     property bool smoking: false
     property color turretColor: "#7b8259"
-    property int turretBodySize: 60
+    property int turretSize: 60
+    property int turretRotation: 0
 
     id: root
-    width: turretBodySize
-    height: turretBodySize
+    width: turretSize
+    height: turretSize
+
+    transform: Rotation {
+        origin.x: root.centerX; origin.y: root.centerY; angle: turretRotation
+    }
 
     Image {
         id: body
-        width: turretBodySize
-        height: turretBodySize
+        width: turretSize
+        height: turretSize
         source: bodyTexture
-        sourceSize.height: turretBodySize
-        sourceSize.width: turretBodySize
+        sourceSize.height: turretSize
+        sourceSize.width: turretSize
         anchors.bottom: parent.bottom
         anchors.left: parent.left
     }
