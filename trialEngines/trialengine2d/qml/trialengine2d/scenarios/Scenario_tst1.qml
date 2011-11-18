@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../units/tanks"
+import "../units/tanks/tests"
 
 Item {
     property string mapFile: "../maps/Map_tst1.qml"
@@ -13,11 +13,13 @@ Item {
         x: parent.width - 150
         y: 400
     }
+
     Tank_tst1 {
         objectName: "tank2"
         x: parent.width - 300
         y: 400
     }
+
     Tank_tst1 {
         objectName: "tank3"
         x: parent.width - 450
@@ -25,16 +27,24 @@ Item {
         rotation: 180
         hullColor: "#ffffff"
     }
+
     Tank_tst1 {
         objectName: "tank4"
         x: parent.width - 600
         y: 400
         rotation: 0
     }
+
     Tank_tst2 {
         objectName: "tank5"
         x: parent.width - 750
         y: 400
         rotation: 0
+    }
+
+    Tank_tst3 {
+        objectName: "tank6"
+        x: parent.width - 750
+        y: 200
     }
 }

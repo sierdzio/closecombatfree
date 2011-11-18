@@ -10,15 +10,18 @@ Unit {
     property int frontArmour: 100 // mm
     property int sideArmour: 80 // mm
     property int backArmour: 60 // mm
-    property int turretArmout: 80 // mm - might evolve into {front, side, back} triplet, too
+    property int turretArmour: 80 // mm - might evolve into {front, side, back} triplet, too
 
     // Additional properties, not important for non-developers/ modders.
     property int turretRotation: 0
-    property string turretBodyTexture: "../../img/units/tanks/generic/tank_tst1_turret_main.png"
     property int turretSize: 60
     property color hullColor: "#7b8259"
-    property int defenceSphereRotation: 0
-    property string defenceSphereColor: ""
+    property bool firing: false
+    property bool smoking: false
+
+    // Structural properties.
+    property string tankHull: ""
+    property string tankTurret: ""
 
     onMoveTo: {
         exhaust.burst(20);
@@ -32,35 +35,41 @@ Unit {
     onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
 
     id: root
-    unitType: "Test tank 1"
-    unitLogo: "../img/units/tanks/generic/tank_tst1_logo.png"
-    rotationSpeed: 40
-    turretRotationSpeed: 35
-    maxSpeed: 20
-    acceleration: 2
-    unitWidth: 62
-    unitHeight: 100
+    unitType: "Generic tank"
+    unitLogo: "../img/units/generic_unit_logo.png"
+    rotationSpeed: 1
+    turretRotationSpeed: 1
+    maxSpeed: 1
+    acceleration: 1
+    unitWidth: 1
+    unitHeight: 1
 
-    Tank_tst1_hull {
+    HullLoader {
         id: hull
+
         anchors.top: parent.top
         anchors.left: parent.left
+        width: unitWidth
+        height: unitHeight
+
         hullColor: root.hullColor
-        tankWidth: root.unitWidth
-        tankHeight: root.unitHeight
+        hullWidth: root.unitWidth
+        hullHeight: root.unitHeight
+
+        hullFile: tankHull
     }
 
-    Tank_tst1_turret {
-        property bool __firing: false
-        property bool __smoking: false
-
+    TurretLoader {
         id: turret
-        turretBodySize: turretSize
+
         anchors.top: hull.top
         anchors.left: hull.left
         anchors.topMargin: hull.centerY - turret.centerY
         anchors.leftMargin: hull.centerX - turret.centerX
-        bodyTexture: turretBodyTexture
+
+        turretBodySize: turretSize
+
+        turretFile: tankTurret
 
         transform: Rotation {
             origin.x: turret.centerX; origin.y: turret.centerY; angle: turretRotation
@@ -77,14 +86,14 @@ Unit {
             }
             ScriptAction {
                 script: {
-                    if (turret.__firing) {
+                    if (firing == true) {
                         turret.firing = true;
-                        turret.__firing = false;
+                        firing = false;
                         actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
-                    } else if (turret.__smoking) {
+                    } else if (smoking == true) {
                         turret.smoking = true;
-                        turret.__smoking = false;
+                        smoking = false;
                         actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
                     }

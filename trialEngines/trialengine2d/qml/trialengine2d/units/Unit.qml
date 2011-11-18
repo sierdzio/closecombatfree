@@ -26,6 +26,10 @@ Item {
     property int __tempY: y
     property string scheduledOperation;
     property bool selected: false
+    property bool firing: false
+    property bool smoking: false
+    property int defenceSphereRotation: 0
+    property string defenceSphereColor: ""
 
     signal unitStatusChanged(string newStatus)
     signal actionFinished(int index, real targetX, real targetY)
@@ -72,6 +76,7 @@ Item {
         unitWidth: parent.unitWidth
         unitHeight: parent.unitHeight
         visible: selected
+        z: 3
     }
 
     DefenceSphere {

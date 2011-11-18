@@ -3,6 +3,11 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+18.11.2011:
+ - add initial modularity to tanks. Tanks should be now more easy to modify.
+   Creating new tanks should also be easier. This still needs some fixing,
+   as turrets are not as shiny, as they could
+
 17.11.2011:
  - add rubber band unit selection, with modifiers
 

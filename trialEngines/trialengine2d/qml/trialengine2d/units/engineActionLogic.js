@@ -35,12 +35,12 @@ function performMovement (newX, newY, factor) {
 
 function turretSmokeTo (targetX, targetY) {
     performTurretShooting(targetX, targetY);
-    turret.__smoking = true;
+    smoking = true;
 }
 
 function turretFireTo (targetX, targetY) {
     performTurretShooting(targetX, targetY);
-    turret.__firing = true;
+    firing = true;
 }
 
 function performTurretShooting (targetX, targetY) {

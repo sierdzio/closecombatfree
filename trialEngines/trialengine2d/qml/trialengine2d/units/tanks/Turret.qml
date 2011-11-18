@@ -1,26 +1,25 @@
 import QtQuick 1.1
-import Qt.labs.particles 1.0
 
 Item {
-    property int centerX: body.width/2
-    property int centerY: (body.height/2) + barrelBase.height + barrelSegment1.height
-    property string bodyTexture: "../../img/units/tanks/generic/tank_tst1_turret_main.png"
+    property int centerX: turretBodySize/2
+    property int centerY: turretBodySize/2
+    property string bodyTexture: ""
     property bool firing: false
     property bool smoking: false
     property color turretColor: "#7b8259"
     property int turretBodySize: 60
 
     id: root
-    width: body.width
-    height: body.height + barrelBase.height + barrelSegment1.height
+    width: turretBodySize
+    height: turretBodySize
 
     Image {
         id: body
-        width: turretSize
-        height: turretSize
+        width: turretBodySize
+        height: turretBodySize
         source: bodyTexture
-        sourceSize.height: turretSize
-        sourceSize.width: turretSize
+        sourceSize.height: turretBodySize
+        sourceSize.width: turretBodySize
         anchors.bottom: parent.bottom
         anchors.left: parent.left
     }
