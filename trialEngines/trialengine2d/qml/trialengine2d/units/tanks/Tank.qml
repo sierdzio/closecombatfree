@@ -16,12 +16,6 @@ Unit {
     property int turretRotation: 0
     property int turretSize: 60
     property color hullColor: "#7b8259"
-//    property bool firing: false
-//    property bool smoking: false
-
-    // Structural properties.
-//    property string tankHull: ""
-//    property string tankTurret: ""
 
     onMoveTo: {
         exhaust.burst(20);
@@ -29,9 +23,6 @@ Unit {
     }
 
     onTurretRotationChanged: turret.turretRotation = turretRotation;
-//    onTurretSizeChanged: turret.turretSize = turretSize;
-//    onUnitWidthChanged: hull.hullWidth = unitWidth;
-//    onUnitHeightChanged: hull.hullHeight = unitHeight;
 
     Component.onCompleted: {
         turret.turretSize = turretSize;

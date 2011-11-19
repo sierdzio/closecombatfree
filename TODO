@@ -1,8 +1,12 @@
+ - add game menu
+ - add campaigns
+ - add guns
+ - add infantry
+ - add trucks
  - add active pause
  - add order cancelling
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading
- +/- make tanks more flexible (make it easier to add new, modified ones based on the existing)
  - add desktop mode and mobile mode (UI will be more mobile-friendly in the second one. Leave option
    to change it by hand in options/ config script)
  - add unified path searching (something like $PWD would be nice to begin with), so that different
@@ -19,3 +23,4 @@ Done:
    (fixed in an yet another way, much better than those)
  + add unit selection
  + add rubber band selection of units
+ + make tanks more flexible (make it easier to add new, modified ones based on the existing)
