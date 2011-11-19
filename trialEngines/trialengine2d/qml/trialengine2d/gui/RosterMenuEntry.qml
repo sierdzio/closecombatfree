@@ -13,6 +13,7 @@ Rectangle {
     id: root
     color: "#5e6c24"
     border.color: "#1e1c00"
+    border.width: 1
     width: 125
     height: 50
 
@@ -22,6 +23,8 @@ Rectangle {
         width: 50
         anchors.left: parent.left
         anchors.top: parent.top
+        anchors.leftMargin: 2
+        anchors.topMargin: 2
         source: entryLogo
     }
 
@@ -76,5 +79,13 @@ Rectangle {
             entryStatusColor = newColor;
         else
             console.log("Error while changing status message color!");
+    }
+
+    function selectionChanged(state) {
+        if (state == true) {
+            root.border.color = "#eeee11";;
+        } else if (state == false) {
+            root.border.color = "#1e1c00";
+        }
     }
 }

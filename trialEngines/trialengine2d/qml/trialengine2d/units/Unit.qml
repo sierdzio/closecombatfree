@@ -43,6 +43,9 @@ Item {
     signal sneakTo (real newX, real newY)
     onSneakTo: ActionLogic.sneakTo(newX, newY);
 
+    signal selectionChanged(bool state)
+    onSelectedChanged: selectionChanged(selected);
+
     width: unitWidth
     height: unitHeight
 

@@ -3,10 +3,10 @@ import "engineRosterLogic.js" as RosterLogic
 
 Rectangle {
     property int entryWidth: 175
-    property int entryHeight: 50
+    property int entryHeight: 54
 
     id: root
-    height: 200
+    height: (unit0.height * 4) + (unit0.anchors.topMargin * 4)//200
     width: 800
     color: "#7e8c24"
     border.color: "#1e1c00"
@@ -20,6 +20,7 @@ Rectangle {
             units.children[i].entryLogo = currentUnit.unitLogo;
             units.children[i].changeStatus(currentUnit.unitStatus);
             currentUnit.unitStatusChanged.connect(units.children[i].changeStatus);
+            currentUnit.selectionChanged.connect(units.children[i].selectionChanged);
         }
     }
 
@@ -65,6 +66,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: unit0.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -75,6 +77,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: unit1.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -85,6 +88,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: unit2.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -95,6 +99,7 @@ Rectangle {
             anchors.left: unit0.right
             anchors.top: parent.top
             anchors.leftMargin: 2
+            anchors.topMargin: 2
 
             width: entryWidth
             height: entryHeight
@@ -105,6 +110,7 @@ Rectangle {
             anchors.left: unit1.right
             anchors.top: unit4.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -115,6 +121,7 @@ Rectangle {
             anchors.left: unit2.right
             anchors.top: unit5.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -125,6 +132,7 @@ Rectangle {
             anchors.left: unit3.right
             anchors.top: unit6.bottom
             anchors.leftMargin: 2
+            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -135,6 +143,7 @@ Rectangle {
             anchors.left: unit4.right
             anchors.top: parent.top
             anchors.leftMargin: 2
+            anchors.topMargin: 2
 
             width: entryWidth
             height: entryHeight

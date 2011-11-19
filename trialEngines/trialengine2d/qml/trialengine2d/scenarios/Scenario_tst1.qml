@@ -14,7 +14,7 @@ Item {
         y: 400
     }
 
-    Tank_tst1 {
+    Tank_tst3 {
         objectName: "tank2"
         x: parent.width - 300
         y: 400
@@ -24,7 +24,7 @@ Item {
         objectName: "tank3"
         x: parent.width - 450
         y: 400
-        rotation: 180
+        rotation: 90
         hullColor: "#ffffff"
     }
 

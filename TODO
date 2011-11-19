@@ -13,6 +13,7 @@
  - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
  - add order markers (objects indicating, where a unit is going, firing etc.)
+ - add keyboard shortcuts
 
 Done:
  +/- move generic tank properties into a C++ QObject
@@ -29,3 +30,4 @@ Done:
  + add unified path searching (something like $PWD would be nice to begin with), so that different
    components and files can be moved around and found more easily
  + add group orders (example: moving 3 selected units)
+ + add unit selection in both game area AND roster
