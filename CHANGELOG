@@ -7,6 +7,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add new type of turret: TurretImage (it is composed of Image elements,
    not Rectangle ones. It has almost the same code, as Turret.
    A common ancestor will probably be created later)
+ - add unified path searching (by means of a PWD root property)
+ - add group orders (assigning orders to all selected units at once)
 
 18.11.2011:
  - add initial modularity to tanks. Tanks should be now more easy to modify.

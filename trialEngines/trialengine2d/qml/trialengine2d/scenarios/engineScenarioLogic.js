@@ -2,7 +2,13 @@ var effectsContainer = new Array();
 var unitGroups = new Array(10);
 
 function scheduleContextAction(index, operation) {
-    var child = units.item.children[index];
+    var children;
+    var child;
+
+    children = selectedUnits();
+//    child = children[0]; // Selects the first child as a "guide" for others.
+    child = units.item.children[index];
+
     child.scheduledOperation = operation;
     contextLoader.source = "";
     contextLoader.visible = false;
@@ -30,12 +36,16 @@ function scheduleContextAction(index, operation) {
 
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
-                child.defenceSphereColor = "green";
-                child.changeStatus("AMBUSHING");
+                for (var i = 0; i < children.length; i++) {
+                    children[i].defenceSphereColor = "green";
+                    children[i].changeStatus("AMBUSHING");
+                }
             }
             else if (operation == "Defend") {
-                child.defenceSphereColor = "blue";
-                child.changeStatus("DEFENDING");
+                for (var i = 0; i < children.length; i++) {
+                    children[i].defenceSphereColor = "blue";
+                    children[i].changeStatus("DEFENDING");
+                }
             }
             rotationTimer.start();
         }
@@ -43,29 +53,47 @@ function scheduleContextAction(index, operation) {
 }
 
 function performContextAction(index, targetX, targetY) {
-    var child = units.item.children[index];
+    var children = selectedUnits();
+    var child = units.item.children[index];//children[0];
     var scheduledOperation = child.scheduledOperation;
 
+    var tempX = 0;
+    var tempY = 0;
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
-        // Clear defence, if it is on.
-        child.defenceSphereColor = "";
-        child.changeStatus("READY");
+        for (var i = 0; i < children.length; i++) {
+            child = children[i];
+            if ((child.unitIndex != index) && (i >= 1)) {
+                tempX = targetX + (child.x - children[i - 1].x);
+                tempY = targetY + (child.y - children[i - 1].y);
+//                console.log("Child X: " + child.x + ", last child X: " + children[i - 1].x);
+            } else if ((child.unitIndex != index)) {
+                tempX = targetX + (child.x - children[i + 1].x);
+                tempY = targetY + (child.y - children[i + 1].y);
+//                console.log("Child X: " + child.x + ", last child X: " + children[i + 1].x);
+            } else {
+                tempX = targetX;
+                tempY = targetY;
+            }
 
-        if (scheduledOperation == "Move") {
-            child.moveTo(targetX, targetY);
-        } else if (scheduledOperation == "Move fast") {
-            child.moveFastTo(targetX, targetY);
-        } else if (scheduledOperation == "Sneak") {
-            child.sneakTo(targetX, targetY);
-        } else if (scheduledOperation == "Attack") {
-            child.fireTo(targetX, targetY);
-            child.actionFinished.connect(firingActionFinished);
-        } else if (scheduledOperation == "Smoke") {
-            child.smokeTo(targetX, targetY);
-            child.actionFinished.connect(firingActionFinished);
+            // Clear defence, if it is on.
+            child.defenceSphereColor = "";
+            child.changeStatus("READY");
+
+            if (scheduledOperation == "Move") {
+                child.moveTo(tempX, tempY);
+            } else if (scheduledOperation == "Move fast") {
+                child.moveFastTo(tempX, tempY);
+            } else if (scheduledOperation == "Sneak") {
+                child.sneakTo(tempX, tempY);
+            } else if (scheduledOperation == "Attack") {
+                child.fireTo(tempX, tempY);
+                child.actionFinished.connect(firingActionFinished);
+            } else if (scheduledOperation == "Smoke") {
+                child.smokeTo(tempX, tempY);
+                child.actionFinished.connect(firingActionFinished);
+            }
         }
     }
-
     cleanContextAction();
 }
 

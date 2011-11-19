@@ -5,11 +5,11 @@ Tank {
     id: root
     unitType: "Test tank 3"
     unitLogo: PWD + "img/units/tanks/generic/tank_tst3_logo.png"
-    rotationSpeed: 40
-    turretRotationSpeed: 35
+    rotationSpeed: 55
+    turretRotationSpeed: 55
     turretSize: 44
-    maxSpeed: 20
-    acceleration: 2
+    maxSpeed: 60
+    acceleration: 4
     unitWidth: 50
     unitHeight: 80
 
