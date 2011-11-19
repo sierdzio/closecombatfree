@@ -42,7 +42,7 @@ Unit {
 
     id: root
     unitType: "Generic tank"
-    unitLogo: "../img/units/generic_unit_logo.png"
+    unitLogo: PWD + "img/units/generic_unit_logo.png"
     rotationSpeed: 1
     turretRotationSpeed: 1
     maxSpeed: 1
@@ -87,7 +87,7 @@ Unit {
         lifeSpan: 600; lifeSpanDeviation: 800
         angle: rotation + 90; angleDeviation: 60;
         velocity: 5; velocityDeviation: 10
-        source: "../../img/effects/vehicle_smoke.png"
+        source: PWD + "img/effects/vehicle_smoke.png"
     }
 
     Particles {
@@ -101,6 +101,6 @@ Unit {
         lifeSpan: 1000; lifeSpanDeviation: 400
         angle: rotation + 90; angleDeviation: 60;
         velocity: 40; velocityDeviation: 60
-        source: "../../img/effects/vehicle_smoke.png"
+        source: PWD + "img/effects/vehicle_smoke.png"
     }
 }

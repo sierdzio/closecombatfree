@@ -5,7 +5,7 @@ import "engineActionLogic.js" as ActionLogic
 
 Item {
     property string unitType: "Generic unit"
-    property string unitLogo: "../img/units/generic_unit_logo.png"
+    property string unitLogo: PWD + "img/units/generic_unit_logo.png"
     property string unitStatus: "READY"
     property int groupNumber: 0 // For now, a unit can be only in one group
     property int unitIndex: -1
@@ -94,7 +94,7 @@ Item {
             if (defenceSphereColor == "")
                 return "";
             else
-                return "../img/gui/defenceSphere_" + defenceSphereColor + ".png"
+                return PWD + "img/gui/defenceSphere_" + defenceSphereColor + ".png"
 
         }
         anchors {

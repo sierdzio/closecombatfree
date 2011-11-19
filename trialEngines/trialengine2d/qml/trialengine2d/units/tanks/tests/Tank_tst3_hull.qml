@@ -9,6 +9,6 @@ Hull {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        source: "../../../img/units/tanks/generic/tank_tst3_hull.png"
+        source: PWD + "img/units/tanks/generic/tank_tst3_hull.png"
     }
 }

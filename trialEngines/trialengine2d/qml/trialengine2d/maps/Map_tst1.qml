@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 Item {
-    property string backgroundImage: "../img/maps/test1.jpg"
+    property string backgroundImage: PWD + "img/maps/test1.jpg"
     property string terrainMap: "" // this may hold obstacles and terrain info. We'll see.
 
     id: root

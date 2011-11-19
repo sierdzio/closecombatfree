@@ -3,7 +3,7 @@ import "../"
 
 Tank {
     unitType: "Test tank 2"
-    unitLogo: "../img/units/tanks/generic/tank_tst2_logo.png"
+    unitLogo: PWD + "img/units/tanks/generic/tank_tst2_logo.png"
     hullColor: "#505050"
     rotationSpeed: 40
     turretRotationSpeed: 35

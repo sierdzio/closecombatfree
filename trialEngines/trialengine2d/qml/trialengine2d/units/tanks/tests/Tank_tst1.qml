@@ -4,7 +4,7 @@ import "../"
 Tank {
     id: root
     unitType: "Test tank 1"
-    unitLogo: "../img/units/tanks/generic/tank_tst1_logo.png"
+    unitLogo: PWD + "img/units/tanks/generic/tank_tst1_logo.png"
     rotationSpeed: 40
     turretRotationSpeed: 35
     maxSpeed: 20

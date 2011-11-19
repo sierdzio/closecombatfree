@@ -2,7 +2,7 @@ import QtQuick 1.1
 import "../units/tanks/tests"
 
 Item {
-    property string mapFile: "../maps/Map_tst1.qml"
+    property string mapFile: PWD + "maps/Map_tst1.qml"
 
     id: root
     width: 800

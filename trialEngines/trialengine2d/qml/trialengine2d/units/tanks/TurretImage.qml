@@ -8,7 +8,6 @@ Item {
     property string barrelSegment1Texture: ""
     property bool firing: false
     property bool smoking: false
-//    property color turretColor: "#7b8259"
     property int turretSize: 60
     property int turretRotation: 0
 
@@ -74,7 +73,7 @@ Item {
 
             if (imgNumber != 5) {
                 fireImage.imageNumber = imgNumber + 1;
-                fireImage.source = "../../img/effects/gun_fire" + (imgNumber + 1) + ".png";
+                fireImage.source = PWD + "img/effects/gun_fire" + (imgNumber + 1) + ".png";
             } else if (imgNumber == 5) {
                 fireImage.imageNumber = 0;
                 fireImage.source = "";

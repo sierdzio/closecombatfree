@@ -4,7 +4,7 @@ import "../"
 Tank {
     id: root
     unitType: "Test tank 3"
-    unitLogo: "../img/units/tanks/generic/tank_tst3_logo.png"
+    unitLogo: PWD + "img/units/tanks/generic/tank_tst3_logo.png"
     rotationSpeed: 40
     turretRotationSpeed: 35
     turretSize: 44
@@ -21,8 +21,8 @@ Tank {
 
     TurretImage {
         id: turret
-        bodyTexture: "../../img/units/tanks/generic/tank_tst3_turret_main.png"
-        barrelBaseTexture: "../../img/units/tanks/generic/turret_barrelBase.png"
-        barrelSegment1Texture: "../../img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
+        bodyTexture: PWD + "img/units/tanks/generic/tank_tst3_turret_main.png"
+        barrelBaseTexture: PWD + "img/units/tanks/generic/turret_barrelBase.png"
+        barrelSegment1Texture: PWD + "img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
     }
 }
