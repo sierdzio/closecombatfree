@@ -1,6 +1,9 @@
 Bugs:
  - group orders mix their targets (they do not reproduce their layout from before the order)
 
+Fixes:
+
+
 New features:
  - add game menu
  - add campaigns
@@ -37,3 +40,4 @@ Done:
  + add group orders (example: moving 3 selected units)
  + add unit selection in both game area AND roster
  + add order markers (objects indicating, where a unit is going, firing etc.)
+ + change order marker's colour according to the order given

@@ -20,17 +20,7 @@ function scheduleContextAction(index, operation) {
             aimLine.x = child.x + child.centerX;
             aimLine.y = child.y + child.centerY;
 
-            if (operation == "Move fast")
-                aimLine.color = "#771b91";
-            else if (operation == "Move")
-                aimLine.color = "#22ff22";
-            else if (operation == "Sneak")
-                aimLine.color = "#f0dd0c";
-            else if (operation == "Smoke")
-                aimLine.color = "#ffa000";
-            else if (operation == "Attack")
-                aimLine.color = "#ff2222";
-
+            aimLine.color = LogicHelpers.colorForOrder(operation);
             rotationTimer.start();
             aimLine.visible = true;
 
@@ -94,7 +84,7 @@ function performContextAction(index, targetX, targetY) {
             }
             child.actionFinished.connect(actionFinished);
 
-            setOrderMarker(child.unitIndex, tempX, tempY);
+            setOrderMarker(child.unitIndex, scheduledOperation, tempX, tempY);
         }
     }
     cleanContextAction();
@@ -539,9 +529,12 @@ function digitPressed(event) {
 
 function calculateOrderMarkerVisibility(index) {
     var orderMarker = orderMarkersContainer[index];
+    var child = units.item.children[index];
 
-    if (units.item.children[index].selected == true) {
-        if (units.item.children[index].unitStatus == "READY") {
+    if (child.selected == true) {
+        if ((child.unitStatus == "READY")
+                || (child.unitStatus == "DEFENDING")
+                || (child.unitStatus == "AMBUSHING")) {
             orderMarker.visible = false;
         } else {
             orderMarker.visible = true;
@@ -551,12 +544,11 @@ function calculateOrderMarkerVisibility(index) {
     }
 }
 
-function setOrderMarker(index, targetX, targetY) {
+function setOrderMarker(index, orderName, targetX, targetY) {
     var orderMarker = orderMarkersContainer[index];
     orderMarker.x = targetX - orderMarker.centerX;
     orderMarker.y = targetY - orderMarker.centerY;
-//    console.log("Calculating order marker. TempX: " + targetX + ", x: "
-//                + x + ", marker's x: " + orderMarker.x);
+    orderMarker.orderColor = LogicHelpers.colorForOrder(orderName);
     orderMarker.visible = true;
 }
 

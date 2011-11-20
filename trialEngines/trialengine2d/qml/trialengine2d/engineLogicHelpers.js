@@ -89,3 +89,25 @@ function rotationDuration(oldRotation, newRotation, rotationSpeed) {
     var dur = (rotationSpeed * Math.abs(rotationChange));
     return Math.round(dur);
 }
+
+function colorForOrder(orderName) {
+    var result = "ERROR";
+
+    if (orderName == "Move") {
+        result = "#22ff22";
+    } else if (orderName == "Move fast") {
+        result = "#771b91";
+    } else if (orderName == "Sneak") {
+        result = "#f0dd0c";
+    } else if (orderName == "Smoke") {
+        result = "#ffa000";
+    } else if (orderName == "Attack") {
+        result = "#ff2222";
+    }
+    //    } else if (orderName == "Ambush") {
+    //        result = "#aaaaaa";
+    //    } else if (orderName == "Defend") {
+    //        result = "#aaaaaa";
+
+    return result;
+}
