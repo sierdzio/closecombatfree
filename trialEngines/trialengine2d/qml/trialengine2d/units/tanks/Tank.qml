@@ -61,15 +61,17 @@ Unit {
             ScriptAction {
                 script: {
                     if (firing == true) {
+                        // Warning! This order is important for order markers!
                         turret.firing = true;
                         firing = false;
-                        actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
+                        actionFinished(unitIndex, __tempX, __tempY);                        
                     } else if (smoking == true) {
+                        // Warning! This order is important for order markers!
                         turret.smoking = true;
                         smoking = false;
-                        actionFinished(unitIndex, __tempX, __tempY);
                         changeStatus("READY");
+                        actionFinished(unitIndex, __tempX, __tempY);                        
                     }
                 }
             }

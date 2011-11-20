@@ -3,6 +3,9 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+20.11.2011:
+ - add order markers
+
 19.11.2011:
  - add new type of turret: TurretImage (it is composed of Image elements,
    not Rectangle ones. It has almost the same code, as Turret.

@@ -4,7 +4,7 @@ import "../engineLogicHelpers.js" as LogicHelpers
 import "engineScenarioLogic.js" as ScenarioLogic
 
 Item {
-    property string scenarioFile: "Scenario_tst1.qml"
+    property string scenarioFile: ""
     property string selectionMode: "DEFAULT" // Will be used for mode (decktop and mobile)
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
@@ -12,6 +12,8 @@ Item {
 
     id: root
     focus: true;
+
+    Component.onCompleted: ScenarioLogic.createOrderMarkers();
 
     Keys.onPressed: {
         if (event.modifiers == Qt.ControlModifier) {

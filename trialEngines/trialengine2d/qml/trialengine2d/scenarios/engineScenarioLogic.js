@@ -1,4 +1,5 @@
 var effectsContainer = new Array();
+var orderMarkersContainer = new Array();
 var unitGroups = new Array(10);
 
 function scheduleContextAction(index, operation) {
@@ -6,7 +7,6 @@ function scheduleContextAction(index, operation) {
     var child;
 
     children = selectedUnits();
-//    child = children[0]; // Selects the first child as a "guide" for others.
     child = units.item.children[index];
 
     child.scheduledOperation = operation;
@@ -62,6 +62,8 @@ function performContextAction(index, targetX, targetY) {
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
         for (var i = 0; i < children.length; i++) {
             child = children[i];
+            child.scheduledOperation = scheduledOperation;
+
             if ((child.unitIndex != index) && (i >= 1)) {
                 tempX = targetX + (child.x - children[i - 1].x);
                 tempY = targetY + (child.y - children[i - 1].y);
@@ -87,14 +89,26 @@ function performContextAction(index, targetX, targetY) {
                 child.sneakTo(tempX, tempY);
             } else if (scheduledOperation == "Attack") {
                 child.fireTo(tempX, tempY);
-                child.actionFinished.connect(firingActionFinished);
             } else if (scheduledOperation == "Smoke") {
                 child.smokeTo(tempX, tempY);
-                child.actionFinished.connect(firingActionFinished);
             }
+            child.actionFinished.connect(actionFinished);
+
+            setOrderMarker(child.unitIndex, tempX, tempY);
         }
     }
     cleanContextAction();
+}
+
+function actionFinished(index, targetX, targetY) {
+    var scheduledOperation = units.item.children[index].scheduledOperation;
+    if ((scheduledOperation != "Move")
+            && (scheduledOperation != "Move fast")
+            && (scheduledOperation != "Sneak")) {
+        firingActionFinished(index, targetX, targetY);
+    }
+
+    calculateOrderMarkerVisibility(index);
 }
 
 function firingActionFinished(index, targetX, targetY) {
@@ -105,25 +119,26 @@ function firingActionFinished(index, targetX, targetY) {
     // A good place to include terrain recognition
     // for landing shells
     var unit = units.item.children[index];
-    var effectIndex;
+//    var effectIndex;
+    var effect;
 
     if (component.status == Component.Ready) {
-        var effect = component.createObject(itemContainer);
+        effect = component.createObject(itemContainer);
     }
 
     effectsContainer.push(effect);
-    effectIndex = effectsContainer.length - 1;
+//    effectIndex = effectsContainer.length - 1;
 
     if (unit.scheduledOperation == "Attack") {
-        effectsContainer[effectIndex].animationString = "gun_fire";
+        effect.animationString = "gun_fire";
     }
     else if(unit.scheduledOperation == "Smoke") {
-        effectsContainer[effectIndex].animationString = "smoke_fire";
+        effect.animationString = "smoke_fire";
     }
 
-    effectsContainer[effectIndex].x = targetX;
-    effectsContainer[effectIndex].y = targetY;
-    effectsContainer[effectIndex].running = true;
+    effect.x = targetX;
+    effect.y = targetY;
+    effect.running = true;
 
     if (effectsTimer.running == false)
         effectsTimer.start();
@@ -402,8 +417,6 @@ function selectUnitFromRoster(mouse) {
 }
 
 function selectUnit(index, modifier) {
-//    var modifier = mouse.modifiers;
-
     if (modifier == Qt.NoModifier) {
         deselectAllUnits();
         units.item.children[index].selected = true;
@@ -413,16 +426,19 @@ function selectUnit(index, modifier) {
         else if (units.item.children[index].selected == false)
             units.item.children[index].selected = true;
     }
+
+    calculateOrderMarkerVisibility(index);
 }
 
 function deselectUnit(index) {
     units.item.children[index].selected = false;
+    calculateOrderMarkerVisibility(index);
 }
 
 function deselectAllUnits() {
     var children = units.item.children;
     for (var i = 0; i < children.length; i++) {
-        children[i].selected = false;
+        deselectUnit(i);
     }
 }
 
@@ -519,4 +535,42 @@ function digitPressed(event) {
         result = 10;
 
     return result;
+}
+
+function calculateOrderMarkerVisibility(index) {
+    var orderMarker = orderMarkersContainer[index];
+
+    if (units.item.children[index].selected == true) {
+        if (units.item.children[index].unitStatus == "READY") {
+            orderMarker.visible = false;
+        } else {
+            orderMarker.visible = true;
+        }
+    } else {
+        orderMarker.visible = false;
+    }
+}
+
+function setOrderMarker(index, targetX, targetY) {
+    var orderMarker = orderMarkersContainer[index];
+    orderMarker.x = targetX - orderMarker.centerX;
+    orderMarker.y = targetY - orderMarker.centerY;
+//    console.log("Calculating order marker. TempX: " + targetX + ", x: "
+//                + x + ", marker's x: " + orderMarker.x);
+    orderMarker.visible = true;
+}
+
+function createOrderMarkers() {
+    for (var i = 0; i < units.item.children.length; i++) {
+        // This component renders an order marker.
+        var component = Qt.createComponent(PWD + "gui/OrderMarker.qml");
+        var marker;
+
+        if (component.status == Component.Ready) {
+            marker = component.createObject(itemContainer);
+        }
+
+        marker.visible = false;
+        orderMarkersContainer.push(marker);
+    }
 }

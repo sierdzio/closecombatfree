@@ -10,5 +10,6 @@ Rectangle {
     Scenario {
         id: scenario
         anchors.fill: parent
+        scenarioFile: "Scenario_tst1.qml"
     }
 }

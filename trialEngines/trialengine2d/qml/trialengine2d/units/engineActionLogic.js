@@ -1,18 +1,16 @@
-//var scheduledOperation;
-
 function moveTo (newX, newY) {
-    performMovement(newX, newY, 1);
     changeStatus("MOVING");
+    performMovement(newX, newY, 1);    
 }
 
 function moveFastTo (newX, newY) {
-    performMovement(newX, newY, moveFastFactor);
     changeStatus("MOVING FAST");
+    performMovement(newX, newY, moveFastFactor);    
 }
 
 function sneakTo (newX, newY) {
-    performMovement(newX, newY, sneakFactor);
     changeStatus("SNEAKING");
+    performMovement(newX, newY, sneakFactor);    
 }
 
 function performMovement (newX, newY, factor) {

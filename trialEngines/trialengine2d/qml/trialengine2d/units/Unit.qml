@@ -136,8 +136,11 @@ Item {
             duration: 2500
             easing.type: Easing.InOutQuad
             onRunningChanged: {
-                if (!xMoveAnimation.running)
+                if (!xMoveAnimation.running) {
+                    // Warning! This order is important for order markers!
                     changeStatus("READY");
+                    actionFinished(unitIndex, __tempX, __tempY);
+                }
             }
         }
     }
