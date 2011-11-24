@@ -11,6 +11,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer->rootContext()->setContextProperty("PWD", pwd);
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setMainQmlFile(QLatin1String("qml/trialengine2d/main.qml"));
+
+    viewer->setAttribute(Qt::WA_OpaquePaintEvent);
+    viewer->setAttribute(Qt::WA_NoSystemBackground);
+    viewer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+    viewer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+
     viewer->showExpanded();
 
     return app->exec();

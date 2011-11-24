@@ -6,3 +6,5 @@ lib/
 *.pro.user*
 *.kate-swp
 *~
+Makefile
+closecombatfree
