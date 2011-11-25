@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
 
     QString pwd = a.applicationDirPath() + "/";
     viewer->rootContext()->setContextProperty("PWD", pwd);
-    viewer->setSource(QUrl("base/main.qml"));
 
+    viewer->setSource(QUrl("base/main.qml"));
     viewer->setAttribute(Qt::WA_OpaquePaintEvent);
     viewer->setAttribute(Qt::WA_NoSystemBackground);
     viewer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);

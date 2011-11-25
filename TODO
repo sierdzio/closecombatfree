@@ -1,5 +1,4 @@
 Bugs & fixes:
- - group orders mix their targets (they do not reproduce their layout from before the order)
 
 New features:
  - add game menu
@@ -41,3 +40,4 @@ Done:
  + add order markers (objects indicating, where a unit is going, firing etc.)
  + change order marker's colour according to the order given
  + move trialengine2d out of trial and into master
+ + group orders mix their targets (they do not reproduce their layout from before the order)

@@ -3,6 +3,9 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+25.11.2011:
+ - fix group orders mixing their targets
+
 24.11.2011:
  - move trialengine2d out of trial and into master
 

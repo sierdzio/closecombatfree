@@ -44,50 +44,68 @@ function scheduleContextAction(index, operation) {
 
 function performContextAction(index, targetX, targetY) {
     var children = selectedUnits();
-    var child = units.item.children[index];//children[0];
+    var child = units.item.children[index];
     var scheduledOperation = child.scheduledOperation;
 
-    var tempX = 0;
-    var tempY = 0;
+    // Set up the unit to which the aimLine is anchored.
+    // Others are set in the loop later, based on this "main"
+    // object.
+    issueActionOrder(child, scheduledOperation, targetX, targetY);
+
+
+//    var tempX = 0;
+//    var tempY = 0;
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
-        for (var i = 0; i < children.length; i++) {
+        for (var i = 0; i < children.length; i++) {            
             child = children[i];
+
+            // This unit's order is already issued.
+            if (child.unitIndex == index)
+                continue;
+
             child.scheduledOperation = scheduledOperation;
 
-            if ((child.unitIndex != index) && (i >= 1)) {
-                tempX = targetX + (child.x - children[i - 1].x);
-                tempY = targetY + (child.y - children[i - 1].y);
-//                console.log("Child X: " + child.x + ", last child X: " + children[i - 1].x);
-            } else if ((child.unitIndex != index)) {
-                tempX = targetX + (child.x - children[i + 1].x);
-                tempY = targetY + (child.y - children[i + 1].y);
-//                console.log("Child X: " + child.x + ", last child X: " + children[i + 1].x);
-            } else {
-                tempX = targetX;
-                tempY = targetY;
-            }
+            var tempX = targetX + (child.x - units.item.children[index].x);
+            var tempY = targetY + (child.y - units.item.children[index].y);
 
-            // Clear defence, if it is on.
-            child.defenceSphereColor = "";
-            child.changeStatus("READY");
+//            if ((child.unitIndex != index) && (i >= 1)) {
+//                tempX = targetX + (child.x - children[i - 1].x);
+//                tempY = targetY + (child.y - children[i - 1].y);
+////                console.log("Child X: " + child.x + ", last child X: " + children[i - 1].x);
+//            } else if ((child.unitIndex != index)) {
+//                tempX = targetX + (child.x - children[i + 1].x);
+//                tempY = targetY + (child.y - children[i + 1].y);
+////                console.log("Child X: " + child.x + ", last child X: " + children[i + 1].x);
+//            } else {
+////                tempX = targetX;
+////                tempY = targetY;
+//            }
 
-            if (scheduledOperation == "Move") {
-                child.moveTo(tempX, tempY);
-            } else if (scheduledOperation == "Move fast") {
-                child.moveFastTo(tempX, tempY);
-            } else if (scheduledOperation == "Sneak") {
-                child.sneakTo(tempX, tempY);
-            } else if (scheduledOperation == "Attack") {
-                child.fireTo(tempX, tempY);
-            } else if (scheduledOperation == "Smoke") {
-                child.smokeTo(tempX, tempY);
-            }
-            child.actionFinished.connect(actionFinished);
-
-            setOrderMarker(child.unitIndex, scheduledOperation, tempX, tempY);
+            issueActionOrder(child, scheduledOperation, tempX, tempY);
         }
     }
     cleanContextAction();
+}
+
+function issueActionOrder(child, operation, x, y) {
+    // Clear defence, if it is on.
+    child.defenceSphereColor = "";
+    child.changeStatus("READY");
+
+    if (operation == "Move") {
+        child.moveTo(x, y);
+    } else if (operation == "Move fast") {
+        child.moveFastTo(x, y);
+    } else if (operation == "Sneak") {
+        child.sneakTo(x, y);
+    } else if (operation == "Attack") {
+        child.fireTo(x, y);
+    } else if (operation == "Smoke") {
+        child.smokeTo(x, y);
+    }
+    child.actionFinished.connect(actionFinished);
+
+    setOrderMarker(child.unitIndex, operation, x, y);
 }
 
 function actionFinished(index, targetX, targetY) {
