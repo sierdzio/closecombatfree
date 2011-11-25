@@ -9,6 +9,10 @@ int main(int argc, char *argv[])
 
     QString pwd = a.applicationDirPath() + "/";
     viewer->rootContext()->setContextProperty("PWD", pwd);
+    // This below could/ should be made into a separate C++ class that handles
+    // game preferences.
+    QString uiMode = "DESKTOP"; // DESKTOP or MOBILE
+    viewer->rootContext()->setContextProperty("uiMode", uiMode);
 
     viewer->setSource(QUrl("base/main.qml"));
     viewer->setAttribute(Qt::WA_OpaquePaintEvent);

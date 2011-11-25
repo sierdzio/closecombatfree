@@ -47,16 +47,13 @@ function performContextAction(index, targetX, targetY) {
     var child = units.item.children[index];
     var scheduledOperation = child.scheduledOperation;
 
-    // Set up the unit to which the aimLine is anchored.
-    // Others are set in the loop later, based on this "main"
-    // object.
-    issueActionOrder(child, scheduledOperation, targetX, targetY);
-
-
-//    var tempX = 0;
-//    var tempY = 0;
     if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
-        for (var i = 0; i < children.length; i++) {            
+        // Set up the unit to which the aimLine is anchored.
+        // Others are set in the loop later, based on this "main"
+        // object.
+        issueActionOrder(child, scheduledOperation, targetX, targetY);
+
+        for (var i = 0; i < children.length; i++) {
             child = children[i];
 
             // This unit's order is already issued.
@@ -67,19 +64,6 @@ function performContextAction(index, targetX, targetY) {
 
             var tempX = targetX + (child.x - units.item.children[index].x);
             var tempY = targetY + (child.y - units.item.children[index].y);
-
-//            if ((child.unitIndex != index) && (i >= 1)) {
-//                tempX = targetX + (child.x - children[i - 1].x);
-//                tempY = targetY + (child.y - children[i - 1].y);
-////                console.log("Child X: " + child.x + ", last child X: " + children[i - 1].x);
-//            } else if ((child.unitIndex != index)) {
-//                tempX = targetX + (child.x - children[i + 1].x);
-//                tempY = targetY + (child.y - children[i + 1].y);
-////                console.log("Child X: " + child.x + ", last child X: " + children[i + 1].x);
-//            } else {
-////                tempX = targetX;
-////                tempY = targetY;
-//            }
 
             issueActionOrder(child, scheduledOperation, tempX, tempY);
         }
@@ -425,10 +409,10 @@ function selectUnitFromRoster(mouse) {
 }
 
 function selectUnit(index, modifier) {
-    if (modifier == Qt.NoModifier) {
+    if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
         deselectAllUnits();
         units.item.children[index].selected = true;
-    } else if (modifier == Qt.ControlModifier) {
+    } else if ((modifier == Qt.ControlModifier) || (uiMode == "MOBILE")) {
         if (units.item.children[index].selected == true)
             units.item.children[index].selected = false;
         else if (units.item.children[index].selected == false)

@@ -5,6 +5,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 === === === ===
 25.11.2011:
  - fix group orders mixing their targets
+ - add desktop mode and mobile mode (initial, simple implementation. There are plans to make it much
+   more robust)
 
 24.11.2011:
  - move trialengine2d out of trial and into master
