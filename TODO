@@ -1,6 +1,5 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
- +/- order cancelling does not stop animation durations (or something), and they spontaneously restart!
 
 New features:
  - add game menu
@@ -8,6 +7,9 @@ New features:
  - add guns
  - add infantry
  - add trucks
+ - add fuel and ammo caps for units
+ - add in-game chat
+ - add deployment phase before the battle
 
  - add multiple-waypoint move orders
  - add active pause
@@ -25,8 +27,14 @@ New features:
     - game window resolution, window state (full screen, maximised)
 
 Big ideas for the future:
- - add advanced world map option (something like TripleA or Hearts of Iron)
+ - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
+   at will. Also, it shall include more realistic (when compared to TripleA) production, research, movement functionalities)
  - add time compression
+ - add multiplayer
+ - add per-commander multiplayer (or even per-unit). That is, several people could fight on one side, steering certain platoons,
+   and communicating with others about general tactics
+ - add online updates and units/maps/scenario/campaign repositories
+ - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
 
 Done:
  + move generic tank properties into a C++ QObject (or a separate QML object)
@@ -51,3 +59,4 @@ Done:
  + add drag&drop for OrderMarkers
  + add order cancelling
  + add map scrolling
+ + (fixed) order cancelling does not stop animation durations (or something), and they spontaneously restart

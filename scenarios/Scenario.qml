@@ -20,10 +20,34 @@ Item {
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
         } else {
-            if (event.key == Qt.Key_S) {
-                var selectedUnits = ScenarioLogic.selectedUnits();
-                for (var i = 0; i < selectedUnits.length; i++) {
-                    selectedUnits[i].cancelOrder();
+            if (ScenarioLogic.selectedUnitsCount() > 0) {
+                // Would be good to optimise order key handling into a function
+                if (event.key == Qt.Key_S) {
+                    var selectedUnits = ScenarioLogic.selectedUnits();
+                    for (var i = 0; i < selectedUnits.length; i++) {
+                        selectedUnits[i].cancelOrder();
+                    }
+                } else if (event.key == Qt.Key_F) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Move fast");
+                } else if (event.key == Qt.Key_M) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Move");
+                } else if (event.key == Qt.Key_N) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Sneak");
+                } else if (event.key == Qt.Key_A) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Attack");
+                } else if (event.key == Qt.Key_K) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Smoke");
+                } else if (event.key == Qt.Key_D) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Defend");
+                } else if (event.key == Qt.Key_B) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.scheduleContextAction(__unitIndex, "Ambush");
                 }
             }
 
@@ -41,12 +65,14 @@ Item {
         contentWidth: map.item.width
         contentHeight: map.item.height
         boundsBehavior: Flickable.StopAtBounds
+        clip: true
 
         Loader {
             id: map
             source: units.item.mapFile
 //            anchors.fill: parent
         }
+
         Loader {
             id: units
             anchors.fill: parent
