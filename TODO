@@ -9,10 +9,8 @@ New features:
  - add trucks
 
  - add multiple-waypoint move orders
- +/- add drag&drop for OrderMarkers
  - add map scrolling
  - add active pause
- - add order cancelling
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading
  +/- add desktop mode and mobile mode (UI will be more mobile-friendly in the second one. Leave option
@@ -48,3 +46,5 @@ Done:
  + change order marker's colour according to the order given
  + move trialengine2d out of trial and into master
  + group orders mix their targets (they do not reproduce their layout from before the order)
+ + add drag&drop for OrderMarkers
+ + add order cancelling

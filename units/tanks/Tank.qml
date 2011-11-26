@@ -60,18 +60,20 @@ Unit {
             }
             ScriptAction {
                 script: {
-                    if (firing == true) {
-                        // Warning! This order is important for order markers!
-                        turret.firing = true;
-                        firing = false;
-                        changeStatus("READY");
-                        actionFinished(unitIndex, __tempX, __tempY);                        
-                    } else if (smoking == true) {
-                        // Warning! This order is important for order markers!
-                        turret.smoking = true;
-                        smoking = false;
-                        changeStatus("READY");
-                        actionFinished(unitIndex, __tempX, __tempY);                        
+                    if (unitStatus != "STOPPED") {
+                        if (firing == true) {
+                            // Warning! This order is important for order markers!
+                            turret.firing = true;
+                            firing = false;
+                            changeStatus("READY");
+                            actionFinished(unitIndex, __tempX, __tempY);
+                        } else if (smoking == true) {
+                            // Warning! This order is important for order markers!
+                            turret.smoking = true;
+                            smoking = false;
+                            changeStatus("READY");
+                            actionFinished(unitIndex, __tempX, __tempY);
+                        }
                     }
                 }
             }

@@ -46,6 +46,9 @@ Item {
     signal selectionChanged(bool state)
     onSelectedChanged: selectionChanged(selected);
 
+    signal cancelOrder ()
+    onCancelOrder: ActionLogic.cancelOrder();
+
     width: unitWidth
     height: unitHeight
 
@@ -122,7 +125,7 @@ Item {
             direction: RotationAnimation.Shortest
             easing.type: Easing.InOutQuad
             onRunningChanged: { // Not sure whether doing that will be good under all circumstances
-                if (!rotationAnimation.running) {
+                if ((!rotationAnimation.running) && (unitStatus != "STOPPED")) {
                     x = __tempX;
                     y = __tempY;
                 }
@@ -136,10 +139,12 @@ Item {
             duration: 2500
             easing.type: Easing.InOutQuad
             onRunningChanged: {
-                if (!xMoveAnimation.running) {
+                if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                     // Warning! This order is important for order markers!
                     changeStatus("READY");
                     actionFinished(unitIndex, __tempX, __tempY);
+                } else if (unitStatus == "STOPPED") {
+                    changeStatus("READY");
                 }
             }
         }

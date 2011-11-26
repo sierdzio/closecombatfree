@@ -60,6 +60,7 @@ function performContextAction(index, targetX, targetY) {
             if (child.unitIndex == index)
                 continue;
 
+            // Sets schedule for all units.
             child.scheduledOperation = scheduledOperation;
 
             var tempX = targetX + (child.x - units.item.children[index].x);
@@ -94,6 +95,18 @@ function issueActionOrder(child, x, y) {
     setOrderMarker(child.unitIndex, operation, x, y);
 }
 
+function modifyTargetFromMarker(unitIndex) {
+//    console.log("Modifying target: " + unitIndex);
+    var marker = orderMarkersContainer[unitIndex];
+    var newX = marker.x + marker.centerX;
+    var newY = marker.y + marker.centerY;
+    var unit = units.item.children[unitIndex];
+
+//    cancelOrder(unit.unitIndex);
+    unit.cancelOrder();
+    issueActionOrder(unit, newX, newY);
+}
+
 function actionFinished(index, targetX, targetY) {
     var scheduledOperation = units.item.children[index].scheduledOperation;
     if ((scheduledOperation != "Move")
@@ -104,6 +117,11 @@ function actionFinished(index, targetX, targetY) {
 
     calculateOrderMarkerVisibility(index);
 }
+
+//function cancelOrder(index) {
+//    var unit = units.item.children[index];
+//    unit.
+//}
 
 function firingActionFinished(index, targetX, targetY) {
     // This component renders in-game effects (not all,
@@ -566,20 +584,8 @@ function createOrderMarkers() {
             marker = component.createObject(itemContainer);
             marker.visible = false;
             marker.index = i;
-            marker.dragComplete.connect(modifyTarget);
+            marker.dragComplete.connect(modifyTargetFromMarker);
             orderMarkersContainer.push(marker);
         }
     }
-}
-
-function modifyTarget(unitIndex) {
-//    console.log("Modifying target: " + unitIndex);
-    var marker = orderMarkersContainer[unitIndex];
-    var newX = marker.x + marker.centerX;
-    var newY = marker.y + marker.centerY;
-    var unit = units.item.children[unitIndex];
-
-    issueActionOrder(unit, newX, newY);
-//    unit.x = newX;
-//    unit.y = newY;
 }

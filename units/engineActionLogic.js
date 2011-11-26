@@ -53,3 +53,27 @@ function performTurretShooting (targetX, targetY) {
     turretRotation = newRotation;
     changeStatus("ROTATING");
 }
+
+function cancelOrder () {
+//    console.log("Unit coordinates before: (" + x + ", " + y + ")");
+
+    changeStatus("STOPPED");
+    if ((firing == false) && (smoking == false))  {
+        var newX = x;
+        var newY = y;
+        x = newX;
+        y = newY;
+
+        var newRotation = rotation;
+        rotation = newRotation;
+        changeStatus("READY");
+    }
+
+    if ((firing == true) || (smoking == true))  {
+        var newTurretRotation = turretRotation;
+        turretRotation = newTurretRotation;
+        smoking = false;
+        firing = false;
+        changeStatus("READY");
+    }
+}

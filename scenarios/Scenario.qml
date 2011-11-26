@@ -20,6 +20,14 @@ Item {
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
         } else {
+            if (event.key == Qt.Key_S) {
+                var selectedUnits = ScenarioLogic.selectedUnits();
+                for (var i = 0; i < selectedUnits.length; i++) {
+                    selectedUnits[i].cancelOrder();
+                }
+            }
+
+            // Digit reading.
             var digit = ScenarioLogic.digitPressed(event);
             if (digit != -1)
                 ScenarioLogic.selectGroup(digit);

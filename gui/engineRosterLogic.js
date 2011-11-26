@@ -5,6 +5,8 @@ function colorForStatus(statusMessage) {
 
     if (statusMessage == "READY") {
         result = "#115511";
+    } else if (statusMessage == "STOPPED") {
+        result = "#ee5511";
     } else if (statusMessage == "MOVING") {
         result = "#11aa11";
     } else if (statusMessage == "MOVING FAST") {
