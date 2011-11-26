@@ -30,6 +30,18 @@ Item {
     property bool smoking: false
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
+    property bool paused: false
+
+    signal togglePause ()
+    onTogglePause: {
+        if (paused == true) {
+            paused = false;
+        } else {
+            paused = true;
+        }
+
+        console.log("Pausing the unit to: " + paused);
+    }
 
     signal unitStatusChanged(string newStatus)
     signal actionFinished(int index, real targetX, real targetY)
@@ -49,6 +61,7 @@ Item {
     signal cancelOrder ()
     onCancelOrder: ActionLogic.cancelOrder();
 
+    id: root
     width: unitWidth
     height: unitHeight
 
@@ -117,44 +130,45 @@ Item {
         }
     }
 
-    Behavior on rotation {
-        RotationAnimation {
-            id: rotationAnimation
-            property: "rotation"
-            duration: 2000
-            direction: RotationAnimation.Shortest
-            easing.type: Easing.InOutQuad
-            onRunningChanged: { // Not sure whether doing that will be good under all circumstances
-                if ((!rotationAnimation.running) && (unitStatus != "STOPPED")) {
-                    x = __tempX;
-                    y = __tempY;
-                }
+    RotationAnimation on rotation {
+        id: rotationAnimation
+        duration: 2000
+        direction: RotationAnimation.Shortest
+        easing.type: Easing.InOutQuad
+        paused: running? root.paused : false
+
+        onRunningChanged: { // Not sure whether doing that will be good under all circumstances
+            if ((!rotationAnimation.running) && (unitStatus != "STOPPED")) {
+                xMoveAnimation.to = __tempX;
+                xMoveAnimation.running = true;
+                yMoveAnimation.to = __tempY;
+                yMoveAnimation.running = true;
             }
         }
     }
 
-    Behavior on x {
-        NumberAnimation {
-            id: xMoveAnimation
-            duration: 2500
-            easing.type: Easing.InOutQuad
-            onRunningChanged: {
-                if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
-                    // Warning! This order is important for order markers!
-                    changeStatus("READY");
-                    actionFinished(unitIndex, __tempX, __tempY);
-                } else if (unitStatus == "STOPPED") {
-                    changeStatus("READY");
-                }
+    NumberAnimation on x {
+        id: xMoveAnimation
+        duration: 2500
+        easing.type: Easing.InOutQuad
+        paused: running? root.paused : false
+
+        onRunningChanged: {
+            if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
+                // Warning! This order is important for order markers!
+                changeStatus("READY");
+                actionFinished(unitIndex, __tempX, __tempY);
+            } else if (unitStatus == "STOPPED") {
+                changeStatus("READY");
             }
         }
     }
 
-    Behavior on y {
-        NumberAnimation {
-            id: yMoveAnimation
-            duration: 2500
-            easing.type: Easing.InOutQuad
-        }
+    NumberAnimation on y {
+        id: yMoveAnimation
+        duration: 2500
+        easing.type: Easing.InOutQuad
+        paused: running? root.paused : false
     }
+
 }

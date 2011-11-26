@@ -8,6 +8,20 @@ Item {
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
+    property bool paused: false
+
+    signal togglePause ()
+    onTogglePause: {
+        if (paused == true) {
+            paused = false;
+        } else {
+            paused = true;
+        }
+
+        console.log("Toggled pause to: " + paused);
+    }
+
+//    signal pause (bool state)
 
     id: root
     focus: true;
@@ -51,6 +65,10 @@ Item {
                 }
             }
 
+            if (event.key == Qt.Key_P) {
+                togglePause();
+            }
+
             // Digit reading.
             var digit = ScenarioLogic.digitPressed(event);
             if (digit != -1)
@@ -81,6 +99,7 @@ Item {
             Component.onCompleted: {
                 for (var i = 0; i < units.item.children.length; i++) {
                     units.item.children[i].unitIndex = i;
+                    togglePause.connect(units.item.children[i].togglePause);
                 }
             }
         }
@@ -192,8 +211,6 @@ Item {
 
     // Timer for rubber band
     Timer {
-//        property int __modifiers: Qt.NoModifier
-
         id: rubberBandTimer
         interval: 120
         running: false

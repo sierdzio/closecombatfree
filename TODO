@@ -7,12 +7,12 @@ New features:
  - add guns
  - add infantry
  - add trucks
+ - add buildings
  - add fuel and ammo caps for units
  - add in-game chat
  - add deployment phase before the battle
 
  - add multiple-waypoint move orders
- - add active pause
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players
@@ -60,3 +60,4 @@ Done:
  + add order cancelling
  + add map scrolling
  + (fixed) order cancelling does not stop animation durations (or something), and they spontaneously restart
+ + add active pause

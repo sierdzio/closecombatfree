@@ -50,30 +50,32 @@ Unit {
     unitWidth: 1
     unitHeight: 1
 
-    Behavior on turretRotation {
-        SequentialAnimation {
-            RotationAnimation {
-                id: turretRotationAnimation
-                duration: 3000
-                direction: RotationAnimation.Shortest
-                easing.type: Easing.InOutQuad
-            }
-            ScriptAction {
-                script: {
-                    if (unitStatus != "STOPPED") {
-                        if (firing == true) {
-                            // Warning! This order is important for order markers!
-                            turret.firing = true;
-                            firing = false;
-                            changeStatus("READY");
-                            actionFinished(unitIndex, __tempX, __tempY);
-                        } else if (smoking == true) {
-                            // Warning! This order is important for order markers!
-                            turret.smoking = true;
-                            smoking = false;
-                            changeStatus("READY");
-                            actionFinished(unitIndex, __tempX, __tempY);
-                        }
+    SequentialAnimation on turretRotation {
+        id: turretRotationRoot
+        paused: running? root.paused : false
+
+        RotationAnimation {
+            id: turretRotationAnimation
+            duration: 3000
+            direction: RotationAnimation.Shortest
+            easing.type: Easing.InOutQuad
+        }
+
+        ScriptAction {
+            script: {
+                if (unitStatus != "STOPPED") {
+                    if (firing == true) {
+                        // Warning! This order is important for order markers!
+                        turret.firing = true;
+                        firing = false;
+                        changeStatus("READY");
+                        actionFinished(unitIndex, __tempX, __tempY);
+                    } else if (smoking == true) {
+                        // Warning! This order is important for order markers!
+                        turret.smoking = true;
+                        smoking = false;
+                        changeStatus("READY");
+                        actionFinished(unitIndex, __tempX, __tempY);
                     }
                 }
             }

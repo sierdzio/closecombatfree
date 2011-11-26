@@ -22,7 +22,8 @@ function performMovement (newX, newY, factor) {
                                           __tempY);
     rotationAnimation.duration = Logic.rotationDuration(rotation,
                                                         newRotation, rotationSpeed);
-    rotation = newRotation;
+    rotationAnimation.to = newRotation;
+    rotationAnimation.running = true;
 
     var moveDuration = Logic.targetDistance(x, y,
                                             __tempX,
@@ -50,7 +51,9 @@ function performTurretShooting (targetX, targetY) {
     turretRotationAnimation.duration = Logic.rotationDuration(turretRotation,
                                                               newRotation,
                                                               turretRotationSpeed);
-    turretRotation = newRotation;
+    turretRotationAnimation.to = newRotation;
+    turretRotationRoot.running = true;
+
     changeStatus("ROTATING");
 }
 
