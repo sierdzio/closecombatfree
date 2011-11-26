@@ -1,5 +1,6 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
+ +/- order cancelling does not stop animation durations (or something), and they spontaneously restart!
 
 New features:
  - add game menu
