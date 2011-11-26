@@ -8,6 +8,8 @@ New features:
  - add infantry
  - add trucks
 
+ - add multiple-waypoint move orders
+ +/- add drag&drop for OrderMarkers
  - add map scrolling
  - add active pause
  - add order cancelling
@@ -24,6 +26,7 @@ New features:
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron)
+ - add time compression
 
 Done:
  + move generic tank properties into a C++ QObject (or a separate QML object)

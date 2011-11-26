@@ -51,7 +51,7 @@ function performContextAction(index, targetX, targetY) {
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
-        issueActionOrder(child, scheduledOperation, targetX, targetY);
+        issueActionOrder(child, targetX, targetY);
 
         for (var i = 0; i < children.length; i++) {
             child = children[i];
@@ -65,13 +65,15 @@ function performContextAction(index, targetX, targetY) {
             var tempX = targetX + (child.x - units.item.children[index].x);
             var tempY = targetY + (child.y - units.item.children[index].y);
 
-            issueActionOrder(child, scheduledOperation, tempX, tempY);
+            issueActionOrder(child, tempX, tempY);
         }
     }
     cleanContextAction();
 }
 
-function issueActionOrder(child, operation, x, y) {
+function issueActionOrder(child, x, y) {
+    var operation = child.scheduledOperation;
+
     // Clear defence, if it is on.
     child.defenceSphereColor = "";
     child.changeStatus("READY");
@@ -562,9 +564,22 @@ function createOrderMarkers() {
 
         if (component.status == Component.Ready) {
             marker = component.createObject(itemContainer);
+            marker.visible = false;
+            marker.index = i;
+            marker.dragComplete.connect(modifyTarget);
+            orderMarkersContainer.push(marker);
         }
-
-        marker.visible = false;
-        orderMarkersContainer.push(marker);
     }
+}
+
+function modifyTarget(unitIndex) {
+//    console.log("Modifying target: " + unitIndex);
+    var marker = orderMarkersContainer[unitIndex];
+    var newX = marker.x + marker.centerX;
+    var newY = marker.y + marker.centerY;
+    var unit = units.item.children[unitIndex];
+
+    issueActionOrder(unit, newX, newY);
+//    unit.x = newX;
+//    unit.y = newY;
 }
