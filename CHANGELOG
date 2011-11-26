@@ -6,6 +6,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 26.11.2011:
  - add drag&drop for OrderMarkers
  - add order cancelling
+ - add map scrolling
 
 25.11.2011:
  - fix group orders mixing their targets

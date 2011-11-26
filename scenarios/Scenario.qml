@@ -34,20 +34,23 @@ Item {
         }
     }
 
-    Item {
+    Flickable {
         id: gameArea
         height: parent.height - roster.height
         width: parent.width
+        contentWidth: map.item.width
+        contentHeight: map.item.height
+        boundsBehavior: Flickable.StopAtBounds
 
         Loader {
             id: map
             source: units.item.mapFile
-            anchors.fill: parent
+//            anchors.fill: parent
         }
         Loader {
             id: units
-            source: scenarioFile
             anchors.fill: parent
+            source: scenarioFile            
 
             Component.onCompleted: {
                 for (var i = 0; i < units.item.children.length; i++) {
@@ -66,12 +69,67 @@ Item {
             onClicked: {
                 ScenarioLogic.handleMouseClick(mouse);
             }
-            onPressAndHold: {
+            onPressAndHold: {                
+                gameArea.interactive = false;
                 ScenarioLogic.handlePressAndHold(mouse);
             }
             onReleased: {
-                ScenarioLogic.handleMouseReleased();
+                ScenarioLogic.handleMouseReleased();                
+                gameArea.interactive = true;
             }
+        }
+
+        Rectangle {
+            id: aimLine
+            z: root.z + 1
+            visible: false
+            width: 3
+            height: 150
+
+            transform: Rotation {
+                origin.x: 1
+                origin.y: 0
+                angle: __aimLineRotation
+            }
+        }
+
+        RubberBand {
+            id: rubberBand
+            visible: false
+
+            transform: Rotation {
+                origin.x: 0
+                origin.y: 0
+                angle: __rubberBandRotation
+            }
+        }
+
+    //    Rectangle {
+    //        id: test1
+    //        color: "#ffff22"
+    //        width: 15
+    //        height: 15
+    //    }
+
+    //    Rectangle {
+    //        id: test2
+    //        color: "#ff22ff"
+    //        width: 15
+    //        height: 15
+    //    }
+
+        Loader {
+            id: contextLoader
+            rotation: 0
+            z: root.z + 1
+        }
+
+        // Needed for effectsContainer in JS file.
+        // Would be neat to rethink and optimise that.
+        Item {
+            id: itemContainer
+            visible: true
+            anchors.fill: parent
         }
     }
 
@@ -93,51 +151,6 @@ Item {
                 ScenarioLogic.handleMouseClickRoster(mouse);
             }
         }
-    }
-
-    Rectangle {
-        id: aimLine
-        z: root.z + 1
-        visible: false
-        width: 3
-        height: 150
-
-        transform: Rotation {
-            origin.x: 1
-            origin.y: 0
-            angle: __aimLineRotation
-        }
-    }
-
-    RubberBand {
-        id: rubberBand
-        visible: false
-
-        transform: Rotation {
-            origin.x: 0
-            origin.y: 0
-            angle: __rubberBandRotation
-        }
-    }
-
-//    Rectangle {
-//        id: test1
-//        color: "#ffff22"
-//        width: 15
-//        height: 15
-//    }
-
-//    Rectangle {
-//        id: test2
-//        color: "#ff22ff"
-//        width: 15
-//        height: 15
-//    }
-
-    Loader {
-        id: contextLoader
-        rotation: 0
-        z: root.z + 1
     }
 
     // Timer for aimline rotation updates.
@@ -162,14 +175,6 @@ Item {
         onTriggered: {
             ScenarioLogic.updateRubberBand(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         }
-    }
-
-    // Needed for effectsContainer in JS file.
-    // Would be neat to rethink and optimise that.
-    Item {
-        id: itemContainer
-        visible: true
-        anchors.fill: parent
     }
 
     // Timer for on-screen animations..

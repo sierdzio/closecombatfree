@@ -10,18 +10,19 @@ New features:
  - add trucks
 
  - add multiple-waypoint move orders
- - add map scrolling
  - add active pause
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
- - add game saving and loading
- +/- add desktop mode and mobile mode (UI will be more mobile-friendly in the second one. Leave option
-   to change it by hand in options/ config script)
+ - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
- - add keyboard shortcuts
  - add soldier's menu
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
+
+ - game config:
+    - keyboard shortcuts
+    - desktop/ mobile mode
+    - game window resolution, window state (full screen, maximised)
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron)
@@ -49,3 +50,4 @@ Done:
  + group orders mix their targets (they do not reproduce their layout from before the order)
  + add drag&drop for OrderMarkers
  + add order cancelling
+ + add map scrolling
