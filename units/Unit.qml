@@ -39,8 +39,6 @@ Item {
         } else {
             paused = true;
         }
-
-        console.log("Pausing the unit to: " + paused);
     }
 
     signal unitStatusChanged(string newStatus)

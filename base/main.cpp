@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     QString uiMode = "DESKTOP"; // DESKTOP or MOBILE
     viewer->rootContext()->setContextProperty("uiMode", uiMode);
 
+    viewer->rootContext()->setContextProperty("windowWidth", 1024);//viewer->width());
+    viewer->rootContext()->setContextProperty("windowHeight", 800);//viewer->height());
+
     viewer->setSource(QUrl("base/main.qml"));
     viewer->setAttribute(Qt::WA_OpaquePaintEvent);
     viewer->setAttribute(Qt::WA_NoSystemBackground);

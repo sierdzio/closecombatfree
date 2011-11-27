@@ -3,8 +3,8 @@ import "../scenarios"
 
 Rectangle {
     id: root
-    width: 800
-    height: 800
+    width: windowWidth
+    height: windowHeight
     color: "lightgray"
 
     Scenario {

@@ -17,11 +17,7 @@ Item {
         } else {
             paused = true;
         }
-
-        console.log("Toggled pause to: " + paused);
     }
-
-//    signal pause (bool state)
 
     id: root
     focus: true;
@@ -112,15 +108,25 @@ Item {
             z: -1
 
             onClicked: {
-                ScenarioLogic.handleMouseClick(mouse);
+                if (mouse.button == Qt.LeftButton) {
+                    ScenarioLogic.handleLeftMouseClick(mouse);
+                } else if (mouse.button == Qt.RightButton) {
+                    ScenarioLogic.handleRightMouseClick(mouse);
+                }
             }
-            onPressAndHold: {                
-                gameArea.interactive = false;
-                ScenarioLogic.handlePressAndHold(mouse);
+            onPressAndHold: {
+                if (uiMode == "DESKTOP") {
+                    gameArea.interactive = false;
+                    ScenarioLogic.handlePressAndHold(mouse);
+                } else if (uiMode == "MOBILE") {
+                    ScenarioLogic.handleRightMouseClick(mouse);
+                }
             }
             onReleased: {
-                ScenarioLogic.handleMouseReleased();                
-                gameArea.interactive = true;
+                if (uiMode == "DESKTOP") {
+                    ScenarioLogic.handleMouseReleased();
+                    gameArea.interactive = true;
+                }
             }
         }
 
@@ -163,12 +169,6 @@ Item {
     //        height: 15
     //    }
 
-        Loader {
-            id: contextLoader
-            rotation: 0
-            z: root.z + 1
-        }
-
         // Needed for effectsContainer in JS file.
         // Would be neat to rethink and optimise that.
         Item {
@@ -193,9 +193,23 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
             onClicked: {
-                ScenarioLogic.handleMouseClickRoster(mouse);
+                if (mouse.button == Qt.LeftButton) {
+                    ScenarioLogic.handleLeftMouseClickRoster(mouse);
+                } else if (mouse.button == Qt.RightButton) {
+                    ScenarioLogic.handleRightMouseClickRoster(mouse);
+                }
+            }
+
+            onDoubleClicked: {
+                ScenarioLogic.handleRightMouseClickRoster(mouse);
             }
         }
+    }
+
+    Loader {
+        id: contextLoader
+        rotation: 0
+        z: roster.z + 1
     }
 
     // Timer for aimline rotation updates.

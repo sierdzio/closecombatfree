@@ -229,8 +229,8 @@ function updateAimLine() {
     }
 }
 
-function handleMouseClick(mouse) {
-    if (mouse.button == Qt.LeftButton) {
+function handleLeftMouseClick(mouse) {
+//    if (mouse.button == Qt.LeftButton) {
         if (contextLoader.visible == false) {
             performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
             return;
@@ -238,8 +238,47 @@ function handleMouseClick(mouse) {
             cleanContextAction();
             selectUnitFromGameArea(mouse);
         }
-    }
-    else if (mouse.button == Qt.RightButton) {
+//    }
+//    else if (mouse.button == Qt.RightButton) {
+//        cleanContextAction();
+
+//        var child;
+//        child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+
+//        if (child == mouseAreaMain || child == null) {
+//            deselectAllUnits();
+//            return;
+//        }
+//        if (child.centerX != undefined) {
+//            if (child.selected == false) {
+//                selectUnitFromGameArea(mouse);
+//            }
+
+//            // Fixes context menu at the centre of child object.
+//            setContextMenuPosition(contextLoader,
+//                                   child.x + child.centerX,
+//                                   child.y + child.centerY);
+
+//            __unitIndex = childIndex(child);
+//            // Displays the context menu. This is suboptimal.
+//            contextLoader.source = "../gui/ContextMenu.qml";
+//            contextLoader.item.unitIndex = __unitIndex;
+//            contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+//        }
+//    }
+}
+
+function handleRightMouseClick(mouse) {
+//    if (mouse.button == Qt.LeftButton) {
+//        if (contextLoader.visible == false) {
+//            performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+//            return;
+//        } else {
+//            cleanContextAction();
+//            selectUnitFromGameArea(mouse);
+//        }
+//    }
+//    else if (mouse.button == Qt.RightButton) {
         cleanContextAction();
 
         var child;
@@ -265,11 +304,11 @@ function handleMouseClick(mouse) {
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
-    }
+//    }
 }
 
-function handleMouseClickRoster(mouse) {
-    if (mouse.button == Qt.LeftButton) {
+function handleLeftMouseClickRoster(mouse) {
+//    if (mouse.button == Qt.LeftButton) {
         if (contextLoader.visible == false) {
 //            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 //            return;
@@ -277,8 +316,44 @@ function handleMouseClickRoster(mouse) {
             cleanContextAction();
             selectUnitFromRoster(mouse);
         }
-    }
-    else if (mouse.button == Qt.RightButton) {
+//    }
+//    else if (mouse.button == Qt.RightButton) {
+//        cleanContextAction();
+
+//        var child;
+//        child = roster.childAt(mouse.x, mouse.y);
+//        var unit;
+//        unit = roster.getUnitAt(mouse.x, mouse.y);
+
+//        if (unit.centerX != undefined) {
+//            if (unit.selected == false) {
+//                selectUnitFromRoster(mouse);
+//            }
+//            // Fixes context menu at the centre of child object.
+//            setContextMenuPosition(contextLoader,
+//                                   roster.x + child.x + (roster.entryWidth/2),
+//                                   roster.y + child.y + (roster.entryHeight/2));
+
+//            __unitIndex = childIndex(unit);
+//            // Displays the context menu. This is suboptimal.
+//            contextLoader.source = "../gui/ContextMenu.qml";
+//            contextLoader.item.unitIndex = __unitIndex;
+//            contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
+//        }
+//    }
+}
+
+function handleRightMouseClickRoster(mouse) {
+//    if (mouse.button == Qt.LeftButton) {
+//        if (contextLoader.visible == false) {
+////            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+////            return;
+//        } else {
+//            cleanContextAction();
+//            selectUnitFromRoster(mouse);
+//        }
+//    }
+//    else if (mouse.button == Qt.RightButton) {
         cleanContextAction();
 
         var child;
@@ -301,7 +376,7 @@ function handleMouseClickRoster(mouse) {
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
-    }
+//    }
 }
 
 function handlePressAndHold(mouse) {

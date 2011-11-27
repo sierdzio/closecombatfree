@@ -3,6 +3,10 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+27.11.2011:
+ - context menu now openes on mouse hold in mobile mode
+ - double click in roster now opens context menu 
+
 26.11.2011:
  - add drag&drop for OrderMarkers
  - add order cancelling
