@@ -16,7 +16,10 @@ MOC_DIR = build
 
 TEMPLATE = app
 
-SOURCES += base/main.cpp
+SOURCES += base/main.cpp \
+    base/ccfconfig.cpp \
+    base/ccfconfigparser.cpp \
+    base/ccferror.cpp
 
 OTHER_FILES += \
     base/main.qml \
@@ -49,6 +52,17 @@ OTHER_FILES += \
     units/tanks/tests/Tank_tst1_turret.qml \
     units/tanks/tests/Tank_tst1_hull.qml \
     units/tanks/tests/Tank_tst1.qml
+
+HEADERS += \
+    base/ccfconfig.h \
+    base/ccfconfigparser.h \
+    base/ccferror.h
+
+
+
+
+
+
 
 
 

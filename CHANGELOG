@@ -5,7 +5,9 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 === === === ===
 27.11.2011:
  - context menu now openes on mouse hold in mobile mode
- - double click in roster now opens context menu 
+ - double click in roster now opens context menu
+ - add config file, it's parser and root context object.
+   Adjust QML to use the new config system
 
 26.11.2011:
  - add drag&drop for OrderMarkers

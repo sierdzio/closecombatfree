@@ -4,6 +4,9 @@ LMB - select single unit
 LMB (hold) - activate rubber band selection
 LMB (flick) - move around the map
 Ctrl + LMB - select multiple units
+Ctrl + [digit] - create a unit group
+[digit] - select a previously created unit group
+
 S - cancel order (stop)
 F - move fast
 M - move

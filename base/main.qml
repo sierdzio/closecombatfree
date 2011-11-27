@@ -7,6 +7,10 @@ Rectangle {
     height: windowHeight
     color: "lightgray"
 
+    Component.onCompleted: {
+        console.log("Configuration from config file:\n" + configurationString());
+    }
+
     Scenario {
         id: scenario
         anchors.fill: parent

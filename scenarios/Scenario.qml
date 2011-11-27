@@ -32,36 +32,36 @@ Item {
         } else {
             if (ScenarioLogic.selectedUnitsCount() > 0) {
                 // Would be good to optimise order key handling into a function
-                if (event.key == Qt.Key_S) {
+                if (event.key == keyForFunction("cancel order")) {
                     var selectedUnits = ScenarioLogic.selectedUnits();
                     for (var i = 0; i < selectedUnits.length; i++) {
                         selectedUnits[i].cancelOrder();
                     }
-                } else if (event.key == Qt.Key_F) {
+                } else if (event.key == keyForFunction("Move fast")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Move fast");
-                } else if (event.key == Qt.Key_M) {
+                } else if (event.key == keyForFunction("Move")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Move");
-                } else if (event.key == Qt.Key_N) {
+                } else if (event.key == keyForFunction("Sneak")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Sneak");
-                } else if (event.key == Qt.Key_A) {
+                } else if (event.key == keyForFunction("Attack")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Attack");
-                } else if (event.key == Qt.Key_K) {
+                } else if (event.key == keyForFunction("Smoke")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Smoke");
-                } else if (event.key == Qt.Key_D) {
+                } else if (event.key == keyForFunction("Defend")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Defend");
-                } else if (event.key == Qt.Key_B) {
+                } else if (event.key == keyForFunction("Ambush")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.scheduleContextAction(__unitIndex, "Ambush");
                 }
             }
 
-            if (event.key == Qt.Key_P) {
+            if (event.key == keyForFunction("pause")) {
                 togglePause();
             }
 

@@ -1,21 +1,28 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
+#include <QDebug>
+#include "ccfconfig.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QDeclarativeView *viewer = new QDeclarativeView();
 
+    CcfConfig configuration("config");
+    if (configuration.isErrorState()) {
+        qDebug() << "Error while reading configuration! Message: "
+                 << configuration.errorMessage();
+    }/* else {
+        qDebug() << configuration.configurationString();
+    }*/
+    viewer->rootContext()->setContextObject(&configuration);
+
     QString pwd = a.applicationDirPath() + "/";
     viewer->rootContext()->setContextProperty("PWD", pwd);
-    // This below could/ should be made into a separate C++ class that handles
-    // game preferences.
-    QString uiMode = "DESKTOP"; // DESKTOP or MOBILE
-    viewer->rootContext()->setContextProperty("uiMode", uiMode);
 
-    viewer->rootContext()->setContextProperty("windowWidth", 1024);//viewer->width());
-    viewer->rootContext()->setContextProperty("windowHeight", 800);//viewer->height());
+    viewer->rootContext()->setContextProperty("windowWidth", configuration.configWindowWidth());
+    viewer->rootContext()->setContextProperty("windowHeight", configuration.configWindowHeight());
 
     viewer->setSource(QUrl("base/main.qml"));
     viewer->setAttribute(Qt::WA_OpaquePaintEvent);

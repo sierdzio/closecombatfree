@@ -1,9 +1,11 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
  - issuing attack while on move causes the unit to move to fire destination and fire at the same time
+ - order cancelling seems to be broken after recen changes
 
 New features:
  - add game menu
+ - preferences menu
  - add UI elements:
     - UI mode switch (desktop/ mobile)
  - add campaigns
@@ -25,12 +27,7 @@ New features:
  - add AI (well, obviously)
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
-
- - game config:
-    - keyboard shortcuts
-    - desktop/ mobile mode
-    - game window resolution, window state (full screen, maximised)
-    - preferences menu
+ - add FPS counter
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
@@ -67,3 +64,7 @@ Done:
  + add map scrolling
  + (fixed) order cancelling does not stop animation durations (or something), and they spontaneously restart
  + add active pause
+ + game config:
+    + keyboard shortcuts
+    + desktop/ mobile mode
+    + game window resolution, window state (full screen, maximised)
