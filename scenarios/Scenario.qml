@@ -8,6 +8,7 @@ Item {
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
+    property real zoom: 1.0
     property bool paused: false
 
     signal togglePause ()
@@ -80,6 +81,7 @@ Item {
         contentHeight: map.item.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
+        scale: zoom
 
         Loader {
             id: map
@@ -155,20 +157,6 @@ Item {
             }
         }
 
-    //    Rectangle {
-    //        id: test1
-    //        color: "#ffff22"
-    //        width: 15
-    //        height: 15
-    //    }
-
-    //    Rectangle {
-    //        id: test2
-    //        color: "#ff22ff"
-    //        width: 15
-    //        height: 15
-    //    }
-
         // Needed for effectsContainer in JS file.
         // Would be neat to rethink and optimise that.
         Item {
@@ -210,6 +198,40 @@ Item {
         id: contextLoader
         rotation: 0
         z: roster.z + 1
+    }
+
+    HudZoomButton {
+        id: zoomInButton
+        x: 10
+        y: 10
+        text: "+"
+
+        MouseArea {
+            id: mouseAreaZoomIn
+            acceptedButtons: Qt.LeftButton
+            anchors.fill: parent
+
+            onClicked: {
+                zoom += 0.1;
+            }
+        }
+    }
+
+    HudZoomButton {
+        id: zoomOutButton
+        x: 10
+        y: 50
+        text: "-"
+
+        MouseArea {
+            id: mouseAreaZoomOut
+            acceptedButtons: Qt.LeftButton
+            anchors.fill: parent
+
+            onClicked: {
+                zoom -= 0.1;
+            }
+        }
     }
 
     // Timer for aimline rotation updates.
@@ -275,4 +297,20 @@ Item {
 
         return result;
     }
+
+    // ------------------
+    // Testing area.
+//    Rectangle {
+//        id: test1
+//        color: "#ffff22"
+//        width: 15
+//        height: 15
+//    }
+
+//    Rectangle {
+//        id: test2
+//        color: "#ff22ff"
+//        width: 15
+//        height: 15
+//    }
 }

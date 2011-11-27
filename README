@@ -6,6 +6,8 @@ As a base for the UI, QtQuick 1, 2 and/or QtQuick 3D will be used. Game logic wi
 
 CCF will be distributed under license which is yet to be decided. Most probably under GNU GPL or LGPL. There is a possibility the artwork will be licenced on other license terms than the source code.
 
+To show "framerate" (time in which repaint is done) set QML_SHOW_FRAMERATE env variable to true (1). If you don't know, what last sentence means, assume it's impossible and move on :)
+
 ---------------- NOTE ---------------
 Some images used (at leas temporarily) were done by NASA. They are released into public domain, AFAIK. Here's a list:
 1. Filename: "test1.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg

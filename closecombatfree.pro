@@ -16,6 +16,11 @@ MOC_DIR = build
 
 TEMPLATE = app
 
+HEADERS += \
+    base/ccfconfig.h \
+    base/ccfconfigparser.h \
+    base/ccferror.h
+
 SOURCES += base/main.cpp \
     base/ccfconfig.cpp \
     base/ccfconfigparser.cpp \
@@ -51,12 +56,9 @@ OTHER_FILES += \
     units/tanks/tests/Tank_tst2.qml \
     units/tanks/tests/Tank_tst1_turret.qml \
     units/tanks/tests/Tank_tst1_hull.qml \
-    units/tanks/tests/Tank_tst1.qml
+    units/tanks/tests/Tank_tst1.qml \
+    gui/HudZoomButton.qml
 
-HEADERS += \
-    base/ccfconfig.h \
-    base/ccfconfigparser.h \
-    base/ccferror.h
 
 
 

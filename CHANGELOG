@@ -10,7 +10,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
    Adjust QML to use the new config system
  - add default config file as fallback when there are problems in the main
    one
- - add QML scene resizing together with window 
+ - add QML scene resizing together with window
+ - add zooming to game area
 
 26.11.2011:
  - add drag&drop for OrderMarkers
