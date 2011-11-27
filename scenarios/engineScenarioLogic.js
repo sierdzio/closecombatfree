@@ -255,9 +255,10 @@ function handleRightMouseClick(mouse) {
             }
 
             // Fixes context menu at the centre of child object.
+            var mappedCoords = root.mapFromItem(gameArea, child.x + child.centerX, child.y + child.centerY);
             setContextMenuPosition(contextLoader,
-                                   child.x + child.centerX,
-                                   child.y + child.centerY);
+                                   mappedCoords.x - (gameArea.contentX * zoom),
+                                   mappedCoords.y - (gameArea.contentY * zoom));
 
             __unitIndex = childIndex(child);
             // Displays the context menu. This is suboptimal.

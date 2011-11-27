@@ -220,7 +220,7 @@ Item {
     HudZoomButton {
         id: zoomOutButton
         x: 10
-        y: 50
+        y: 45
         text: "-"
 
         MouseArea {

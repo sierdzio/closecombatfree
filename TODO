@@ -4,7 +4,6 @@ Bugs & fixes:
  - order cancelling seems to be broken after recent changes
  - add error checking to config system (check for invalidity of entries)
  - maximising the window does not cause QML scene to change size
- - context menu needs to be readjusted to show appropriately when game area is zoomed
 
 New features:
  - add game menu
@@ -23,6 +22,9 @@ New features:
  - add soldier's menu
  - add unit destruction and health
 
+ - change roster menu into a QML Flow element
+ - add centering the view on a unit
+ - add option to follow a unit
  - add multiple-waypoint move orders
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
@@ -76,3 +78,4 @@ Done:
     + desktop/ mobile mode
     + game window resolution, window state (full screen, maximised)
  + add zooming to game area
+ + context menu needs to be readjusted to show appropriately when game area is zoomed
