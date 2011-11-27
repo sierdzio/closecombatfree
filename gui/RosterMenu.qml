@@ -6,7 +6,7 @@ Rectangle {
     property int entryHeight: 54
 
     id: root
-    height: (unit0.height * 4) + (unit0.anchors.topMargin * 4)//200
+    height: (unit0.height * 4) + (units.spacing * 6)
     width: 800
     color: "#7e8c24"
     border.color: "#1e1c00"
@@ -44,18 +44,18 @@ Rectangle {
         return units.childAt(x, y);
     }
 
-    Item {
+    Grid {
         id: units
         anchors.fill: parent
+        anchors.topMargin: 2
+        anchors.leftMargin: 2
+        spacing: 2
+        rows: 4
+        flow: Grid.TopToBottom
 
-        // This is (temporarily) done in a very, very crude fashion.
         RosterMenuEntry {
             id: unit0
             index: 0
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 2
-            anchors.topMargin: 2
 
             width: entryWidth
             height: entryHeight
@@ -63,10 +63,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit1
             index: 1
-            anchors.left: parent.left
-            anchors.top: unit0.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -74,10 +70,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit2
             index: 2
-            anchors.left: parent.left
-            anchors.top: unit1.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -85,10 +77,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit3
             index: 3
-            anchors.left: parent.left
-            anchors.top: unit2.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -96,10 +84,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit4
             index: 4
-            anchors.left: unit0.right
-            anchors.top: parent.top
-            anchors.leftMargin: 2
-            anchors.topMargin: 2
 
             width: entryWidth
             height: entryHeight
@@ -107,10 +91,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit5
             index: 5
-            anchors.left: unit1.right
-            anchors.top: unit4.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -118,10 +98,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit6
             index: 6
-            anchors.left: unit2.right
-            anchors.top: unit5.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -129,10 +105,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit7
             index: 7
-            anchors.left: unit3.right
-            anchors.top: unit6.bottom
-            anchors.leftMargin: 2
-            anchors.topMargin: 1
 
             width: entryWidth
             height: entryHeight
@@ -140,10 +112,6 @@ Rectangle {
         RosterMenuEntry {
             id: unit8
             index: 8
-            anchors.left: unit4.right
-            anchors.top: parent.top
-            anchors.leftMargin: 2
-            anchors.topMargin: 2
 
             width: entryWidth
             height: entryHeight

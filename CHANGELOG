@@ -13,6 +13,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add QML scene resizing together with window
  - add zooming to game area
  - context menu is readjusted to show appropriately when game area is zoomed
+ - change roster menu into a QML Grid element
 
 26.11.2011:
  - add drag&drop for OrderMarkers

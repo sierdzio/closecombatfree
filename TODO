@@ -22,7 +22,6 @@ New features:
  - add soldier's menu
  - add unit destruction and health
 
- - change roster menu into a QML Flow element
  - add centering the view on a unit
  - add option to follow a unit
  - add multiple-waypoint move orders
@@ -79,3 +78,4 @@ Done:
     + game window resolution, window state (full screen, maximised)
  + add zooming to game area
  + context menu needs to be readjusted to show appropriately when game area is zoomed
+ + change roster menu into a QML Grid element
