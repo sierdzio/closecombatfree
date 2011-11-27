@@ -1,7 +1,6 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
-//#include <QDebug>
 #include "ccfconfig.h"
 
 int main(int argc, char *argv[])
@@ -11,7 +10,7 @@ int main(int argc, char *argv[])
 
     CcfConfig *configuration = new CcfConfig("config");
     if (configuration->isErrorState()) {
-        printf("Error while reading configuration! Message: "
+        printf("Error while reading configuration file! Message: "
                + configuration->errorMessage().toLocal8Bit() + "\n");
         printf("Loading default configuration... ");
         configuration = new CcfConfig("config_default");
@@ -28,14 +27,12 @@ int main(int argc, char *argv[])
     QString pwd = a.applicationDirPath() + "/";
     viewer->rootContext()->setContextProperty("PWD", pwd);
 
-    viewer->rootContext()->setContextProperty("windowWidth", configuration->configWindowWidth());
-    viewer->rootContext()->setContextProperty("windowHeight", configuration->configWindowHeight());
-
     viewer->setSource(QUrl("base/main.qml"));
     viewer->setAttribute(Qt::WA_OpaquePaintEvent);
     viewer->setAttribute(Qt::WA_NoSystemBackground);
     viewer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
     viewer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+    QObject::connect(viewer, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
 
     viewer->show();
     return a.exec();

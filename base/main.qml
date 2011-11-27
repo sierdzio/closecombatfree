@@ -3,13 +3,13 @@ import "../scenarios"
 
 Rectangle {
     id: root
-    width: windowWidth
-    height: windowHeight
+    width: configWindowWidth
+    height: configWindowHeight
     color: "lightgray"
 
-    Component.onCompleted: {
-        console.log("Configuration from config file:\n" + configurationString());
-    }
+//    Component.onCompleted: {
+//        console.log("Configuration from config file:\n" + configurationString());
+//    }
 
     Scenario {
         id: scenario

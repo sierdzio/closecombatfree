@@ -131,3 +131,14 @@ int CcfConfig::findQtKey(QChar character)
 
     return result;
 }
+
+void CcfConfig::windowResized(QSize newSize)
+{
+    configuration->remove("width");
+    configuration->insert("width", QString::number(newSize.width()));
+    emit configWindowWidthChanged();
+
+    configuration->remove("height");
+    configuration->insert("height", QString::number(newSize.height()));
+    emit configWindowHeightChanged();
+}

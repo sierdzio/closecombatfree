@@ -8,8 +8,9 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - double click in roster now opens context menu
  - add config file, it's parser and root context object.
    Adjust QML to use the new config system
- - add default config file as fallbac when there are problems in the main
+ - add default config file as fallback when there are problems in the main
    one
+ - add QML scene resizing together with window 
 
 26.11.2011:
  - add drag&drop for OrderMarkers

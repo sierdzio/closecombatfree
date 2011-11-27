@@ -3,6 +3,7 @@ Bugs & fixes:
  - issuing attack while on move causes the unit to move to fire destination and fire at the same time
  - order cancelling seems to be broken after recent changes
  - add error checking to config system (check for invalidity of entries)
+ - maximising the window does not cause QML scene to change size
 
 New features:
  - add game menu
