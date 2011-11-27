@@ -1,7 +1,8 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
  - issuing attack while on move causes the unit to move to fire destination and fire at the same time
- - order cancelling seems to be broken after recen changes
+ - order cancelling seems to be broken after recent changes
+ - add error checking to config system (check for invalidity of entries)
 
 New features:
  - add game menu
