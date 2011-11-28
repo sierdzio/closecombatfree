@@ -57,7 +57,9 @@ OTHER_FILES += \
     units/tanks/tests/Tank_tst1_turret.qml \
     units/tanks/tests/Tank_tst1_hull.qml \
     units/tanks/tests/Tank_tst1.qml \
-    gui/HudZoomButton.qml
+    gui/HudZoomButton.qml \
+    gui/PauseInfoBox.qml
+
 
 
 

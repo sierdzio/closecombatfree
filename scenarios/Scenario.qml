@@ -200,6 +200,13 @@ Item {
         z: roster.z + 1
     }
 
+    PauseInfoBox {
+        visible: paused
+
+        anchors.bottom: gameArea.bottom
+        anchors.horizontalCenter: gameArea.horizontalCenter
+    }
+
     HudZoomButton {
         id: zoomInButton
         x: 10

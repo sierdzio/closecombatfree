@@ -79,3 +79,4 @@ Done:
  + add zooming to game area
  + context menu needs to be readjusted to show appropriately when game area is zoomed
  + change roster menu into a QML Grid element
+ + add pause info
