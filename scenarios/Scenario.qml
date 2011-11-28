@@ -31,7 +31,26 @@ Item {
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
         } else {
-            if (ScenarioLogic.selectedUnitsCount() > 0) {
+            if (event.key == keyForFunction("follow")) {
+                if ((followedUnit.running == false) && (ScenarioLogic.selectedUnitsCount() > 0)) {
+                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+                    ScenarioLogic.startFollowingUnit(__unitIndex);
+                } else if (followedUnit.running == true) {
+                    if (ScenarioLogic.selectedUnitsCount() > 0) {
+                        __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
+
+                        if (followedUnit.index == __unitIndex) {
+                            ScenarioLogic.stopFollowingUnit();
+                        } else {
+                            ScenarioLogic.startFollowingUnit(__unitIndex);
+                        }
+                    } else {
+                        ScenarioLogic.stopFollowingUnit();
+                    }
+                } else {
+                    console.log("No unit selected to follow.");
+                }
+            } else if (ScenarioLogic.selectedUnitsCount() > 0) {
                 // Would be good to optimise order key handling into a function
                 if (event.key == keyForFunction("cancel order")) {
                     var selectedUnits = ScenarioLogic.selectedUnits();
@@ -189,7 +208,9 @@ Item {
             }
 
             onDoubleClicked: {
-                ScenarioLogic.handleRightMouseClickRoster(mouse);
+                ScenarioLogic.cleanContextAction();
+                var unit = roster.getUnitAt(mouse.x, mouse.y);
+                ScenarioLogic.centerViewOnUnit(unit);
             }
         }
     }
@@ -200,10 +221,22 @@ Item {
         z: roster.z + 1
     }
 
-    PauseInfoBox {
+    SimpleInfoBox {
         visible: paused
+        header: "Pause activated"
+        text: "This is active pause. You can still give orders."
 
         anchors.bottom: gameArea.bottom
+        anchors.horizontalCenter: gameArea.horizontalCenter
+    }
+
+    SimpleInfoBox {
+        id: followingInfoBox
+        visible: followedUnit.running
+        header: "Following:"
+        text: ""
+
+        anchors.top: gameArea.top
         anchors.horizontalCenter: gameArea.horizontalCenter
     }
 
@@ -241,6 +274,13 @@ Item {
         }
     }
 
+    Item {
+        property int index: -1
+        property bool running: false
+
+        id: followedUnit
+    }
+
     // Timer for aimline rotation updates.
     Timer {
         id: rotationTimer
@@ -271,6 +311,17 @@ Item {
         triggeredOnStart: true
         onTriggered: {
             ScenarioLogic.updateEffects();
+        }
+    }
+
+    // Timer for unit following..
+    Timer {
+        id: followingTimer
+        interval: 20
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: {
+            ScenarioLogic.updateFollowingUnit();
         }
     }
 

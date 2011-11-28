@@ -4,7 +4,11 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 
 === === === ===
 28.11.2011:
+ - add SimpleInfoBox to gui - useful for displaying short messages
  - add pause info box
+ - add centering view on a unit (when double clicking on roster entry)
+ - add unit follow status box
+ - add unit following
 
 27.11.2011:
  - context menu now openes on mouse hold in mobile mode

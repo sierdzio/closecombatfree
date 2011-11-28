@@ -4,6 +4,7 @@ Bugs & fixes:
  - order cancelling seems to be broken after recent changes
  - add error checking to config system (check for invalidity of entries)
  - maximising the window does not cause QML scene to change size
+ - optimise timer running when following a unit (it can be turned off when unit is stationary)
 
 New features:
  - add game menu
@@ -22,8 +23,7 @@ New features:
  - add soldier's menu
  - add unit destruction and health
 
- - add centering the view on a unit
- - add option to follow a unit
+ - add an indicator of level of zoom (in percentage, probably)
  - add multiple-waypoint move orders
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
@@ -46,6 +46,7 @@ Big ideas for the future:
    and communicating with others about general tactics
  - add online updates and units/maps/scenario/campaign repositories
  - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
+ - parametrize UI to allow easy modding and skins creation
 
 Done:
  + move generic tank properties into a C++ QObject (or a separate QML object)
@@ -80,3 +81,5 @@ Done:
  + context menu needs to be readjusted to show appropriately when game area is zoomed
  + change roster menu into a QML Grid element
  + add pause info
+ + add centering the view on a unit
+ + add option to follow a unit

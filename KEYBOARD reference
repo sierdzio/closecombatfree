@@ -7,12 +7,13 @@ Ctrl + LMB - select multiple units
 Ctrl + [digit] - create a unit group
 [digit] - select a previously created unit group
 
+P - pause
 S - cancel order (stop)
-F - move fast
+F - follow unit
+R - move fast (run)
 M - move
 N - sneak
 A - attack
 K - smoke
 D - defend
 B - ambush
-P - pause

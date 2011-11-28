@@ -329,6 +329,33 @@ function handleMouseReleased() {
     }
 }
 
+function centerViewOnUnit(unit) {
+    gameArea.contentX = unit.x - gameArea.width/2;
+    gameArea.contentY = unit.y - gameArea.height/2;
+}
+
+function startFollowingUnit(index) {
+    followedUnit.index = index;
+    followedUnit.running = true;
+    followingInfoBox.text = "Unit name: " + units.item.children[index].unitType;
+
+    if (followingTimer.running == false)
+        followingTimer.start();
+}
+
+function stopFollowingUnit() {
+    followedUnit.index = -1;
+    followedUnit.running = false;
+
+    if (followingTimer.running == true)
+        followingTimer.stop();
+}
+
+function updateFollowingUnit() {
+    var unit = units.item.children[followedUnit.index];
+    centerViewOnUnit(unit);
+}
+
 function updateRubberBand(x, y) {
     var rubberX, rubberY, rubberX2, rubberY2; // 2 edges of the rubber band,
                                               // in root's coordinates.
