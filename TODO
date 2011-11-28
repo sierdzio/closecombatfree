@@ -11,6 +11,9 @@ New features:
  - preferences menu
  - add UI elements:
     - UI mode switch (desktop/ mobile)
+    - zoom buttons
+    - status messages area
+    - unified infobox viewer
  - add campaigns
  - add guns
  - add infantry
@@ -23,6 +26,7 @@ New features:
  - add soldier's menu
  - add unit destruction and health
 
+ - add group following
  - add an indicator of level of zoom (in percentage, probably)
  - add multiple-waypoint move orders
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects

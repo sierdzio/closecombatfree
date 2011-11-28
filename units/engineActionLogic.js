@@ -61,25 +61,16 @@ function cancelOrder () {
     changeStatus("STOPPED");
 
     if ((firing == false) && (smoking == false))  {
-        var newX = x;
-        var newY = y;
-        x = newX;
-        y = newY;
-        __tempX = newX;
-        __tempY = newY;
-        xMoveAnimation.duration = 0;
-        yMoveAnimation.duration = 0;
+        xMoveAnimation.stop();
+        yMoveAnimation.stop();
+        rotationAnimation.stop();
 
-        var newRotation = rotation;
-        rotation = newRotation;
-        rotationAnimation.duration = 0;
         changeStatus("READY");
     }
 
     if ((firing == true) || (smoking == true))  {
-        var newTurretRotation = turretRotation;
-        turretRotation = newTurretRotation;
-        turretRotationAnimation.duration = 0;
+        turretRotationAnimation.stop();
+
         smoking = false;
         firing = false;
         changeStatus("READY");

@@ -96,13 +96,11 @@ function issueActionOrder(child, x, y) {
 }
 
 function modifyTargetFromMarker(unitIndex) {
-//    console.log("Modifying target: " + unitIndex);
     var marker = orderMarkersContainer[unitIndex];
     var newX = marker.x + marker.centerX;
     var newY = marker.y + marker.centerY;
     var unit = units.item.children[unitIndex];
 
-//    cancelOrder(unit.unitIndex);
     unit.cancelOrder();
     issueActionOrder(unit, newX, newY);
 }
@@ -117,11 +115,6 @@ function actionFinished(index, targetX, targetY) {
 
     calculateOrderMarkerVisibility(index);
 }
-
-//function cancelOrder(index) {
-//    var unit = units.item.children[index];
-//    unit.
-//}
 
 function firingActionFinished(index, targetX, targetY) {
     // This component renders in-game effects (not all,
@@ -579,16 +572,12 @@ function calculateOrderMarkerVisibility(index) {
     var orderMarker = orderMarkersContainer[index];
     var child = units.item.children[index];
 
-    if (child.selected == true) {
-        if ((child.unitStatus == "READY")
-                || (child.unitStatus == "DEFENDING")
-                || (child.unitStatus == "AMBUSHING")) {
-            orderMarker.visible = false;
-        } else {
-            orderMarker.visible = true;
-        }
-    } else {
+    if ((child.unitStatus == "READY")
+            || (child.unitStatus == "DEFENDING")
+            || (child.unitStatus == "AMBUSHING")) {
         orderMarker.visible = false;
+    } else {
+        orderMarker.visible = true;
     }
 }
 

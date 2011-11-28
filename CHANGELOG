@@ -9,6 +9,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add centering view on a unit (when double clicking on roster entry)
  - add unit follow status box
  - add unit following
+ - fix order cancelling
+ - make OrderMarkers remain visible even when unit is deselected
 
 27.11.2011:
  - context menu now openes on mouse hold in mobile mode

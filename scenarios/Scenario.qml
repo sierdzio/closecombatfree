@@ -56,6 +56,7 @@ Item {
                     var selectedUnits = ScenarioLogic.selectedUnits();
                     for (var i = 0; i < selectedUnits.length; i++) {
                         selectedUnits[i].cancelOrder();
+                        ScenarioLogic.calculateOrderMarkerVisibility(selectedUnits[i].unitIndex);
                     }
                 } else if (event.key == keyForFunction("Move fast")) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
