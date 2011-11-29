@@ -31,7 +31,11 @@ Item {
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
         } else {
-            if (event.key == keyForFunction("follow")) {
+            if (event.key == keyForFunction("zoom in")) {
+                zoomIn();
+            } else if (event.key == keyForFunction("zoom out")) {
+                zoomOut();
+            } else if (event.key == keyForFunction("follow")) {
                 if ((followedUnit.running == false) && (ScenarioLogic.selectedUnitsCount() > 0)) {
                     __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
                     ScenarioLogic.startFollowingUnit(__unitIndex);
@@ -252,9 +256,7 @@ Item {
             acceptedButtons: Qt.LeftButton
             anchors.fill: parent
 
-            onClicked: {
-                zoom += 0.1;
-            }
+            onClicked: zoomIn();
         }
     }
 
@@ -269,9 +271,7 @@ Item {
             acceptedButtons: Qt.LeftButton
             anchors.fill: parent
 
-            onClicked: {
-                zoom -= 0.1;
-            }
+            onClicked: zoomOut();
         }
     }
 
@@ -355,6 +355,14 @@ Item {
         }
 
         return result;
+    }
+
+    function zoomIn() {
+        zoom += 0.1;
+    }
+
+    function zoomOut() {
+        zoom -= 0.1;
     }
 
     // ------------------

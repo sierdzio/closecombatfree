@@ -17,6 +17,8 @@ height = 800
 ######
 # Keyboard layout:
 pause = p
+zoom in = =
+zoom out = -
 # Orders:
 follow = f
 stop = s

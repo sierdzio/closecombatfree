@@ -21,7 +21,6 @@ function scheduleContextAction(index, operation) {
                 children[i].cancelOrder();
                 calculateOrderMarkerVisibility(children[i].unitIndex);
             }
-
             cleanContextAction();
         } else
         // Draw aim line for all move/attack operations.

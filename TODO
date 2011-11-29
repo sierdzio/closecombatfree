@@ -25,6 +25,7 @@ New features:
  - add single soldiers within a unit
  - add soldier's menu
  - add unit destruction and health
+ - add map obstacles, buildings, terrain information
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
 

@@ -6,6 +6,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 29.11.2011:
  - add stop to context menu entry
  - make context menu grid based
+ - add zoom in and zoom out keyboar binding ('=' and '-' respectively)
 
 28.11.2011:
  - add SimpleInfoBox to gui - useful for displaying short messages

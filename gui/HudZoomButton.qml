@@ -2,8 +2,9 @@ import QtQuick 1.1
 
 Rectangle {
     property string text: "o"
+    property color backgroundColor: "#bb333232"
 
-    color: "#333232"
+    color: backgroundColor
     width: 30
     height: 30
     radius: 5

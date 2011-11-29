@@ -7,7 +7,7 @@ Rectangle {
 
     id: root
     height: (unit0.height * 4) + (units.spacing * 6)
-    width: 800
+    width: 600
     color: "#7e8c24"
     border.color: "#1e1c00"
     border.width: 2
@@ -51,6 +51,7 @@ Rectangle {
         anchors.leftMargin: 2
         spacing: 2
         rows: 4
+        columns: 4
         flow: Grid.TopToBottom
 
         RosterMenuEntry {
