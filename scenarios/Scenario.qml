@@ -52,7 +52,7 @@ Item {
                 }
             } else if (ScenarioLogic.selectedUnitsCount() > 0) {
                 // Would be good to optimise order key handling into a function
-                if (event.key == keyForFunction("cancel order")) {
+                if (event.key == keyForFunction("Stop")) {
                     var selectedUnits = ScenarioLogic.selectedUnits();
                     for (var i = 0; i < selectedUnits.length; i++) {
                         selectedUnits[i].cancelOrder();

@@ -17,8 +17,9 @@ height = 800
 ######
 # Keyboard layout:
 pause = p
+# Orders:
 follow = f
-cancel order = s
+stop = s
 move fast = r
 move = m
 sneak = n

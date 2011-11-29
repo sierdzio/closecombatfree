@@ -1,10 +1,10 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
  - issuing attack while on move causes the unit to move to fire destination and fire at the same time
- - order cancelling seems to be broken after recent changes
  - add error checking to config system (check for invalidity of entries)
  - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
+ - change "child" variables in logic into "unit" variables
 
 New features:
  - add game menu
@@ -25,6 +25,8 @@ New features:
  - add single soldiers within a unit
  - add soldier's menu
  - add unit destruction and health
+
+ - add per-unit order queues (that is a big one, but might help a lot in the future)
 
  - add group following
  - add an indicator of level of zoom (in percentage, probably)
@@ -87,3 +89,5 @@ Done:
  + add pause info
  + add centering the view on a unit
  + add option to follow a unit
+ + (fixed) order cancelling seems to be broken after recent changes
+ + add order cancelling to unit's contex menu

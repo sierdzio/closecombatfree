@@ -15,6 +15,15 @@ function scheduleContextAction(index, operation) {
 
     // Prevents some strange errors in certain situations.
     if (child.centerY != undefined) {
+        if (operation == "Stop") {
+            // Iterate over every unit!
+            for (var i = 0; i < children.length; i++) {
+                children[i].cancelOrder();
+                calculateOrderMarkerVisibility(children[i].unitIndex);
+            }
+
+            cleanContextAction();
+        } else
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
             aimLine.x = child.x + child.centerX;
@@ -47,7 +56,9 @@ function performContextAction(index, targetX, targetY) {
     var child = units.item.children[index];
     var scheduledOperation = child.scheduledOperation;
 
-    if ((scheduledOperation != "Ambush") && (scheduledOperation != "Defend")) {
+    if ((scheduledOperation != "Ambush")
+            && (scheduledOperation != "Defend")
+            && (scheduledOperation != "Stop")) {
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
