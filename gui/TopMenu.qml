@@ -96,7 +96,7 @@ Item {
                     target: menu;
                     property: "x";
                     to: (trigger.x - menu.width);
-                    duration: 500
+                    duration: 300
                 }
             }
         },
@@ -110,7 +110,7 @@ Item {
                     target: menu;
                     property: "x";
                     to: (trigger.x);
-                    duration: 500
+                    duration: 300
                 }
                 ScriptAction {
                     script: menu.visible = false;

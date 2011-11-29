@@ -9,6 +9,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add zoom in and zoom out keyboar binding ('=' and '-' respectively)
  - parametrised SimpleInfoBox
  - add TopMenu (with new ZoomBox, MenuEntry, PopUpArrow elements)
+ - add "Follow" to context menu
+ - double click on gameArea now stops following
 
 28.11.2011:
  - add SimpleInfoBox to gui - useful for displaying short messages

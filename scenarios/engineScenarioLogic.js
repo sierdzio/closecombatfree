@@ -22,6 +22,8 @@ function scheduleContextAction(index, operation) {
                 calculateOrderMarkerVisibility(children[i].unitIndex);
             }
             cleanContextAction();
+        } else if (operation == "Follow") {
+            startFollowingUnit(child.unitIndex);
         } else
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
@@ -57,7 +59,8 @@ function performContextAction(index, targetX, targetY) {
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
-            && (scheduledOperation != "Stop")) {
+            && (scheduledOperation != "Stop")
+            && (scheduledOperation != "Follow")) {
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
@@ -340,7 +343,8 @@ function centerViewOnUnit(unit) {
 function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
-    followingInfoBox.bodyText = "Unit name: " + units.item.children[index].unitType;
+    followingInfoBox.bodyText = "Unit name: " + units.item.children[index].unitType
+            + "\nDouble click to stop.";
 
     if (followingTimer.running == false)
         followingTimer.start();

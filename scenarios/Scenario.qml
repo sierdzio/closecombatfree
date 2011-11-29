@@ -154,6 +154,9 @@ Item {
                     gameArea.interactive = true;
                 }
             }
+            onDoubleClicked: {
+                ScenarioLogic.stopFollowingUnit();
+            }
         }
 
         Rectangle {

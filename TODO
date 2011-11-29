@@ -10,8 +10,8 @@ New features:
  - add game menu
  - preferences menu
  - add UI elements:
-    - UI mode switch (desktop/ mobile)
-    - zoom buttons
+    + UI mode switch (desktop/ mobile)
+    + zoom buttons
     - status messages area
     - unified infobox viewer
  - add campaigns
@@ -29,7 +29,6 @@ New features:
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
 
- - add uiMode changing to config
  - add config saver to config
  - add group following
  - add an indicator of level of zoom (in percentage, probably)
@@ -94,3 +93,4 @@ Done:
  + add option to follow a unit
  + (fixed) order cancelling seems to be broken after recent changes
  + add order cancelling to unit's contex menu
+ + add uiMode changing to config

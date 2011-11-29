@@ -25,7 +25,7 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: 2
         spacing: 1
-        rows: 8
+        rows: 9
         flow: Grid.TopToBottom
 
         ContextMenuEntry {
@@ -36,6 +36,7 @@ Rectangle {
 
             Component.onCompleted: moveFastButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: moveButton
             buttonText: qsTr("Move")
@@ -44,6 +45,7 @@ Rectangle {
 
             Component.onCompleted: moveButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: sneakButton
             buttonText: qsTr("Sneak")
@@ -52,6 +54,7 @@ Rectangle {
 
             Component.onCompleted: sneakButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: smokeButton
             buttonText: qsTr("Smoke")
@@ -60,6 +63,7 @@ Rectangle {
 
             Component.onCompleted: smokeButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: attackButton
             buttonText: qsTr("Attack")
@@ -68,6 +72,7 @@ Rectangle {
 
             Component.onCompleted: attackButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: ambushButton
             buttonText: qsTr("Ambush")
@@ -76,6 +81,7 @@ Rectangle {
 
             Component.onCompleted: ambushButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: defendButton
             buttonText: qsTr("Defend")
@@ -84,6 +90,7 @@ Rectangle {
 
             Component.onCompleted: defendButton.entryClicked.connect(prepareSignal);
         }
+
         ContextMenuEntry {
             id: stopButton
             buttonText: qsTr("Stop")
@@ -91,6 +98,15 @@ Rectangle {
             height: __buttonHeight
 
             Component.onCompleted: stopButton.entryClicked.connect(prepareSignal);
+        }
+
+        ContextMenuEntry {
+            id: followButton
+            buttonText: qsTr("Follow")
+            width: __buttonWidth
+            height: __buttonHeight
+
+            Component.onCompleted: followButton.entryClicked.connect(prepareSignal);
         }
     }
 }
