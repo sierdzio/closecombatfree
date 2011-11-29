@@ -1,13 +1,15 @@
 import QtQuick 1.1
 
 Item {
-    property real currentZoom: zoomBox.currentZoom
+    property int currentZoom: 100
     property bool open: trigger.poppedUp
     property color backgroundColor: "#dd333232"
 
     signal pauseEntryClicked();
     signal optionsEntryClicked();
     signal uiModeEntryClicked();
+    signal zoomIn();
+    signal zoomOut();
 
     onOptionsEntryClicked: {
         console.log("Options entry clicked.");
@@ -21,10 +23,13 @@ Item {
         pauseEntry.entryClicked.connect(pauseEntryClicked);
         optionsEntry.entryClicked.connect(optionsEntryClicked);
         modeEntry.entryClicked.connect(uiModeEntryClicked);
+        zoomBox.zoomIn.connect(zoomIn);
+        zoomBox.zoomOut.connect(zoomOut);
     }
 
     id: root
     height: 30
+    state: "closed"
 
     PopUpArrow {
         id: trigger
@@ -36,12 +41,14 @@ Item {
     Row {
         id: menu
         visible: false
-        anchors.right: trigger.left
+        x: trigger.x
         anchors.top: trigger.top
+        z: trigger.z - 1
 
         ZoomBox {
             id: zoomBox
             size: root.height
+            currentZoom: root.currentZoom
         }
 
         MenuEntry {
@@ -66,11 +73,48 @@ Item {
 
     states: [
         State {
+            when: (open == false)
+            name: "closed"
+        },
+
+        State {
             when: (open == true)
             name: "opened"
-            PropertyChanges {
-                target: menu
-                visible: true
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "closed"
+            to: "opened"
+
+            SequentialAnimation {
+                ScriptAction {
+                    script: menu.visible = true;
+                }
+                NumberAnimation {
+                    target: menu;
+                    property: "x";
+                    to: (trigger.x - menu.width);
+                    duration: 500
+                }
+            }
+        },
+
+        Transition {
+            from: "opened"
+            to: "closed"
+
+            SequentialAnimation {
+                NumberAnimation {
+                    target: menu;
+                    property: "x";
+                    to: (trigger.x);
+                    duration: 500
+                }
+                ScriptAction {
+                    script: menu.visible = false;
+                }
             }
         }
     ]

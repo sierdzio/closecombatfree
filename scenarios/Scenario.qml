@@ -8,7 +8,7 @@ Item {
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
-    property real zoom: topMenu.currentZoom // Defaults to 1.0 == 100%
+    property real zoom: 1.0
     property bool paused: false
 
     signal togglePause ()
@@ -249,9 +249,12 @@ Item {
         id: topMenu
         anchors.top: gameArea.top
         anchors.right: gameArea.right
+        currentZoom: (zoom * 100)
 
         Component.onCompleted: {
             topMenu.pauseEntryClicked.connect(togglePause);
+            topMenu.zoomIn.connect(root.zoomIn);
+            topMenu.zoomOut.connect(root.zoomOut);
         }
     }
 
@@ -337,13 +340,13 @@ Item {
         return result;
     }
 
-//    function zoomIn() {
-//        zoom += 0.1;
-//    }
+    function zoomIn() {
+        zoom += 0.1;
+    }
 
-//    function zoomOut() {
-//        zoom -= 0.1;
-//    }
+    function zoomOut() {
+        zoom -= 0.1;
+    }
 
     // ------------------
     // Testing area.

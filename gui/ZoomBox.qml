@@ -2,8 +2,11 @@ import QtQuick 1.1
 
 Rectangle {
     property int size: 50
-    property real currentZoom: 1.0
+    property int currentZoom: 100
     property color backgroundColor: "#bb333232"
+
+    signal zoomIn();
+    signal zoomOut();
 
     color: backgroundColor
     width: (2 * height) + zoomText.paintedWidth
@@ -25,7 +28,7 @@ Rectangle {
 
     Text {
         id: zoomText
-        text: (currentZoom * 100) + "%"
+        text: currentZoom + "%" //(currentZoom * 100) + "%"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pointSize: size/2
@@ -43,11 +46,11 @@ Rectangle {
         anchors.right: parent.right
     }
 
-    function zoomIn() {
-        currentZoom += 0.1
-    }
+//    function zoomIn() {
+//        currentZoom += 0.1
+//    }
 
-    function zoomOut() {
-        currentZoom -= 0.1
-    }
+//    function zoomOut() {
+//        currentZoom -= 0.1
+//    }
 }
