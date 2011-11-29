@@ -340,7 +340,7 @@ function centerViewOnUnit(unit) {
 function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
-    followingInfoBox.text = "Unit name: " + units.item.children[index].unitType;
+    followingInfoBox.bodyText = "Unit name: " + units.item.children[index].unitType;
 
     if (followingTimer.running == false)
         followingTimer.start();

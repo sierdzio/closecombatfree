@@ -57,8 +57,20 @@ OTHER_FILES += \
     units/tanks/tests/Tank_tst1_turret.qml \
     units/tanks/tests/Tank_tst1_hull.qml \
     units/tanks/tests/Tank_tst1.qml \
-    gui/HudZoomButton.qml \
-    gui/SimpleInfoBox.qml
+    gui/SimpleInfoBox.qml \
+    gui/PopUpArrow.qml \
+    gui/TopMenu.qml \
+    gui/MenuEntry.qml \
+    gui/ZoomBox.qml \
+    gui/ZoomButton.qml
+
+
+
+
+
+
+
+
 
 
 

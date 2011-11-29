@@ -29,6 +29,23 @@ QString CcfConfig::uiMode()
     return configuration->value("uimode").toUpper();
 }
 
+void CcfConfig::toggleUiMode()
+{
+    QString mode = configuration->value("uimode");
+
+    if (mode == "desktop") {
+        mode = "mobile";
+        configuration->remove("uimode");
+        configuration->insert("uimode", mode);
+        emit uiModeChanged();
+    } else if (mode == "mobile") {
+        mode = "desktop";
+        configuration->remove("uimode");
+        configuration->insert("uimode", mode);
+        emit uiModeChanged();
+    }
+}
+
 int CcfConfig::configWindowWidth()
 {
     return configuration->value("width").toInt();

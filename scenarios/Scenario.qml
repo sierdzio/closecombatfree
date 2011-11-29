@@ -8,7 +8,7 @@ Item {
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
-    property real zoom: 1.0
+    property real zoom: topMenu.currentZoom // Defaults to 1.0 == 100%
     property bool paused: false
 
     signal togglePause ()
@@ -228,8 +228,8 @@ Item {
 
     SimpleInfoBox {
         visible: paused
-        header: "Pause activated"
-        text: "This is active pause. You can still give orders."
+        headerText: "Pause activated"
+        bodyText: "This is active pause. You can still give orders."
 
         anchors.bottom: gameArea.bottom
         anchors.horizontalCenter: gameArea.horizontalCenter
@@ -238,40 +238,20 @@ Item {
     SimpleInfoBox {
         id: followingInfoBox
         visible: followedUnit.running
-        header: "Following:"
-        text: ""
+        headerText: "Following:"
+        bodyText: ""
 
         anchors.top: gameArea.top
         anchors.horizontalCenter: gameArea.horizontalCenter
     }
 
-    HudZoomButton {
-        id: zoomInButton
-        x: 10
-        y: 10
-        text: "+"
+    TopMenu {
+        id: topMenu
+        anchors.top: gameArea.top
+        anchors.right: gameArea.right
 
-        MouseArea {
-            id: mouseAreaZoomIn
-            acceptedButtons: Qt.LeftButton
-            anchors.fill: parent
-
-            onClicked: zoomIn();
-        }
-    }
-
-    HudZoomButton {
-        id: zoomOutButton
-        x: 10
-        y: 45
-        text: "-"
-
-        MouseArea {
-            id: mouseAreaZoomOut
-            acceptedButtons: Qt.LeftButton
-            anchors.fill: parent
-
-            onClicked: zoomOut();
+        Component.onCompleted: {
+            topMenu.pauseEntryClicked.connect(togglePause);
         }
     }
 
@@ -357,13 +337,13 @@ Item {
         return result;
     }
 
-    function zoomIn() {
-        zoom += 0.1;
-    }
+//    function zoomIn() {
+//        zoom += 0.1;
+//    }
 
-    function zoomOut() {
-        zoom -= 0.1;
-    }
+//    function zoomOut() {
+//        zoom -= 0.1;
+//    }
 
     // ------------------
     // Testing area.

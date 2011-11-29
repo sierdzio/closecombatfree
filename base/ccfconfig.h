@@ -11,7 +11,7 @@
 class CcfConfig : public QObject, public CcfError
 {
     Q_OBJECT
-    Q_PROPERTY(QString uiMode READ uiMode)
+    Q_PROPERTY(QString uiMode READ uiMode NOTIFY uiModeChanged)
     Q_PROPERTY(int configWindowWidth READ configWindowWidth NOTIFY configWindowWidthChanged)
     Q_PROPERTY(int configWindowHeight READ configWindowHeight NOTIFY configWindowHeightChanged)
 
@@ -20,6 +20,7 @@ public:
 
     Q_INVOKABLE QString configurationString();
     Q_INVOKABLE int keyForFunction(const QString &functionName);
+    Q_INVOKABLE void toggleUiMode();
 
     QString uiMode();
     int configWindowWidth();
@@ -31,6 +32,7 @@ public slots:
 signals:
     void configWindowWidthChanged();
     void configWindowHeightChanged();
+    void uiModeChanged();
 
 private:
     int findQtKey(QChar character);

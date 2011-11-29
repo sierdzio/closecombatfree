@@ -29,6 +29,8 @@ New features:
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
 
+ - add uiMode changing to config
+ - add config saver to config
  - add group following
  - add an indicator of level of zoom (in percentage, probably)
  - add multiple-waypoint move orders

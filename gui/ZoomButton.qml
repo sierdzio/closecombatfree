@@ -1,12 +1,15 @@
 import QtQuick 1.1
 
 Rectangle {
+    property int size: 30
     property string text: "o"
     property color backgroundColor: "#bb333232"
 
+    signal zoomButtonClicked();
+
     color: backgroundColor
-    width: 30
-    height: 30
+    width: size
+    height: height
     radius: 5
 
     Text {
@@ -19,5 +22,13 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         font.pointSize: 25
         font.bold: true
+
+        MouseArea {
+            id: mouseAreaZoom
+            acceptedButtons: Qt.LeftButton
+            anchors.fill: parent
+
+            onClicked: zoomButtonClicked();
+        }
     }
 }

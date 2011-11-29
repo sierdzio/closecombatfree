@@ -7,6 +7,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add stop to context menu entry
  - make context menu grid based
  - add zoom in and zoom out keyboar binding ('=' and '-' respectively)
+ - parametrised SimpleInfoBox
+ - add TopMenu (with new ZoomBox, MenuEntry, PopUpArrow elements)
 
 28.11.2011:
  - add SimpleInfoBox to gui - useful for displaying short messages
