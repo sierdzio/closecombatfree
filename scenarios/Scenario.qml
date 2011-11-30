@@ -209,39 +209,52 @@ Item {
 //                                            + "\nMenu y: " + menu.y
 //                                            + "\nGame area height: " + gameArea.height);
 
-        Row {
+        Flickable {
             id: menu
             visible: false
             anchors.left: bottomMenu.left
             height: roster.height
             width: bottomMenu.width
+            flickableDirection: Flickable.HorizontalFlick
+            contentWidth: roster.width + soldierMenu.width
+            contentHeight: roster.height
+            clip: true
 
-            RosterMenu {
-                id: roster
-                width: bottomMenu.width
+            Row {
+                anchors.fill: parent
 
-                Component.onCompleted: {
-                    populateUnits(units.item.children);
-                }
+                RosterMenu {
+                    id: roster
+                    width: bottomMenu.width
 
-                MouseArea {
-                    id: mouseAreaRoster
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    Component.onCompleted: {
+                        populateUnits(units.item.children);
+                    }
 
-                    onClicked: {
-                        if (mouse.button == Qt.LeftButton) {
-                            ScenarioLogic.handleLeftMouseClickRoster(mouse);
-                        } else if (mouse.button == Qt.RightButton) {
-                            ScenarioLogic.handleRightMouseClickRoster(mouse);
+                    MouseArea {
+                        id: mouseAreaRoster
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                        onClicked: {
+                            if (mouse.button == Qt.LeftButton) {
+                                ScenarioLogic.handleLeftMouseClickRoster(mouse);
+                            } else if (mouse.button == Qt.RightButton) {
+                                ScenarioLogic.handleRightMouseClickRoster(mouse);
+                            }
+                        }
+
+                        onDoubleClicked: {
+                            ScenarioLogic.cleanContextAction();
+                            var unit = roster.getUnitAt(mouse.x, mouse.y);
+                            ScenarioLogic.centerViewOnUnit(unit);
                         }
                     }
+                }
 
-                    onDoubleClicked: {
-                        ScenarioLogic.cleanContextAction();
-                        var unit = roster.getUnitAt(mouse.x, mouse.y);
-                        ScenarioLogic.centerViewOnUnit(unit);
-                    }
+                SoldierMenu {
+                    id: soldierMenu
+                    width: bottomMenu.width
                 }
             }
         }

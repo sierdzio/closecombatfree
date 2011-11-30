@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "../"
+import "../../"
 
 Tank {
     id: root
@@ -18,5 +19,37 @@ Tank {
 
     Tank_tst1_turret {
         id: turret
+    }
+
+    // This should be redesigned into a C++ property
+    Item {
+        id: soldierContainer
+
+        Soldier {
+            role: "Commander"
+        }
+
+        Soldier {
+            role: "Gunner"
+        }
+
+        Soldier {
+            role: "Loader"
+        }
+
+        Soldier {
+            role: "Assistant"
+        }
+
+        Soldier {
+            role: "Assistant"
+        }
+    }
+
+    Component.onCompleted: {
+        var allSoldiers = soldierContainer.children;
+        for (var i = 0; i < allSoldiers.length; i++) {
+            addSoldier(allSoldiers[i]);
+        }
     }
 }

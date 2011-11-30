@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "engineRosterLogic.js" as RosterLogic
+import "../base/engineLogicHelpers.js" as Logic
 
 Rectangle {
     property string entryText: ""
@@ -8,14 +8,12 @@ Rectangle {
     property string entryLogo: ""
     property int index: 0
 
-//    signal entryClicked(string entryName)
-
     id: root
     color: "#5e6c24"
     border.color: "#1e1c00"
     border.width: 1
-    width: 125
-    height: 50
+    width: 175
+    height: 54
 
     Image {
         id: logo
@@ -74,7 +72,7 @@ Rectangle {
     function changeStatus(newStatusMessage) {
         entryStatusText = newStatusMessage;
 
-        var newColor = RosterLogic.colorForStatus(newStatusMessage);
+        var newColor = Logic.colorForStatus(newStatusMessage);
         if (newColor != "ERROR")
             entryStatusColor = newColor;
         else

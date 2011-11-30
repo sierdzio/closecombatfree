@@ -22,8 +22,6 @@ New features:
  - add fuel and ammo caps for units
  - add in-game chat
  - add deployment phase before the battle
- - add single soldiers within a unit
- - add soldier's menu
  - add unit destruction and health
  - add map obstacles, buildings, terrain information
 
@@ -31,7 +29,6 @@ New features:
 
  - add config saver to config
  - add group following
- - add an indicator of level of zoom (in percentage, probably)
  - add multiple-waypoint move orders
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
@@ -57,41 +54,5 @@ Big ideas for the future:
  - parametrize UI to allow easy modding and skins creation
 
 Done:
- + move generic tank properties into a C++ QObject (or a separate QML object)
- + add status messages to units
- + add generic unit (with, yes, a status)
- + add unit grouping (with Ctrl + digit)
- + fix order mixing (either add a queue, or make orders more tightly connected with objects)
- + add more fire timers (list-based) - it will be required to have multiple fires/ smoke animations
-   rendered OR make all those things unit-based (probably a bad idea) OR make them unit-connected
-   (fixed in an yet another way, much better than those)
- + add unit selection
- + add rubber band selection of units
- + make tanks more flexible (make it easier to add new, modified ones based on the existing)
- + add unified path searching (something like $PWD would be nice to begin with), so that different
-   components and files can be moved around and found more easily
- + add group orders (example: moving 3 selected units)
- + add unit selection in both game area AND roster
- + add order markers (objects indicating, where a unit is going, firing etc.)
- + change order marker's colour according to the order given
- + move trialengine2d out of trial and into master
- + group orders mix their targets (they do not reproduce their layout from before the order)
- + add drag&drop for OrderMarkers
- + add order cancelling
- + add map scrolling
- + (fixed) order cancelling does not stop animation durations (or something), and they spontaneously restart
- + add active pause
- + game config:
-    + keyboard shortcuts
-    + desktop/ mobile mode
-    + game window resolution, window state (full screen, maximised)
- + add zooming to game area
- + context menu needs to be readjusted to show appropriately when game area is zoomed
- + change roster menu into a QML Grid element
- + add pause info
- + add centering the view on a unit
- + add option to follow a unit
- + (fixed) order cancelling seems to be broken after recent changes
- + add order cancelling to unit's contex menu
- + add uiMode changing to config
- + add sliding BottomMenu (pretty crude implementation, but works)
+ + add single soldiers within a unit
+ + add soldier's menu

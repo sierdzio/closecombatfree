@@ -465,11 +465,18 @@ function selectUnit(index, modifier) {
     if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
         deselectAllUnits();
         units.item.children[index].selected = true;
+        soldierMenu.populateSoldiers(units.item.children[index].soldiers());
     } else if ((modifier == Qt.ControlModifier) || (uiMode == "MOBILE")) {
         if (units.item.children[index].selected == true)
             units.item.children[index].selected = false;
         else if (units.item.children[index].selected == false)
             units.item.children[index].selected = true;
+
+        if (selectedUnitsCount() > 1) {
+            soldierMenu.clear();
+        } else if (selectedUnitsCount() == 1) {
+            soldierMenu.populateSoldiers(selectedUnits()[0].soldiers());
+        }
     }
 
     calculateOrderMarkerVisibility(index);
@@ -478,9 +485,11 @@ function selectUnit(index, modifier) {
 function deselectUnit(index) {
     units.item.children[index].selected = false;
     calculateOrderMarkerVisibility(index);
+//    soldierMenu.clear();
 }
 
 function deselectAllUnits() {
+    soldierMenu.clear();
     var children = units.item.children;
     for (var i = 0; i < children.length; i++) {
         deselectUnit(i);

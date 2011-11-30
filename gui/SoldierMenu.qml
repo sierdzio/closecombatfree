@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "engineRosterHelper.js" as RosterHelper
+import "engineRosterHelper.js" as SoldierHelper
 
 Rectangle {
     property int entryWidth: 175
@@ -12,36 +12,27 @@ Rectangle {
     border.color: "#1e1c00"
     border.width: 2
 
-    function populateUnits(tmpUnitsList) {
-        RosterHelper.unitsList = tmpUnitsList;
-        for (var i = 0; i < RosterHelper.unitsList.length; i++) {
-            var currentUnit = RosterHelper.unitsList[i];
-            units.children[i].entryText = currentUnit.unitType;
-            units.children[i].entryLogo = currentUnit.unitLogo;
-            units.children[i].changeStatus(currentUnit.unitStatus);
+    function populateSoldiers(tmpSoldiersList) {
+        clear();
+        SoldierHelper.unitsList = tmpSoldiersList;
+        for (var i = 0; i < SoldierHelper.unitsList.length; i++) {
+            var currentUnit = SoldierHelper.unitsList[i];
+            units.children[i].entryText = currentUnit.name + "\n" + currentUnit.role;
+            units.children[i].entryLogo = currentUnit.soldierLogo;
+            units.children[i].changeStatus(currentUnit.status);
             currentUnit.unitStatusChanged.connect(units.children[i].changeStatus);
-            currentUnit.selectionChanged.connect(units.children[i].selectionChanged);
         }
     }
 
-    function getUnitAt(x, y) {
-        var i = -1;
-        var child = units.childAt(x, y);
-
-        if ((child != null)) {
-            i = child.index;
-        } else {
-            return -1;
+    function clear() {
+        SoldierHelper.unitsList = new Array();
+        for (var i = 0; i < 8; i++) {
+            if (units.children[i].entryText != "") {
+                units.children[i].entryText = "";
+                units.children[i].entryLogo = "";
+                units.children[i].entryStatusText = "";
+            }
         }
-
-        if (RosterHelper.unitsList.length <= i)
-            return -1;
-
-        return RosterHelper.unitsList[i];
-    }
-
-    function childAt(x, y) {
-        return units.childAt(x, y);
     }
 
     Grid {

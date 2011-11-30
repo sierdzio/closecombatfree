@@ -2,6 +2,7 @@ import QtQuick 1.1
 import "../gui"
 import "../base/engineLogicHelpers.js" as Logic
 import "engineActionLogic.js" as ActionLogic
+import "unitSoldiers.js" as Soldiers
 
 Item {
     property string unitType: "Generic unit"
@@ -66,6 +67,14 @@ Item {
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage);
+    }
+
+    function soldiers() {
+        return Soldiers.soldiers;
+    }
+
+    function addSoldier(newSoldier) {
+        Soldiers.soldiers.push(newSoldier);
     }
 
     Text {

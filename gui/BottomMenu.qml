@@ -6,14 +6,13 @@ Item {
     property int visibleHeight: 0
 
     id: root
-//    height: 200
     state: "closed"
 
     PopUpArrow {
         id: trigger
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        //        size: root.height
+        rotation: 90
         size: 30
         z: menu.z + 1
     }
@@ -22,19 +21,11 @@ Item {
         State {
             when: (open == false)
             name: "closed"
-//            AnchorChanges {
-//                target: menu
-//                anchors.top: root.bottom
-//            }
         },
 
         State {
             when: (open == true)
             name: "opened"
-//            AnchorChanges {
-//                target: menu
-//                anchors.top: root.top
-//            }
         }
     ]
 
@@ -47,9 +38,6 @@ Item {
                 ScriptAction {
                     script: menu.visible = true;
                 }
-//                AnchorAnimation {
-//                    duration: 500
-//                }
                 NumberAnimation {
                     target: menu
                     properties: "y"
@@ -64,17 +52,14 @@ Item {
             to: "closed"
 
             SequentialAnimation {
-                AnchorAnimation {
-                    duration: 500
-                }
-//                ScriptAction {
-//                    script: menu.visible = false;
-//                }
                 NumberAnimation {
                     target: menu
                     properties: "y"
-                    to: 0//-menu.height
-                    duration: 500
+                    to: 0
+                    duration: 300
+                }
+                ScriptAction {
+                    script: menu.visible = false;
                 }
             }
         }

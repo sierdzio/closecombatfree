@@ -29,7 +29,6 @@ SOURCES += base/main.cpp \
 OTHER_FILES += \
     base/main.qml \
     base/engineLogicHelpers.js \
-    gui/engineRosterLogic.js \
     gui/UnitSelectionBox.qml \
     gui/RubberBand.qml \
     gui/RosterMenuEntry.qml \
@@ -63,7 +62,16 @@ OTHER_FILES += \
     gui/MenuEntry.qml \
     gui/ZoomBox.qml \
     gui/ZoomButton.qml \
-    gui/BottomMenu.qml
+    gui/BottomMenu.qml \
+    units/Soldier.qml \
+    gui/engineRosterHelper.js \
+    gui/SoldierMenu.qml \
+    units/unitSoldiers.js
+
+
+
+
+
 
 
 
