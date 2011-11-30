@@ -99,13 +99,18 @@ Item {
 
     Flickable {
         id: gameArea
-        height: parent.height - roster.height
-        width: parent.width
+        height: parent.height - bottomMenu.visibleHeight
+//        width: parent.width
         contentWidth: map.item.width
         contentHeight: map.item.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
         scale: zoom
+
+        anchors.top: root.top
+        anchors.left: root.left
+        anchors.right: root.right
+//        anchors.bottom: menu.top
 
         Loader {
             id: map
@@ -193,32 +198,51 @@ Item {
         }
     }
 
-    RosterMenu {
-        id: roster
-        width: parent.width
-        anchors.top: gameArea.bottom
+    BottomMenu {        
+        id: bottomMenu
+        anchors.bottom: root.bottom
+        anchors.right: root.right
+        anchors.left: root.left
+        visibleHeight: -menu.y
 
-        Component.onCompleted: {
-            populateUnits(units.item.children);
-        }
+//        onVisibleHeightChanged: console.log("Visible height: " + visibleHeight
+//                                            + "\nMenu y: " + menu.y
+//                                            + "\nGame area height: " + gameArea.height);
 
-        MouseArea {
-            id: mouseAreaRoster
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
+        Row {
+            id: menu
+            visible: false
+            anchors.left: bottomMenu.left
+            height: roster.height
+            width: bottomMenu.width
 
-            onClicked: {
-                if (mouse.button == Qt.LeftButton) {
-                    ScenarioLogic.handleLeftMouseClickRoster(mouse);
-                } else if (mouse.button == Qt.RightButton) {
-                    ScenarioLogic.handleRightMouseClickRoster(mouse);
+            RosterMenu {
+                id: roster
+                width: bottomMenu.width
+
+                Component.onCompleted: {
+                    populateUnits(units.item.children);
                 }
-            }
 
-            onDoubleClicked: {
-                ScenarioLogic.cleanContextAction();
-                var unit = roster.getUnitAt(mouse.x, mouse.y);
-                ScenarioLogic.centerViewOnUnit(unit);
+                MouseArea {
+                    id: mouseAreaRoster
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                    onClicked: {
+                        if (mouse.button == Qt.LeftButton) {
+                            ScenarioLogic.handleLeftMouseClickRoster(mouse);
+                        } else if (mouse.button == Qt.RightButton) {
+                            ScenarioLogic.handleRightMouseClickRoster(mouse);
+                        }
+                    }
+
+                    onDoubleClicked: {
+                        ScenarioLogic.cleanContextAction();
+                        var unit = roster.getUnitAt(mouse.x, mouse.y);
+                        ScenarioLogic.centerViewOnUnit(unit);
+                    }
+                }
             }
         }
     }

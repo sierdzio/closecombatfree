@@ -5,17 +5,10 @@ Rectangle {
     property string bodyText: "Some description"
 
     id: root
-    width: ((header.paintedWidth < body.paintedWidth)? body.paintedWidth : header.paintedWidth) + 6;
+    width: ((header.paintedWidth < body.paintedWidth)? body.paintedWidth : (header.paintedWidth) + 6);
     height: header.paintedHeight + body.paintedHeight + 4;
-//    width: 255
-//    height: 42
     color: "#bb333232"
     radius: 10
-
-//    Component.onCompleted: {
-//        console.log("Header: " + header.paintedHeight + ", " + header.paintedWidth);
-//        console.log("Body: " + body.paintedHeight + ", " + body.paintedWidth);
-//    }
 
     Text {
         id: header

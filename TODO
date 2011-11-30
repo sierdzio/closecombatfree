@@ -94,3 +94,4 @@ Done:
  + (fixed) order cancelling seems to be broken after recent changes
  + add order cancelling to unit's contex menu
  + add uiMode changing to config
+ + add sliding BottomMenu (pretty crude implementation, but works)

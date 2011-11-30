@@ -62,7 +62,9 @@ OTHER_FILES += \
     gui/TopMenu.qml \
     gui/MenuEntry.qml \
     gui/ZoomBox.qml \
-    gui/ZoomButton.qml
+    gui/ZoomButton.qml \
+    gui/BottomMenu.qml
+
 
 
 

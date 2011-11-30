@@ -3,6 +3,9 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+30.11.2011:
+ - add sliding BottomMenu (pretty crude implementation, but works)
+
 29.11.2011:
  - add stop to context menu entry
  - make context menu grid based
