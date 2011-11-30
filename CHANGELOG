@@ -7,6 +7,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add sliding BottomMenu (pretty crude implementation, but works)
  - add soldier menu
  - add single soldiers within a unit
+ - unified infobox viewer
 
 29.11.2011:
  - add stop to context menu entry

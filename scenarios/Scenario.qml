@@ -266,23 +266,26 @@ Item {
         z: roster.z + 1
     }
 
-    SimpleInfoBox {
-        visible: paused
-        headerText: "Pause activated"
-        bodyText: "This is active pause. You can still give orders."
-
+    Row {
+        id: infoboxHolder
         anchors.bottom: gameArea.bottom
         anchors.horizontalCenter: gameArea.horizontalCenter
-    }
 
-    SimpleInfoBox {
-        id: followingInfoBox
-        visible: followedUnit.running
-        headerText: "Following:"
-        bodyText: ""
+        SimpleInfoBox {
+            y: (infoboxHolder.height - height) / 2
+            opacity: paused? 1 : 0
+            headerText: "Pause activated"
+            bodyText: "This is active pause. You can still give orders."
+            Behavior on opacity { NumberAnimation {} }
+        }
 
-        anchors.top: gameArea.top
-        anchors.horizontalCenter: gameArea.horizontalCenter
+        SimpleInfoBox {
+            id: followingInfoBox
+            opacity: (followedUnit.running)? 1 : 0
+            headerText: "Following:"
+            bodyText: ""
+            Behavior on opacity { NumberAnimation {} }
+        }
     }
 
     TopMenu {

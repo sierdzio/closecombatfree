@@ -13,7 +13,7 @@ New features:
     + UI mode switch (desktop/ mobile)
     + zoom buttons
     - status messages area
-    - unified infobox viewer
+    + unified infobox viewer
  - add campaigns
  - add guns
  - add infantry
@@ -26,20 +26,16 @@ New features:
  - add map obstacles, buildings, terrain information
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
-
  - add config saver to config
  - add group following
  - add multiple-waypoint move orders
+
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
- - make roster more useful on mobile and elsewhere, by making it's view more dynamic:
-    - allow for hiding of roster
-    AND/ OR
-    - add flickability to roster
  +/- add FPS counter
 
 Big ideas for the future:
@@ -56,3 +52,8 @@ Big ideas for the future:
 Done:
  + add single soldiers within a unit
  + add soldier's menu
+ + make roster more useful on mobile and elsewhere, by making it's view more dynamic:
+    + allow for hiding of roster
+    AND/ OR
+    + add flickability to roster
+ + unified infobox viewer
