@@ -9,6 +9,10 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add single soldiers within a unit
  - unified infobox viewer
  - made menus automatically unroll on init, if in desktop mode
+ - add OptionsMenu - a roll-down from Options in TopMenu,
+   where user will be able to choose from: Preferences, Save game,
+   Load game, Quit
+ - add quit capability.
 
 29.11.2011:
  - add stop to context menu entry

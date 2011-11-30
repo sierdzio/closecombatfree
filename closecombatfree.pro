@@ -66,7 +66,9 @@ OTHER_FILES += \
     units/Soldier.qml \
     gui/engineRosterHelper.js \
     gui/SoldierMenu.qml \
-    units/unitSoldiers.js
+    units/unitSoldiers.js \
+    gui/OptionsMenu.qml
+
 
 
 

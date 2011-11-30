@@ -107,7 +107,6 @@ Item {
     Flickable {
         id: gameArea
         height: parent.height - bottomMenu.visibleHeight
-//        width: parent.width
         contentWidth: map.item.width
         contentHeight: map.item.height
         boundsBehavior: Flickable.StopAtBounds
@@ -117,12 +116,10 @@ Item {
         anchors.top: root.top
         anchors.left: root.left
         anchors.right: root.right
-//        anchors.bottom: menu.top
 
         Loader {
             id: map
             source: units.item.mapFile
-//            anchors.fill: parent
         }
 
         Loader {

@@ -12,7 +12,7 @@ Rectangle {
     color: backgroundColor
     width: size * 2
     height: size
-    radius: 5
+    radius: size/8
 
     Text {
         id: mainText

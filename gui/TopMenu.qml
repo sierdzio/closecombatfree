@@ -15,7 +15,7 @@ Item {
     onOpenMenu: trigger.poppedUp = true;
 
     onOptionsEntryClicked: {
-        console.log("Options entry clicked.");
+        optionsMenu.toggleMenu();
     }
 
     onUiModeEntryClicked: {
@@ -64,6 +64,13 @@ Item {
             id: optionsEntry
             text: "Options"
             size: root.height
+
+            OptionsMenu {
+                id: optionsMenu
+                anchors.top: optionsEntry.bottom
+                anchors.left: optionsEntry.left
+                z: optionsEntry.z - 1
+            }
         }
 
         MenuEntry {
