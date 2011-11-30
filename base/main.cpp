@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     viewer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
     viewer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
     QObject::connect(viewer, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
-//    QDeclarativeEngine engine = viewer->engine();
     QObject::connect(viewer->engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 
     viewer->show();

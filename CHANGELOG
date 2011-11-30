@@ -12,7 +12,10 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add OptionsMenu - a roll-down from Options in TopMenu,
    where user will be able to choose from: Preferences, Save game,
    Load game, Quit
- - add quit capability.
+ - add quit capability
+ - changed QMap<QString, QString> into QMap<QString, QPair<QString, bool> >
+   in Config classes - this will enable for the future ConfigSaver class
+   to be optimised, as it will only update lines that have changed
 
 29.11.2011:
  - add stop to context menu entry

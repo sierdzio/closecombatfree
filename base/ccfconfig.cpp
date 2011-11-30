@@ -3,7 +3,7 @@
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)
 {
-    configuration = new QMap<QString, QString>();
+    configuration = new QMap<QString, QPair<QString, bool> >();
     parser = new CcfConfigParser(filePath, this);
 
     if (!parser->isErrorState()) {
@@ -18,7 +18,7 @@ QString CcfConfig::configurationString()
     QString result;
     if (!isErrorState()) {
         foreach (const QString &key, configuration->keys()) {
-            result.append(key + " " + configuration->value(key) + "\n");
+            result.append(key + " " + configuration->value(key).first + "\n");
         }
     }
     return result;
@@ -26,34 +26,34 @@ QString CcfConfig::configurationString()
 
 QString CcfConfig::uiMode()
 {
-    return configuration->value("uimode").toUpper();
+    return configuration->value("uimode").first.toUpper();
 }
 
 void CcfConfig::toggleUiMode()
 {
-    QString mode = configuration->value("uimode");
+    QString mode = configuration->value("uimode").first;
 
     if (mode == "desktop") {
         mode = "mobile";
         configuration->remove("uimode");
-        configuration->insert("uimode", mode);
+        configuration->insert("uimode", QPair<QString, bool>(mode, true));
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
         configuration->remove("uimode");
-        configuration->insert("uimode", mode);
+        configuration->insert("uimode", QPair<QString, bool>(mode, true));
         emit uiModeChanged();
     }
 }
 
 int CcfConfig::configWindowWidth()
 {
-    return configuration->value("width").toInt();
+    return configuration->value("width").first.toInt();
 }
 
 int CcfConfig::configWindowHeight()
 {
-    return configuration->value("height").toInt();
+    return configuration->value("height").first.toInt();
 }
 
 int CcfConfig::keyForFunction(const QString &functionName)
@@ -61,7 +61,7 @@ int CcfConfig::keyForFunction(const QString &functionName)
     int result = -1;
 
     if (configuration->contains(functionName.toLower())) {
-        QChar key = configuration->value(functionName.toLower()).at(0);
+        QChar key = configuration->value(functionName.toLower()).first.at(0);
         result = findQtKey(key);
     }
 
@@ -152,10 +152,10 @@ int CcfConfig::findQtKey(QChar character)
 void CcfConfig::windowResized(QSize newSize)
 {
     configuration->remove("width");
-    configuration->insert("width", QString::number(newSize.width()));
+    configuration->insert("width", QPair<QString, bool>(QString::number(newSize.width()), true));
     emit configWindowWidthChanged();
 
     configuration->remove("height");
-    configuration->insert("height", QString::number(newSize.height()));
+    configuration->insert("height", QPair<QString, bool>(QString::number(newSize.height()), true));
     emit configWindowHeightChanged();
 }

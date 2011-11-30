@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QIODevice>
 #include <QFile>
+#include <QPair>
 #include "ccferror.h"
 
 class CcfConfigParser : public QObject, public CcfError
@@ -15,13 +16,13 @@ class CcfConfigParser : public QObject, public CcfError
     Q_OBJECT
 public:
     explicit CcfConfigParser(const QString &configFilePath, QObject *parent = 0);
-    QMap<QString, QString> *configuration();
+    QMap<QString, QPair<QString, bool> > *configuration();
 
 private:
     void parse(const QString &configFilePath);
     bool readLine(const QString &line);
 
-    QMap<QString, QString> *m_configuration;
+    QMap<QString, QPair<QString, bool> > *m_configuration;
 };
 
 #endif // CCFCONFIGPARSER_H

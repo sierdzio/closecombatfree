@@ -1,14 +1,13 @@
 #include "ccfconfigparser.h"
-//#include <QDebug>
 
 CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError()
 {
-    m_configuration = new QMap<QString, QString>();
+    m_configuration = new QMap<QString, QPair<QString, bool> >();
     parse(configFilePath);
 }
 
-QMap<QString, QString> *CcfConfigParser::configuration()
+QMap<QString, QPair<QString, bool> > *CcfConfigParser::configuration()
 {
     return m_configuration;
 }
@@ -62,7 +61,7 @@ bool CcfConfigParser::readLine(const QString &lineToParse)
     QString value = lineData.at(1);
 
     // Add key and value checks here
-    m_configuration->insert(key, value);
+    m_configuration->insert(key, QPair<QString, bool>(value, false));
 
     return true;
 }

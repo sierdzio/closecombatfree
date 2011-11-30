@@ -5,6 +5,7 @@
 #include <QString>
 #include <QMap>
 #include <QSize>
+#include <QPair>
 #include "ccferror.h"
 #include "ccfconfigparser.h"
 
@@ -39,7 +40,7 @@ private:
 
     QString filePath;
     CcfConfigParser *parser;
-    QMap<QString, QString> *configuration;
+    QMap<QString, QPair<QString, bool> > *configuration;
 };
 
 #endif // CCFCONFIG_H
