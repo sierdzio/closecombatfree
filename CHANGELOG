@@ -8,6 +8,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add soldier menu
  - add single soldiers within a unit
  - unified infobox viewer
+ - made menus automatically unroll on init, if in desktop mode
 
 29.11.2011:
  - add stop to context menu entry

@@ -11,6 +11,9 @@ Item {
     signal zoomIn();
     signal zoomOut();
 
+    signal openMenu();
+    onOpenMenu: trigger.poppedUp = true;
+
     onOptionsEntryClicked: {
         console.log("Options entry clicked.");
     }

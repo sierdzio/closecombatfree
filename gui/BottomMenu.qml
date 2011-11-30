@@ -5,6 +5,9 @@ Item {
     property color backgroundColor: "#dd333232"
     property int visibleHeight: 0
 
+    signal openMenu();
+    onOpenMenu: trigger.poppedUp = true;
+
     id: root
     state: "closed"
 

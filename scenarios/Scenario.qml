@@ -23,7 +23,14 @@ Item {
     id: root
     focus: true;
 
-    Component.onCompleted: ScenarioLogic.createOrderMarkers();
+    Component.onCompleted: {
+        ScenarioLogic.createOrderMarkers();
+        // If it' desktop, menus should be unrolled:
+        if (uiMode == "DESKTOP") {
+            topMenu.openMenu();
+            bottomMenu.openMenu();
+        }
+    }
 
     Keys.onPressed: {
         if (event.modifiers == Qt.ControlModifier) {
