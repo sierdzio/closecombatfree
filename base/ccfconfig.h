@@ -32,11 +32,15 @@ public:
 
 public slots:
     void windowResized(QSize newSize);
+    void statusMsg(const QString &message);
+    void statusMessage(const QString &message);
 
 signals:
     void configWindowWidthChanged();
     void configWindowHeightChanged();
     void uiModeChanged();
+    void newStatusMessage(const QString &message,
+                     QObject *sender);
 
 private:
     int findQtKey(QChar character);

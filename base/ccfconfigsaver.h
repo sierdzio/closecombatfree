@@ -14,7 +14,7 @@ class CcfConfigSaver : public QObject, public CcfError
 public:
     explicit CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
                             QList<QString> *configIndexes,
-                            QString configFilePath,
+                            const QString &configFilePath,
                             QObject *parent = 0);
     void updateConfigFile();
 

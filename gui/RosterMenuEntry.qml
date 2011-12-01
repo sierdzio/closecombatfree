@@ -6,6 +6,7 @@ Rectangle {
     property string entryStatusText: ""
     property color entryStatusColor: "#000000"
     property string entryLogo: ""
+    property bool mouseAreaEnabled: true
     property int index: 0
 
     id: root
@@ -62,6 +63,7 @@ Rectangle {
 
     MouseArea {
         id: moveFastMouseArea
+        enabled: mouseAreaEnabled
         anchors.fill: parent
         hoverEnabled: true
 

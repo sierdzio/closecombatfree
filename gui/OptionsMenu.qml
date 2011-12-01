@@ -34,7 +34,7 @@ Item {
     signal quitEntryClicked()
     onQuitEntryClicked: {
         console.log("Bailing out.");
-        console.log(configurationString());
+//        console.log(configurationString());
         Qt.quit();
     }
 

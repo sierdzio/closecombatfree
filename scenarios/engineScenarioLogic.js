@@ -535,7 +535,8 @@ function groupUnits(groupNumber) {
     for (var i = 0; i < group.length; i++) {
         group[i].groupNumber = groupNumber;
     }
-    console.log("Group " + groupNumber + " created.");
+//    console.log("Group " + groupNumber + " created.");
+    statusMessage("Group " + groupNumber + " created.");
 }
 
 function selectGroup(groupNumber) {

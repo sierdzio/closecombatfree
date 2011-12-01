@@ -51,6 +51,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit1
@@ -58,6 +59,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit2
@@ -65,6 +67,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit3
@@ -72,6 +75,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit4
@@ -79,6 +83,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit5
@@ -86,6 +91,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit6
@@ -93,6 +99,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit7
@@ -100,6 +107,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
         RosterMenuEntry {
             id: unit8
@@ -107,6 +115,7 @@ Rectangle {
 
             width: entryWidth
             height: entryHeight
+            mouseAreaEnabled: false
         }
     }
 }

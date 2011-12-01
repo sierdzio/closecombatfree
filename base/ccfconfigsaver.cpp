@@ -1,9 +1,9 @@
 #include "ccfconfigsaver.h"
-#include <QDebug>
+//#include <QDebug>
 
 CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
                                QList<QString> *configIndexes,
-                               QString configFilePath,
+                               const QString &configFilePath,
                                QObject *parent) :
     QObject(parent), m_configuration(configuration),
     m_configIndexes(configIndexes), m_configFilePath(configFilePath)
@@ -17,8 +17,8 @@ void CcfConfigSaver::updateConfigFile()
     foreach (QString key, m_configuration->keys()) {
         if (m_configuration->value(key).second == true) {
             wasChange = true;
-            qDebug() << "Value change for: " << key << " = " << m_configuration->value(key).first
-                     << ", " << m_configuration->value(key).second;
+//            qDebug() << "Value change for: " << key << " = " << m_configuration->value(key).first
+//                     << ", " << m_configuration->value(key).second;
             break;
         }
     }

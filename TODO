@@ -26,11 +26,13 @@ New features:
  - add map obstacles, buildings, terrain information
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
-
  - add group following
  - add multiple-waypoint move orders
  - look for memory leaks in CcfConfig set of classes. There might be some
+ - (sth. to think about) change roster and soldier menu into Model and Delegate based entities
+ - add MenuEntriy specialised for status messages (wrap longer text etc.)
 
+ - add IFDEFS for debug mode
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players

@@ -220,7 +220,7 @@ Item {
             height: roster.height
             width: bottomMenu.width
             flickableDirection: Flickable.HorizontalFlick
-            contentWidth: roster.width + soldierMenu.width
+            contentWidth: roster.width + soldierMenu.width + statusMessageViewer.width
             contentHeight: roster.height
             clip: true
 
@@ -229,7 +229,7 @@ Item {
 
                 RosterMenu {
                     id: roster
-                    width: bottomMenu.width
+//                    width: bottomMenu.width
 
                     Component.onCompleted: {
                         populateUnits(units.item.children);
@@ -258,7 +258,12 @@ Item {
 
                 SoldierMenu {
                     id: soldierMenu
-                    width: bottomMenu.width
+//                    width: bottomMenu.width
+                }
+
+                StatusMessageViewer {
+                    id: statusMessageViewer
+                    height: roster.height
                 }
             }
         }

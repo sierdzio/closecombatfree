@@ -1,4 +1,5 @@
 #include "ccfconfig.h"
+//#include <QDebug>
 
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)
@@ -38,11 +39,13 @@ void CcfConfig::toggleUiMode()
         mode = "mobile";
         configuration->remove("uimode");
         configuration->insert("uimode", QPair<QString, bool>(mode, true));
+        statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
         configuration->remove("uimode");
         configuration->insert("uimode", QPair<QString, bool>(mode, true));
+        statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
 }
@@ -65,7 +68,10 @@ bool CcfConfig::saveConfig()
 
     if (saver->isErrorState()) {
         enterErrorState("Saving config file failed. Error: " + saver->errorMessage());
+        return false;
     }
+
+    return true;
 }
 
 int CcfConfig::keyForFunction(const QString &functionName)
@@ -174,4 +180,15 @@ void CcfConfig::windowResized(QSize newSize)
         configuration->insert("height", QPair<QString, bool>(QString::number(newSize.height()), true));
         emit configWindowHeightChanged();
     }
+}
+
+void CcfConfig::statusMsg(const QString &message)
+{
+    statusMessage(message);
+}
+
+void CcfConfig::statusMessage(const QString &message)
+{
+//    qDebug() << this->sender();
+    emit newStatusMessage(message, this->sender()); // or QObject::sender()
 }
