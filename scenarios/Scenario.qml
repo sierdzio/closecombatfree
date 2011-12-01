@@ -229,7 +229,6 @@ Item {
 
                 RosterMenu {
                     id: roster
-//                    width: bottomMenu.width
 
                     Component.onCompleted: {
                         populateUnits(units.item.children);
@@ -258,10 +257,9 @@ Item {
 
                 SoldierMenu {
                     id: soldierMenu
-//                    width: bottomMenu.width
                 }
 
-                StatusMessageViewer {
+                StatusMessageMenu {
                     id: statusMessageViewer
                     height: roster.height
                 }

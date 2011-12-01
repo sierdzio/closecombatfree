@@ -7,6 +7,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add CcfConfigSaver
  - add CcfMain (just initial, copy implementation.
    This is likely to be reshaed later)
+ - add status message handling
 
 30.11.2011:
  - add sliding BottomMenu (pretty crude implementation, but works)

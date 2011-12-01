@@ -72,7 +72,11 @@ OTHER_FILES += \
     gui/SoldierMenu.qml \
     units/unitSoldiers.js \
     gui/OptionsMenu.qml \
-    gui/StatusMessageViewer.qml
+    gui/StatusMessageMenu.qml \
+    gui/StatusMessageMenuEntry.qml
+
+
+
 
 
 
