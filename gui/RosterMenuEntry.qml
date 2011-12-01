@@ -7,6 +7,7 @@ Rectangle {
     property color entryStatusColor: "#000000"
     property string entryLogo: ""
     property bool mouseAreaEnabled: true
+    property bool selected: false
     property int index: 0
 
     id: root
@@ -15,6 +16,26 @@ Rectangle {
     border.width: 1
     width: 175
     height: 54
+
+    onEntryStatusTextChanged: {
+        if (entryStatusText == "") {
+            return;
+        }
+
+        var newColor = Logic.colorForStatus(entryStatusText);
+        if (newColor != "ERROR")
+            entryStatusColor = newColor;
+        else
+            console.log("Error while changing status message color!");
+    }
+
+    onSelectedChanged: {
+        if (selected == true) {
+            root.border.color = "#eeee11";;
+        } else if (selected == false) {
+            root.border.color = "#1e1c00";
+        }
+    }
 
     Image {
         id: logo

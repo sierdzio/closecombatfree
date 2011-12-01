@@ -42,7 +42,7 @@ Item {
         }
     }
 
-    signal unitStatusChanged(string newStatus)
+    signal unitStatusChanged(string newStatus, int index)
     signal actionFinished(int index, real targetX, real targetY)
 
     signal moveTo (real newX, real newY)
@@ -54,8 +54,8 @@ Item {
     signal sneakTo (real newX, real newY)
     onSneakTo: ActionLogic.sneakTo(newX, newY);
 
-    signal selectionChanged(bool state)
-    onSelectedChanged: selectionChanged(selected);
+    signal selectionChanged(bool state, int index)
+    onSelectedChanged: selectionChanged(selected, unitIndex);
 
     signal cancelOrder ()
     onCancelOrder: ActionLogic.cancelOrder();
@@ -66,7 +66,7 @@ Item {
 
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
-        unitStatusChanged(newStatusMessage);
+        unitStatusChanged(newStatusMessage, unitIndex);
     }
 
     function soldiers() {

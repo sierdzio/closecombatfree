@@ -2,7 +2,6 @@ import QtQuick 1.1
 
 Rectangle {
     property int entryWidth: 175
-//    property int entryHeight: 30
 
     id: root
     height: 200

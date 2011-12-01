@@ -8,6 +8,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add CcfMain (just initial, copy implementation.
    This is likely to be reshaed later)
  - add status message handling
+ - change RosterMenu to be GridView-based
 
 30.11.2011:
  - add sliding BottomMenu (pretty crude implementation, but works)

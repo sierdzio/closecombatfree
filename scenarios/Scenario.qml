@@ -229,6 +229,8 @@ Item {
 
                 RosterMenu {
                     id: roster
+                    height: entryHeight * 4
+//                    height: soldierMenu.height
 
                     Component.onCompleted: {
                         populateUnits(units.item.children);
@@ -262,6 +264,7 @@ Item {
                 StatusMessageMenu {
                     id: statusMessageViewer
                     height: roster.height
+//                    height: soldierMenu.height
                 }
             }
         }
