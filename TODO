@@ -26,9 +26,10 @@ New features:
  - add map obstacles, buildings, terrain information
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
- - add config saver to config
+
  - add group following
  - add multiple-waypoint move orders
+ - look for memory leaks in CcfConfig set of classes. There might be some
 
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
@@ -57,3 +58,4 @@ Done:
     AND/ OR
     + add flickability to roster
  + unified infobox viewer
+ + add config saver to config

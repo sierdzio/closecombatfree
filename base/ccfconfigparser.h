@@ -2,6 +2,7 @@
 #define CCFCONFIGPARSER_H
 
 #include <QObject>
+#include <QList>
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
@@ -17,12 +18,14 @@ class CcfConfigParser : public QObject, public CcfError
 public:
     explicit CcfConfigParser(const QString &configFilePath, QObject *parent = 0);
     QMap<QString, QPair<QString, bool> > *configuration();
+    QList<QString> *configIndexes();
 
 private:
     void parse(const QString &configFilePath);
-    bool readLine(const QString &line);
+    bool readLine(int lineNumber, const QString &line);
 
     QMap<QString, QPair<QString, bool> > *m_configuration;
+    QList<QString> *m_configIndexes;
 };
 
 #endif // CCFCONFIGPARSER_H

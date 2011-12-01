@@ -18,7 +18,8 @@ QString CcfConfig::configurationString()
     QString result;
     if (!isErrorState()) {
         foreach (const QString &key, configuration->keys()) {
-            result.append(key + " " + configuration->value(key).first + "\n");
+            result.append(key + " " + configuration->value(key).first
+                          + ", " + configuration->value(key).second + "\n");
         }
     }
     return result;
@@ -54,6 +55,17 @@ int CcfConfig::configWindowWidth()
 int CcfConfig::configWindowHeight()
 {
     return configuration->value("height").first.toInt();
+}
+
+bool CcfConfig::saveConfig()
+{
+    saver = new CcfConfigSaver(configuration, parser->configIndexes(),
+                               filePath, this);
+    saver->updateConfigFile();
+
+    if (saver->isErrorState()) {
+        enterErrorState("Saving config file failed. Error: " + saver->errorMessage());
+    }
 }
 
 int CcfConfig::keyForFunction(const QString &functionName)
@@ -151,11 +163,15 @@ int CcfConfig::findQtKey(QChar character)
 
 void CcfConfig::windowResized(QSize newSize)
 {
-    configuration->remove("width");
-    configuration->insert("width", QPair<QString, bool>(QString::number(newSize.width()), true));
-    emit configWindowWidthChanged();
+    if (configWindowWidth() != newSize.width()) {
+        configuration->remove("width");
+        configuration->insert("width", QPair<QString, bool>(QString::number(newSize.width()), true));
+        emit configWindowWidthChanged();
+    }
 
-    configuration->remove("height");
-    configuration->insert("height", QPair<QString, bool>(QString::number(newSize.height()), true));
-    emit configWindowHeightChanged();
+    if (configWindowHeight() != newSize.height()) {
+        configuration->remove("height");
+        configuration->insert("height", QPair<QString, bool>(QString::number(newSize.height()), true));
+        emit configWindowHeightChanged();
+    }
 }

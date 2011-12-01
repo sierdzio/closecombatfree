@@ -1,0 +1,5 @@
+CcfConfig set of classes is used to load and save config files.
+
+Parsed options are stored in QMap<QString, QPair<QString, bool> >, where first QString is the option name, the second QString (accessible through .first) stores value, and the bool specifies, whether the value was changed in-game (true if was, false by default).
+
+Additional QList<QString> stores option names in ordered manner - this was file saving can be optimised.

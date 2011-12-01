@@ -4,12 +4,18 @@ CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent)
     QObject(parent), CcfError()
 {
     m_configuration = new QMap<QString, QPair<QString, bool> >();
+    m_configIndexes = new QList<QString>();
     parse(configFilePath);
 }
 
 QMap<QString, QPair<QString, bool> > *CcfConfigParser::configuration()
 {
     return m_configuration;
+}
+
+QList<QString> *CcfConfigParser::configIndexes()
+{
+    return m_configIndexes;
 }
 
 void CcfConfigParser::parse(const QString &configFilePath)
@@ -20,17 +26,22 @@ void CcfConfigParser::parse(const QString &configFilePath)
         return;
     }
 
+    int i = 0;
     while (!file.atEnd()) {
-        if (!readLine(file.readLine()))
+        if (!readLine(i, file.readLine()))
             return;
+        i++;
     }
+
+    file.close();
 }
 
-bool CcfConfigParser::readLine(const QString &lineToParse)
+bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
 {
     QString line = lineToParse.simplified();
 
     if (line.isEmpty()) {
+        m_configIndexes->insert(lineNumber, "Empty");
         return true;
     }
 
@@ -40,6 +51,7 @@ bool CcfConfigParser::readLine(const QString &lineToParse)
         if (character.isSpace()) {
             continue; // Could be an empty line or a comment
         } else if (character == QChar('#')) {// || (character == QChar('\n')) || (character == QChar('\0'))) {
+            m_configIndexes->insert(lineNumber, "Comment");
             return true; // It's a comment
         } else {
             break; // Non comment, non empty line. Continue with parsing.
@@ -62,6 +74,7 @@ bool CcfConfigParser::readLine(const QString &lineToParse)
 
     // Add key and value checks here
     m_configuration->insert(key, QPair<QString, bool>(value, false));
+    m_configIndexes->insert(lineNumber, key);
 
     return true;
 }

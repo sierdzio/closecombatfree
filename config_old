@@ -1,0 +1,31 @@
+# Close Combat Free - cofiguration file
+# This file stores game settings, including keyboard settings.
+#
+# Lines beginning with '#' are comments and are ignored by the parser.
+# Accepted format is: "option = value" (with any number of intervening spaces).
+# Option names and values are expected to be given in lower case.
+# Boolean switches accept "true", "false", '1', '0' as valid values.
+#
+# This file should be encoded in UTF-8.
+
+######
+# General settings:
+uimode = mobile
+width = 1024
+height = 800
+
+######
+# Keyboard layout:
+pause = p
+zoom in = =
+zoom out = -
+# Orders:
+follow = f
+stop = s
+move fast = r
+move = m
+sneak = n
+attack = a
+smoke = k
+defend = d
+ambush = b

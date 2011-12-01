@@ -8,6 +8,7 @@
 #include <QPair>
 #include "ccferror.h"
 #include "ccfconfigparser.h"
+#include "ccfconfigsaver.h"
 
 class CcfConfig : public QObject, public CcfError
 {
@@ -27,6 +28,8 @@ public:
     int configWindowWidth();
     int configWindowHeight();
 
+    bool saveConfig();
+
 public slots:
     void windowResized(QSize newSize);
 
@@ -40,6 +43,7 @@ private:
 
     QString filePath;
     CcfConfigParser *parser;
+    CcfConfigSaver *saver;
     QMap<QString, QPair<QString, bool> > *configuration;
 };
 

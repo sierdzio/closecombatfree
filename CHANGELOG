@@ -3,6 +3,11 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+01.12.2011:
+ - add CcfConfigSaver
+ - add CcfMain (just initial, copy implementation.
+   This is likely to be reshaed later)
+
 30.11.2011:
  - add sliding BottomMenu (pretty crude implementation, but works)
  - add soldier menu

@@ -19,12 +19,16 @@ TEMPLATE = app
 HEADERS += \
     base/ccfconfig.h \
     base/ccfconfigparser.h \
-    base/ccferror.h
+    base/ccferror.h \
+    base/ccfconfigsaver.h \
+    base/ccfmain.h
 
 SOURCES += base/main.cpp \
     base/ccfconfig.cpp \
     base/ccfconfigparser.cpp \
-    base/ccferror.cpp
+    base/ccferror.cpp \
+    base/ccfconfigsaver.cpp \
+    base/ccfmain.cpp
 
 OTHER_FILES += \
     base/main.qml \
@@ -68,6 +72,10 @@ OTHER_FILES += \
     gui/SoldierMenu.qml \
     units/unitSoldiers.js \
     gui/OptionsMenu.qml
+
+
+
+
 
 
 
