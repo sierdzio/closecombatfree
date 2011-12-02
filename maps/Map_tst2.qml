@@ -11,10 +11,25 @@ Map {
         y: 50
     }
 
+    Tree_tst {
+        x: 220
+        y: 30
+    }
+
+    Tree_tst {
+        x: 250
+        y: 30
+    }
+
+    Tree_tst {
+        x: 280
+        y: 30
+    }
+
     Rectangle {
         id: rect2
-        x: 50
-        y: 260
+        x: 360
+        y: 50
         width: 100
         height: 100
         color: "#aabbbbcc"
@@ -22,8 +37,8 @@ Map {
 
     Rectangle {
         id: rect3
-        x: 500
-        y: 260
+        x: 905
+        y: 162
         width: 150
         height: 300
         radius: 50

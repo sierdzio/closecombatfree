@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "engineRosterHelper.js" as RosterHelper
+import "../units/units.js" as Units
 
 Rectangle {
     property int entryWidth: 175
@@ -14,9 +14,9 @@ Rectangle {
     border.width: 2
 
     function populateUnits(tmpUnitsList) {
-        RosterHelper.unitsList = tmpUnitsList;
-        for (var i = 0; i < RosterHelper.unitsList.length; i++) {
-            var currentUnit = RosterHelper.unitsList[i];
+        Units.list = tmpUnitsList;
+        for (var i = 0; i < Units.list.length; i++) {
+            var currentUnit = Units.list[i];
             unitModel.append({"unitType": currentUnit.unitType,
                                  "unitLogo": currentUnit.unitLogo,
                                  "unitStatus": currentUnit.unitStatus,
@@ -32,10 +32,10 @@ Rectangle {
         if (i == -1)
             return i;
 
-        if (RosterHelper.unitsList.length <= i)
+        if (Units.list.length <= i)
             return -1;
 
-        return RosterHelper.unitsList[i];
+        return Units.list[i];
     }
 
     function childCenterCoords(x, y) {

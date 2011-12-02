@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "engineRosterHelper.js" as SoldierHelper
+import "../units/units.js" as Soldiers
 
 Rectangle {
     property int entryWidth: 175
@@ -15,9 +15,9 @@ Rectangle {
 
     function populateSoldiers(tmpSoldiersList) {
         clear();
-        SoldierHelper.unitsList = tmpSoldiersList;
-        for (var i = 0; i < SoldierHelper.unitsList.length; i++) {
-            var currentSoldier = SoldierHelper.unitsList[i];
+        Soldiers.list = tmpSoldiersList;
+        for (var i = 0; i < Soldiers.list.length; i++) {
+            var currentSoldier = Soldiers.list[i];
             soldierModel.append({"unitType": currentSoldier.name + "\n" + currentSoldier.role,
                                  "unitLogo": currentSoldier.soldierLogo,
                                  "unitStatus": currentSoldier.status});
@@ -26,7 +26,7 @@ Rectangle {
     }
 
     function clear() {
-        SoldierHelper.unitsList = new Array();
+        Soldiers.list = new Array();
         soldierModel.clear();
     }
 

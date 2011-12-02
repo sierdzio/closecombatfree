@@ -68,7 +68,6 @@ OTHER_FILES += \
     gui/ZoomButton.qml \
     gui/BottomMenu.qml \
     units/Soldier.qml \
-    gui/engineRosterHelper.js \
     gui/SoldierMenu.qml \
     units/unitSoldiers.js \
     gui/OptionsMenu.qml \
@@ -76,7 +75,14 @@ OTHER_FILES += \
     gui/StatusMessageMenuEntry.qml \
     maps/Map_tst2.qml \
     maps/props/HouseBasic_tst.qml \
-    maps/props/Prop.qml
+    maps/props/Prop.qml \
+    maps/props/Tree_tst.qml \
+    units/units.js
+
+
+
+
+
 
 
 

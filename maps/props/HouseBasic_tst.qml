@@ -1,6 +1,7 @@
 import QtQuick 1.1
 
 Prop {
+    objectName: "props/HouseBasic_tst"
     width: 140
     height: 100
 
@@ -17,18 +18,10 @@ Prop {
         }
     }
 
-    Rectangle {
+    Image {
         id: roof
         visible: topVisible
         anchors.fill: parent
-        color: "#8899ff"
-    }
-
-    MouseArea {
-        anchors.fill: parent
-
-        onClicked: {
-            toggleTop();
-        }
+        source: PWD + "img/maps/props/HouseBasicRoof1.png"
     }
 }

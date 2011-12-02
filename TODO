@@ -27,6 +27,7 @@ New features:
  - add C++ proxy class, that will organise QML-C++ communication
  - add "tree clusters" or "forests" that automatically generate
    some forest-looking areas
+ - add Role enum to props. Might be good to create a specialised C++ class for that
 
  - make map obstacles share a common base class - so that they can all have "remove top"
    capability (for example, when a unit enters a house, the roof should vanish)

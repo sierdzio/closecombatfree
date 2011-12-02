@@ -1,1 +1,0 @@
-var unitsList = new Array();

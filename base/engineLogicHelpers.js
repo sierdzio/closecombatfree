@@ -104,10 +104,6 @@ function colorForOrder(orderName) {
     } else if (orderName == "Attack") {
         result = "#ff2222";
     }
-    //    } else if (orderName == "Ambush") {
-    //        result = "#aaaaaa";
-    //    } else if (orderName == "Defend") {
-    //        result = "#aaaaaa";
 
     return result;
 }
