@@ -7,6 +7,7 @@ Rectangle {
 
     id: root
     width: units.width
+    height: (entryHeight + 2) * 4 + 3
     color: "#7e8c24"
     border.color: "#1e1c00"
     border.width: 2
@@ -74,9 +75,9 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         height: parent.height
-        width: (count > 8)? (entryWidth * 3) : (entryWidth * 2)
-        cellWidth: entryWidth
-        cellHeight: entryHeight
+        width: (count > 8)? (cellWidth + 3) : (cellWidth * 2) + 3
+        cellWidth: entryWidth + 2
+        cellHeight: entryHeight + 2
         flow: Grid.TopToBottom
 
         model: unitModel

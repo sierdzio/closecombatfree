@@ -6,8 +6,8 @@ Rectangle {
     property int entryHeight: 54
 
     id: root
-    height: (unit0.height * 4) + (units.spacing * 6)
-    width: 600
+    height: (((soldiers.cellHeight) * 4) + 3)
+    width: soldiers.width
     color: "#7e8c24"
     border.color: "#1e1c00"
     border.width: 2
@@ -16,106 +16,56 @@ Rectangle {
         clear();
         SoldierHelper.unitsList = tmpSoldiersList;
         for (var i = 0; i < SoldierHelper.unitsList.length; i++) {
-            var currentUnit = SoldierHelper.unitsList[i];
-            units.children[i].entryText = currentUnit.name + "\n" + currentUnit.role;
-            units.children[i].entryLogo = currentUnit.soldierLogo;
-            units.children[i].changeStatus(currentUnit.status);
-            currentUnit.unitStatusChanged.connect(units.children[i].changeStatus);
+            var currentSoldier = SoldierHelper.unitsList[i];
+            soldierModel.append({"unitType": currentSoldier.name + "\n" + currentSoldier.role,
+                                 "unitLogo": currentSoldier.soldierLogo,
+                                 "unitStatus": currentSoldier.status});
+            currentSoldier.unitStatusChanged.connect(changeStatus);
         }
     }
 
     function clear() {
         SoldierHelper.unitsList = new Array();
-        for (var i = 0; i < 8; i++) {
-            if (units.children[i].entryText != "") {
-                units.children[i].entryText = "";
-                units.children[i].entryLogo = "";
-                units.children[i].entryStatusText = "";
-            }
+        soldierModel.clear();
+    }
+
+    function changeStatus(newStatus, index) {
+        unitModel.set(index, {"unitStatus": newStatus});
+    }
+
+    ListModel {
+        id: soldierModel
+    }
+
+    Component {
+        id: soldierDelegate
+
+        RosterMenuEntry {
+            width: entryWidth
+            height: entryHeight
+
+            entryText: unitType
+            entryLogo: unitLogo
+            entryStatusText: unitStatus
+            mouseAreaEnabled: false
         }
     }
 
-    Grid {
-        id: units
-        anchors.fill: parent
+    GridView {
+        id: soldiers
         anchors.topMargin: 2
         anchors.leftMargin: 2
-        spacing: 2
-        rows: 4
-        columns: 4
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        height: parent.height
+        width: (count > 8)? ((cellWidth * 3) + 3) : ((cellWidth * 2) + 3)
+        cellWidth: entryWidth + 2
+        cellHeight: entryHeight + 2
         flow: Grid.TopToBottom
 
-        RosterMenuEntry {
-            id: unit0
-            index: 0
+        model: soldierModel
 
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit1
-            index: 1
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit2
-            index: 2
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit3
-            index: 3
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit4
-            index: 4
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit5
-            index: 5
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit6
-            index: 6
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit7
-            index: 7
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
-        RosterMenuEntry {
-            id: unit8
-            index: 8
-
-            width: entryWidth
-            height: entryHeight
-            mouseAreaEnabled: false
-        }
+        delegate: soldierDelegate
     }
 }

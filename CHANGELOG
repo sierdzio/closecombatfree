@@ -3,6 +3,10 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+02.12.2011:
+ - rewrote SoldierMenu so that it is based on GridView
+ - 
+
 01.12.2011:
  - add CcfConfigSaver
  - add CcfMain (just initial, copy implementation.

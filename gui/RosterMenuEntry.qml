@@ -86,27 +86,9 @@ Rectangle {
         id: moveFastMouseArea
         enabled: mouseAreaEnabled
         anchors.fill: parent
-        hoverEnabled: true
+        hoverEnabled: mouseAreaEnabled
 
         onEntered: parent.color = "#2e3c24";
         onExited: parent.color = "#5e6c24";
-    }
-
-    function changeStatus(newStatusMessage) {
-        entryStatusText = newStatusMessage;
-
-        var newColor = Logic.colorForStatus(newStatusMessage);
-        if (newColor != "ERROR")
-            entryStatusColor = newColor;
-        else
-            console.log("Error while changing status message color!");
-    }
-
-    function selectionChanged(state) {
-        if (state == true) {
-            root.border.color = "#eeee11";;
-        } else if (state == false) {
-            root.border.color = "#1e1c00";
-        }
     }
 }
