@@ -288,7 +288,7 @@ function handleRightMouseClickRoster(mouse) {
         cleanContextAction();
 
         var child;
-        child = roster.childAt(mouse.x, mouse.y);
+        child = roster.childCenterCoords(mouse.x, mouse.y);
         var unit;
         unit = roster.getUnitAt(mouse.x, mouse.y);
 
@@ -298,8 +298,8 @@ function handleRightMouseClickRoster(mouse) {
             }
             // Fixes context menu at the centre of child object.
             setContextMenuPosition(contextLoader,
-                                   roster.x + child.x + (roster.entryWidth/2),
-                                   roster.y + child.y + (roster.entryHeight/2));
+                                   menu.x + child.x,
+                                   root.height + menu.y + child.y);
 
             __unitIndex = childIndex(unit);
             // Displays the context menu. This is suboptimal.

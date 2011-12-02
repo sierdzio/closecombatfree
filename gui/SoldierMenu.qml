@@ -4,9 +4,10 @@ import "engineRosterHelper.js" as SoldierHelper
 Rectangle {
     property int entryWidth: 175
     property int entryHeight: 54
+    property int rows: 4
 
     id: root
-    height: (((soldiers.cellHeight) * 4) + 3)
+    height: (((soldiers.cellHeight) * rows) + 3)
     width: soldiers.width
     color: "#7e8c24"
     border.color: "#1e1c00"
@@ -62,10 +63,9 @@ Rectangle {
         width: (count > 8)? ((cellWidth * 3) + 3) : ((cellWidth * 2) + 3)
         cellWidth: entryWidth + 2
         cellHeight: entryHeight + 2
-        flow: Grid.TopToBottom
+        flow: GridView.TopToBottom
 
         model: soldierModel
-
         delegate: soldierDelegate
     }
 }
