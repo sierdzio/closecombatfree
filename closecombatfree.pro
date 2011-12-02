@@ -73,7 +73,13 @@ OTHER_FILES += \
     units/unitSoldiers.js \
     gui/OptionsMenu.qml \
     gui/StatusMessageMenu.qml \
-    gui/StatusMessageMenuEntry.qml
+    gui/StatusMessageMenuEntry.qml \
+    maps/Map_tst2.qml \
+    maps/props/HouseBasic_tst.qml \
+    maps/props/Prop.qml
+
+
+
 
 
 

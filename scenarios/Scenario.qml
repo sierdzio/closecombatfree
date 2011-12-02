@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "../gui"
+import "../maps"
 import "../base/engineLogicHelpers.js" as LogicHelpers
 import "engineScenarioLogic.js" as ScenarioLogic
 
@@ -38,6 +39,11 @@ Item {
             if (digit != -1)
                 ScenarioLogic.groupUnits(digit);
         } else {
+            // Development key bindings.
+            if (event.key == Qt.Key_BracketRight) {
+                map.item.hipsometricMapInFront = !map.item.hipsometricMapInFront;
+            } else
+            // end of dev key bindings
             if (event.key == keyForFunction("zoom in")) {
                 zoomIn();
             } else if (event.key == keyForFunction("zoom out")) {
@@ -107,8 +113,8 @@ Item {
     Flickable {
         id: gameArea
         height: parent.height - bottomMenu.visibleHeight
-        contentWidth: map.item.width
-        contentHeight: map.item.height
+        contentWidth: map.width
+        contentHeight: map.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
         scale: zoom
@@ -261,8 +267,7 @@ Item {
 
                 StatusMessageMenu {
                     id: statusMessageViewer
-                    height: roster.height
-//                    height: soldierMenu.height
+                    height: menu.height
                 }
             }
         }

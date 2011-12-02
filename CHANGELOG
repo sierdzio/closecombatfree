@@ -5,7 +5,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 === === === ===
 02.12.2011:
  - rewrote SoldierMenu so that it is based on GridView
- - 
+ - add Map_tst2, rebuild Map element, begin adding map props (obstacles). First one is HouseBasic_tst
 
 01.12.2011:
  - add CcfConfigSaver

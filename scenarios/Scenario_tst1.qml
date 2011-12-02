@@ -2,11 +2,9 @@ import QtQuick 1.1
 import "../units/tanks/tests"
 
 Item {
-    property string mapFile: PWD + "maps/Map_tst1.qml"
+    property string mapFile: PWD + "maps/Map_tst2.qml"
 
     id: root
-//    width: 800
-//    height: 800
 
     Tank_tst1 {
         objectName: "tank1"

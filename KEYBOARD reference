@@ -17,3 +17,6 @@ A - attack
 K - smoke
 D - defend
 B - ambush
+
+Developer controls (not adjustable in config):
+] - swap map background image with hipsometric image
