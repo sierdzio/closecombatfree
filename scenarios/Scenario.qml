@@ -112,7 +112,7 @@ Item {
 
     Flickable {
         id: gameArea
-        height: parent.height - bottomMenu.visibleHeight
+        height: (bottomMenu.width < root.width)? (parent.height - bottomMenu.visibleHeight) : parent.height;
         contentWidth: map.width
         contentHeight: map.height
         boundsBehavior: Flickable.StopAtBounds
