@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../base/engineLogicHelpers.js" as Logic
+import "../../base/engineLogicHelpers.js" as Logic
 
 Rectangle {
     property string entryText: ""

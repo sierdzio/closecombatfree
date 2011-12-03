@@ -1,6 +1,7 @@
 import QtQuick 1.1
 
 Item {
+    property string cover: "none"
     property bool topVisible: true
 
     function removeTop() {
@@ -12,7 +13,9 @@ Item {
         topVisible = !topVisible;
     }
 
-    objectName: "props/Prop"
+    // Warning! All props should have "objectName" set!
+    // This information is used in terrain info.
+    objectName: "default prop"
 
 //    MouseArea {
 //        anchors.fill: parent

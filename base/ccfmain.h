@@ -10,7 +10,7 @@
 #include <QDebug>
 #include "ccfconfig.h"
 
-class CcfMain : public QDeclarativeView
+class CcfMain : public QDeclarativeView, public CcfError
 {
     Q_OBJECT
 public:
@@ -20,7 +20,10 @@ public slots:
     void quit();
 
 private:
+    bool initConfiguration();
+
     CcfConfig *configuration;
+    QString pwd;
 };
 
 #endif // CCFMAIN_H

@@ -1,7 +1,8 @@
 import QtQuick 1.1
 
 Prop {
-    objectName: "props/HouseBasic_tst"
+    objectName: "house"
+    cover: "great"
     width: 140
     height: 100
 

@@ -160,7 +160,11 @@ Item {
             onPressAndHold: {
                 if (uiMode == "DESKTOP") {
                     gameArea.interactive = false;
-                    ScenarioLogic.handlePressAndHold(mouse);
+                    if (mouse.button == Qt.LeftButton) {
+                        ScenarioLogic.handlePressAndHoldLeft(mouse);
+                    } else if (mouse.button == Qt.RightButton) {
+                        ScenarioLogic.handlePressAndHoldRight(mouse);;
+                    }
                 } else if (uiMode == "MOBILE") {
                     ScenarioLogic.handleRightMouseClick(mouse);
                 }
@@ -265,11 +269,13 @@ Item {
 
                 SoldierMenu {
                     id: soldierMenu
+                    visible: !empty
                 }
 
                 StatusMessageMenu {
                     id: statusMessageViewer
                     height: menu.height
+                    visible: !empty
                 }
             }
         }
@@ -279,6 +285,24 @@ Item {
         id: contextLoader
         rotation: 0
         z: roster.z + 1
+    }
+
+    Text {
+        id: terrainInfoText
+        text: ""
+        visible: (text == "")? false : true;
+
+        height: paintedHeight
+        width: paintedWidth
+        anchors.left: gameArea.left
+        anchors.top: gameArea.top
+        color: "#ddeeee00"
+        font.pointSize: 14
+        style: Text.Raised
+        font.bold: true
+        font.family: "Ubuntu Condensed"
+        verticalAlignment: Text.Center
+        horizontalAlignment: Text.AlignLeft
     }
 
     Row {

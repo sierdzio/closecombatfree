@@ -35,11 +35,11 @@ OTHER_FILES += \
     base/engineLogicHelpers.js \
     gui/UnitSelectionBox.qml \
     gui/RubberBand.qml \
-    gui/RosterMenuEntry.qml \
+    gui/menuEntries/RosterMenuEntry.qml \
     gui/RosterMenu.qml \
     gui/OrderMarker.qml \
     gui/DefenceSphere.qml \
-    gui/ContextMenuEntry.qml \
+    gui/menuEntries/ContextMenuEntry.qml \
     gui/ContextMenu.qml \
     maps/Map_tst1.qml \
     maps/Map.qml \
@@ -72,12 +72,24 @@ OTHER_FILES += \
     units/unitSoldiers.js \
     gui/OptionsMenu.qml \
     gui/StatusMessageMenu.qml \
-    gui/StatusMessageMenuEntry.qml \
+    gui/menuEntries/StatusMessageMenuEntry.qml \
     maps/Map_tst2.qml \
     maps/props/HouseBasic_tst.qml \
     maps/props/Prop.qml \
     maps/props/Tree_tst.qml \
     units/units.js
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

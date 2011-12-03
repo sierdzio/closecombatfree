@@ -23,20 +23,17 @@ New features:
  - add in-game chat
  - add deployment phase before the battle
  - add unit destruction and health
- - add map obstacles, buildings, terrain information
  - add C++ proxy class, that will organise QML-C++ communication
  - add "tree clusters" or "forests" that automatically generate
    some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
 
- - make map obstacles share a common base class - so that they can all have "remove top"
-   capability (for example, when a unit enters a house, the roof should vanish)
+ - add terrain info mode on MOBILE (important!)
  - add per-unit order queues (that is a big one, but might help a lot in the future)
  - add group following
  - add multiple-waypoint move orders
  - look for memory leaks in CcfConfig set of classes. There might be some
 
- - organise files in PWD/gui into neat folders
  - add IFDEFS for debug mode
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
@@ -68,3 +65,7 @@ Done:
  + add config saver to config
  + (sth. to think about) change roster and soldier menu into Model and Delegate based entities
  + add MenuEntriy specialised for status messages (wrap longer text etc.)
+ + make map obstacles share a common base class - so that they can all have "remove top"
+   capability (for example, when a unit enters a house, the roof should vanish)
+ + organise files in PWD/gui into neat folders
+ + add map obstacles, buildings, terrain information

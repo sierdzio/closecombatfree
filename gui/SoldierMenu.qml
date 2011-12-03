@@ -1,10 +1,12 @@
 import QtQuick 1.1
+import "menuEntries"
 import "../units/units.js" as Soldiers
 
 Rectangle {
     property int entryWidth: 175
     property int entryHeight: 54
     property int rows: 4
+    property bool empty: true
 
     id: root
     height: (((soldiers.cellHeight) * rows) + 3)
@@ -23,16 +25,26 @@ Rectangle {
                                  "unitStatus": currentSoldier.status});
             currentSoldier.unitStatusChanged.connect(changeStatus);
         }
+        empty = false;
     }
 
     function clear() {
         Soldiers.list = new Array();
         soldierModel.clear();
+        empty = true;
     }
 
     function changeStatus(newStatus, index) {
         unitModel.set(index, {"unitStatus": newStatus});
     }
+
+//    function isEmpty() {
+//        console.log("Checking whether soldier menu is empty");
+//        if (soldierModel.count == 0)
+//            return true;
+//        else
+//            return false;
+//    }
 
     ListModel {
         id: soldierModel

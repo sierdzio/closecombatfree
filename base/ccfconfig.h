@@ -6,6 +6,13 @@
 #include <QMap>
 #include <QSize>
 #include <QPair>
+////
+#include <QImage>
+#include <QPoint>
+#include <QSize>
+#include <QColor>
+#include <QDebug>
+////
 #include "ccferror.h"
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
@@ -23,6 +30,8 @@ public:
     Q_INVOKABLE QString configurationString();
     Q_INVOKABLE int keyForFunction(const QString &functionName);
     Q_INVOKABLE void toggleUiMode();
+    Q_INVOKABLE void setTerrainImageUrl(const QString &url, int width, int height);
+    Q_INVOKABLE int terrainPixelInfo(int x, int y);
 
     QString uiMode();
     int configWindowWidth();
@@ -46,6 +55,7 @@ private:
     int findQtKey(QChar character);
 
     QString filePath;
+    QImage *terrainImage;
     CcfConfigParser *parser;
     CcfConfigSaver *saver;
     QMap<QString, QPair<QString, bool> > *configuration;

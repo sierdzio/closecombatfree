@@ -309,7 +309,7 @@ function handleRightMouseClickRoster(mouse) {
         }
 }
 
-function handlePressAndHold(mouse) {
+function handlePressAndHoldLeft(mouse) {
     rubberBand.x = mouse.x;
     rubberBand.y = mouse.y;
     rubberBand.height = 2;
@@ -326,12 +326,19 @@ function handlePressAndHold(mouse) {
         rubberBandTimer.start();
 }
 
+function handlePressAndHoldRight(mouse) {
+    var infoString = map.item.terrainInfoString(mouse.x, mouse.y);
+    terrainInfoText.text = infoString;
+}
+
 function handleMouseReleased() {
     if (rubberBandTimer.running == true) {
         rubberBandTimer.stop();
         rubberBand.visible = false;
         rubberBand.height = 2;
         rubberBand.width = 2;
+    } else if (terrainInfoText.text != "") {
+        terrainInfoText.text = "";
     }
 }
 

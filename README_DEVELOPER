@@ -3,3 +3,6 @@ CcfConfig set of classes is used to load and save config files.
 Parsed options are stored in QMap<QString, QPair<QString, bool> >, where first QString is the option name, the second QString (accessible through .first) stores value, and the bool specifies, whether the value was changed in-game (true if was, false by default).
 
 Additional QList<QString> stores option names in ordered manner - this was file saving can be optimised.
+
+// Terrain information
+Application uses hipsometric map for terrain height. Value ("height") is calculated by ADDING int values (0-255) of red, green and blue components. This is then converted into meters by dividing by 10. This means, that the maximum height available in gam is 76.5 meters. Should that not be enough, a different algorithm can easily be added.

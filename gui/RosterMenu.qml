@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "menuEntries"
 import "../units/units.js" as Units
 
 Rectangle {

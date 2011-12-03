@@ -1,7 +1,8 @@
 import QtQuick 1.1
 
 Prop {
-    objectName: "props/Tree_tst"
+    objectName: "tree"
+    cover: "average"
     width: top.width
     height: top.height
 
@@ -11,6 +12,10 @@ Prop {
         height: 4
         radius: 1
         color: "#4f1708"
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: top.width/2
+        anchors.leftMargin: top.width/2
 
         Image {
             id: top

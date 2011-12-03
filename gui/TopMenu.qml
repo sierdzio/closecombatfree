@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "menuEntries"
 
 Item {
     property int currentZoom: 100

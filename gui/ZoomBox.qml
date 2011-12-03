@@ -45,12 +45,4 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
     }
-
-//    function zoomIn() {
-//        currentZoom += 0.1
-//    }
-
-//    function zoomOut() {
-//        currentZoom -= 0.1
-//    }
 }

@@ -1,7 +1,9 @@
 import QtQuick 1.1
+import "menuEntries"
 
 Rectangle {
     property int entryWidth: 175
+    property bool empty: true
 
     id: root
     height: 200
@@ -16,7 +18,16 @@ Rectangle {
 
     function newStatusMessageReceived(message, object) {
         messageModel.append({"message": message});
+        if (empty == true)
+            empty = false;
     }
+
+//    function isEmpty() {
+//        if (messageModel.count == 0)
+//            return true;
+//        else
+//            return false;
+//    }
 
     ListModel {
         id: messageModel

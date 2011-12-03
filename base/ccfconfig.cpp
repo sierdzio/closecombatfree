@@ -192,3 +192,17 @@ void CcfConfig::statusMessage(const QString &message)
 //    qDebug() << this->sender();
     emit newStatusMessage(message, this->sender()); // or QObject::sender()
 }
+
+void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
+{
+    QImage tempImage(url);
+    terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
+//    qDebug() << "Got terrain info in C++. Height:" << terrainImage->width()
+//             << ". Height:" << terrainImage->height();
+}
+
+int CcfConfig::terrainPixelInfo(int x, int y)
+{
+    QRgb result(terrainImage->pixel(QPoint(x, y)));
+    return qRed(result) + qGreen(result) + qBlue(result);
+}

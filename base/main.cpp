@@ -1,10 +1,17 @@
-#include <QtGui/QApplication>
+#include <QApplication>
+#include <QDebug>
 #include "ccfmain.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     CcfMain *viewer = new CcfMain();
-    viewer->show();
-    return a.exec();
+    if (!viewer->isErrorState()) {
+        viewer->setSource(QUrl("base/main.qml"));
+        viewer->show();
+        return a.exec();
+    } else {
+        qDebug() << viewer->errorMessage();
+        return 1;
+    }
 }

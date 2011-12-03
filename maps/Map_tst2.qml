@@ -27,6 +27,7 @@ Map {
     }
 
     Rectangle {
+        objectName: "Gray rectangle"
         id: rect2
         x: 360
         y: 50
@@ -36,6 +37,7 @@ Map {
     }
 
     Rectangle {
+        objectName: "Shallow water"
         id: rect3
         x: 905
         y: 162

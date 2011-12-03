@@ -26,6 +26,13 @@ Item {
         source: hipsometricImage
         anchors.fill: parent
         z: -1
+
+        Component.onCompleted: {
+//            console.log("Sending terrain info to C++. Image URL: " + hipsometricImage
+//                        + " . Width: " + hipsometricMap.width
+//                        + " . Height: " + hipsometricMap.height);
+            setTerrainImageUrl(hipsometricImage, hipsometricMap.width, hipsometricMap.height);
+        }
     }
 
     Image {
@@ -45,27 +52,56 @@ Item {
 
     function setUnits(newList) {
         Units.list = newList;
-
-        // Experimental event searching.
-        // Would be better to optimise this.
-        // For example, add coarse filter in Unit.qml
-        // that would send a signal only once 5-10 units,
-        // and would combine X and Y signals into one.
         for (var i = 0; i < Units.list.length; i++) {
             var unit = Units.list[i];
             unit.positionChanged.connect(checkForHits);
-//            console.log("Unit number " + i + " is set in Map element.");
         }
     }
 
     function checkForHits(x, y, index) {
-        var child = childAt(x, y);
-        if ((child == null) || (child == background) || (child == hipsometricMap))
+        if (!childExistsAt(x, y))
             return;
 
+        var child = childAt(x, y);
         // WARNING! This checks x and y only. No check for width/height/rotation. Yet.
 
-        console.log("Hit! Who: " + child);
-        child.removeTop();
+//        console.log("Hit! Who: " + child);
+        if (child.topVisible !== undefined)
+            child.removeTop();
+    }
+
+    function childExistsAt(x, y) {
+        var child = childAt(x, y);
+        if ((child == null) || (child == background) || (child == hipsometricMap))
+            return false;
+        else
+            return true;
+    }
+
+    function terrainInfo(x, y) {
+        // This method is intended to extract terrain information on a given point.
+        // This info should include: type of terrain/ obstacle/ prop, height over "0" level,
+        // how much cover does a given spot give to a unit.
+        var result = {objectType: "unknown", heightOverZero: 5, cover: "poor"};
+
+        if (childExistsAt(x, y)) {
+            var child = childAt(x, y);
+            result.objectType = child.objectName;
+            result.cover = child.cover;
+        }
+
+        var pixelInfo = terrainPixelInfo(x, y);
+        console.log("Got terrain PIXEL info: " + pixelInfo);
+        result.heightOverZero = pixelInfo / 10;
+
+        return result;
+    }
+
+    function terrainInfoString(x, y) {
+        var info = terrainInfo(x, y);
+        var result = "Terrain: " + info.objectType
+            + ". Height: " + info.heightOverZero
+            + ". Cover: " + info.cover + " meters.";
+        return result;
     }
 }

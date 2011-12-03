@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "menuEntries"
 
 Rectangle {    
     property int __buttonWidth: 86
