@@ -1,9 +1,9 @@
 import QtQuick 1.1
 
-Item {
+Rectangle {
     // Warning! All props should have "objectName" set!
     // This information is used in terrain info.
-    objectName: "default prop"
+    objectName: "default prop rectangle"
     property string cover: "none"
     property bool topVisible: true
 

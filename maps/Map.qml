@@ -65,7 +65,7 @@ Item {
         var child = childAt(x, y);
         // WARNING! This checks x and y only. No check for width/height/rotation. Yet.
 
-//        console.log("Hit! Who: " + child);
+        console.log("Hit! Who: " + child);
         if (child.topVisible !== undefined)
             child.removeTop();
     }
@@ -91,7 +91,7 @@ Item {
         }
 
         var pixelInfo = terrainPixelInfo(x, y);
-        console.log("Got terrain PIXEL info: " + pixelInfo);
+//        console.log("Got terrain PIXEL info: " + pixelInfo);
         result.heightOverZero = pixelInfo / 10;
 
         return result;

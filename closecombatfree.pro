@@ -77,7 +77,9 @@ OTHER_FILES += \
     maps/props/HouseBasic_tst.qml \
     maps/props/Prop.qml \
     maps/props/Tree_tst.qml \
-    units/units.js
+    units/units.js \
+    maps/props/PropRectangle.qml
+
 
 
 

@@ -34,6 +34,7 @@ Map {
         width: 100
         height: 100
         color: "#aabbbbcc"
+        opacity: 0
     }
 
     Rectangle {
@@ -45,5 +46,6 @@ Map {
         height: 300
         radius: 50
         color: "#ee1188ee"
+        opacity: 0
     }
 }
