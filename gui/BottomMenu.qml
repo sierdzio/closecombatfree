@@ -45,7 +45,7 @@ Item {
                     target: menu
                     properties: "y"
                     to: -menu.height
-                    duration: 500
+                    duration: 300
                 }
             }
         },

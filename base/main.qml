@@ -5,7 +5,7 @@ Rectangle {
     id: root
     width: configWindowWidth
     height: configWindowHeight
-    color: "black"
+    color: "#7e8c24"
 
 //    Component.onCompleted: {
 //        console.log("Configuration from config file:\n" + configurationString());

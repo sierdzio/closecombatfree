@@ -112,7 +112,12 @@ Item {
 
     Flickable {
         id: gameArea
-        height: (bottomMenu.width < root.width)? (parent.height - bottomMenu.visibleHeight) : parent.height;
+        height: {
+            if ((bottomMenu.width < root.width) || (uiMode == "MOBILE"))
+                return (parent.height - bottomMenu.visibleHeight);
+            else
+                return parent.height;
+        }
         contentWidth: map.width
         contentHeight: map.height
         boundsBehavior: Flickable.StopAtBounds
@@ -221,20 +226,13 @@ Item {
         anchors.left: root.left
         visibleHeight: -menu.y
 
-//        onVisibleHeightChanged: console.log("Visible height: " + visibleHeight
-//                                            + "\nMenu y: " + menu.y
-//                                            + "\nGame area height: " + gameArea.height);
-
         Flickable {
             id: menu
             visible: false
             anchors.left: bottomMenu.left
             height: roster.height
-            width: bottomMenu.width
             flickableDirection: Flickable.HorizontalFlick
-            contentWidth: roster.width + soldierMenu.width + statusMessageViewer.width
             contentHeight: roster.height
-            clip: true
 
             Row {
                 anchors.fill: parent
