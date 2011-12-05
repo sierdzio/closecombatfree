@@ -7,10 +7,13 @@ Rectangle {
     id: entryButton
     color: "#5e2c24"
     border.color: "#c0baba"
+    width: entryText.paintedWidth
+    height: entryText.paintedHeight
 
     Text {
         id: entryText
-        anchors.fill: parent
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         color: "#ffffff"
         text: buttonText
         font.pointSize: 11

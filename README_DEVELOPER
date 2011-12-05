@@ -6,3 +6,5 @@ Additional QList<QString> stores option names in ordered manner - this was file 
 
 // Terrain information
 Application uses hipsometric map for terrain height. Value ("height") is calculated by ADDING int values (0-255) of red, green and blue components. This is then converted into meters by dividing by 10. This means, that the maximum height available in gam is 76.5 meters. Should that not be enough, a different algorithm can easily be added.
+
+Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).

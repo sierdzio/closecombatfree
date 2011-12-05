@@ -4,6 +4,7 @@ Item {
     property bool open: trigger.poppedUp
     property color backgroundColor: "#dd333232"
     property int visibleHeight: 0
+    property int popupSize: 30
 
     signal openMenu();
     onOpenMenu: trigger.poppedUp = true;
@@ -16,7 +17,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         rotation: 90
-        size: 30
+        size: popupSize
         z: menu.z + 1
     }
 

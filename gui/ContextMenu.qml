@@ -2,7 +2,7 @@ import QtQuick 1.1
 import "menuEntries"
 
 Rectangle {    
-    property int __buttonWidth: 86
+    property int __buttonWidth: moveFastButton.width
     property int __buttonHeight: 19
     property int unitIndex: -1
 
@@ -13,8 +13,8 @@ Rectangle {
     }
 
     id: root
-    width: 90
-    height: (__buttonHeight + 1) * entries.rows + 4
+    width: entries.width + 5
+    height: entries.height + 5
     color: "#331008"
     border.width: 2
     border.color: "#000000"
@@ -22,7 +22,8 @@ Rectangle {
 
     Grid {
         id: entries
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
         anchors.topMargin: 2
         anchors.leftMargin: 2
         spacing: 1
@@ -32,7 +33,6 @@ Rectangle {
         ContextMenuEntry {
             id: moveFastButton
             buttonText: qsTr("Move fast")
-            width: __buttonWidth
             height: __buttonHeight
 
             Component.onCompleted: moveFastButton.entryClicked.connect(prepareSignal);

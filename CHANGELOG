@@ -3,12 +3,18 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+05.12.2011:
+ - parametrized menus, they should look OK on different screen sizes (and densities). Still needs testing,
+   but seems to work
+
 03.12.2011:
  - organise files in PWD/gui into neat folders
  - made soldier menu and statu message menu disappear if they are empty
  - add basic terrain info communication
  - add terrainInfo reader to CcfConfig
  - add "cover" property to props
+ - make BottomMenu adjust it's size and not obstruct the view. On mobile, the old behaviour is kept
+ - add PropRectangle
 
 02.12.2011:
  - rewrote SoldierMenu so that it is based on GridView

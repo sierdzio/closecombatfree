@@ -22,13 +22,6 @@ Rectangle {
             empty = false;
     }
 
-//    function isEmpty() {
-//        if (messageModel.count == 0)
-//            return true;
-//        else
-//            return false;
-//    }
-
     ListModel {
         id: messageModel
     }

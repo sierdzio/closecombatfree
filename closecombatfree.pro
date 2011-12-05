@@ -63,7 +63,7 @@ OTHER_FILES += \
     gui/SimpleInfoBox.qml \
     gui/PopUpArrow.qml \
     gui/TopMenu.qml \
-    gui/MenuEntry.qml \
+    gui/menuEntries/MenuEntry.qml \
     gui/ZoomBox.qml \
     gui/ZoomButton.qml \
     gui/BottomMenu.qml \

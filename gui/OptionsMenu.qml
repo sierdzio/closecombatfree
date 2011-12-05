@@ -5,6 +5,7 @@ Item {
     property int currentZoom: 100
     property bool open: false
     property color backgroundColor: "#dd333232"
+    property int size: preferencesEntry.width //30
 
     signal pauseEntryClicked();
     signal optionsEntryClicked();
@@ -34,7 +35,6 @@ Item {
 
     signal quitEntryClicked()
     onQuitEntryClicked: {
-//        console.log("Bailing out.");
         Qt.quit();
     }
 
@@ -46,7 +46,7 @@ Item {
     }
 
     id: root
-    width: 30
+    width: size
     state: "closed"
 
     Column {
@@ -57,25 +57,24 @@ Item {
         MenuEntry {
             id: preferencesEntry
             text: "Preferences"
-            size: root.width
         }
 
         MenuEntry {
             id: saveGameEntry
             text: "Save game"
-            size: root.width
+            width: root.size
         }
 
         MenuEntry {
             id: loadGameEntry
             text: "Load game"
-            size: root.width
+            width: root.size
         }
 
         MenuEntry {
             id: quitEntry
             text: "Quit"
-            size: root.width
+            width: root.size
         }
     }
 

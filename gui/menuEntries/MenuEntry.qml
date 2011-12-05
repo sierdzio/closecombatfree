@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 Rectangle {
-    property int size: 50
+    property int size: 30
     property string text: "o"
     property string additionalText: ""
     property color backgroundColor: "#bb333232"
@@ -10,8 +10,36 @@ Rectangle {
 
     id: root
     color: backgroundColor
-    width: size * 2
-    height: size
+
+    width: {
+        var result = 0;
+        var textWidth = mainText.paintedWidth;
+        if (additional.visible == true) {
+            textWidth = additional.paintedWidth;
+        }
+
+        if (size > textWidth)
+            result = size;
+        else
+            result = textWidth;
+
+        return (result + 2 * radius);
+    }
+
+    height: {
+        var result = 0;
+        var textHeight = mainText.paintedHeight;
+        if (additional.visible == true) {
+            textHeight += additional.paintedHeight;
+        }
+
+//        if ((size) > textHeight)
+//            result = (size);
+//        else
+            result = textHeight;
+
+        return (result + 2 * radius);
+    }
     radius: size/8
 
     Text {
@@ -19,10 +47,11 @@ Rectangle {
         color: "#adadad"
         text: parent.text
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+//        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: size/4
+        font.pointSize: 10//size/4
         font.bold: true
     }
 
@@ -34,7 +63,7 @@ Rectangle {
         anchors.top: mainText.bottom
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: size/5
+        font.pointSize: 8//size/5
 //        font.bold: true
         visible: (additional.text != "")? true : false;
     }

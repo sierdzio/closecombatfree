@@ -14,8 +14,10 @@ Rectangle {
     color: "#5e6c24"
     border.color: "#1e1c00"
     border.width: 1
-    width: 175
-    height: 54
+//    width: 175
+//    height: 54
+    width: entryStatus.paintedWidth
+    height: entryStatus.paintedHeight
 
     onEntryStatusTextChanged: {
         if (entryStatusText == "") {

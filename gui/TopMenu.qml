@@ -5,6 +5,7 @@ Item {
     property int currentZoom: 100
     property bool open: trigger.poppedUp
     property color backgroundColor: "#dd333232"
+    property int popupSize: 30
 
     signal pauseEntryClicked();
     signal optionsEntryClicked();
@@ -32,14 +33,14 @@ Item {
     }
 
     id: root
-    height: 30
+    height: popupSize
     state: "closed"
 
     PopUpArrow {
         id: trigger
         anchors.top: parent.top
         anchors.right: parent.right
-        size: root.height
+        size: popupSize
     }
 
     Row {
@@ -51,20 +52,20 @@ Item {
 
         ZoomBox {
             id: zoomBox
-            size: root.height
+            size: popupSize
             currentZoom: root.currentZoom
         }
 
         MenuEntry {
             id: pauseEntry
             text: "Pause"
-            size: root.height
+            height: popupSize
         }
 
         MenuEntry {
             id: optionsEntry
             text: "Options"
-            size: root.height
+            height: popupSize
 
             OptionsMenu {
                 id: optionsMenu
@@ -78,7 +79,7 @@ Item {
             id: modeEntry
             text: "UI Mode"
             additionalText: uiMode
-            size: root.height
+            size: popupSize
         }
     }
 
