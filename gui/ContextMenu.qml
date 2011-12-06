@@ -2,8 +2,8 @@ import QtQuick 1.1
 import "menuEntries"
 
 Rectangle {    
-    property int __buttonWidth: moveFastButton.width
-    property int __buttonHeight: 19
+    property int buttonWidth: moveFastButton.width
+    property int buttonHeight: 19
     property int unitIndex: -1
     property color backgroundColor: "#5e2c24"
     property color entryBackgroundColor: backgroundColor
@@ -35,7 +35,7 @@ Rectangle {
         ContextMenuEntry {
             id: moveFastButton
             buttonText: qsTr("Move fast")
-            height: __buttonHeight
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: moveFastButton.entryClicked.connect(prepareSignal);
@@ -44,8 +44,8 @@ Rectangle {
         ContextMenuEntry {
             id: moveButton
             buttonText: qsTr("Move")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: moveButton.entryClicked.connect(prepareSignal);
@@ -54,8 +54,8 @@ Rectangle {
         ContextMenuEntry {
             id: sneakButton
             buttonText: qsTr("Sneak")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: sneakButton.entryClicked.connect(prepareSignal);
@@ -64,8 +64,8 @@ Rectangle {
         ContextMenuEntry {
             id: smokeButton
             buttonText: qsTr("Smoke")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: smokeButton.entryClicked.connect(prepareSignal);
@@ -74,8 +74,8 @@ Rectangle {
         ContextMenuEntry {
             id: attackButton
             buttonText: qsTr("Attack")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: attackButton.entryClicked.connect(prepareSignal);
@@ -84,8 +84,8 @@ Rectangle {
         ContextMenuEntry {
             id: ambushButton
             buttonText: qsTr("Ambush")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: ambushButton.entryClicked.connect(prepareSignal);
@@ -94,8 +94,8 @@ Rectangle {
         ContextMenuEntry {
             id: defendButton
             buttonText: qsTr("Defend")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: defendButton.entryClicked.connect(prepareSignal);
@@ -104,8 +104,8 @@ Rectangle {
         ContextMenuEntry {
             id: stopButton
             buttonText: qsTr("Stop")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: stopButton.entryClicked.connect(prepareSignal);
@@ -114,8 +114,8 @@ Rectangle {
         ContextMenuEntry {
             id: followButton
             buttonText: qsTr("Follow")
-            width: __buttonWidth
-            height: __buttonHeight
+            width: buttonWidth
+            height: buttonHeight
             backgroundColor: entryBackgroundColor
 
             Component.onCompleted: followButton.entryClicked.connect(prepareSignal);

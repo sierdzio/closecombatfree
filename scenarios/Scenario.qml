@@ -244,9 +244,11 @@ Item {
                 anchors.fill: parent
 
                 ContextMenu {
+                    // A static context menu, useful on mobile, where there is no right click.
                     id: contextMenu
                     height: menu.height
                     backgroundColor: menuBackgroundColor
+                    buttonHeight: ((height/9) - 1)
                     visible: (uiMode == "MOBILE")? true: false;
 
                     Component.onCompleted: {
