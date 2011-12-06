@@ -7,6 +7,9 @@ Bugs & fixes:
  - change "child" variables in logic into "unit" variables
 
 New features:
+ - consider moving JS files, and core QML files, to Qt Resource System (that will make them hidden
+   from users, and also it will leave only files important in modding for them to see. Would also help
+   Android)
  - add game menu
  - preferences menu
  - add campaigns
@@ -22,7 +25,7 @@ New features:
 
  - add terrain info mode on MOBILE (important!)
  - add per-unit order queues (that is a big one, but might help a lot in the future)
- - add group following
+ - add group following (not needed too much)
  - add multiple-waypoint move orders
  - look for memory leaks in CcfConfig set of classes. There might be some
 

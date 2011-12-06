@@ -64,25 +64,19 @@ Item {
     width: unitWidth
     height: unitHeight
 
-    // EXPERIMENT
-
     signal positionChanged(real x, real y, int index)
 
     onXChanged: {
         if (Math.round(x % 10) === 0) {
-//            console.log("onXChanged. X: " + x);
             positionChanged(x, y, unitIndex);
         }
     }
 
     onYChanged: {
         if (Math.round(y % 10) === 0) {
-//            console.log("onYChanged. Y: " + y);
             positionChanged(x, y, unitIndex);
         }
     }
-
-    // END OF EXPERIMENT
 
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;

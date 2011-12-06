@@ -136,7 +136,7 @@ Item {
         Loader {
             id: units
             anchors.fill: parent
-            source: scenarioFile            
+            source: scenarioFile
 
             Component.onCompleted: {
                 for (var i = 0; i < units.item.children.length; i++) {
