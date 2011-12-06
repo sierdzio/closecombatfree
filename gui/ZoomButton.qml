@@ -3,13 +3,15 @@ import QtQuick 1.1
 Rectangle {
     property int size: 30
     property string text: "o"
-    property color backgroundColor: "#bb333232"
+    property color backgroundColor: "#dd333232"
 
     signal zoomButtonClicked();
 
     color: backgroundColor
+    border.color: Qt.tint(backgroundColor, "#88aaaaaa")
+    border.width: 1
     width: size
-    height: height
+    height: size
     radius: 5
 
     Text {

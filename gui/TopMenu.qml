@@ -12,6 +12,11 @@ Item {
     signal uiModeEntryClicked();
     signal zoomIn();
     signal zoomOut();
+    signal terrainInfoEntryClicked();
+    onTerrainInfoEntryClicked: {
+        toggleTerrainInfoMode();
+        terrainInfoEntry.additionalText = terrainInfoMode;
+    }
 
     signal openMenu();
     onOpenMenu: trigger.poppedUp = true;
@@ -28,6 +33,7 @@ Item {
         pauseEntry.entryClicked.connect(pauseEntryClicked);
         optionsEntry.entryClicked.connect(optionsEntryClicked);
         modeEntry.entryClicked.connect(uiModeEntryClicked);
+        terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);
     }
@@ -57,12 +63,6 @@ Item {
         }
 
         MenuEntry {
-            id: pauseEntry
-            text: "Pause"
-            height: popupSize
-        }
-
-        MenuEntry {
             id: optionsEntry
             text: "Options"
             height: popupSize
@@ -76,10 +76,28 @@ Item {
         }
 
         MenuEntry {
+            id: pauseEntry
+            text: "Pause"
+            height: popupSize
+        }
+
+        MenuEntry {
+            id: terrainInfoEntry
+            text: "Terrain info mode"
+            additionalText: "OFF"
+            height: popupSize
+            opacity: (uiMode == "MOBILE")? 1: 0;
+
+            Behavior on opacity {
+                NumberAnimation {}
+            }
+        }
+
+        MenuEntry {
             id: modeEntry
             text: "UI Mode"
             additionalText: uiMode
-            size: popupSize
+            height: popupSize
         }
     }
 
@@ -87,11 +105,21 @@ Item {
         State {
             when: (open == false)
             name: "closed"
+            AnchorChanges {
+                target: menu
+                anchors.left: trigger.left
+                anchors.right: undefined
+            }
         },
 
         State {
             when: (open == true)
             name: "opened"
+            AnchorChanges {
+                target: menu
+                anchors.right: trigger.left
+                anchors.left: undefined
+            }
         }
     ]
 
@@ -104,10 +132,7 @@ Item {
                 ScriptAction {
                     script: menu.visible = true;
                 }
-                NumberAnimation {
-                    target: menu;
-                    property: "x";
-                    to: (trigger.x - menu.width);
+                AnchorAnimation {
                     duration: 300
                 }
             }
@@ -118,10 +143,7 @@ Item {
             to: "closed"
 
             SequentialAnimation {
-                NumberAnimation {
-                    target: menu;
-                    property: "x";
-                    to: (trigger.x);
+                AnchorAnimation {
                     duration: 300
                 }
                 ScriptAction {

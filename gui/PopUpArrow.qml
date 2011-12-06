@@ -6,6 +6,8 @@ Rectangle {
     property color backgroundColor: "#dd333232"
 
     color: backgroundColor
+    border.color: Qt.tint(backgroundColor, "#88aaaaaa")
+    border.width: 1
     width: size
     height: width
     radius: 5

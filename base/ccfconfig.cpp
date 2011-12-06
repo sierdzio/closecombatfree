@@ -6,6 +6,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
 {
     configuration = new QMap<QString, QPair<QString, bool> >();
     parser = new CcfConfigParser(filePath, this);
+    m_terrainInfoMode = "OFF";
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
@@ -48,6 +49,21 @@ void CcfConfig::toggleUiMode()
         statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
+}
+
+QString CcfConfig::terrainInfoMode()
+{
+    return m_terrainInfoMode;
+}
+
+void CcfConfig::toggleTerrainInfoMode()
+{
+    if (m_terrainInfoMode == "ON") {
+        m_terrainInfoMode = "OFF";
+    } else {
+        m_terrainInfoMode = "ON";
+    }
+    emit terrainInfoModeChanged();
 }
 
 int CcfConfig::configWindowWidth()

@@ -21,6 +21,7 @@ class CcfConfig : public QObject, public CcfError
 {
     Q_OBJECT
     Q_PROPERTY(QString uiMode READ uiMode NOTIFY uiModeChanged)
+    Q_PROPERTY(QString terrainInfoMode READ terrainInfoMode NOTIFY uiModeChanged)
     Q_PROPERTY(int configWindowWidth READ configWindowWidth NOTIFY configWindowWidthChanged)
     Q_PROPERTY(int configWindowHeight READ configWindowHeight NOTIFY configWindowHeightChanged)
 
@@ -30,10 +31,12 @@ public:
     Q_INVOKABLE QString configurationString();
     Q_INVOKABLE int keyForFunction(const QString &functionName);
     Q_INVOKABLE void toggleUiMode();
+    Q_INVOKABLE void toggleTerrainInfoMode();
     Q_INVOKABLE void setTerrainImageUrl(const QString &url, int width, int height);
     Q_INVOKABLE int terrainPixelInfo(int x, int y);
 
     QString uiMode();
+    QString terrainInfoMode();
     int configWindowWidth();
     int configWindowHeight();
 
@@ -48,12 +51,14 @@ signals:
     void configWindowWidthChanged();
     void configWindowHeightChanged();
     void uiModeChanged();
+    void terrainInfoModeChanged();
     void newStatusMessage(const QString &message,
                      QObject *sender);
 
 private:
     int findQtKey(QChar character);
 
+    QString m_terrainInfoMode;
     QString filePath;
     QImage *terrainImage;
     CcfConfigParser *parser;

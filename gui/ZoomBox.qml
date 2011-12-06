@@ -9,6 +9,8 @@ Rectangle {
     signal zoomOut();
 
     color: backgroundColor
+    border.color: Qt.tint(backgroundColor, "#88aaaaaa")
+    border.width: 1
     width: (2 * height) + zoomText.paintedWidth
     height: size
     radius: 5

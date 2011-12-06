@@ -6,7 +6,9 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 06.12.2011:
  - ContextMenu is now displayed on double click when no unit is being followed
  - all menus backgrounds' colours are now parametrised
- - add ContextMenu to BottomMenu on mobile
+ - add ContextMenu to BottomMenu on mobile mode
+ - add terrainInfoMode for mobile mode
+ - change TopMenu transition to be anchor-based, not x-based
 
 05.12.2011:
  - parametrized menus, they should look OK on different screen sizes (and densities). Still needs testing,

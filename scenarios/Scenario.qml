@@ -172,7 +172,11 @@ Item {
                         ScenarioLogic.handlePressAndHoldRight(mouse);;
                     }
                 } else if (uiMode == "MOBILE") {
-                    ScenarioLogic.handleRightMouseClick(mouse);
+                    if (terrainInfoMode == "OFF") {
+                        ScenarioLogic.handleRightMouseClick(mouse);
+                    } else {
+                        ScenarioLogic.handlePressAndHoldRight(mouse);
+                    }
                 }
             }
             onReleased: {

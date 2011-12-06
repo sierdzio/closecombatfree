@@ -10,11 +10,13 @@ Rectangle {
 
     id: root
     color: backgroundColor
+    border.color: Qt.tint(backgroundColor, "#88aaaaaa")
+    border.width: 1
 
     width: {
         var result = 0;
         var textWidth = mainText.paintedWidth;
-        if (additional.visible == true) {
+        if ((additional.visible == true) && (additional.paintedWidth > textWidth)) {
             textWidth = additional.paintedWidth;
         }
 
@@ -33,13 +35,11 @@ Rectangle {
             textHeight += additional.paintedHeight;
         }
 
-//        if ((size) > textHeight)
-//            result = (size);
-//        else
-            result = textHeight;
+        result = textHeight;
 
         return (result + 2 * radius);
     }
+
     radius: size/8
 
     Text {
