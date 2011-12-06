@@ -6,11 +6,12 @@ Rectangle {
     property int entryWidth: 175
     property int entryHeight: 54
     property int rows: 4
+    property color backgroundColor: "#7e8c24"
 
     id: root
     width: units.width
     height: (entryHeight + 2) * rows + 3
-    color: "#7e8c24"
+    color: backgroundColor
     border.color: "#1e1c00"
     border.width: 2
 
@@ -40,7 +41,6 @@ Rectangle {
     }
 
     function childCenterCoords(x, y) {
-//        return units.childAt(x, y);
         var index;
         index = units.indexAt(x, y);
 
@@ -48,9 +48,6 @@ Rectangle {
         row = index % rows;
         var column;
         column = index / rows;
-//        index = units.model.childAt(x, y);
-//        console.log("Index: " + index + ", object: " + unitModel.get(index) + " " + unitModel.get(index).x);
-//        console.log("Index: " + index.index + ", object x: " + index.x);
 
         var result = {"x": ((column * units.cellWidth) + (units.cellWidth/2)),
             "y": ((row * units.cellHeight) + (units.cellHeight/2))};
@@ -77,6 +74,7 @@ Rectangle {
         RosterMenuEntry {
             width: entryWidth
             height: entryHeight
+            backgroundColor: root.backgroundColor
 
             entryText: unitType
             entryLogo: unitLogo

@@ -6,12 +6,13 @@ Rectangle {
     property string entryStatusText: ""
     property color entryStatusColor: "#000000"
     property string entryLogo: ""
+    property color backgroundColor: "#7e8c24"
     property bool mouseAreaEnabled: true
     property bool selected: false
     property int index: 0
 
     id: root
-    color: "#5e6c24"
+    color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
 //    width: 175
@@ -90,7 +91,7 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: mouseAreaEnabled
 
-        onEntered: parent.color = "#2e3c24";
-        onExited: parent.color = "#5e6c24";
+        onEntered: parent.color = Qt.tint(backgroundColor, "#80202020");
+        onExited: parent.color = backgroundColor;
     }
 }

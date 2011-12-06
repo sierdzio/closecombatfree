@@ -4,7 +4,9 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 
 === === === ===
 06.12.2011:
- - 
+ - ContextMenu is now displayed on double click when no unit is being followed
+ - all menus bacgrounds' colours are now parametrised
+ - add ContextMenu to BottomMenu on mobile
 
 05.12.2011:
  - parametrized menus, they should look OK on different screen sizes (and densities). Still needs testing,

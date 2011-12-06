@@ -49,6 +49,7 @@ Big ideas for the future:
  - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
  - parametrize UI to allow easy modding and skins creation
  - add naval warfare
+ - consider using QRC as mod packages for the game
 
 Done (this section gets occasionally cleaned):
  + add single soldiers within a unit

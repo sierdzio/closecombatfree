@@ -4,10 +4,11 @@ import "../../base/engineLogicHelpers.js" as Logic
 Rectangle {
     property string entryText: ""
     property color entryTextColor: "#000000"
+    property color backgroundColor: "#7e8c24"
     property string entryPicture: ""
 
     id: root
-    color: "#5e6c24"
+    color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
     width: entry.paintedWidth

@@ -38,7 +38,6 @@ Rectangle {
             onActiveChanged: {
                 if(drag.active == false) {
                     dragComplete(index);
-//                    console.log("Drag is now: " + drag.active);
                 }
             }
         }

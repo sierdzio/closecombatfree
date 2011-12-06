@@ -11,6 +11,7 @@ Item {
     property int __unitIndex: -1
     property real zoom: 1.0
     property bool paused: false
+    property color menuBackgroundColor: "#7e8c24"
 
     signal togglePause ()
     onTogglePause: {
@@ -181,7 +182,12 @@ Item {
                 }
             }
             onDoubleClicked: {
-                ScenarioLogic.stopFollowingUnit();
+                if (followedUnit.index != -1) {
+                    ScenarioLogic.stopFollowingUnit();
+                } else {
+                    // Especially useful on mobile, where right click is not possible
+                    ScenarioLogic.handleRightMouseClick(mouse);
+                }
             }
         }
 
@@ -237,8 +243,20 @@ Item {
             Row {
                 anchors.fill: parent
 
+                ContextMenu {
+                    id: contextMenu
+                    height: menu.height
+                    backgroundColor: menuBackgroundColor
+                    visible: (uiMode == "MOBILE")? true: false;
+
+                    Component.onCompleted: {
+                        contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
+                    }
+                }
+
                 RosterMenu {
                     id: roster
+                    backgroundColor: menuBackgroundColor
 
                     Component.onCompleted: {
                         populateUnits(units.item.children);
@@ -268,12 +286,14 @@ Item {
                 SoldierMenu {
                     id: soldierMenu
                     visible: !empty
+                    backgroundColor: menuBackgroundColor
                 }
 
                 StatusMessageMenu {
                     id: statusMessageViewer
                     height: menu.height
                     visible: !empty
+                    backgroundColor: menuBackgroundColor
                 }
             }
         }

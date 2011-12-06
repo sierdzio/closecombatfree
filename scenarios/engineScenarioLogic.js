@@ -7,7 +7,12 @@ function scheduleContextAction(index, operation) {
     var child;
 
     children = selectedUnits();
-    child = units.item.children[index];
+    if (units.item.children[index] != undefined) {
+        child = units.item.children[index];
+    } else {
+        child = children[0];
+        __unitIndex = child.unitIndex;
+    }
 
     child.scheduledOperation = operation;
     contextLoader.source = "";
@@ -255,6 +260,7 @@ function handleRightMouseClick(mouse) {
             deselectAllUnits();
             return;
         }
+
         if (child.centerX != undefined) {
             if (child.selected == false) {
                 selectUnitFromGameArea(mouse);

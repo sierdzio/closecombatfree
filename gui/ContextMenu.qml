@@ -5,6 +5,8 @@ Rectangle {
     property int __buttonWidth: moveFastButton.width
     property int __buttonHeight: 19
     property int unitIndex: -1
+    property color backgroundColor: "#5e2c24"
+    property color entryBackgroundColor: backgroundColor
 
     signal menuEntryClicked(int currentUnitIndex, string menuEntry)
 
@@ -15,7 +17,7 @@ Rectangle {
     id: root
     width: entries.width + 5
     height: entries.height + 5
-    color: "#331008"
+    color: backgroundColor
     border.width: 2
     border.color: "#000000"
     focus: true
@@ -34,6 +36,7 @@ Rectangle {
             id: moveFastButton
             buttonText: qsTr("Move fast")
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: moveFastButton.entryClicked.connect(prepareSignal);
         }
@@ -43,6 +46,7 @@ Rectangle {
             buttonText: qsTr("Move")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: moveButton.entryClicked.connect(prepareSignal);
         }
@@ -52,6 +56,7 @@ Rectangle {
             buttonText: qsTr("Sneak")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: sneakButton.entryClicked.connect(prepareSignal);
         }
@@ -61,6 +66,7 @@ Rectangle {
             buttonText: qsTr("Smoke")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: smokeButton.entryClicked.connect(prepareSignal);
         }
@@ -70,6 +76,7 @@ Rectangle {
             buttonText: qsTr("Attack")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: attackButton.entryClicked.connect(prepareSignal);
         }
@@ -79,6 +86,7 @@ Rectangle {
             buttonText: qsTr("Ambush")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: ambushButton.entryClicked.connect(prepareSignal);
         }
@@ -88,6 +96,7 @@ Rectangle {
             buttonText: qsTr("Defend")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: defendButton.entryClicked.connect(prepareSignal);
         }
@@ -97,6 +106,7 @@ Rectangle {
             buttonText: qsTr("Stop")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: stopButton.entryClicked.connect(prepareSignal);
         }
@@ -106,6 +116,7 @@ Rectangle {
             buttonText: qsTr("Follow")
             width: __buttonWidth
             height: __buttonHeight
+            backgroundColor: entryBackgroundColor
 
             Component.onCompleted: followButton.entryClicked.connect(prepareSignal);
         }

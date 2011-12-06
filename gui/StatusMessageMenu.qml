@@ -4,11 +4,12 @@ import "menuEntries"
 Rectangle {
     property int entryWidth: 175
     property bool empty: true
+    property color backgroundColor: "#7e8c24"
 
     id: root
     height: 200
     width: 180
-    color: "#7e8c24"
+    color: backgroundColor
     border.color: "#1e1c00"
     border.width: 2
 
@@ -38,6 +39,7 @@ Rectangle {
             delegate: StatusMessageMenuEntry {
                 width: entryWidth
                 entryText: message
+                backgroundColor: root.backgroundColor
             }
     }
 }

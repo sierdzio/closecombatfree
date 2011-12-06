@@ -7,11 +7,12 @@ Rectangle {
     property int entryHeight: 54
     property int rows: 4
     property bool empty: true
+    property color backgroundColor: "#7e8c24"
 
     id: root
     height: (((soldiers.cellHeight) * rows) + 3)
     width: soldiers.width
-    color: "#7e8c24"
+    color: backgroundColor
     border.color: "#1e1c00"
     border.width: 2
 
@@ -56,6 +57,7 @@ Rectangle {
         RosterMenuEntry {
             width: entryWidth
             height: entryHeight
+            backgroundColor: root.backgroundColor
 
             entryText: unitType
             entryLogo: unitLogo
