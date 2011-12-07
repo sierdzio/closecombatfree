@@ -247,22 +247,31 @@ Item {
             Row {
                 anchors.fill: parent
 
+                move: Transition {
+                    NumberAnimation {
+                        properties: "x"
+                    }
+                }
+
                 ContextMenu {
                     // A static context menu, useful on mobile, where there is no right click.
                     id: contextMenu
                     height: menu.height
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
-                    visible: (uiMode == "MOBILE")? true: false;
+                    opacity: (uiMode == "MOBILE")? 1: 0;
 
                     Component.onCompleted: {
                         contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
                     }
+
+                    Behavior on opacity { NumberAnimation {} }
                 }
 
                 RosterMenu {
                     id: roster
                     backgroundColor: menuBackgroundColor
+                    z: contextMenu.z - 1
 
                     Component.onCompleted: {
                         populateUnits(units.item.children);
@@ -287,19 +296,27 @@ Item {
                             ScenarioLogic.centerViewOnUnit(unit);
                         }
                     }
+
+                    Behavior on opacity { NumberAnimation {} }
                 }
 
                 SoldierMenu {
                     id: soldierMenu
-                    visible: !empty
+                    opacity: (empty)? 0 : 1;
                     backgroundColor: menuBackgroundColor
+                    z: roster.z - 1
+
+                    Behavior on opacity { NumberAnimation {} }
                 }
 
                 StatusMessageMenu {
                     id: statusMessageViewer
                     height: menu.height
-                    visible: !empty
+                    opacity: (empty)? 0 : 1;
                     backgroundColor: menuBackgroundColor
+                    z: soldierMenu.z - 1
+
+                    Behavior on opacity { NumberAnimation {} }
                 }
             }
         }

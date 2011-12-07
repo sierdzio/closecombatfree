@@ -52,8 +52,8 @@ Item {
     Row {
         id: menu
         visible: false
-        x: trigger.x
         anchors.top: trigger.top
+        anchors.left: trigger.left
         z: trigger.z - 1
 
         ZoomBox {

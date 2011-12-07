@@ -3,6 +3,10 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+07.12.2011:
+ - made visibility of items in BottomMenu be based on opacity, with a NumberAnimation
+ - add move transitions for items in BottomMenu
+
 06.12.2011:
  - ContextMenu is now displayed on double click when no unit is being followed
  - all menus backgrounds' colours are now parametrised

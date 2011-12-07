@@ -10,7 +10,7 @@
 
 ######
 # General settings:
-uimode = mobile
+uimode = desktop
 width = 1024
 height = 800
 
