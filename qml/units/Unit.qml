@@ -1,8 +1,7 @@
 import QtQuick 1.1
 import "../gui"
-import "../base/engineLogicHelpers.js" as Logic
+import "../engineLogicHelpers.js" as Logic
 import "engineActionLogic.js" as ActionLogic
-import "unitSoldiers.js" as Soldiers
 
 Item {
     property string unitType: "Generic unit"
@@ -17,6 +16,7 @@ Item {
     property int acceleration: 1 // m/s^2 (maybe... could be arbitrary - to be decided later)
     property int unitWidth: 1 // mm - should be properly recalculated later on
     property int unitHeight: 1 // mm - should be properly recalculated later on
+    property list<Soldier> soldiers //Soldiers.soldiers
 
     property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
     property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
@@ -81,14 +81,6 @@ Item {
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage, unitIndex);
-    }
-
-    function soldiers() {
-        return Soldiers.soldiers;
-    }
-
-    function addSoldier(newSoldier) {
-        Soldiers.soldiers.push(newSoldier);
     }
 
     Text {

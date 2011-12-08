@@ -10,7 +10,7 @@
 #include <QIODevice>
 #include <QFile>
 #include <QPair>
-#include "ccferror.h"
+#include "../ccferror.h"
 
 class CcfConfigParser : public QObject, public CcfError
 {

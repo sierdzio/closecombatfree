@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "../"
-import "../../"
+import "../../../qml/units"
+import "../../../qml/units/tanks"
 
 Tank {
     id: root
@@ -27,31 +27,22 @@ Tank {
         barrelSegment1Texture: PWD + "img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
     }
 
-    // This should be redesigned into a C++ property
-    Item {
-        id: soldierContainer
-
+    soldiers: [
         Soldier {
+            name: "Thomas Glory"
             role: "Commander"
-        }
-
+        },
         Soldier {
+            name: "Marco Ponati"
             role: "Gunner"
-        }
-
+        },
         Soldier {
+            name: "Kevin Niven"
             role: "Loader"
-        }
-
+        },
         Soldier {
+            name: "Gustav Store"
             role: "MG gunner"
         }
-    }
-
-    Component.onCompleted: {
-        var allSoldiers = soldierContainer.children;
-        for (var i = 0; i < allSoldiers.length; i++) {
-            addSoldier(allSoldiers[i]);
-        }
-    }
+    ]
 }

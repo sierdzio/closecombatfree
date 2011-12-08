@@ -3,6 +3,15 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+08.12.2011:
+ - fix key presses not working when BottomMenu is hidden (ContextMenu was stealing focus)
+ - add global opacity to Map.qml
+ - make SoldierMenu a bit more flexible, when it comes to it's width
+ - rearrange files. C++ now resides in src/, core qml in qml/, and user-visible content
+   in maps/, scenarios/ and units/
+ - remove JS containers, substitute them with built-in QML list and variant properties
+ - add proper "soldiers" property to Unit.qml
+
 07.12.2011:
  - made visibility of items in BottomMenu be based on opacity, with a NumberAnimation
  - add move transitions for items in BottomMenu

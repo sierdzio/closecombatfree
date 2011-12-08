@@ -6,7 +6,7 @@
 #include <QString>
 #include <QPair>
 #include <QFile>
-#include "ccferror.h"
+#include "../ccferror.h"
 
 class CcfConfigSaver : public QObject, public CcfError
 {

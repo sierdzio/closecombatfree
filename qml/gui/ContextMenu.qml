@@ -20,7 +20,7 @@ Rectangle {
     color: backgroundColor
     border.width: 2
     border.color: "#000000"
-    focus: true
+//    focus: true
 
     Grid {
         id: entries

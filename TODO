@@ -23,6 +23,8 @@ New features:
    some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
 
+ - add shell script to easily convert main app code into Necessitas port code
+
  - add terrain info mode on MOBILE (important!)
  - add per-unit order queues (that is a big one, but might help a lot in the future)
  - add group following (not needed too much)
@@ -52,23 +54,3 @@ Big ideas for the future:
  - consider using QRC as mod packages for the game
 
 Done (this section gets occasionally cleaned):
- + add single soldiers within a unit
- + add soldier's menu
- + make roster more useful on mobile and elsewhere, by making it's view more dynamic:
-    + allow for hiding of roster
-    AND/ OR
-    + add flickability to roster
- + unified infobox viewer
- + add config saver to config
- + (sth. to think about) change roster and soldier menu into Model and Delegate based entities
- + add MenuEntriy specialised for status messages (wrap longer text etc.)
- + make map obstacles share a common base class - so that they can all have "remove top"
-   capability (for example, when a unit enters a house, the roof should vanish)
- + organise files in PWD/gui into neat folders
- + add map obstacles, buildings, terrain information
- + add UI elements:
-    + UI mode switch (desktop/ mobile)
-    + zoom buttons
-    + status messages area
-    + unified infobox viewer
- + add buildings

@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import "../gui"
 import "../maps"
-import "../base/engineLogicHelpers.js" as LogicHelpers
+import "../engineLogicHelpers.js" as LogicHelpers
 import "engineScenarioLogic.js" as ScenarioLogic
 
 Item {

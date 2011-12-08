@@ -8,7 +8,7 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QDebug>
-#include "ccfconfig.h"
+#include "config/ccfconfig.h"
 
 class CcfMain : public QDeclarativeView, public CcfError
 {

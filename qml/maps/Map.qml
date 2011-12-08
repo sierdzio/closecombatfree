@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import "../units/units.js" as Units
 
 Item {
     // Stores background image. Preferably in PNG, although all
@@ -12,6 +11,12 @@ Item {
     property string hipsometricImage: ""
     // Defines, whether hipsometric map should be visible
     property bool hipsometricMapInFront: false
+    // Defines global opacity value.
+    // Useful for temporarily revealing hidden props
+    // (like, water objects etc.)
+    property real propOpacity: 0.5
+
+    property variant units
 
     onHipsometricMapInFrontChanged: {
         swapBackgrounds();
@@ -51,9 +56,9 @@ Item {
     }
 
     function setUnits(newList) {
-        Units.list = newList;
-        for (var i = 0; i < Units.list.length; i++) {
-            var unit = Units.list[i];
+        units = newList;
+        for (var i = 0; i < units.length; i++) {
+            var unit = units[i];
             unit.positionChanged.connect(checkForHits);
         }
     }
@@ -100,8 +105,8 @@ Item {
     function terrainInfoString(x, y) {
         var info = terrainInfo(x, y);
         var result = "Terrain: " + info.objectType
-            + ". Height: " + info.heightOverZero
-            + ". Cover: " + info.cover + " meters.";
+            + ". Height: " + info.heightOverZero + " meters"
+            + ". Cover: " + info.cover;
         return result;
     }
 }

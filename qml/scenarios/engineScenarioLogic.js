@@ -197,7 +197,8 @@ function switchEffectFrame(effectIndex) {
 
     if (imgNumber != 5) {
         effectsContainer[i].imageNumber = imgNumber + 1;
-        effectsContainer[i].source = "../img/effects/" + effectsContainer[i].animationString + (imgNumber + 1) + ".png";
+        effectsContainer[i].source = "../../img/effects/" + effectsContainer[i].animationString
+                + (imgNumber + 1) + ".png";
     } else if (imgNumber == 5) {
         effectsContainer[i].imageNumber = 0;
         effectsContainer[i].source = "";
@@ -478,7 +479,7 @@ function selectUnit(index, modifier) {
     if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
         deselectAllUnits();
         units.item.children[index].selected = true;
-        soldierMenu.populateSoldiers(units.item.children[index].soldiers());
+        soldierMenu.populateSoldiers(units.item.children[index].soldiers);
     } else if ((modifier == Qt.ControlModifier) || (uiMode == "MOBILE")) {
         if (units.item.children[index].selected == true)
             units.item.children[index].selected = false;
@@ -488,7 +489,7 @@ function selectUnit(index, modifier) {
         if (selectedUnitsCount() > 1) {
             soldierMenu.clear();
         } else if (selectedUnitsCount() == 1) {
-            soldierMenu.populateSoldiers(selectedUnits()[0].soldiers());
+            soldierMenu.populateSoldiers(selectedUnits()[0].soldiers);
         }
     }
 
@@ -629,7 +630,7 @@ function setOrderMarker(index, orderName, targetX, targetY) {
 function createOrderMarkers() {
     for (var i = 0; i < units.item.children.length; i++) {
         // This component renders an order marker.
-        var component = Qt.createComponent(PWD + "gui/OrderMarker.qml");
+        var component = Qt.createComponent(PWD + "qml/gui/OrderMarker.qml");
         var marker;
 
         if (component.status == Component.Ready) {

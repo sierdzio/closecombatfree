@@ -1,1 +1,0 @@
-var soldiers = new Array();

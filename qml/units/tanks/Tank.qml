@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Qt.labs.particles 1.0
 import "../"
 import "../../gui"
-import "../../base/engineLogicHelpers.js" as Logic
+import "../../engineLogicHelpers.js" as Logic
 import "../engineActionLogic.js" as ActionLogic
 
 Unit {

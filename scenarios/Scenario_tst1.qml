@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "../units/tanks/tests"
+import "../qml/units"
 
 Item {
     property string mapFile: PWD + "maps/Map_tst2.qml"
@@ -38,6 +39,11 @@ Item {
         x: 750
         y: 400
         rotation: 0
+
+//        soldiers: Soldier {
+//            name: "Thomas Cook"
+//            role: "Commander"
+//        }
     }
 
     Tank_tst3 {

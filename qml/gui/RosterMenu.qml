@@ -1,12 +1,13 @@
 import QtQuick 1.1
 import "menuEntries"
-import "../units/units.js" as Units
+import "../units"
 
 Rectangle {
     property int entryWidth: 175
     property int entryHeight: 54
     property int rows: 4
     property color backgroundColor: "#7e8c24"
+    property variant unitsList
 
     id: root
     width: units.width
@@ -16,9 +17,9 @@ Rectangle {
     border.width: 2
 
     function populateUnits(tmpUnitsList) {
-        Units.list = tmpUnitsList;
-        for (var i = 0; i < Units.list.length; i++) {
-            var currentUnit = Units.list[i];
+        unitsList = tmpUnitsList;
+        for (var i = 0; i < unitsList.length; i++) {
+            var currentUnit = unitsList[i];
             unitModel.append({"unitType": currentUnit.unitType,
                                  "unitLogo": currentUnit.unitLogo,
                                  "unitStatus": currentUnit.unitStatus,
@@ -34,10 +35,10 @@ Rectangle {
         if (i == -1)
             return i;
 
-        if (Units.list.length <= i)
+        if (unitsList.length <= i)
             return -1;
 
-        return Units.list[i];
+        return unitsList[i];
     }
 
     function childCenterCoords(x, y) {

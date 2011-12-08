@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "../"
-import "../../"
+import "../../../qml/units"
+import "../../../qml/units/tanks"
 
 Tank {
     unitType: "Test tank 2"
@@ -22,31 +22,18 @@ Tank {
         id: turret
     }
 
-    // This should be redesigned into a C++ property
-    Item {
-        id: soldierContainer
-
+    soldiers: [
         Soldier {
             role: "Commander"
-        }
-
+        },
         Soldier {
             role: "Gunner"
-        }
-
+        },
         Soldier {
             role: "Loader"
-        }
-
+        },
         Soldier {
             role: "Assistant"
         }
-    }
-
-    Component.onCompleted: {
-        var allSoldiers = soldierContainer.children;
-        for (var i = 0; i < allSoldiers.length; i++) {
-            addSoldier(allSoldiers[i]);
-        }
-    }
+    ]
 }

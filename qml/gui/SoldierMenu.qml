@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "menuEntries"
-import "../units/units.js" as Soldiers
 
 Rectangle {
     property int entryWidth: 175
@@ -8,6 +7,7 @@ Rectangle {
     property int rows: 4
     property bool empty: true
     property color backgroundColor: "#7e8c24"
+    property variant soldiersList
 
     id: root
     height: (((soldiers.cellHeight) * rows) + 3)
@@ -18,9 +18,9 @@ Rectangle {
 
     function populateSoldiers(tmpSoldiersList) {
         clear();
-        Soldiers.list = tmpSoldiersList;
-        for (var i = 0; i < Soldiers.list.length; i++) {
-            var currentSoldier = Soldiers.list[i];
+        soldiersList = tmpSoldiersList;
+        for (var i = 0; i < soldiersList.length; i++) {
+            var currentSoldier = soldiersList[i];
             soldierModel.append({"unitType": currentSoldier.name + "\n" + currentSoldier.role,
                                  "unitLogo": currentSoldier.soldierLogo,
                                  "unitStatus": currentSoldier.status});
@@ -30,7 +30,6 @@ Rectangle {
     }
 
     function clear() {
-        Soldiers.list = new Array();
         soldierModel.clear();
         empty = true;
     }
@@ -38,14 +37,6 @@ Rectangle {
     function changeStatus(newStatus, index) {
         unitModel.set(index, {"unitStatus": newStatus});
     }
-
-//    function isEmpty() {
-//        console.log("Checking whether soldier menu is empty");
-//        if (soldierModel.count == 0)
-//            return true;
-//        else
-//            return false;
-//    }
 
     ListModel {
         id: soldierModel
@@ -74,7 +65,15 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         height: parent.height
-        width: (count > 8)? ((cellWidth * 3) + 3) : ((cellWidth * 2) + 3)
+        width: {
+            if (count > 8) {
+                return (cellWidth * 3) + 3;
+            } else if (count > 4) {
+                return (cellWidth * 2) + 3;
+            } else {
+                return  cellWidth + 3;
+            }
+        }
         cellWidth: entryWidth + 2
         cellHeight: entryHeight + 2
         flow: GridView.TopToBottom

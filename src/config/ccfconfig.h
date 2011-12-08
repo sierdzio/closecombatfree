@@ -13,7 +13,7 @@
 #include <QColor>
 #include <QDebug>
 ////
-#include "ccferror.h"
+#include "../ccferror.h"
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
 
