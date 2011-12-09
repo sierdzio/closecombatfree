@@ -1,7 +1,7 @@
 import QtQuick 1.1
-import "../gui"
-import "../engineLogicHelpers.js" as LogicHelpers
-import "engineScenarioLogic.js" as ScenarioLogic
+import "qrc:/skin"
+import "qrc:/core/engineLogicHelpers.js" as LogicHelpers
+import "qrc:/core/engineScenarioLogic.js" as ScenarioLogic
 
 Item {
     property string scenarioFile: ""

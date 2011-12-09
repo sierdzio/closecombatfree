@@ -1,0 +1,54 @@
+<RCC>
+    <qresource prefix="/skin">
+        <file alias="BottomMenu.qml">qml/gui/BottomMenu.qml</file>
+        <file alias="ContextMenu.qml">qml/gui/ContextMenu.qml</file>
+        <file alias="DefenceSphere.qml">qml/gui/DefenceSphere.qml</file>
+        <file alias="OptionsMenu.qml">qml/gui/OptionsMenu.qml</file>
+        <file alias="OrderMarker.qml">qml/gui/OrderMarker.qml</file>
+        <file alias="PopUpArrow.qml">qml/gui/PopUpArrow.qml</file>
+        <file alias="RosterMenu.qml">qml/gui/RosterMenu.qml</file>
+        <file alias="RubberBand.qml">qml/gui/RubberBand.qml</file>
+        <file alias="SimpleInfoBox.qml">qml/gui/SimpleInfoBox.qml</file>
+        <file alias="SoldierMenu.qml">qml/gui/SoldierMenu.qml</file>
+        <file alias="StatusMessageMenu.qml">qml/gui/StatusMessageMenu.qml</file>
+        <file alias="TopMenu.qml">qml/gui/TopMenu.qml</file>
+        <file alias="UnitSelectionBox.qml">qml/gui/UnitSelectionBox.qml</file>
+        <file alias="ZoomBox.qml">qml/gui/ZoomBox.qml</file>
+        <file alias="ZoomButton.qml">qml/gui/ZoomButton.qml</file>
+        <file alias="menuEntries/ContextMenuEntry.qml">qml/gui/menuEntries/ContextMenuEntry.qml</file>
+        <file alias="menuEntries/MenuEntry.qml">qml/gui/menuEntries/MenuEntry.qml</file>
+        <file alias="menuEntries/RosterMenuEntry.qml">qml/gui/menuEntries/RosterMenuEntry.qml</file>
+        <file alias="menuEntries/StatusMessageMenuEntry.qml">qml/gui/menuEntries/StatusMessageMenuEntry.qml</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file alias="effects/smoke_fire1.png">img/effects/smoke_fire1.png</file>
+        <file alias="effects/smoke_fire2.png">img/effects/smoke_fire2.png</file>
+        <file alias="effects/smoke_fire3.png">img/effects/smoke_fire3.png</file>
+        <file alias="effects/smoke_fire4.png">img/effects/smoke_fire4.png</file>
+        <file alias="effects/smoke_fire5.png">img/effects/smoke_fire5.png</file>
+        <file alias="effects/vehicle_smoke.png">img/effects/vehicle_smoke.png</file>
+        <file alias="gui/defenceSphere_.png">img/gui/defenceSphere_.png</file>
+        <file alias="gui/defenceSphere_black.png">img/gui/defenceSphere_black.png</file>
+        <file alias="gui/defenceSphere_blue.png">img/gui/defenceSphere_blue.png</file>
+        <file alias="gui/defenceSphere_green.png">img/gui/defenceSphere_green.png</file>
+        <file alias="gui/popUpArrow.png">img/gui/popUpArrow.png</file>
+        <file alias="maps/test1.jpg">img/maps/test1.jpg</file>
+        <file alias="maps/test2.jpg">img/maps/test2.jpg</file>
+        <file alias="maps/test3.jpg">img/maps/test3.jpg</file>
+        <file alias="maps/hipsometric_test1.png">img/maps/hipsometric_test1.png</file>
+        <file alias="maps/props/Tree1.png">img/maps/props/Tree1.png</file>
+        <file alias="maps/props/HouseBasicRoof1.png">img/maps/props/HouseBasicRoof1.png</file>
+        <file alias="units/generic_unit_logo.png">img/units/generic_unit_logo.png</file>
+        <file alias="units/generic_soldier_logo.png">img/units/generic_soldier_logo.png</file>
+        <file alias="units/tanks/generic/tank_tst1_logo.png">img/units/tanks/generic/tank_tst1_logo.png</file>
+        <file alias="units/tanks/generic/tank_tst1_turret_main.png">img/units/tanks/generic/tank_tst1_turret_main.png</file>
+        <file alias="units/tanks/generic/tank_tst2_logo.png">img/units/tanks/generic/tank_tst2_logo.png</file>
+        <file alias="units/tanks/generic/tank_tst2_turret_main.png">img/units/tanks/generic/tank_tst2_turret_main.png</file>
+        <file alias="units/tanks/generic/tank_tst3_hull.png">img/units/tanks/generic/tank_tst3_hull.png</file>
+        <file alias="units/tanks/generic/tank_tst3_logo.png">img/units/tanks/generic/tank_tst3_logo.png</file>
+        <file alias="units/tanks/generic/tank_tst3_turret_main.png">img/units/tanks/generic/tank_tst3_turret_main.png</file>
+        <file alias="units/tanks/generic/turret_barrelBase.png">img/units/tanks/generic/turret_barrelBase.png</file>
+        <file alias="units/tanks/generic/turret_barrelSegment1.png">img/units/tanks/generic/turret_barrelSegment1.png</file>
+        <file alias="units/tanks/generic/turret_barrelSegment1_tank_tst3.png">img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png</file>
+    </qresource>
+</RCC>

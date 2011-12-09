@@ -1,9 +1,9 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
-import "../"
-import "../../gui"
-import "../../engineLogicHelpers.js" as Logic
-import "../engineActionLogic.js" as ActionLogic
+import "qrc:/core/units"
+import "qrc:/skin"
+import "qrc:/core/engineLogicHelpers.js" as Logic
+import "qrc:/core/engineActionLogic.js" as ActionLogic
 
 Unit {
     // Tank properties.
@@ -42,7 +42,7 @@ Unit {
 
     id: root
     unitType: "Generic tank"
-    unitLogo: PWD + "img/units/generic_unit_logo.png"
+    unitLogo: "qrc:/img/units/generic_unit_logo.png"
     rotationSpeed: 1
     turretRotationSpeed: 1
     maxSpeed: 1
@@ -93,7 +93,7 @@ Unit {
         lifeSpan: 600; lifeSpanDeviation: 800
         angle: rotation + 90; angleDeviation: 60;
         velocity: 5; velocityDeviation: 10
-        source: PWD + "img/effects/vehicle_smoke.png"
+        source: "qrc:/img/effects/vehicle_smoke.png"
     }
 
     Particles {
@@ -107,6 +107,6 @@ Unit {
         lifeSpan: 1000; lifeSpanDeviation: 400
         angle: rotation + 90; angleDeviation: 60;
         velocity: 40; velocityDeviation: 60
-        source: PWD + "img/effects/vehicle_smoke.png"
+        source: "qrc:/img/effects/vehicle_smoke.png"
     }
 }

@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../../../qml/units/tanks"
+import "qrc:/core/units/tanks"
 
 Hull {
     Rectangle {

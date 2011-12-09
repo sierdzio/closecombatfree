@@ -1,10 +1,10 @@
 import QtQuick 1.1
-import "../qml/maps"
+import "qrc:/core/maps"
 import "props"
 
 Map {
-    backgroundImage: PWD + "img/maps/test2.jpg"
-    hipsometricImage: PWD + "img/maps/hipsometric_test1.png"
+    backgroundImage: "qrc:/img/maps/test2.jpg"
+    hipsometricImage: "qrc:/img/maps/hipsometric_test1.png"
 
     HouseBasic_tst {
         id: house1

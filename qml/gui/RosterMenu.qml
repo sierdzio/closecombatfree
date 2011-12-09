@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "menuEntries"
-import "../units"
+import "qrc:/skin/menuEntries"
+import "qrc:/core/units"
 
 Rectangle {
     property int entryWidth: 175

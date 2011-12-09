@@ -1,11 +1,11 @@
 import QtQuick 1.1
-import "../../../qml/units"
-import "../../../qml/units/tanks"
+import "qrc:/core/units"
+import "qrc:/core/units/tanks"
 
 Tank {
     id: root
     unitType: "Test tank 1"
-    unitLogo: PWD + "img/units/tanks/generic/tank_tst1_logo.png"
+    unitLogo: "qrc:/img/units/tanks/generic/tank_tst1_logo.png"
     rotationSpeed: 40
     turretRotationSpeed: 35
     maxSpeed: 20

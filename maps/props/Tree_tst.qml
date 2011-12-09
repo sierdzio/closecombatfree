@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../../qml/maps/props"
+import "qrc:/core/maps/props"
 
 Prop {
     objectName: "tree"
@@ -21,7 +21,7 @@ Prop {
         Image {
             id: top
             visible: topVisible
-            source: PWD + "img/maps/props/Tree1.png"
+            source: "qrc:/img/maps/props/Tree1.png"
             width: 25
             height: width
             anchors.horizontalCenter: base.horizontalCenter

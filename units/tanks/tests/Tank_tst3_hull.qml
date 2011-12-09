@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../../../qml/units/tanks"
+import "qrc:/core/units/tanks"
 
 Hull {
     Image {
@@ -9,6 +9,6 @@ Hull {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        source: PWD + "img/units/tanks/generic/tank_tst3_hull.png"
+        source: "qrc:/img/units/tanks/generic/tank_tst3_hull.png"
     }
 }

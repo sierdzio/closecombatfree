@@ -5,7 +5,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 === === === ===
 09.12.2011:
  - move key press handling into ScenarioLogic
- - 
+ - QRC take 2
 
 08.12.2011:
  - fix key presses not working when BottomMenu is hidden (ContextMenu was stealing focus)

@@ -79,6 +79,14 @@ OTHER_FILES += \
     maps/props/HouseBasic_tst.qml \
     maps/props/Tree_tst.qml
 
+RESOURCES += \
+    coreResource.qrc \
+    skinResource.qrc \
+    tempResource.qrc
+
+
+
+
 
 
 

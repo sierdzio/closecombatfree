@@ -387,9 +387,9 @@ function handleKeyPress(event) {
         } else if (ScenarioLogic.selectedUnitsCount() > 0) {
             var selectedOnes = selectedUnits();
             if (event.key == keyForFunction("Stop")) {
-                for (var i = 0; i < selectedUnits.length; i++) {
+                for (var i = 0; i < selectedOnes.length; i++) {
                     selectedOnes[i].cancelOrder();
-                    calculateOrderMarkerVisibility(selectedUnits[i].unitIndex);
+                    calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
                 }
             } else if (event.key == keyForFunction("Move fast")) {
                 __unitIndex = selectedOnes[0].unitIndex;
@@ -707,7 +707,7 @@ function setOrderMarker(index, orderName, targetX, targetY) {
 function createOrderMarkers() {
     for (var i = 0; i < units.item.children.length; i++) {
         // This component renders an order marker.
-        var component = Qt.createComponent(PWD + "qml/gui/OrderMarker.qml");
+        var component = Qt.createComponent("qrc:/skin/OrderMarker.qml");
         var marker;
 
         if (component.status == Component.Ready) {

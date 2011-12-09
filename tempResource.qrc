@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/img">
+        <file alias="effects/gun_fire1.png">img/effects/gun_fire1.png</file>
+        <file alias="effects/gun_fire2.png">img/effects/gun_fire2.png</file>
+        <file alias="effects/gun_fire3.png">img/effects/gun_fire3.png</file>
+        <file alias="effects/gun_fire4.png">img/effects/gun_fire4.png</file>
+        <file alias="effects/gun_fire5.png">img/effects/gun_fire5.png</file>
+    </qresource>
+</RCC>

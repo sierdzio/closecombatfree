@@ -1,9 +1,9 @@
 import QtQuick 1.1
 import "../units/tanks/tests"
-import "../qml/units"
+import "qrc:/core/units"
 
 Item {
-    property string mapFile: PWD + "maps/Map_tst2.qml"
+    property string mapFile: "../../maps/Map_tst2.qml"
 
     id: root
 

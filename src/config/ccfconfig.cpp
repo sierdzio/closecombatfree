@@ -1,5 +1,6 @@
 #include "ccfconfig.h"
 //#include <QDebug>
+//#include <QUrl>
 
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)
@@ -211,7 +212,11 @@ void CcfConfig::statusMessage(const QString &message)
 
 void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
 {
-    QImage tempImage(url);
+    // Hack for QRC support
+    QString nUrl = url;
+    nUrl.remove(0, 3);
+//    qDebug() << nUrl;
+    QImage tempImage(nUrl);
     terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
 //    qDebug() << "Got terrain info in C++. Height:" << terrainImage->width()
 //             << ". Height:" << terrainImage->height();

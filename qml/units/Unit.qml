@@ -1,11 +1,11 @@
 import QtQuick 1.1
-import "../gui"
-import "../engineLogicHelpers.js" as Logic
-import "engineActionLogic.js" as ActionLogic
+import "qrc:/skin"
+import "qrc:/core/engineLogicHelpers.js" as Logic
+import "qrc:/core/engineActionLogic.js" as ActionLogic
 
 Item {
     property string unitType: "Generic unit"
-    property string unitLogo: PWD + "img/units/generic_unit_logo.png"
+    property string unitLogo: "qrc:/img/units/generic_unit_logo.png"
     property string unitStatus: "READY"
     property int groupNumber: 0 // For now, a unit can be only in one group
     property int unitIndex: -1
@@ -126,7 +126,7 @@ Item {
             if (defenceSphereColor == "")
                 return "";
             else
-                return PWD + "img/gui/defenceSphere_" + defenceSphereColor + ".png"
+                return "qrc:/img/gui/defenceSphere_" + defenceSphereColor + ".png"
 
         }
         anchors {

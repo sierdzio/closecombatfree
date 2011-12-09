@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "../../../qml/units/tanks"
+import "qrc:/core/units/tanks"
 
 Turret {
-    bodyTexture: PWD + "img/units/tanks/generic/tank_tst2_turret_main.png"
+    bodyTexture: "qrc:/img/units/tanks/generic/tank_tst2_turret_main.png"
 }
