@@ -349,6 +349,83 @@ function handleMouseReleased() {
     }
 }
 
+function handleKeyPress(event) {
+    if (event.modifiers == Qt.ControlModifier) {
+        var digit = digitPressed(event);
+        if (digit != -1)
+            groupUnits(digit);
+    } else {
+        // Development key bindings.
+        if (event.key == Qt.Key_BracketRight) {
+            map.item.hipsometricMapInFront = !map.item.hipsometricMapInFront;
+        } else
+        // end of dev key bindings
+        if (event.key == keyForFunction("zoom in")) {
+            zoomIn();
+        } else if (event.key == keyForFunction("zoom out")) {
+            zoomOut();
+        } else if (event.key == keyForFunction("follow")) {
+            var selectedOnes = selectedUnits();
+            if ((followedUnit.running == false) && (selectedUnitsCount() > 0)) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                startFollowingUnit(__unitIndex);
+            } else if (followedUnit.running == true) {
+                if (selectedUnitsCount() > 0) {
+                    __unitIndex = selectedOnes[0].unitIndex;
+
+                    if (followedUnit.index == __unitIndex) {
+                        stopFollowingUnit();
+                    } else {
+                        startFollowingUnit(__unitIndex);
+                    }
+                } else {
+                    stopFollowingUnit();
+                }
+            } else {
+                console.log("No unit selected to follow.");
+            }
+        } else if (ScenarioLogic.selectedUnitsCount() > 0) {
+            var selectedOnes = selectedUnits();
+            if (event.key == keyForFunction("Stop")) {
+                for (var i = 0; i < selectedUnits.length; i++) {
+                    selectedOnes[i].cancelOrder();
+                    calculateOrderMarkerVisibility(selectedUnits[i].unitIndex);
+                }
+            } else if (event.key == keyForFunction("Move fast")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Move fast");
+            } else if (event.key == keyForFunction("Move")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Move");
+            } else if (event.key == keyForFunction("Sneak")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Sneak");
+            } else if (event.key == keyForFunction("Attack")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Attack");
+            } else if (event.key == keyForFunction("Smoke")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Smoke");
+            } else if (event.key == keyForFunction("Defend")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Defend");
+            } else if (event.key == keyForFunction("Ambush")) {
+                __unitIndex = selectedOnes[0].unitIndex;
+                scheduleContextAction(__unitIndex, "Ambush");
+            }
+        }
+
+        if (event.key == keyForFunction("pause")) {
+            togglePause();
+        }
+
+        // Digit reading.
+        var digit = digitPressed(event);
+        if (digit != -1)
+            selectGroup(digit);
+    }
+}
+
 function centerViewOnUnit(unit) {
     gameArea.contentX = unit.x - gameArea.width/2;
     gameArea.contentY = unit.y - gameArea.height/2;

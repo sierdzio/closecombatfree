@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "../gui"
-import "../maps"
 import "../engineLogicHelpers.js" as LogicHelpers
 import "engineScenarioLogic.js" as ScenarioLogic
 
@@ -35,80 +34,7 @@ Item {
     }
 
     Keys.onPressed: {
-        if (event.modifiers == Qt.ControlModifier) {
-            var digit = ScenarioLogic.digitPressed(event);
-            if (digit != -1)
-                ScenarioLogic.groupUnits(digit);
-        } else {
-            // Development key bindings.
-            if (event.key == Qt.Key_BracketRight) {
-                map.item.hipsometricMapInFront = !map.item.hipsometricMapInFront;
-            } else
-            // end of dev key bindings
-            if (event.key == keyForFunction("zoom in")) {
-                zoomIn();
-            } else if (event.key == keyForFunction("zoom out")) {
-                zoomOut();
-            } else if (event.key == keyForFunction("follow")) {
-                if ((followedUnit.running == false) && (ScenarioLogic.selectedUnitsCount() > 0)) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.startFollowingUnit(__unitIndex);
-                } else if (followedUnit.running == true) {
-                    if (ScenarioLogic.selectedUnitsCount() > 0) {
-                        __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-
-                        if (followedUnit.index == __unitIndex) {
-                            ScenarioLogic.stopFollowingUnit();
-                        } else {
-                            ScenarioLogic.startFollowingUnit(__unitIndex);
-                        }
-                    } else {
-                        ScenarioLogic.stopFollowingUnit();
-                    }
-                } else {
-                    console.log("No unit selected to follow.");
-                }
-            } else if (ScenarioLogic.selectedUnitsCount() > 0) {
-                // Would be good to optimise order key handling into a function
-                if (event.key == keyForFunction("Stop")) {
-                    var selectedUnits = ScenarioLogic.selectedUnits();
-                    for (var i = 0; i < selectedUnits.length; i++) {
-                        selectedUnits[i].cancelOrder();
-                        ScenarioLogic.calculateOrderMarkerVisibility(selectedUnits[i].unitIndex);
-                    }
-                } else if (event.key == keyForFunction("Move fast")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Move fast");
-                } else if (event.key == keyForFunction("Move")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Move");
-                } else if (event.key == keyForFunction("Sneak")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Sneak");
-                } else if (event.key == keyForFunction("Attack")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Attack");
-                } else if (event.key == keyForFunction("Smoke")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Smoke");
-                } else if (event.key == keyForFunction("Defend")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Defend");
-                } else if (event.key == keyForFunction("Ambush")) {
-                    __unitIndex = ScenarioLogic.selectedUnits()[0].unitIndex;
-                    ScenarioLogic.scheduleContextAction(__unitIndex, "Ambush");
-                }
-            }
-
-            if (event.key == keyForFunction("pause")) {
-                togglePause();
-            }
-
-            // Digit reading.
-            var digit = ScenarioLogic.digitPressed(event);
-            if (digit != -1)
-                ScenarioLogic.selectGroup(digit);
-        }
+        ScenarioLogic.handleKeyPress(event);
     }
 
     Flickable {
