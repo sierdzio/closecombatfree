@@ -17,8 +17,23 @@ Rectangle {
     border.width: 1
 //    width: 175
 //    height: 54
-    width: entryStatus.paintedWidth
-    height: entryStatus.paintedHeight
+    width: {
+        var textWidth = entryStatus.paintedWidth;
+
+        if (entryDescription.paintedWidth > textWidth) {
+            textWidth = entryDescription.paintedWidth;
+        }
+
+        return logo.width + textWidth;
+    }
+
+    height: {
+        if ((entryDescription.paintedHeight + entryStatus.paintedHeight) > logo.height) {
+            return (entryDescription.paintedHeight + entryStatus.paintedHeight);
+        } else {
+            return logo.height;
+        }
+    }
 
     onEntryStatusTextChanged: {
         if (entryStatusText == "") {
@@ -53,8 +68,8 @@ Rectangle {
 
     Text {
         id: entryDescription
-        height: 25
-        width: 75
+//        height: 25
+//        width: 75
         anchors.left: logo.right
         anchors.top: parent.top
         anchors.right: parent.right
@@ -69,15 +84,15 @@ Rectangle {
 
     Text {
         id: entryStatus
-        height: 25
-        width: 75
+//        height: 25
+//        width: 75
         anchors.left: logo.right
         anchors.top: entryDescription.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         color: entryStatusColor
         text: entryStatusText
-        font.pointSize: 14
+        font.pointSize: 12
         style: Text.Raised
         font.bold: true
         font.family: "Ubuntu Condensed"

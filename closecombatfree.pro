@@ -13,6 +13,7 @@ TARGET = closecombatfree
 
 OBJECTS_DIR = build
 MOC_DIR = build
+RCC_DIR = build
 
 TEMPLATE = app
 
@@ -82,7 +83,9 @@ OTHER_FILES += \
 RESOURCES += \
     coreResource.qrc \
     skinResource.qrc \
-    tempResource.qrc
+    tempResource.qrc \
+    imgResource.qrc
+
 
 
 

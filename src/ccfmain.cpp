@@ -3,11 +3,12 @@
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
-    if (initConfiguration() == true)
-        rootContext()->setContextObject(configuration);
+//    if (initConfiguration() == true)
+    initConfiguration();
+    rootContext()->setContextObject(configuration);
 
-    QString pwd = qApp->applicationDirPath() + "/";
-    rootContext()->setContextProperty("PWD", pwd);
+//    QString pwd = qApp->applicationDirPath() + "/";
+//    rootContext()->setContextProperty("PWD", pwd);
 
 //    setSource(QUrl("base/main.qml"));
     setAttribute(Qt::WA_OpaquePaintEvent);

@@ -275,7 +275,7 @@ function handleRightMouseClick(mouse) {
 
             __unitIndex = childIndex(child);
             // Displays the context menu. This is suboptimal.
-            contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.source = "qrc:/skin/ContextMenu.qml";
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }
@@ -310,7 +310,7 @@ function handleRightMouseClickRoster(mouse) {
 
             __unitIndex = childIndex(unit);
             // Displays the context menu. This is suboptimal.
-            contextLoader.source = "../gui/ContextMenu.qml";
+            contextLoader.source = "qrc:/skin/ContextMenu.qml";
             contextLoader.item.unitIndex = __unitIndex;
             contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
         }

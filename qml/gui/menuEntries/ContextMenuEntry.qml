@@ -8,8 +8,8 @@ Rectangle {
     id: entryButton
     color: backgroundColor
     border.color: "#c0baba"
-    width: entryText.paintedWidth
-    height: entryText.paintedHeight
+    width: entryText.paintedWidth + 5
+    height: entryText.paintedHeight + 5
 
     Text {
         id: entryText

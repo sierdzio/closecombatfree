@@ -11,8 +11,19 @@ Rectangle {
     color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
-    width: entry.paintedWidth
-    height: entry.paintedHeight
+//    width: entry.paintedWidth
+//    height: entry.paintedHeight
+    width: {
+        return logo.width + entry.paintedWidth;
+    }
+
+    height: {
+        if (entry.paintedHeight > logo.height) {
+            return entry.paintedHeight;
+        } else {
+            return logo.height;
+        }
+    }
 
     Text {
         id: entry

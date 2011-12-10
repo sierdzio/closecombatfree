@@ -25,10 +25,14 @@ Rectangle {
         else
             result = textWidth;
 
-        return (result + 2 * radius);
+        return (result + (radius));
     }
 
-    height: {
+//    height: getContentsHeight()
+//    height: mainText.paintedHeight + radius
+    height: 30
+
+    function getContentsHeight() {
         var result = 0;
         var textHeight = mainText.paintedHeight;
         if (additional.visible == true) {
@@ -37,7 +41,7 @@ Rectangle {
 
         result = textHeight;
 
-        return (result + 2 * radius);
+        return (result + (radius));
     }
 
     radius: size/8
@@ -51,7 +55,7 @@ Rectangle {
 //        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: 10//size/4
+        font.pointSize: 8//size/4
         font.bold: true
     }
 
@@ -63,9 +67,9 @@ Rectangle {
         anchors.top: mainText.bottom
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: 8//size/5
+        font.pointSize: 6//size/5
 //        font.bold: true
-        visible: (additional.text != "")? true : false;
+        visible: (parent.additionalText != "")? true : false;
     }
 
     MouseArea {

@@ -31,6 +31,8 @@ Item {
             topMenu.openMenu();
             bottomMenu.openMenu();
         }
+
+        configWindowWidthChanged.connect(updateWidth);
     }
 
     Keys.onPressed: {
@@ -166,12 +168,16 @@ Item {
             id: menu
             visible: false
             anchors.left: bottomMenu.left
-            height: roster.height
+            pressDelay: 800
             flickableDirection: Flickable.HorizontalFlick
-            contentHeight: roster.height
+
+            height: row.height
+            width: row.width
+            contentHeight: row.height
+            contentWidth: row.width
 
             Row {
-                anchors.fill: parent
+                id: row
 
                 move: Transition {
                     NumberAnimation {
@@ -262,7 +268,7 @@ Item {
         height: paintedHeight
         width: paintedWidth
         anchors.left: gameArea.left
-        anchors.top: gameArea.top
+        anchors.top: topMenu.bottom
         color: "#ddeeee00"
         font.pointSize: 14
         style: Text.Raised
@@ -355,6 +361,14 @@ Item {
         triggeredOnStart: true
         onTriggered: {
             ScenarioLogic.updateFollowingUnit();
+        }
+    }
+
+    function updateWidth() {
+        if (configWindowWidth < menu.contentWidth) {
+            menu.width = configWindowWidth;
+        } else {
+            menu.width = menu.contentWidth;
         }
     }
 

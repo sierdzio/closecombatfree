@@ -5,6 +5,7 @@ Bugs & fixes:
  - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
+ - !!! change RosterMenu and SoldierMenu (yes, top-level menus!) to adapt to real size of their entries!
 
 New features:
  - consider moving JS files, and core QML files, to Qt Resource System (that will make them hidden

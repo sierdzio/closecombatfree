@@ -1,9 +1,21 @@
 <RCC>
-    <qresource prefix="/img">
-        <file alias="effects/gun_fire1.png">img/effects/gun_fire1.png</file>
-        <file alias="effects/gun_fire2.png">img/effects/gun_fire2.png</file>
-        <file alias="effects/gun_fire3.png">img/effects/gun_fire3.png</file>
-        <file alias="effects/gun_fire4.png">img/effects/gun_fire4.png</file>
-        <file alias="effects/gun_fire5.png">img/effects/gun_fire5.png</file>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <!--
+            <file>config</file>
+            <file>config_default</file>
+        -->
+        <file>scenarios/Scenario_tst1.qml</file>
+        <file>maps/Map_tst1.qml</file>
+        <file>maps/Map_tst2.qml</file>
+        <file>units/tanks/tests/Tank_tst1_hull.qml</file>
+        <file>units/tanks/tests/Tank_tst1_turret.qml</file>
+        <file>units/tanks/tests/Tank_tst1.qml</file>
+        <file>units/tanks/tests/Tank_tst2_turret.qml</file>
+        <file>units/tanks/tests/Tank_tst2.qml</file>
+        <file>units/tanks/tests/Tank_tst3_hull.qml</file>
+        <file>units/tanks/tests/Tank_tst3.qml</file>
+        <file>maps/props/HouseBasic_tst.qml</file>
+        <file>maps/props/Tree_tst.qml</file>
     </qresource>
 </RCC>

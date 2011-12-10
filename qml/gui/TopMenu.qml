@@ -36,69 +36,98 @@ Item {
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);
+        configWindowWidthChanged.connect(updateWidth);
     }
 
     id: root
-    height: popupSize
+    height: getContentsHeight()
+
+    function getContentsHeight() {
+        if (modeEntry.getContentsHeight() < popupSize)
+            return popupSize;
+        else
+            return modeEntry.getContentsHeight();
+    }
+
+    function updateWidth() {
+        if (configWindowWidth < menu.contentWidth) {
+            menu.width = configWindowWidth;
+            return;
+        } else {
+            menu.width = menu.contentWidth;
+        }
+    }
+
     state: "closed"
 
     PopUpArrow {
         id: trigger
         anchors.top: parent.top
         anchors.right: parent.right
-        size: popupSize
+        size: root.height
     }
 
-    Row {
+    Flickable {
         id: menu
         visible: false
         anchors.top: trigger.top
         anchors.left: trigger.left
         z: trigger.z - 1
 
-        ZoomBox {
-            id: zoomBox
-            size: popupSize
-            currentZoom: root.currentZoom
-        }
+        pressDelay: 800
+        height: row.height
+        width: row.width
+        contentHeight: row.height
+        contentWidth: row.width
 
-        MenuEntry {
-            id: optionsEntry
-            text: "Options"
-            height: popupSize
+        Row {
+            id: row
 
-            OptionsMenu {
-                id: optionsMenu
-                anchors.top: optionsEntry.bottom
-                anchors.left: optionsEntry.left
-                z: optionsEntry.z - 1
+            ZoomBox {
+                id: zoomBox
+                size: root.height
+                currentZoom: root.currentZoom
+            }
+
+            MenuEntry {
+                id: optionsEntry
+                text: "Options"
+                height: root.height
+
+                OptionsMenu {
+                    id: optionsMenu
+                    anchors.top: optionsEntry.bottom
+                    anchors.left: optionsEntry.left
+                    z: optionsEntry.z - 1
+                }
+            }
+
+            MenuEntry {
+                id: pauseEntry
+                text: "Pause"
+                height: root.height
+            }
+
+            MenuEntry {
+                id: terrainInfoEntry
+                text: "Terrain info mode"
+                additionalText: "OFF"
+                height: root.height
+                opacity: (uiMode == "MOBILE")? 1: 0;
+
+                Behavior on opacity {
+                    NumberAnimation {}
+                }
+            }
+
+            MenuEntry {
+                id: modeEntry
+                text: "UI Mode"
+                additionalText: uiMode
+                height: root.height
             }
         }
 
-        MenuEntry {
-            id: pauseEntry
-            text: "Pause"
-            height: popupSize
-        }
-
-        MenuEntry {
-            id: terrainInfoEntry
-            text: "Terrain info mode"
-            additionalText: "OFF"
-            height: popupSize
-            opacity: (uiMode == "MOBILE")? 1: 0;
-
-            Behavior on opacity {
-                NumberAnimation {}
-            }
-        }
-
-        MenuEntry {
-            id: modeEntry
-            text: "UI Mode"
-            additionalText: uiMode
-            height: popupSize
-        }
     }
 
     states: [

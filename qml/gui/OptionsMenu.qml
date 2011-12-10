@@ -57,24 +57,28 @@ Item {
         MenuEntry {
             id: preferencesEntry
             text: "Preferences"
+            height: getContentsHeight()
         }
 
         MenuEntry {
             id: saveGameEntry
             text: "Save game"
             width: root.size
+            height: getContentsHeight()
         }
 
         MenuEntry {
             id: loadGameEntry
             text: "Load game"
             width: root.size
+            height: getContentsHeight()
         }
 
         MenuEntry {
             id: quitEntry
             text: "Quit"
             width: root.size
+            height: getContentsHeight()
         }
     }
 

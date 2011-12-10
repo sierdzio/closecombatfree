@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "scenarios"
+import "qrc:/core/scenarios"
 
 Rectangle {
     id: root
@@ -14,6 +14,6 @@ Rectangle {
     Scenario {
         id: scenario
         anchors.fill: parent
-        scenarioFile: "../../scenarios/Scenario_tst1.qml"
+        scenarioFile: "qrc:/scenarios/Scenario_tst1.qml"
     }
 }
