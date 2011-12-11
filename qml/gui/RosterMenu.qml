@@ -11,13 +11,17 @@ Rectangle {
 
     id: root
     width: units.width
-    height: (entryHeight + 2) * rows + 3
+//    height: units.height
+//    width: entryWidth
+    height: (entryHeight * 4) + 3
+
     color: backgroundColor
     border.color: "#1e1c00"
     border.width: 2
 
     function populateUnits(tmpUnitsList) {
         unitsList = tmpUnitsList;
+
         for (var i = 0; i < unitsList.length; i++) {
             var currentUnit = unitsList[i];
             unitModel.append({"unitType": currentUnit.unitType,
@@ -27,6 +31,36 @@ Rectangle {
             currentUnit.unitStatusChanged.connect(changeStatus);
             currentUnit.selectionChanged.connect(selectionChanged);
         }
+
+        // Get widest and highest dimension from cells:
+        var widestCell = 0;
+        var heighestCell = 0;
+        for (var i = 0; i < units.count; i++) {
+            units.currentIndex = i;
+            var current = units.currentItem;
+            if (current.height > heighestCell) {
+                heighestCell = current.height;
+            }
+
+            if (current.width > widestCell) {
+                widestCell = current.width;
+            }
+        }
+
+        // Set all elements' dimentions
+        for (var i = 0; i < units.count; i++) {
+            units.currentIndex = i;
+            var current = units.currentItem;
+            current.height = heighestCell;
+            current.width = widestCell;
+        }
+
+        // Set GridView properties
+        units.currentIndex = -1;
+        units.cellWidth = widestCell + 2;
+        units.cellHeight = heighestCell + 2;
+        entryHeight = units.cellHeight;
+        entryWidth = units.cellWidth
     }
 
     function getUnitAt(x, y) {
@@ -73,8 +107,6 @@ Rectangle {
         id: unitDelegate
 
         RosterMenuEntry {
-            width: entryWidth
-            height: entryHeight
             backgroundColor: root.backgroundColor
 
             entryText: unitType
@@ -88,13 +120,13 @@ Rectangle {
         id: units
         anchors.topMargin: 2
         anchors.leftMargin: 2
+        interactive: false
 
         anchors.top: parent.top
         anchors.left: parent.left
-        height: parent.height
+
+        height: (cellHeight * 4) + 3
         width: (count > 8)? (cellWidth + 3) : (cellWidth * 2) + 3
-        cellWidth: entryWidth + 2
-        cellHeight: entryHeight + 2
         flow: GridView.TopToBottom
 
         model: unitModel

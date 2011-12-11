@@ -10,7 +10,7 @@ Rectangle {
     property variant soldiersList
 
     id: root
-    height: (((soldiers.cellHeight) * rows) + 3)
+    height: soldiers.height
     width: soldiers.width
     color: backgroundColor
     border.color: "#1e1c00"
@@ -27,6 +27,34 @@ Rectangle {
             currentSoldier.unitStatusChanged.connect(changeStatus);
         }
         empty = false;
+
+        // Get widest and highest dimension from cells:
+        var widestCell = 0;
+        var heighestCell = 0;
+        for (var i = 0; i < soldiers.count; i++) {
+            soldiers.currentIndex = i;
+            var current = soldiers.currentItem;
+            if (current.height > heighestCell) {
+                heighestCell = current.height;
+            }
+
+            if (current.width > widestCell) {
+                widestCell = current.width;
+            }
+        }
+
+        // Set all elements' dimentions
+        for (var i = 0; i < soldiers.count; i++) {
+            soldiers.currentIndex = i;
+            var current = soldiers.currentItem;
+            current.height = heighestCell;
+            current.width = widestCell;
+        }
+
+        // Set GridView properties
+        soldiers.currentIndex = -1;
+        soldiers.cellWidth = widestCell + 2;
+        soldiers.cellHeight = heighestCell + 2;
     }
 
     function clear() {
@@ -46,8 +74,6 @@ Rectangle {
         id: soldierDelegate
 
         RosterMenuEntry {
-            width: entryWidth
-            height: entryHeight
             backgroundColor: root.backgroundColor
 
             entryText: unitType
@@ -61,10 +87,11 @@ Rectangle {
         id: soldiers
         anchors.topMargin: 2
         anchors.leftMargin: 2
+        interactive: false
 
         anchors.top: parent.top
         anchors.left: parent.left
-        height: parent.height
+        height: (cellHeight * 4) + 3
         width: {
             if (count > 8) {
                 return (cellWidth * 3) + 3;
@@ -74,8 +101,6 @@ Rectangle {
                 return  cellWidth + 3;
             }
         }
-        cellWidth: entryWidth + 2
-        cellHeight: entryHeight + 2
         flow: GridView.TopToBottom
 
         model: soldierModel

@@ -9,6 +9,9 @@ Item {
     signal openMenu();
     onOpenMenu: trigger.poppedUp = true;
 
+    signal toggleMenu();
+    onToggleMenu: trigger.poppedUp = !trigger.poppedUp;
+
     id: root
     state: "closed"
 
@@ -45,7 +48,7 @@ Item {
                 NumberAnimation {
                     target: menu
                     properties: "y"
-                    to: -menu.height
+                    to: -(menu.height + 5)
                     duration: 300
                 }
             }

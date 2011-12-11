@@ -236,7 +236,7 @@ Item {
                     id: soldierMenu
                     opacity: (empty)? 0 : 1;
                     backgroundColor: menuBackgroundColor
-                    z: roster.z - 1
+                    z: roster.z - 1                    
 
                     Behavior on opacity { NumberAnimation {} }
                 }

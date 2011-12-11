@@ -24,14 +24,14 @@ Rectangle {
             textWidth = entryDescription.paintedWidth;
         }
 
-        return logo.width + textWidth;
+        return logo.width + textWidth + 5;
     }
 
     height: {
-        if ((entryDescription.paintedHeight + entryStatus.paintedHeight) > logo.height) {
+        if ((entryDescription.paintedHeight + entryStatus.paintedHeight) > (logo.height + 5)) {
             return (entryDescription.paintedHeight + entryStatus.paintedHeight);
         } else {
-            return logo.height;
+            return logo.height + 3;
         }
     }
 
@@ -68,8 +68,6 @@ Rectangle {
 
     Text {
         id: entryDescription
-//        height: 25
-//        width: 75
         anchors.left: logo.right
         anchors.top: parent.top
         anchors.right: parent.right
@@ -84,8 +82,6 @@ Rectangle {
 
     Text {
         id: entryStatus
-//        height: 25
-//        width: 75
         anchors.left: logo.right
         anchors.top: entryDescription.bottom
         anchors.right: parent.right

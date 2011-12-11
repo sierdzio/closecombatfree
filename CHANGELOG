@@ -3,6 +3,10 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+11.12.2011:
+ - modify RosterMenu and SoldierMenu to resize appropriately
+ - QRC is here to stay - merge QRC branch into development
+
 10.12.2011:
  - various style and font changes to fit Android
  - make TopMenu flickable
