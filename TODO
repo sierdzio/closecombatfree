@@ -5,12 +5,8 @@ Bugs & fixes:
  - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
- - !!! change RosterMenu and SoldierMenu (yes, top-level menus!) to adapt to real size of their entries!
 
 New features:
- - consider moving JS files, and core QML files, to Qt Resource System (that will make them hidden
-   from users, and also it will leave only files important in modding for them to see. Would also help
-   Android)
  - add game menu
  - preferences menu
  - add campaigns
@@ -24,9 +20,6 @@ New features:
    some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
 
- - add shell script to easily convert main app code into Necessitas port code
-
- - add terrain info mode on MOBILE (important!)
  - add per-unit order queues (that is a big one, but might help a lot in the future)
  - add group following (not needed too much)
  - add multiple-waypoint move orders

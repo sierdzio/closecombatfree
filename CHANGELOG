@@ -6,6 +6,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 11.12.2011:
  - modify RosterMenu and SoldierMenu to resize appropriately
  - QRC is here to stay - merge QRC branch into development
+ - remove all trial engines from project tree
 
 10.12.2011:
  - various style and font changes to fit Android

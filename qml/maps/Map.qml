@@ -14,7 +14,7 @@ Item {
     // Defines global opacity value.
     // Useful for temporarily revealing hidden props
     // (like, water objects etc.)
-    property real propOpacity: 0.5
+    property real propOpacity: 0.0
 
     property variant units
 
