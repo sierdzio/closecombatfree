@@ -24,8 +24,8 @@ Item {
     id: root
     focus: true;
 
-    Component.onCompleted: {
-        ScenarioLogic.createOrderMarkers();
+    onScenarioFileChanged: {
+        if (scenarioFile != "") {
         // If it' desktop, menus should be unrolled:
         if (uiMode == "DESKTOP") {
             topMenu.openMenu();
@@ -33,6 +33,7 @@ Item {
         }
 
         configWindowWidthChanged.connect(updateWidth);
+        }
     }
 
     Keys.onPressed: {
@@ -59,21 +60,26 @@ Item {
 
         Loader {
             id: map
-            source: units.item.mapFile
         }
 
         Loader {
             id: units
             anchors.fill: parent
-            source: scenarioFile
+            source: (scenarioFile != "")? scenarioFile : ""
 
-            Component.onCompleted: {
+            onLoaded: {
+                if (scenarioFile != "") {
+                    map.source = units.item.mapFile
+
                 for (var i = 0; i < units.item.children.length; i++) {
                     units.item.children[i].unitIndex = i;
                     togglePause.connect(units.item.children[i].togglePause);
                 }
 
                 map.item.setUnits(units.item.children);
+                ScenarioLogic.createOrderMarkers();
+                roster.populateUnits(units.item.children);
+                }
             }
         }
 
@@ -204,10 +210,6 @@ Item {
                     id: roster
                     backgroundColor: menuBackgroundColor
                     z: contextMenu.z - 1
-
-                    Component.onCompleted: {
-                        populateUnits(units.item.children);
-                    }
 
                     MouseArea {
                         id: mouseAreaRoster

@@ -20,6 +20,7 @@
         <file alias="maps/test2.jpg">img/maps/test2.jpg</file>
         <file alias="maps/test3.jpg">img/maps/test3.jpg</file>
         <file alias="maps/hipsometric_test1.png">img/maps/hipsometric_test1.png</file>
+        <file alias="maps/hipsometric_default.png">img/maps/hipsometric_default.png</file>
         <file alias="maps/props/Tree1.png">img/maps/props/Tree1.png</file>
         <file alias="maps/props/HouseBasicRoof1.png">img/maps/props/HouseBasicRoof1.png</file>
         <file alias="units/generic_unit_logo.png">img/units/generic_unit_logo.png</file>

@@ -1,5 +1,6 @@
 import QtQuick 1.1
-import "qrc:/core/scenarios"
+//import "qrc:/core/scenarios"
+import "qrc:/core/menus"
 
 Rectangle {
     id: root
@@ -11,9 +12,14 @@ Rectangle {
 //        console.log("Configuration from config file:\n" + configurationString());
 //    }
 
-    Scenario {
-        id: scenario
+//    Scenario {
+//        id: scenario
+//        anchors.fill: parent
+//        scenarioFile: "qrc:/scenarios/Scenario_tst1.qml"
+//    }
+
+    ScenarioMenu {
+        id: scenarioMenu
         anchors.fill: parent
-        scenarioFile: "qrc:/scenarios/Scenario_tst1.qml"
     }
 }

@@ -15,5 +15,6 @@
         <file alias="maps/props/Prop.qml">qml/maps/props/Prop.qml</file>
         <file alias="maps/props/PropRectangle.qml">qml/maps/props/PropRectangle.qml</file>
         <file alias="maps/Map.qml">qml/maps/Map.qml</file>
+        <file alias="menus/ScenarioMenu.qml">qml/menus/ScenarioMenu.qml</file>
     </qresource>
 </RCC>

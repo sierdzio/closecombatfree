@@ -78,13 +78,19 @@ OTHER_FILES += \
     maps/Map_tst1.qml \
     maps/Map_tst2.qml \
     maps/props/HouseBasic_tst.qml \
-    maps/props/Tree_tst.qml
+    maps/props/Tree_tst.qml \
+    scenarios/Scenario_tst2.qml \
+    qml/menus/ScenarioMenu.qml
 
 RESOURCES += \
     coreResource.qrc \
     skinResource.qrc \
     tempResource.qrc \
     imgResource.qrc
+
+
+
+
 
 
 

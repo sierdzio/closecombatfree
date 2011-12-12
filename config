@@ -11,8 +11,8 @@
 ######
 # General settings:
 uimode = desktop
-width = 1024
-height = 800
+width = 1272
+height = 700
 
 ######
 # Keyboard layout:

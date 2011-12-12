@@ -1,6 +1,5 @@
 #include "ccfconfig.h"
-//#include <QDebug>
-//#include <QUrl>
+#include <QDebug>
 
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)
@@ -8,6 +7,9 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     configuration = new QMap<QString, QPair<QString, bool> >();
     parser = new CcfConfigParser(filePath, this);
     m_terrainInfoMode = "OFF";
+
+    QDir scenarioDir(":/scenarios");
+    m_scenariosList = scenarioDir.entryList();
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
@@ -226,4 +228,14 @@ int CcfConfig::terrainPixelInfo(int x, int y)
 {
     QRgb result(terrainImage->pixel(QPoint(x, y)));
     return qRed(result) + qGreen(result) + qBlue(result);
+}
+
+QStringList CcfConfig::scenariosList()
+{
+    return m_scenariosList;
+}
+
+QString CcfConfig::scenarioPath(int index)
+{
+    return m_scenariosList.at(index);
 }
