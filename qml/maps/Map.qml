@@ -37,6 +37,7 @@ Item {
 //                        + " . Width: " + hipsometricMap.width
 //                        + " . Height: " + hipsometricMap.height);
             setTerrainImageUrl(hipsometricImage, hipsometricMap.width, hipsometricMap.height);
+//            console.log("H: " + height + ", w: " + width);
         }
     }
 

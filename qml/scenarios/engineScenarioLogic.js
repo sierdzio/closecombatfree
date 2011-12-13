@@ -268,10 +268,12 @@ function handleRightMouseClick(mouse) {
             }
 
             // Fixes context menu at the centre of child object.
-            var mappedCoords = root.mapFromItem(gameArea, child.x + child.centerX, child.y + child.centerY);
+            var mappedCoords = root.mapFromItem(gameArea,
+                                                (child.x + child.centerX) * zoom,
+                                                (child.y + child.centerY) * zoom);
             setContextMenuPosition(contextLoader,
-                                   mappedCoords.x - (gameArea.contentX * zoom),
-                                   mappedCoords.y - (gameArea.contentY * zoom));
+                                   mappedCoords.x - (gameArea.contentX),
+                                   mappedCoords.y - (gameArea.contentY));
 
             __unitIndex = childIndex(child);
             // Displays the context menu. This is suboptimal.
@@ -427,8 +429,8 @@ function handleKeyPress(event) {
 }
 
 function centerViewOnUnit(unit) {
-    gameArea.contentX = unit.x - gameArea.width/2;
-    gameArea.contentY = unit.y - gameArea.height/2;
+    gameArea.contentX = (((unit.x + unit.centerX) * zoom) - gameArea.width/2) //* zoom;
+    gameArea.contentY = (((unit.y + unit.centerY) * zoom) - gameArea.height/2) //* zoom;
 }
 
 function startFollowingUnit(index) {
@@ -698,8 +700,8 @@ function calculateOrderMarkerVisibility(index) {
 
 function setOrderMarker(index, orderName, targetX, targetY) {
     var orderMarker = orderMarkersContainer[index];
-    orderMarker.x = targetX - orderMarker.centerX;
-    orderMarker.y = targetY - orderMarker.centerY;
+    orderMarker.x = (targetX - orderMarker.centerX);
+    orderMarker.y = (targetY - orderMarker.centerY);
     orderMarker.orderColor = LogicHelpers.colorForOrder(orderName);
     orderMarker.visible = true;
 }

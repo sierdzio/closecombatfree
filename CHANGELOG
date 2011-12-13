@@ -6,7 +6,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 13.12.2011:
  - add background to Scenario
  - update ScenarioMenu with some better visuals
- - 
+ - rebuild zooming so that gameArea's dimensions stay the same, even on zoom less than 100%
+   (background remains invisible throughout zooming)
 
 12.12.2011:
  - add ScenarioMenu

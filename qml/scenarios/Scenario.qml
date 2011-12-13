@@ -41,6 +41,11 @@ Rectangle {
         ScenarioLogic.handleKeyPress(event);
     }
 
+    onZoomChanged: {
+        gameArea.resizeContent(map.width * zoom, map.height * zoom, Qt.point(0, 0));
+        gameArea.returnToBounds();
+    }
+
     Flickable {
         id: gameArea
         height: {
@@ -53,114 +58,126 @@ Rectangle {
         contentHeight: map.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
-        scale: zoom
 
         anchors.top: root.top
         anchors.left: root.left
         anchors.right: root.right
 
-        Loader {
-            id: map
-        }
-
-        Loader {
-            id: units
-            anchors.fill: parent
-            source: (scenarioFile != "")? scenarioFile : ""
-
-            onLoaded: {
-                if (scenarioFile != "") {
-                    map.source = units.item.mapFile
-
-                for (var i = 0; i < units.item.children.length; i++) {
-                    units.item.children[i].unitIndex = i;
-                    togglePause.connect(units.item.children[i].togglePause);
-                }
-
-                map.item.setUnits(units.item.children);
-                ScenarioLogic.createOrderMarkers();
-                roster.populateUnits(units.item.children);
-                }
-            }
-        }
-
-        MouseArea {
-            id: mouseAreaMain
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            hoverEnabled: true
-            z: -1
-
-            onClicked: {
-                if (mouse.button == Qt.LeftButton) {
-                    ScenarioLogic.handleLeftMouseClick(mouse);
-                } else if (mouse.button == Qt.RightButton) {
-                    ScenarioLogic.handleRightMouseClick(mouse);
-                }
-            }
-            onPressAndHold: {
-                if (uiMode == "DESKTOP") {
-                    gameArea.interactive = false;
-                    if (mouse.button == Qt.LeftButton) {
-                        ScenarioLogic.handlePressAndHoldLeft(mouse);
-                    } else if (mouse.button == Qt.RightButton) {
-                        ScenarioLogic.handlePressAndHoldRight(mouse);;
-                    }
-                } else if (uiMode == "MOBILE") {
-                    if (terrainInfoMode == "OFF") {
-                        ScenarioLogic.handleRightMouseClick(mouse);
-                    } else {
-                        ScenarioLogic.handlePressAndHoldRight(mouse);
-                    }
-                }
-            }
-            onReleased: {
-                if (uiMode == "DESKTOP") {
-                    ScenarioLogic.handleMouseReleased();
-                    gameArea.interactive = true;
-                }
-            }
-            onDoubleClicked: {
-                if (followedUnit.index != -1) {
-                    ScenarioLogic.stopFollowingUnit();
-                } else {
-                    // Especially useful on mobile, where right click is not possible
-                    ScenarioLogic.handleRightMouseClick(mouse);
-                }
-            }
-        }
-
-        Rectangle {
-            id: aimLine
-            z: root.z + 1
-            visible: false
-            width: 3
-            height: 150
-
-            transform: Rotation {
-                origin.x: 1
-                origin.y: 0
-                angle: __aimLineRotation
-            }
-        }
-
-        RubberBand {
-            id: rubberBand
-            visible: false
-
-            transform: Rotation {
-                origin.x: 0
-                origin.y: 0
-                angle: __rubberBandRotation
-            }
-        }
-
-        // Needed for effectsContainer in JS file.
-        // Would be neat to rethink and optimise that.
         Item {
-            id: itemContainer
-            visible: true
-            anchors.fill: parent
+            id: zoomArea
+            scale: zoom
+
+            Loader {
+                id: map
+
+                onLoaded: {
+                    if (scenarioFile != "") {
+
+                        height = map.item.height;
+                        width = map.item.width;
+                    }
+                }
+
+                Loader {
+                    id: units
+                    anchors.fill: parent
+                    z: map.z + 1
+                    source: (scenarioFile != "")? scenarioFile : ""
+
+                    onLoaded: {
+                        if (scenarioFile != "") {
+                            map.source = units.item.mapFile
+
+                            for (var i = 0; i < units.item.children.length; i++) {
+                                units.item.children[i].unitIndex = i;
+                                togglePause.connect(units.item.children[i].togglePause);
+                            }
+
+                            map.item.setUnits(units.item.children);
+                            ScenarioLogic.createOrderMarkers();
+                            roster.populateUnits(units.item.children);
+                        }
+                    }
+                }
+
+                MouseArea {
+                    id: mouseAreaMain
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    hoverEnabled: true
+                    z: -1
+
+                    onClicked: {
+                        if (mouse.button == Qt.LeftButton) {
+                            ScenarioLogic.handleLeftMouseClick(mouse);
+                        } else if (mouse.button == Qt.RightButton) {
+                            ScenarioLogic.handleRightMouseClick(mouse);
+                        }
+                    }
+                    onPressAndHold: {
+                        if (uiMode == "DESKTOP") {
+                            gameArea.interactive = false;
+                            if (mouse.button == Qt.LeftButton) {
+                                ScenarioLogic.handlePressAndHoldLeft(mouse);
+                            } else if (mouse.button == Qt.RightButton) {
+                                ScenarioLogic.handlePressAndHoldRight(mouse);;
+                            }
+                        } else if (uiMode == "MOBILE") {
+                            if (terrainInfoMode == "OFF") {
+                                ScenarioLogic.handleRightMouseClick(mouse);
+                            } else {
+                                ScenarioLogic.handlePressAndHoldRight(mouse);
+                            }
+                        }
+                    }
+                    onReleased: {
+                        if (uiMode == "DESKTOP") {
+                            ScenarioLogic.handleMouseReleased();
+                            gameArea.interactive = true;
+                        }
+                    }
+                    onDoubleClicked: {
+                        if (followedUnit.index != -1) {
+                            ScenarioLogic.stopFollowingUnit();
+                        } else {
+                            // Especially useful on mobile, where right click is not possible
+                            ScenarioLogic.handleRightMouseClick(mouse);
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: aimLine
+                    z: root.z + 1
+                    visible: false
+                    width: 3
+                    height: 150
+
+                    transform: Rotation {
+                        origin.x: 1
+                        origin.y: 0
+                        angle: __aimLineRotation
+                    }
+                }
+
+                RubberBand {
+                    id: rubberBand
+                    visible: false
+
+                    transform: Rotation {
+                        origin.x: 0
+                        origin.y: 0
+                        angle: __rubberBandRotation
+                    }
+                }
+            }
+            // Needed for effectsContainer in JS file.
+            // Would be neat to rethink and optimise that.
+            Item {
+                id: itemContainer
+                visible: true
+                anchors.fill: parent
+            }
         }
     }
 

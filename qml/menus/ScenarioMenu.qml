@@ -20,7 +20,6 @@ Rectangle {
         for (var i = 0; i < list.length; i++) {
             var current = list[i];
             scenarioModel.append({"scenarioText": current});
-//            console.log("Current file: " + current);
         }
     }
 
@@ -35,6 +34,8 @@ Rectangle {
             width: entryText.paintedWidth
             height: entryText.paintedHeight
             color: "#000000"
+            border.color: "#a0a0a0"
+            border.width: 1
 
             Text {
                 id: entryText
@@ -60,6 +61,7 @@ Rectangle {
     ListView {
         id: scenarios
         height: 200
+        spacing: 2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
