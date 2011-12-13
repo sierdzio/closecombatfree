@@ -3,14 +3,10 @@
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
-//    if (initConfiguration() == true)
     initConfiguration();
     rootContext()->setContextObject(configuration);
 
-//    QString pwd = qApp->applicationDirPath() + "/";
-//    rootContext()->setContextProperty("PWD", pwd);
-
-//    setSource(QUrl("base/main.qml"));
+    setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
     viewport()->setAttribute(Qt::WA_OpaquePaintEvent);

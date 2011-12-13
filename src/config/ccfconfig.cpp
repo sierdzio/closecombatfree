@@ -1,5 +1,5 @@
 #include "ccfconfig.h"
-#include <QDebug>
+//#include <QDebug>
 
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)

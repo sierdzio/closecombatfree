@@ -3,7 +3,7 @@ import "qrc:/skin"
 import "qrc:/core/engineLogicHelpers.js" as LogicHelpers
 import "qrc:/core/engineScenarioLogic.js" as ScenarioLogic
 
-Item {
+Rectangle {
     property string scenarioFile: ""
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
@@ -23,6 +23,7 @@ Item {
 
     id: root
     focus: true;
+    color: menuBackgroundColor
 
     onScenarioFileChanged: {
         if (scenarioFile != "") {

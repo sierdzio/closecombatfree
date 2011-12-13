@@ -12,6 +12,7 @@ Rectangle {
     width: 100
     height: 100
     state: "closed"
+    color: "#5f5f5f"
 
     Component.onCompleted: {
         var list = scenariosList();
@@ -19,7 +20,7 @@ Rectangle {
         for (var i = 0; i < list.length; i++) {
             var current = list[i];
             scenarioModel.append({"scenarioText": current});
-            console.log("Current file: " + current);
+//            console.log("Current file: " + current);
         }
     }
 
@@ -31,18 +32,19 @@ Rectangle {
         id: scenarioDelegate
 
         Rectangle {
-            width: 100
-            height: 50
+            width: entryText.paintedWidth
+            height: entryText.paintedHeight
             color: "#000000"
 
             Text {
+                id: entryText
                 color: "#ffffff"
                 text: scenarioText
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pointSize: 8
+                font.pointSize: 10
                 font.bold: true
             }
 
@@ -57,7 +59,9 @@ Rectangle {
 
     ListView {
         id: scenarios
-        anchors.fill: parent
+        height: 200
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
         model: scenarioModel
         delegate: scenarioDelegate

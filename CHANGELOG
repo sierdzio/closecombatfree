@@ -3,6 +3,11 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+13.12.2011:
+ - add background to Scenario
+ - update ScenarioMenu with some better visuals
+ - 
+
 12.12.2011:
  - add ScenarioMenu
  - modify Scenario to be more dynamic (allow to instantiate empty Scenario)
