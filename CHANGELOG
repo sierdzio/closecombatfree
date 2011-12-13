@@ -10,6 +10,9 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
    (background remains invisible throughout zooming)
  - fix TopMenu "hiding" plus sign on small screens
  - add pinch zooming
+ - make "standard" zooming always center on screen center
+ - center scenarios list in ScenarioMenu
+ - fix roster status not adjusting size when a long status emerges
 
 12.12.2011:
  - add ScenarioMenu

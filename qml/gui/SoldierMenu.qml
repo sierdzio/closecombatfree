@@ -31,17 +31,13 @@ Rectangle {
         // Get widest and highest dimension from cells:
         var widestCell = 0;
         var heighestCell = 0;
-        for (var i = 0; i < soldiers.count; i++) {
-            soldiers.currentIndex = i;
-            var current = soldiers.currentItem;
-            if (current.height > heighestCell) {
-                heighestCell = current.height;
-            }
+        soldierModel.get(0).unitStatus = "MOVING FAST";
 
-            if (current.width > widestCell) {
-                widestCell = current.width;
-            }
-        }
+        soldiers.currentIndex = 0;
+        var current = soldiers.currentItem;
+        widestCell = current.width;
+        heighestCell = current.height;
+        soldierModel.get(0).unitStatus = "READY";
 
         // Set all elements' dimentions
         for (var i = 0; i < soldiers.count; i++) {
@@ -88,6 +84,7 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: 2
         interactive: false
+//        flickableDirection: Flickable.VerticalFlick
 
         anchors.top: parent.top
         anchors.left: parent.left

@@ -5,7 +5,6 @@ Bugs & fixes:
  - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
- - fix roster status not adjusting size then a long status emerges (especially important on mobile)
 
 New features:
  - add game menu

@@ -9,6 +9,8 @@ Rectangle {
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
     property real zoom: 1.0
+    property variant zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
+                                         gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
     property bool paused: false
     property color menuBackgroundColor: "#7e8c24"
 
@@ -34,6 +36,7 @@ Rectangle {
         }
 
         configWindowWidthChanged.connect(updateWidth);
+        updateWidth();
         }
     }
 
@@ -42,7 +45,10 @@ Rectangle {
     }
 
     onZoomChanged: {
-        gameArea.resizeContent(map.width * zoom, map.height * zoom, Qt.point(0, 0));
+        zoomPoint = Qt.point(gameArea.width/2 + gameArea.contentX,
+                             gameArea.height/2 + gameArea.contentY);
+
+        gameArea.resizeContent((map.width * zoom), (map.height * zoom), zoomPoint);
         gameArea.returnToBounds();
     }
 
@@ -62,6 +68,15 @@ Rectangle {
         anchors.top: root.top
         anchors.left: root.left
         anchors.right: root.right
+
+        PinchArea {
+            id: pinchArea
+            anchors.fill: parent
+
+            onPinchUpdated: {
+                zoom += pinch.scale - pinch.previousScale;
+            }
+        }
 
         Item {
             id: zoomArea
@@ -181,7 +196,7 @@ Rectangle {
         }
     }
 
-    BottomMenu {        
+    BottomMenu {
         id: bottomMenu
         anchors.bottom: root.bottom
         anchors.right: root.right
@@ -212,7 +227,7 @@ Rectangle {
                 ContextMenu {
                     // A static context menu, useful on mobile, where there is no right click.
                     id: contextMenu
-                    height: menu.height
+                    height: roster.height
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
                     opacity: (uiMode == "MOBILE")? 1: 0;
@@ -254,16 +269,17 @@ Rectangle {
 
                 SoldierMenu {
                     id: soldierMenu
+                    height: roster.height
                     opacity: (empty)? 0 : 1;
                     backgroundColor: menuBackgroundColor
-                    z: roster.z - 1                    
+                    z: roster.z - 1
 
                     Behavior on opacity { NumberAnimation {} }
                 }
 
                 StatusMessageMenu {
                     id: statusMessageViewer
-                    height: menu.height
+                    height: roster.height
                     opacity: (empty)? 0 : 1;
                     backgroundColor: menuBackgroundColor
                     z: soldierMenu.z - 1

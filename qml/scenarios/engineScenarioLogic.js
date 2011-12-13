@@ -429,8 +429,13 @@ function handleKeyPress(event) {
 }
 
 function centerViewOnUnit(unit) {
-    gameArea.contentX = (((unit.x + unit.centerX) * zoom) - gameArea.width/2) //* zoom;
-    gameArea.contentY = (((unit.y + unit.centerY) * zoom) - gameArea.height/2) //* zoom;
+    gameArea.contentX = (((unit.x + unit.centerX) * zoom) - gameArea.width/2);
+    gameArea.contentY = (((unit.y + unit.centerY) * zoom) - gameArea.height/2);
+}
+
+function centerViewOn(x, y) {
+    gameArea.contentX = (x - gameArea.width/2);
+    gameArea.contentY = (y - gameArea.height/2);
 }
 
 function startFollowingUnit(index) {

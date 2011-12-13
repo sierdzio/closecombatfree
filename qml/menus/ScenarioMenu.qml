@@ -31,6 +31,7 @@ Rectangle {
         id: scenarioDelegate
 
         Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
             width: entryText.paintedWidth
             height: entryText.paintedHeight
             color: "#000000"
