@@ -50,8 +50,8 @@ Item {
     }
 
     function updateWidth() {
-        if (configWindowWidth < menu.contentWidth) {
-            menu.width = configWindowWidth;
+        if (configWindowWidth < (menu.contentWidth + trigger.width)) {
+            menu.width = configWindowWidth - trigger.width;
             return;
         } else {
             menu.width = menu.contentWidth;
