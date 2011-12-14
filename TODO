@@ -5,6 +5,9 @@ Bugs & fixes:
  - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
+ - pausing seems to be stopping animations only visually - it looks as if they still run in the background
+   (only visuals are not being updated). Investigate
+ - firing animation is performed when a unit on the move stops while being followed
 
 New features:
  - add game menu

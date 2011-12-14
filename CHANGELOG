@@ -3,6 +3,10 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created. Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+14.12.2011:
+ - add Map_tst3 and Scnario_tst3
+ - add ability to stop following a unit on mobile (context menu "Follow" now toggles following)
+
 13.12.2011:
  - add background to Scenario
  - update ScenarioMenu with some better visuals

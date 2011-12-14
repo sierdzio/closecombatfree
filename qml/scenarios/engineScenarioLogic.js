@@ -28,7 +28,10 @@ function scheduleContextAction(index, operation) {
             }
             cleanContextAction();
         } else if (operation == "Follow") {
-            startFollowingUnit(child.unitIndex);
+            if (isFollowingOn() == true)
+                stopFollowingUnit();
+            else
+                startFollowingUnit(child.unitIndex);
         } else
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
@@ -454,6 +457,10 @@ function stopFollowingUnit() {
 
     if (followingTimer.running == true)
         followingTimer.stop();
+}
+
+function isFollowingOn() {
+    return followedUnit.running;
 }
 
 function updateFollowingUnit() {

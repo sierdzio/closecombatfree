@@ -7,8 +7,10 @@
         -->
         <file>scenarios/Scenario_tst1.qml</file>
         <file>scenarios/Scenario_tst2.qml</file>
+        <file>scenarios/Scenario_tst3.qml</file>
         <file>maps/Map_tst1.qml</file>
         <file>maps/Map_tst2.qml</file>
+        <file>maps/Map_tst3.qml</file>
         <file>units/tanks/tests/Tank_tst1_hull.qml</file>
         <file>units/tanks/tests/Tank_tst1_turret.qml</file>
         <file>units/tanks/tests/Tank_tst1.qml</file>
