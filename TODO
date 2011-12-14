@@ -2,7 +2,6 @@ Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
  - issuing attack while on move causes the unit to move to fire destination and fire at the same time
  - add error checking to config system (check for invalidity of entries)
- - maximising the window does not cause QML scene to change size
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - pausing seems to be stopping animations only visually - it looks as if they still run in the background
@@ -48,6 +47,5 @@ Big ideas for the future:
  - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
  - parametrize UI to allow easy modding and skins creation
  - add naval warfare
- - consider using QRC as mod packages for the game
 
 Done (this section gets occasionally cleaned):

@@ -8,6 +8,7 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
  - add ability to stop following a unit on mobile (context menu "Follow" now toggles following)
  - add option to close scenario to OptionsMenu
  - optimise ScenarioMenu to use Loader instead of Scenario element
+ - make group numbers always remain vertical
 
 13.12.2011:
  - add background to Scenario

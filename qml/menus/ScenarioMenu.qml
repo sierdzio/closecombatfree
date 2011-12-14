@@ -87,6 +87,7 @@ Rectangle {
         onLoaded: {
             item.scenarioFile = scenarioFile;
             item.closeScenario.connect(root.closeScenario);
+            focus = true;
         }
     }
 

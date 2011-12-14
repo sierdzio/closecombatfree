@@ -101,6 +101,7 @@ Item {
         font.family: "Ubuntu Condensed"
         verticalAlignment: Text.Bottom
         horizontalAlignment: Text.AlignRight
+        rotation: -root.rotation
     }
 
     UnitSelectionBox {
