@@ -13,6 +13,8 @@ Item {
     signal zoomIn();
     signal zoomOut();
     signal terrainInfoEntryClicked();
+    signal closeScenario();
+
     onTerrainInfoEntryClicked: {
         toggleTerrainInfoMode();
         terrainInfoEntry.additionalText = terrainInfoMode;
@@ -32,6 +34,7 @@ Item {
     Component.onCompleted: {
         pauseEntry.entryClicked.connect(pauseEntryClicked);
         optionsEntry.entryClicked.connect(optionsEntryClicked);
+        optionsMenu.closeEntryClicked.connect(closeScenario);
         modeEntry.entryClicked.connect(uiModeEntryClicked);
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);

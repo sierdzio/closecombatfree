@@ -5,6 +5,7 @@ Rectangle {
     signal entryClicked(string scenarioPath)
     onEntryClicked: {
         scenario.scenarioFile = "qrc:/scenarios/" + scenarioPath;
+        scenario.source = "qrc:/core/scenarios/Scenario.qml";
         root.state = "opened";
     }
 
@@ -21,6 +22,10 @@ Rectangle {
             var current = list[i];
             scenarioModel.append({"scenarioText": current});
         }
+    }
+
+    function closeScenario() {
+        root.state = "closed";
     }
 
     ListModel {
@@ -70,12 +75,19 @@ Rectangle {
         delegate: scenarioDelegate
     }
 
-    Scenario {
+    Loader {
+        property string scenarioFile: ""
+
         id: scenario
         width: root.width
         anchors.top: root.top
         anchors.bottom: root.bottom
         anchors.left: root.right
+
+        onLoaded: {
+            item.scenarioFile = scenarioFile;
+            item.closeScenario.connect(root.closeScenario);
+        }
     }
 
     states: [
@@ -122,7 +134,11 @@ Rectangle {
                     duration: 500
                 }
                 ScriptAction {
-                    script: scenario.visible = false;
+                    script: {
+                        scenario.scenarioFile = "";
+                        scenario.source = "";
+                        scenario.visible = false;
+                    }
                 }
             }
         }

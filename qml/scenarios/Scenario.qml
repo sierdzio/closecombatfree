@@ -14,6 +14,8 @@ Rectangle {
     property bool paused: false
     property color menuBackgroundColor: "#7e8c24"
 
+    signal closeScenario()
+
     signal togglePause ()
     onTogglePause: {
         if (paused == true) {
@@ -346,6 +348,7 @@ Rectangle {
             topMenu.pauseEntryClicked.connect(togglePause);
             topMenu.zoomIn.connect(root.zoomIn);
             topMenu.zoomOut.connect(root.zoomOut);
+            topMenu.closeScenario.connect(root.closeScenario);
         }
     }
 

@@ -6,6 +6,8 @@ Quite a lot of basic engine stuff was done before this changelog was created. So
 14.12.2011:
  - add Map_tst3 and Scnario_tst3
  - add ability to stop following a unit on mobile (context menu "Follow" now toggles following)
+ - add option to close scenario to OptionsMenu
+ - optimise ScenarioMenu to use Loader instead of Scenario element
 
 13.12.2011:
  - add background to Scenario

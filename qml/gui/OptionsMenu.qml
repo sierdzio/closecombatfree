@@ -33,6 +33,8 @@ Item {
         console.log("Load game.");
     }
 
+    signal closeEntryClicked()
+
     signal quitEntryClicked()
     onQuitEntryClicked: {
         Qt.quit();
@@ -42,6 +44,7 @@ Item {
         preferencesEntry.entryClicked.connect(preferencesEntryClicked);
         saveGameEntry.entryClicked.connect(saveGameEntryClicked);
         loadGameEntry.entryClicked.connect(loadGameEntryClicked);
+        closeEntry.entryClicked.connect(closeEntryClicked);
         quitEntry.entryClicked.connect(quitEntryClicked);
     }
 
@@ -70,6 +73,13 @@ Item {
         MenuEntry {
             id: loadGameEntry
             text: "Load game"
+            width: root.size
+            height: getContentsHeight()
+        }
+
+        MenuEntry {
+            id: closeEntry
+            text: "Close"
             width: root.size
             height: getContentsHeight()
         }
