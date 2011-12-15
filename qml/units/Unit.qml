@@ -28,7 +28,6 @@ Item {
     property int __tempX: x
     property int __tempY: y
     property string scheduledOperation;
-//    property variant orderQueue;
     property bool selected: false
     property bool firing: false
     property bool smoking: false
@@ -89,7 +88,6 @@ Item {
     }
 
     Component.onCompleted: {
-//        orderQueue = new Array();
         queueOrderFinished.connect(processQueue);
     }
 
@@ -98,7 +96,7 @@ Item {
         unitStatusChanged(newStatusMessage, unitIndex);
     }
 
-    function orderQueue() {
+    function getOrderQueue() {
         return OrderQueue.orderQueue;
     }
 

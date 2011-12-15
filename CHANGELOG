@@ -9,8 +9,11 @@ Some more history can be devised from git sources (although even there, the thin
  - fix units mixing orders
  - add order queues
  - fix RubberBand not showing up
- - added initial implementation for waypoint creation (needs fixes, as it breaks order cancelling
-   in its current form)
+ - added initial implementation for waypoint creation (needs fixes, but works)
+ - (temporary, probably) orders are cancelled ONLY on "Stop" oder. All movement
+   and firing actions are queued
+ - add example scripting to Scenario_tst2 (2 units are given 3 orders each and perform
+   them automatically on startup!)
 
 14.12.2011:
  - add Map_tst3 and Scnario_tst3

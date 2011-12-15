@@ -146,7 +146,8 @@ function issueWaypointOrder(child, x, y) {
 function issueActionOrder(child, x, y) {
     var operation = child.scheduledOperation;
 
-    child.cancelOrder();
+    // WARNING! Order canceling IS important!
+//    child.cancelOrder();
     // Clear defence, if it is on.
     child.defenceSphereColor = "";
     child.changeStatus("READY");

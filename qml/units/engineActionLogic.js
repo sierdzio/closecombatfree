@@ -1,5 +1,3 @@
-//var orderQueue = new Array();
-
 function moveTo (newX, newY) {
     queueOrder("Move", newX, newY);
     processQueue();
@@ -61,7 +59,7 @@ function performTurretShooting (targetX, targetY) {
 
 function cancelOrder () {
     changeStatus("STOPPED");
-//    orderQueue = new Array();
+    clearOrderQueue();
 
     if ((firing == false) && (smoking == false))  {
         xMoveAnimation.stop();
@@ -88,17 +86,18 @@ function queueOrder (orderName, newX, newY) {
         order = component.createObject(root, {"x": newX, "y": newY, "operation": orderName});
     }
 
-    orderQueue().push(order);
+    var orderQueue = getOrderQueue();
+    orderQueue.push(order);
     console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
-                + ". Length: " + orderQueue().length);
+                + ". Length: " + orderQueue.length);
 }
 
 function processQueue () {
-//    console.log("Processing queue. Length: " + orderQueue.length);
+    var orderQueue = getOrderQueue();
     var noOrdersLeft = true;
 
-    for (var i = 0; i < orderQueue().length; i++) {
-        var order = orderQueue()[i];
+    for (var i = 0; i < orderQueue.length; i++) {
+        var order = orderQueue[i];
         if (order.performed == true) {
             continue;
         } else {
@@ -119,7 +118,7 @@ function processQueue () {
                 firing = true;
             }
 
-            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue().length
+            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
                         + ", queueIndex: " + i);
             order.performed = true;
             noOrdersLeft = false;
@@ -129,7 +128,6 @@ function processQueue () {
     }
 
     if (noOrdersLeft == true) {
-//        orderQueue() = new Array();
         clearOrderQueue();
 //        actionFinished(unitIndex, __tempX, __tempY);
         console.log("Whole queue finished.");

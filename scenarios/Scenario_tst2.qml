@@ -31,6 +31,13 @@ Item {
         x: 750
         y: 400
         rotation: 0
+
+        Component.onCompleted: {
+            queueOrder ("Move", 700, 300);
+            queueOrder ("Move", 500, 250);
+            queueOrder ("Attack", 50, 50);
+            processQueue();
+        }
     }
 
     Tank_tst2 {
@@ -38,5 +45,12 @@ Item {
         x: 950
         y: 400
         rotation: 0
+
+        Component.onCompleted: {
+            queueOrder ("Move", 700, 600);
+            queueOrder ("Move fast", 500, 650);
+            queueOrder ("Attack", 50, 50);
+            processQueue();
+        }
     }
 }
