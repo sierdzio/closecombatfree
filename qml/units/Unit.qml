@@ -3,6 +3,7 @@ import "qrc:/skin"
 import "qrc:/core/units"
 import "qrc:/core/engineLogicHelpers.js" as Logic
 import "qrc:/core/engineActionLogic.js" as ActionLogic
+import "qrc:/tempJs.js" as OrderQueue
 
 Item {
     property string unitType: "Generic unit"
@@ -27,8 +28,7 @@ Item {
     property int __tempX: x
     property int __tempY: y
     property string scheduledOperation;
-//    property variant orderQueue; //list<Order>
-    property int __currentQueueIndex: 0
+//    property variant orderQueue;
     property bool selected: false
     property bool firing: false
     property bool smoking: false
@@ -47,10 +47,7 @@ Item {
 
     signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
-    signal queueOrderFinished()
-//    onQueueOrderFinished: {
-//        orderQueue[__currentQueueIndex].performed = true;
-//    }
+    signal queueOrderFinished ()
 
     signal moveTo (real newX, real newY)
     onMoveTo: ActionLogic.moveTo(newX, newY);
@@ -99,6 +96,14 @@ Item {
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage, unitIndex);
+    }
+
+    function orderQueue() {
+        return OrderQueue.orderQueue;
+    }
+
+    function clearOrderQueue() {
+        return OrderQueue.orderQueue = new Array();
     }
 
     Text {

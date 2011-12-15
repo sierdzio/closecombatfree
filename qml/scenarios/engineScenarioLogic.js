@@ -93,6 +93,56 @@ function performContextAction(index, targetX, targetY) {
     cleanContextAction();
 }
 
+function placeWaypoint(index, targetX, targetY) {
+    var children = selectedUnits();
+    var child = units.item.children[index];
+    var scheduledOperation = child.scheduledOperation;
+
+    if ((scheduledOperation != "Ambush")
+            && (scheduledOperation != "Defend")
+            && (scheduledOperation != "Stop")
+            && (scheduledOperation != "Follow")) {
+        // Set up the unit to which the aimLine is anchored.
+        // Others are set in the loop later, based on this "main"
+        // object.
+        issueWaypointOrder(child, targetX, targetY);
+
+
+        for (var i = 0; i < children.length; i++) {
+            child = children[i];
+
+            // This unit's order is already issued.
+            if (child.unitIndex == index)
+                continue;
+
+            // Sets schedule for all units.
+            child.scheduledOperation = scheduledOperation;
+
+            var tempX = targetX + (child.x - units.item.children[index].x);
+            var tempY = targetY + (child.y - units.item.children[index].y);
+
+            issueWaypointOrder(child, tempX, tempY);
+        }
+    }
+//    cleanContextAction();
+}
+
+function issueWaypointOrder(child, x, y) {
+    var operation = child.scheduledOperation;
+
+    // WARNING! Order canceling IS important!
+//    child.cancelOrder();
+
+    // Clear defence, if it is on.
+    child.defenceSphereColor = "";
+    child.changeStatus("READY");
+
+    child.queueOrder(operation, x, y);
+    child.actionFinished.connect(actionFinished);
+
+    setOrderMarker(child.unitIndex, operation, x, y);
+}
+
 function issueActionOrder(child, x, y) {
     var operation = child.scheduledOperation;
 
@@ -248,8 +298,15 @@ function updateAimLine() {
 
 function handleLeftMouseClick(mouse) {
         if (contextLoader.visible == false) {
-            performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
-            return;
+            if (mouse.modifiers == Qt.ShiftModifier) {
+                console.log("Placing waypoint");
+                // This will need a waypoint container, but that can wait.
+                // Just a quick test code - needs update later.
+                placeWaypoint(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+            } else {
+                performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+                return;
+            }
         } else {
             cleanContextAction();
             selectUnitFromGameArea(mouse);

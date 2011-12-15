@@ -180,6 +180,7 @@ Rectangle {
                 RubberBand {
                     id: rubberBand
                     visible: false
+                    z: root.z + 1
 
                     transform: Rotation {
                         origin.x: 0

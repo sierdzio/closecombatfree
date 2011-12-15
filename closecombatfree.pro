@@ -83,7 +83,8 @@ OTHER_FILES += \
     qml/menus/ScenarioMenu.qml \
     maps/Map_tst3.qml \
     scenarios/Scenario_tst3.qml \
-    qml/units/Order.qml
+    qml/units/Order.qml \
+    qml/units/tempJs.js
 
 RESOURCES += \
     coreResource.qrc \

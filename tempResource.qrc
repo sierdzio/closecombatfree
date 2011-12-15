@@ -20,5 +20,7 @@
         <file>units/tanks/tests/Tank_tst3.qml</file>
         <file>maps/props/HouseBasic_tst.qml</file>
         <file>maps/props/Tree_tst.qml</file>
+
+        <file alias="tempJs.js">qml/units/tempJs.js</file>
     </qresource>
 </RCC>

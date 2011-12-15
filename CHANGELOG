@@ -8,6 +8,9 @@ Some more history can be devised from git sources (although even there, the thin
  - trim Map_tst3 background
  - fix units mixing orders
  - add order queues
+ - fix RubberBand not showing up
+ - added initial implementation for waypoint creation (needs fixes, as it breaks order cancelling
+   in its current form)
 
 14.12.2011:
  - add Map_tst3 and Scnario_tst3

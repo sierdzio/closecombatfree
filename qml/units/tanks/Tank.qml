@@ -50,33 +50,30 @@ Unit {
     unitWidth: 1
     unitHeight: 1
 
-    SequentialAnimation on turretRotation {
-        id: turretRotationRoot
+    RotationAnimation on turretRotation {
+
+        id: turretRotationAnimation
         paused: running? root.paused : false
+        duration: 3000
+        direction: RotationAnimation.Shortest
+        easing.type: Easing.InOutQuad
 
-        RotationAnimation {
-            id: turretRotationAnimation
-            duration: 3000
-            direction: RotationAnimation.Shortest
-            easing.type: Easing.InOutQuad
-        }
-
-        ScriptAction {
-            script: {
+        onRunningChanged: {
+            if (!running) {
                 if (unitStatus != "STOPPED") {
                     if (firing == true) {
                         // Warning! This order is important for order markers!
                         turret.firing = true;
                         firing = false;
                         changeStatus("READY");
-//                        actionFinished(unitIndex, __tempX, __tempY);
+                        actionFinished(unitIndex, __tempX, __tempY);
                         queueOrderFinished();
                     } else if (smoking == true) {
                         // Warning! This order is important for order markers!
                         turret.smoking = true;
                         smoking = false;
                         changeStatus("READY");
-//                        actionFinished(unitIndex, __tempX, __tempY);
+                        actionFinished(unitIndex, __tempX, __tempY);
                         queueOrderFinished();
                     }
                 }
