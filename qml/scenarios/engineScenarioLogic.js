@@ -96,6 +96,7 @@ function performContextAction(index, targetX, targetY) {
 function issueActionOrder(child, x, y) {
     var operation = child.scheduledOperation;
 
+    child.cancelOrder();
     // Clear defence, if it is on.
     child.defenceSphereColor = "";
     child.changeStatus("READY");
@@ -130,7 +131,8 @@ function actionFinished(index, targetX, targetY) {
     var scheduledOperation = units.item.children[index].scheduledOperation;
     if ((scheduledOperation != "Move")
             && (scheduledOperation != "Move fast")
-            && (scheduledOperation != "Sneak")) {
+            && (scheduledOperation != "Sneak")
+            && (scheduledOperation != "Follow")) {
         firingActionFinished(index, targetX, targetY);
     }
 

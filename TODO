@@ -1,11 +1,8 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
- - issuing attack while on move causes the unit to move to fire destination and fire at the same time
  - add error checking to config system (check for invalidity of entries)
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
- - pausing seems to be stopping animations only visually - it looks as if they still run in the background
-   (only visuals are not being updated). Investigate
  - firing animation is performed when a unit on the move stops while being followed
 
 New features:
@@ -21,6 +18,8 @@ New features:
  - add "tree clusters" or "forests" that automatically generate
    some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
+ - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
+   adding curiously-shaped obstacles, like water etc.
 
  - add per-unit order queues (that is a big one, but might help a lot in the future)
  - add group following (not needed too much)

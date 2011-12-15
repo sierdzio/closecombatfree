@@ -22,6 +22,10 @@ Rectangle {
             var current = list[i];
             scenarioModel.append({"scenarioText": current});
         }
+
+        scenarios.currentIndex = 0;
+        scenarios.height = scenarioModel.count * scenarios.currentItem.height;
+        scenarios.currentIndex = -1;
     }
 
     function closeScenario() {
@@ -66,7 +70,7 @@ Rectangle {
 
     ListView {
         id: scenarios
-        height: 200
+        height: 50
         spacing: 2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
