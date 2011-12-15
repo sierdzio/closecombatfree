@@ -88,8 +88,8 @@ function queueOrder (orderName, newX, newY) {
 
     var orderQueue = getOrderQueue();
     orderQueue.push(order);
-    console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
-                + ". Length: " + orderQueue.length);
+//    console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
+//                + ". Length: " + orderQueue.length);
 }
 
 function processQueue () {
@@ -118,8 +118,9 @@ function processQueue () {
                 firing = true;
             }
 
-            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
-                        + ", queueIndex: " + i);
+//            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
+//                        + ", queueIndex: " + i);
+            currentOrder = i;
             order.performed = true;
             noOrdersLeft = false;
             // Ensures that unit performs one order at a time
@@ -129,7 +130,6 @@ function processQueue () {
 
     if (noOrdersLeft == true) {
         clearOrderQueue();
-//        actionFinished(unitIndex, __tempX, __tempY);
-        console.log("Whole queue finished.");
+//        console.log("Whole queue finished.");
     }
 }

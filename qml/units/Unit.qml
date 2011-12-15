@@ -28,6 +28,7 @@ Item {
     property int __tempX: x
     property int __tempY: y
     property string scheduledOperation;
+    property int currentOrder: -1
     property bool selected: false
     property bool firing: false
     property bool smoking: false

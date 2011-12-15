@@ -148,6 +148,7 @@ function issueActionOrder(child, x, y) {
 
     // WARNING! Order canceling IS important!
 //    child.cancelOrder();
+
     // Clear defence, if it is on.
     child.defenceSphereColor = "";
     child.changeStatus("READY");
@@ -207,11 +208,12 @@ function firingActionFinished(index, targetX, targetY) {
 
     effectsContainer.push(effect);
 //    effectIndex = effectsContainer.length - 1;
+    var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
 
-    if (unit.scheduledOperation == "Attack") {
+    if (scheduledOperation == "Attack") {
         effect.animationString = "gun_fire";
     }
-    else if(unit.scheduledOperation == "Smoke") {
+    else if(scheduledOperation == "Smoke") {
         effect.animationString = "smoke_fire";
     }
 
@@ -300,7 +302,7 @@ function updateAimLine() {
 function handleLeftMouseClick(mouse) {
         if (contextLoader.visible == false) {
             if (mouse.modifiers == Qt.ShiftModifier) {
-                console.log("Placing waypoint");
+//                console.log("Placing waypoint");
                 // This will need a waypoint container, but that can wait.
                 // Just a quick test code - needs update later.
                 placeWaypoint(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
