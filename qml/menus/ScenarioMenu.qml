@@ -41,8 +41,8 @@ Rectangle {
 
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: entryText.paintedWidth
-            height: entryText.paintedHeight
+            width: entryText.paintedWidth + 10
+            height: entryText.paintedHeight + 10
             color: "#000000"
             border.color: "#a0a0a0"
             border.width: 1
