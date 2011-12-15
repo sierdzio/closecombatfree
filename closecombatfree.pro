@@ -82,7 +82,8 @@ OTHER_FILES += \
     scenarios/Scenario_tst2.qml \
     qml/menus/ScenarioMenu.qml \
     maps/Map_tst3.qml \
-    scenarios/Scenario_tst3.qml
+    scenarios/Scenario_tst3.qml \
+    qml/units/Order.qml
 
 RESOURCES += \
     coreResource.qrc \

@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "qrc:/skin"
+import "qrc:/core/units"
 import "qrc:/core/engineLogicHelpers.js" as Logic
 import "qrc:/core/engineActionLogic.js" as ActionLogic
 
@@ -26,6 +27,8 @@ Item {
     property int __tempX: x
     property int __tempY: y
     property string scheduledOperation;
+//    property variant orderQueue; //list<Order>
+    property int __currentQueueIndex: 0
     property bool selected: false
     property bool firing: false
     property bool smoking: false
@@ -42,8 +45,12 @@ Item {
         }
     }
 
-    signal unitStatusChanged(string newStatus, int index)
-    signal actionFinished(int index, real targetX, real targetY)
+    signal unitStatusChanged (string newStatus, int index)
+    signal actionFinished (int index, real targetX, real targetY)
+    signal queueOrderFinished()
+//    onQueueOrderFinished: {
+//        orderQueue[__currentQueueIndex].performed = true;
+//    }
 
     signal moveTo (real newX, real newY)
     onMoveTo: ActionLogic.moveTo(newX, newY);
@@ -54,11 +61,17 @@ Item {
     signal sneakTo (real newX, real newY)
     onSneakTo: ActionLogic.sneakTo(newX, newY);
 
-    signal selectionChanged(bool state, int index)
+    signal selectionChanged (bool state, int index)
     onSelectedChanged: selectionChanged(selected, unitIndex);
 
     signal cancelOrder ()
     onCancelOrder: ActionLogic.cancelOrder();
+
+    signal queueOrder (string orderName, real newX, real newY)
+    onQueueOrder: ActionLogic.queueOrder(orderName, newX, newY);
+
+    signal processQueue ()
+    onProcessQueue: ActionLogic.processQueue();
 
     id: root
     width: unitWidth
@@ -76,6 +89,11 @@ Item {
         if (Math.round(y % 10) === 0) {
             positionChanged(x, y, unitIndex);
         }
+    }
+
+    Component.onCompleted: {
+//        orderQueue = new Array();
+        queueOrderFinished.connect(processQueue);
     }
 
     function changeStatus(newStatusMessage) {
@@ -171,7 +189,8 @@ Item {
             if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
-                actionFinished(unitIndex, __tempX, __tempY);
+//                actionFinished(unitIndex, __tempX, __tempY);
+                queueOrderFinished();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
             }

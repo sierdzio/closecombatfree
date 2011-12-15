@@ -6,6 +6,7 @@
         <file alias="main.qml">qml/main.qml</file>
         <file alias="scenarios/Scenario.qml">qml/scenarios/Scenario.qml</file>
         <file alias="scenarios/Effect.qml">qml/scenarios/Effect.qml</file>
+        <file alias="units/Order.qml">qml/units/Order.qml</file>
         <file alias="units/Soldier.qml">qml/units/Soldier.qml</file>
         <file alias="units/Unit.qml">qml/units/Unit.qml</file>
         <file alias="units/tanks/Hull.qml">qml/units/tanks/Hull.qml</file>
