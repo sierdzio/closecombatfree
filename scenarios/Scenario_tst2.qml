@@ -11,6 +11,12 @@ Item {
         objectName: "tank1"
         x: 550
         y: 400
+
+        Component.onCompleted: {
+            fireTo(650, 300);
+            smokeTo(700, 250);
+            fireTo(750, 200);
+        }
     }
 
     Tank_tst2 {

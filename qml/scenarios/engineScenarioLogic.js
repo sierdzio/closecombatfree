@@ -758,7 +758,7 @@ function calculateOrderMarkerVisibility(index) {
     } else {
         for (var i = 0; i < orders.length; i++) {
             if (orders[i].performed == true) {
-                if (orderMarker.length >= i - 1) {
+                if (i < orderMarker.length) {
                     orderMarker[i].destroy();
                 }
             } else {
