@@ -88,11 +88,17 @@ function queueOrder (orderName, newX, newY) {
 
     var orderQueue = getOrderQueue();
     orderQueue.push(order);
-//    console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
-//                + ". Length: " + orderQueue.length);
+    console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
+                + ". Length: " + orderQueue.length);
 }
 
 function processQueue () {
+    if (currentOrder == -1) {
+        continueQueue();
+    }
+}
+
+function continueQueue () {
     var orderQueue = getOrderQueue();
     var noOrdersLeft = true;
 
@@ -118,8 +124,8 @@ function processQueue () {
                 firing = true;
             }
 
-//            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
-//                        + ", queueIndex: " + i);
+            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
+                        + ", queueIndex: " + i);
             currentOrder = i;
             order.performed = true;
             noOrdersLeft = false;
@@ -130,6 +136,7 @@ function processQueue () {
 
     if (noOrdersLeft == true) {
         clearOrderQueue();
+        currentOrder = -1;
 //        console.log("Whole queue finished.");
     }
 }

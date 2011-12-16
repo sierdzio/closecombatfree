@@ -36,7 +36,7 @@ Item {
             queueOrder ("Move", 700, 300);
             queueOrder ("Move", 500, 250);
             queueOrder ("Attack", 50, 50);
-            processQueue();
+//            processQueue();
         }
     }
 
@@ -50,7 +50,7 @@ Item {
             queueOrder ("Move", 700, 600);
             queueOrder ("Move fast", 500, 650);
             queueOrder ("Attack", 50, 50);
-            processQueue();
+//            processQueue();
         }
     }
 }

@@ -70,6 +70,9 @@ Item {
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
 
+    signal continueQueue ()
+    onContinueQueue: ActionLogic.continueQueue();
+
     id: root
     width: unitWidth
     height: unitHeight
@@ -89,7 +92,7 @@ Item {
     }
 
     Component.onCompleted: {
-        queueOrderFinished.connect(processQueue);
+        queueOrderFinished.connect(continueQueue);
     }
 
     function changeStatus(newStatusMessage) {
