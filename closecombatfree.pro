@@ -84,7 +84,8 @@ OTHER_FILES += \
     maps/Map_tst3.qml \
     scenarios/Scenario_tst3.qml \
     qml/units/Order.qml \
-    qml/units/tempJs.js
+    qml/units/tempJs.js \
+    qml/gui/ScenarioMenuEntry.qml
 
 RESOURCES += \
     coreResource.qrc \

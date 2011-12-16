@@ -8,6 +8,7 @@
         <file alias="PopUpArrow.qml">qml/gui/PopUpArrow.qml</file>
         <file alias="RosterMenu.qml">qml/gui/RosterMenu.qml</file>
         <file alias="RubberBand.qml">qml/gui/RubberBand.qml</file>
+        <file alias="ScenarioMenuEntry.qml">qml/gui/ScenarioMenuEntry.qml</file>
         <file alias="SimpleInfoBox.qml">qml/gui/SimpleInfoBox.qml</file>
         <file alias="SoldierMenu.qml">qml/gui/SoldierMenu.qml</file>
         <file alias="StatusMessageMenu.qml">qml/gui/StatusMessageMenu.qml</file>

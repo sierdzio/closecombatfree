@@ -1,12 +1,16 @@
 import QtQuick 1.1
-import "qrc:/core/scenarios"
+import "qrc:/skin"
 
 Rectangle {
-    signal entryClicked(string scenarioPath)
-    onEntryClicked: {
+    signal scenarioEntryClicked (string scenarioPath)
+    onScenarioEntryClicked: {
         scenario.scenarioFile = "qrc:/scenarios/" + scenarioPath;
         scenario.source = "qrc:/core/scenarios/Scenario.qml";
         root.state = "opened";
+    }
+    signal quitEntryClicked (string ignoreThisString)
+    onQuitEntryClicked: {
+        Qt.quit();
     }
 
     id: root
@@ -26,6 +30,7 @@ Rectangle {
         scenarios.currentIndex = 0;
         scenarios.height = scenarioModel.count * scenarios.currentItem.height;
         scenarios.currentIndex = -1;
+        quitButton.entryClicked.connect(quitEntryClicked);
     }
 
     function closeScenario() {
@@ -39,31 +44,12 @@ Rectangle {
     Component {
         id: scenarioDelegate
 
-        Rectangle {
+        ScenarioMenuEntry {
+            text: scenarioText
             anchors.horizontalCenter: parent.horizontalCenter
-            width: entryText.paintedWidth + 10
-            height: entryText.paintedHeight + 10
-            color: "#000000"
-            border.color: "#a0a0a0"
-            border.width: 1
 
-            Text {
-                id: entryText
-                color: "#ffffff"
-                text: scenarioText
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                font.pointSize: 10
-                font.bold: true
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    entryClicked(scenarioText);
-                }
+            Component.onCompleted: {
+                entryClicked.connect(scenarioEntryClicked);
             }
         }
     }
@@ -77,6 +63,14 @@ Rectangle {
 
         model: scenarioModel
         delegate: scenarioDelegate
+    }
+
+    ScenarioMenuEntry {
+        id: quitButton
+        text: "Quit"
+        anchors.top: scenarios.bottom
+        anchors.topMargin: 20
+        anchors.horizontalCenter: scenarios.horizontalCenter
     }
 
     Loader {
