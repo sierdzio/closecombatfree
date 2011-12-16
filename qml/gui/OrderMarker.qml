@@ -5,8 +5,9 @@ Rectangle {
     property int centerY: height/2
     property color orderColor: "#bb3333"
     property int index: -1
+    property int number: -1
 
-    signal dragComplete(int index)
+    signal dragComplete(int index, int number)
 
     id: root
     width: 21
@@ -24,6 +25,18 @@ Rectangle {
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+
+        Text {
+            text: (number == -1)? "" : number + 1;
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            style: Text.Outline
+            anchors.fill: parent
+            anchors.topMargin: 1
+            anchors.leftMargin: 1
+            font.pointSize: 7
+            color: "#dddddd"
+        }
     }
 
     MouseArea {
@@ -37,7 +50,7 @@ Rectangle {
 
             onActiveChanged: {
                 if(drag.active == false) {
-                    dragComplete(index);
+                    dragComplete(index, number);
                 }
             }
         }

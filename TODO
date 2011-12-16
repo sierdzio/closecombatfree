@@ -3,7 +3,7 @@ Bugs & fixes:
  - add error checking to config system (check for invalidity of entries)
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
- - a lot of fixes and testing needed in the new per-unit order queues and waypointing system
+ - look for memory leaks in CcfConfig set of classes. There might be some
 
 New features:
  - add game menu
@@ -22,8 +22,6 @@ New features:
    adding curiously-shaped obstacles, like water etc.
 
  - add group following (not needed too much)
- - look for memory leaks in CcfConfig set of classes. There might be some
-
  - add IFDEFS for debug mode
  - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)

@@ -65,19 +65,18 @@ function cancelOrder () {
         xMoveAnimation.stop();
         yMoveAnimation.stop();
         rotationAnimation.stop();
-
         changeStatus("READY");
     }
 
     if ((firing == true) || (smoking == true))  {
         turretRotationAnimation.stop();
-
         smoking = false;
         firing = false;
         changeStatus("READY");
     }
 }
 
+// Puts a new order at the end of a queue.
 function queueOrder (orderName, newX, newY) {
     var component = Qt.createComponent("qrc:/core/units/Order.qml");
     var order;
@@ -88,16 +87,17 @@ function queueOrder (orderName, newX, newY) {
 
     var orderQueue = getOrderQueue();
     orderQueue.push(order);
-    console.log("Order queued: " + order.operation + " (" + order.x + ", " + order.y + ")"
-                + ". Length: " + orderQueue.length);
 }
 
+// Makes sure that queue in execution is not disturbed
+// by new calls.
 function processQueue () {
     if (currentOrder == -1) {
         continueQueue();
     }
 }
 
+// Processes next element in the queue.
 function continueQueue () {
     var orderQueue = getOrderQueue();
     var noOrdersLeft = true;
@@ -124,8 +124,6 @@ function continueQueue () {
                 firing = true;
             }
 
-            console.log("Issuing: " + order.operation + ", queueLength: " + orderQueue.length
-                        + ", queueIndex: " + i);
             currentOrder = i;
             order.performed = true;
             noOrdersLeft = false;
@@ -137,6 +135,5 @@ function continueQueue () {
     if (noOrdersLeft == true) {
         clearOrderQueue();
         currentOrder = -1;
-//        console.log("Whole queue finished.");
     }
 }

@@ -111,7 +111,8 @@ Rectangle {
                             }
 
                             map.item.setUnits(units.item.children);
-                            ScenarioLogic.createOrderMarkers();
+                            // Creates base for order markers.
+                            ScenarioLogic.initOrderMarkers();
                             roster.populateUnits(units.item.children);
                         }
                     }

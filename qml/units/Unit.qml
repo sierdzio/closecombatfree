@@ -104,7 +104,20 @@ Item {
         return OrderQueue.orderQueue;
     }
 
+    function modifyOrder(orderNumber, newX, newY) {
+        var order = OrderQueue.orderQueue[orderNumber];
+        order.x = newX;
+        order.y = newY;
+        order.performed = false;
+    }
+
     function clearOrderQueue() {
+        var orderQueue = OrderQueue.orderQueue;
+        for (var i = 0; i < orderQueue.length; i++) {
+            orderQueue[i].destroy();
+        }
+        currentOrder = -1;
+
         return OrderQueue.orderQueue = new Array();
     }
 
@@ -196,7 +209,7 @@ Item {
             if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
-//                actionFinished(unitIndex, __tempX, __tempY);
+                actionFinished(unitIndex, __tempX, __tempY);
                 queueOrderFinished();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
