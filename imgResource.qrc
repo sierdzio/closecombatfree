@@ -10,6 +10,7 @@
         <file alias="effects/smoke_fire3.png">img/effects/smoke_fire3.png</file>
         <file alias="effects/smoke_fire4.png">img/effects/smoke_fire4.png</file>
         <file alias="effects/smoke_fire5.png">img/effects/smoke_fire5.png</file>
+        <file alias="effects/vehicle_fire.png">img/effects/vehicle_fire.png</file>
         <file alias="effects/vehicle_smoke.png">img/effects/vehicle_smoke.png</file>
         <file alias="gui/defenceSphere_.png">img/gui/defenceSphere_.png</file>
         <file alias="gui/defenceSphere_black.png">img/gui/defenceSphere_black.png</file>

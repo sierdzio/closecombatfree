@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Qt.labs.particles 1.0
 import "qrc:/core/units"
 import "qrc:/core/units/tanks"
 
@@ -43,6 +44,32 @@ Tank {
         Soldier {
             name: "Gustav Store"
             role: "MG gunner"
+        }
+    ]
+
+    Particles {
+        id: destroyedFire
+
+        width: 1; height: 1
+        x: (centerX)
+        y: (centerY)
+        z: root.z + 4
+
+        emissionRate: 0; emissionVariance: 3
+        lifeSpan: 500; lifeSpanDeviation: 800
+        angle: 0; angleDeviation: 360;
+        velocity: 80; velocityDeviation: 50
+        source: "qrc:/img/effects/vehicle_fire.png"
+    }
+
+    states: [
+        State {
+            name: "destroyed"
+            extend: "damaged_base"
+            StateChangeScript {
+                name: "destroyed_script"
+                script: { destroyedFire.burst(300) }
+            }
         }
     ]
 }

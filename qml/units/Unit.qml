@@ -73,9 +73,13 @@ Item {
     signal continueQueue ()
     onContinueQueue: ActionLogic.continueQueue();
 
+    signal hit(string byWhat, real xWhere, real yWhere) // should be variant.
+    onHit: ActionLogic.hit(byWhat, xWhere, yWhere);
+
     id: root
     width: unitWidth
     height: unitHeight
+    state: "healthy"
 
     signal positionChanged(real x, real y, int index)
 
@@ -93,6 +97,15 @@ Item {
 
     Component.onCompleted: {
         queueOrderFinished.connect(continueQueue);
+
+        // Code that displays all info on unit's states:
+//        var result = "Unit: " + unitType + "\n";
+//        for (var i = 0; i < states.length; i++) {
+//            state = states[i].name;
+//            result += "State: " + states[i].name + ", temp text: " + temp + "\n";
+//        }
+//        result += "\n";
+//        console.log(result);
     }
 
     function changeStatus(newStatusMessage) {

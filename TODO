@@ -4,6 +4,8 @@ Bugs & fixes:
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
+ - there's a strange bug when the last order in queue is attack, but first one - move.
+   Info about "rotationAnimation" being unavailable
 
 New features:
  - add game menu
@@ -30,6 +32,7 @@ New features:
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
  +/- add FPS counter
+ - fragment resources
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
@@ -42,6 +45,9 @@ Big ideas for the future:
  - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
  - parametrize UI to allow easy modding and skins creation
  - add naval warfare
+ - redesign Scenarios so that they can be easily constructed in Qt Creator by modders
+ - add loadable resources (on runtime)
+ - add resource wrapper app for modders
 
 Done (this section gets occasionally cleaned):
  + add per-unit order queues (that is a big one, but might help a lot in the future)

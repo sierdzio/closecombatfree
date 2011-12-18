@@ -108,4 +108,33 @@ Unit {
         velocity: 40; velocityDeviation: 60
         source: "qrc:/img/effects/vehicle_smoke.png"
     }
+
+    Particles {
+        id: destroyed
+
+        width: 1; height: 1
+        x: (centerX)
+        y: (centerY)
+        z: root.z + 3
+
+        emissionRate: 0; emissionVariance: 3
+        lifeSpan: 300; lifeSpanDeviation: 800
+        angle: 0; angleDeviation: 360;
+        velocity: 400; velocityDeviation: 120
+        source: "qrc:/img/effects/vehicle_smoke.png"
+    }
+
+    // Implement transitions in children
+    states: [
+        State { name: "healthy_base" },
+        State { name: "damaged_base" },
+        State { name: "abandonned_base" },
+        State { name: "destroyed_base"
+            StateChangeScript {
+                name: "destroyed_baseScript"
+                script: { destroyed.burst(300) }
+            }
+        },
+        State { name: "long destroyed_base" }
+    ]
 }

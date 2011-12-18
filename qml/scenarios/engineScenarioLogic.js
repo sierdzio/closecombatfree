@@ -200,6 +200,12 @@ function firingActionFinished(index, targetX, targetY) {
 
     if (scheduledOperation == "Attack") {
         effect.animationString = "gun_fire";
+
+        // Check, whether a unit was hit.
+        var hitee = childAt(targetX, targetY);
+        if ((hitee != null) && (hitee.unitIndex != undefined)) {
+            hitee.hit(unit.unitType, targetX, targetY);
+        }
     }
     else if(scheduledOperation == "Smoke") {
         effect.animationString = "smoke_fire";

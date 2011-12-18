@@ -137,3 +137,16 @@ function continueQueue () {
         currentOrder = -1;
     }
 }
+
+// Calculates result of a hit
+function hit(byWhat, xWhere, yWhere) {
+    // For now, not much logic is in ... :)
+    cancelOrder();
+    // Strangely, both state chang calls invoke on base state only once!
+//    if (states.contains("destroyed"))
+        state = "destroyed";
+//    else
+        state = "destroyed_base";
+
+    console.log("Hit! By: " + byWhat + ", where: (" + xWhere + ", " + yWhere + ")");
+}

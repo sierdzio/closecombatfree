@@ -4,6 +4,9 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+18.12.2011:
+ - add prototype damage system
+
 16.12.2011:
  - fix units omitting first order in queue
  - add waypoint order markers + ton of fixes to waypointing and order queues
