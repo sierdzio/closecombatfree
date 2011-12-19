@@ -15,6 +15,16 @@ CcfMain::CcfMain(QWidget *parent) :
     connect(this->engine(), SIGNAL(quit()), this, SLOT(quit()));
 }
 
+bool CcfMain::isConfigMaximised()
+{
+    configuration->configMaximised();
+}
+
+void CcfMain::resizeView(QSize newSize)
+{
+    configuration->windowResized(newSize);
+}
+
 void CcfMain::quit()
 {
     configuration->saveConfig();

@@ -5,6 +5,7 @@ Rectangle {
     property string text: "o"
     property string additionalText: ""
     property color backgroundColor: "#bb333232"
+    property bool enabled: true
 
     signal entryClicked()
 
@@ -28,9 +29,14 @@ Rectangle {
         return (result + (radius));
     }
 
-//    height: getContentsHeight()
-//    height: mainText.paintedHeight + radius
-    height: 30
+    height: {
+        var objectsHeight = mainText.paintedHeight + additional.paintedHeight;
+        if (objectsHeight > 30) {
+            return objectsHeight;
+        } else {
+            return 30;
+        }
+    }
 
     function getContentsHeight() {
         var result = 0;
@@ -52,10 +58,9 @@ Rectangle {
         text: parent.text
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-//        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: 8//size/4
+        font.pointSize: 8
         font.bold: true
     }
 
@@ -67,8 +72,7 @@ Rectangle {
         anchors.top: mainText.bottom
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: 6//size/5
-//        font.bold: true
+        font.pointSize: 6
         visible: (parent.additionalText != "")? true : false;
     }
 
@@ -76,6 +80,7 @@ Rectangle {
         id: mouseAreaEntry
         acceptedButtons: Qt.LeftButton
         anchors.fill: parent
+        enabled: parent.enabled
 
         onClicked: {
             entryClicked();

@@ -15,8 +15,7 @@ Rectangle {
     color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
-//    width: 175
-//    height: 54
+
     width: {
         var textWidth = entryStatus.paintedWidth;
 

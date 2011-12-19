@@ -62,6 +62,7 @@ Rectangle {
             else
                 return parent.height;
         }
+
         contentWidth: map.width
         contentHeight: map.height
         boundsBehavior: Flickable.StopAtBounds
@@ -351,7 +352,18 @@ Rectangle {
             topMenu.zoomIn.connect(root.zoomIn);
             topMenu.zoomOut.connect(root.zoomOut);
             topMenu.closeScenario.connect(root.closeScenario);
+            topMenu.preferences.connect(togglePreferences);
         }
+    }
+
+    function togglePreferences() {
+        preferences.visible = !preferences.visible;
+    }
+
+    PreferencesMenu {
+        id: preferences
+        anchors.fill: parent
+        visible: false
     }
 
     Item {

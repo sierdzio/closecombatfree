@@ -6,6 +6,7 @@
         <file alias="OptionsMenu.qml">qml/gui/OptionsMenu.qml</file>
         <file alias="OrderMarker.qml">qml/gui/OrderMarker.qml</file>
         <file alias="PopUpArrow.qml">qml/gui/PopUpArrow.qml</file>
+        <file alias="PreferencesMenu.qml">qml/gui/PreferencesMenu.qml</file>
         <file alias="RosterMenu.qml">qml/gui/RosterMenu.qml</file>
         <file alias="RubberBand.qml">qml/gui/RubberBand.qml</file>
         <file alias="ScenarioMenuEntry.qml">qml/gui/ScenarioMenuEntry.qml</file>
@@ -17,6 +18,8 @@
         <file alias="ZoomBox.qml">qml/gui/ZoomBox.qml</file>
         <file alias="ZoomButton.qml">qml/gui/ZoomButton.qml</file>
         <file alias="menuEntries/ContextMenuEntry.qml">qml/gui/menuEntries/ContextMenuEntry.qml</file>
+        <file alias="menuEntries/PreferencesCheckboxEntry.qml">qml/gui/menuEntries/PreferencesCheckboxEntry.qml</file>
+        <file alias="menuEntries/PreferencesScreenSizeEntry.qml">qml/gui/menuEntries/PreferencesScreenSizeEntry.qml</file>
         <file alias="menuEntries/MenuEntry.qml">qml/gui/menuEntries/MenuEntry.qml</file>
         <file alias="menuEntries/RosterMenuEntry.qml">qml/gui/menuEntries/RosterMenuEntry.qml</file>
         <file alias="menuEntries/StatusMessageMenuEntry.qml">qml/gui/menuEntries/StatusMessageMenuEntry.qml</file>

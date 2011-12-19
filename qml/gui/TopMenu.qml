@@ -9,11 +9,11 @@ Item {
 
     signal pauseEntryClicked();
     signal optionsEntryClicked();
-    signal uiModeEntryClicked();
     signal zoomIn();
     signal zoomOut();
     signal terrainInfoEntryClicked();
     signal closeScenario();
+    signal preferences();
 
     onTerrainInfoEntryClicked: {
         toggleTerrainInfoMode();
@@ -27,15 +27,11 @@ Item {
         optionsMenu.toggleMenu();
     }
 
-    onUiModeEntryClicked: {
-        toggleUiMode();
-    }
-
     Component.onCompleted: {
         pauseEntry.entryClicked.connect(pauseEntryClicked);
         optionsEntry.entryClicked.connect(optionsEntryClicked);
+        optionsMenu.preferencesEntryClicked.connect(preferences);
         optionsMenu.closeEntryClicked.connect(closeScenario);
-        modeEntry.entryClicked.connect(uiModeEntryClicked);
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);
@@ -46,10 +42,10 @@ Item {
     height: getContentsHeight()
 
     function getContentsHeight() {
-        if (modeEntry.getContentsHeight() < popupSize)
+        if (terrainInfoEntry.getContentsHeight() < popupSize)
             return popupSize;
         else
-            return modeEntry.getContentsHeight();
+            return terrainInfoEntry.getContentsHeight();
     }
 
     function updateWidth() {
@@ -86,6 +82,21 @@ Item {
         Row {
             id: row
 
+            MenuEntry {
+                id: terrainInfoEntry
+                text: "Terrain info mode"
+                additionalText: "OFF"
+                height: root.height
+                // This is a serious and nasty hack, and should be
+                // redesigned.
+                opacity: (uiMode == "MOBILE")? 1 : 0.001;
+                enabled: (uiMode == "MOBILE")? true : false;
+
+                Behavior on opacity {
+                    NumberAnimation {}
+                }
+            }
+
             ZoomBox {
                 id: zoomBox
                 size: root.height
@@ -108,25 +119,6 @@ Item {
             MenuEntry {
                 id: pauseEntry
                 text: "Pause"
-                height: root.height
-            }
-
-            MenuEntry {
-                id: terrainInfoEntry
-                text: "Terrain info mode"
-                additionalText: "OFF"
-                height: root.height
-                opacity: (uiMode == "MOBILE")? 1: 0;
-
-                Behavior on opacity {
-                    NumberAnimation {}
-                }
-            }
-
-            MenuEntry {
-                id: modeEntry
-                text: "UI Mode"
-                additionalText: uiMode
                 height: root.height
             }
         }
@@ -162,7 +154,9 @@ Item {
 
             SequentialAnimation {
                 ScriptAction {
-                    script: menu.visible = true;
+                    script: {
+                        menu.visible = true;
+                    }
                 }
                 AnchorAnimation {
                     duration: 300
@@ -179,7 +173,9 @@ Item {
                     duration: 300
                 }
                 ScriptAction {
-                    script: menu.visible = false;
+                    script: {
+                        menu.visible = false;
+                    }
                 }
             }
         }

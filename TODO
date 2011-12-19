@@ -4,12 +4,12 @@ Bugs & fixes:
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
- - there's a strange bug when the last order in queue is attack, but first one - move.
-   Info about "rotationAnimation" being unavailable
+ - there's a strange bug when the last order in queue is attack, but first one - move
+ - make changes to preferences (in-game) influence game window's size in real-time
+ - fix game not maximising properly
 
 New features:
  - add game menu
- - preferences menu
  - add campaigns
  - add guns, infantry, trucks
  - add fuel and ammo caps for units
@@ -53,3 +53,4 @@ Done (this section gets occasionally cleaned):
  + add per-unit order queues (that is a big one, but might help a lot in the future)
  + add multiple-waypoint move orders
  + firing animation is performed when a unit on the move stops while being followed
+ + preferences menu

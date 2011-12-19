@@ -85,7 +85,10 @@ OTHER_FILES += \
     scenarios/Scenario_tst3.qml \
     qml/units/Order.qml \
     qml/units/tempJs.js \
-    qml/gui/ScenarioMenuEntry.qml
+    qml/gui/ScenarioMenuEntry.qml \
+    qml/gui/PreferencesMenu.qml \
+    qml/gui/menuEntries/PreferencesCheckboxEntry.qml \
+    qml/gui/menuEntries/PreferencesScreenSizeEntry.qml
 
 RESOURCES += \
     coreResource.qrc \

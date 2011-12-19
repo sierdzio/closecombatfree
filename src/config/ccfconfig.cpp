@@ -13,6 +13,8 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
+        runtimeWidth = configuration->value("width").first.toInt();
+        runtimeHeight = configuration->value("height").first.toInt();
     } else {
         enterErrorState(parser->errorMessage());
     }
@@ -41,14 +43,12 @@ void CcfConfig::toggleUiMode()
 
     if (mode == "desktop") {
         mode = "mobile";
-        configuration->remove("uimode");
-        configuration->insert("uimode", QPair<QString, bool>(mode, true));
+        replaceElement("uimode", mode);
         statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
-        configuration->remove("uimode");
-        configuration->insert("uimode", QPair<QString, bool>(mode, true));
+        replaceElement("uimode", mode);
         statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
@@ -71,16 +71,31 @@ void CcfConfig::toggleTerrainInfoMode()
 
 int CcfConfig::configWindowWidth()
 {
-    return configuration->value("width").first.toInt();
+    return runtimeWidth;
+//    return configuration->value("width").first.toInt();
 }
 
 int CcfConfig::configWindowHeight()
 {
-    return configuration->value("height").first.toInt();
+    return runtimeHeight;
+//    return configuration->value("height").first.toInt();
 }
 
 bool CcfConfig::saveConfig()
 {
+    // Put screen size checks here!
+    if (configuration->value("remember dimensions on exit").first == "true") {
+        if (configuration->value("height").first.toInt() != runtimeHeight) {
+            replaceElement("height", QString::number(runtimeHeight));
+            qDebug() << "Height change saved in C++!";
+        }
+        if (configuration->value("width").first.toInt() != runtimeWidth) {
+            replaceElement("width", QString::number(runtimeWidth));
+            qDebug() << "Width change saved in C++!";
+        }
+    }
+
+
     saver = new CcfConfigSaver(configuration, parser->configIndexes(),
                                filePath, this);
     saver->updateConfigFile();
@@ -109,95 +124,44 @@ int CcfConfig::findQtKey(QChar character)
 {
     int result = -1;
 
-    QChar temp = character.toLower();
-
-    if (temp == 'a') {
-        result = Qt::Key_A;
-    } else if (temp == 'b') {
-        result = Qt::Key_B;
-    } else if (temp == 'c') {
-        result = Qt::Key_C;
-    } else if (temp == 'd') {
-        result = Qt::Key_D;
-    } else if (temp == 'e') {
-        result = Qt::Key_E;
-    } else if (temp == 'f') {
-        result = Qt::Key_F;
-    } else if (temp == 'g') {
-        result = Qt::Key_G;
-    } else if (temp == 'h') {
-        result = Qt::Key_H;
-    } else if (temp == 'i') {
-        result = Qt::Key_I;
-    } else if (temp == 'j') {
-        result = Qt::Key_J;
-    } else if (temp == 'k') {
-        result = Qt::Key_K;
-    } else if (temp == 'l') {
-        result = Qt::Key_L;
-    } else if (temp == 'm') {
-        result = Qt::Key_M;
-    } else if (temp == 'n') {
-        result = Qt::Key_N;
-    } else if (temp == 'o') {
-        result = Qt::Key_O;
-    } else if (temp == 'p') {
-        result = Qt::Key_P;
-    } else if (temp == 'q') {
-        result = Qt::Key_Q;
-    } else if (temp == 'r') {
-        result = Qt::Key_R;
-    } else if (temp == 's') {
-        result = Qt::Key_S;
-    } else if (temp == 't') {
-        result = Qt::Key_T;
-    } else if (temp == 'u') {
-        result = Qt::Key_U;
-    } else if (temp == 'w') {
-        result = Qt::Key_W;
-    } else if (temp == 'x') {
-        result = Qt::Key_X;
-    } else if (temp == 'y') {
-        result = Qt::Key_Y;
-    } else if (temp == 'z') {
-        result = Qt::Key_Z;
-    } else if (temp == '[') {
-        result = Qt::Key_BracketLeft;
-    } else if (temp == ']') {
-        result = Qt::Key_BracketRight;
-    } else if (temp == ';') {
-        result = Qt::Key_Semicolon;
-    } else if (temp == '\'') {
-        result = Qt::Key_Apostrophe;
-    } else if (temp == ',') {
-        result = Qt::Key_Comma;
-    } else if (temp == '.') {
-        result = Qt::Key_Period;
-    } else if (temp == '/') {
-        result = Qt::Key_Slash;
-    } else if (temp == '\\') {
-        result = Qt::Key_Backslash;
-    } else if (temp == '-') {
-        result = Qt::Key_Minus;
-    } else if (temp == '=') {
-        result = Qt::Key_Equal;
-    }
+    QKeySequence key(character);
+    result = key[0];
 
     return result;
+}
+
+bool CcfConfig::stringToBool(const QString &stringToConvert)
+{
+    if (stringToConvert == "true") {
+        return true;
+    } else if (stringToConvert == "false") {
+        return false;
+    }
+}
+
+QString CcfConfig::boolToString(bool boolToConvert)
+{
+    if (boolToConvert == true) {
+        return "true";
+    } else if (boolToConvert == false) {
+        return "false";
+    }
+}
+
+void CcfConfig::replaceElement(const QString &elementToReplace, const QString &newValue)
+{
+    configuration->remove(elementToReplace);
+    configuration->insert(elementToReplace, QPair<QString, bool>(newValue, true));
 }
 
 void CcfConfig::windowResized(QSize newSize)
 {
     if (configWindowWidth() != newSize.width()) {
-        configuration->remove("width");
-        configuration->insert("width", QPair<QString, bool>(QString::number(newSize.width()), true));
-        emit configWindowWidthChanged();
+        setConfigWindowWidth(newSize.width());
     }
 
     if (configWindowHeight() != newSize.height()) {
-        configuration->remove("height");
-        configuration->insert("height", QPair<QString, bool>(QString::number(newSize.height()), true));
-        emit configWindowHeightChanged();
+        setConfigWindowHeight(newSize.height());
     }
 }
 
@@ -208,8 +172,7 @@ void CcfConfig::statusMsg(const QString &message)
 
 void CcfConfig::statusMessage(const QString &message)
 {
-//    qDebug() << this->sender();
-    emit newStatusMessage(message, this->sender()); // or QObject::sender()
+    emit newStatusMessage(message, this->sender());
 }
 
 void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
@@ -217,11 +180,8 @@ void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
     // Hack for QRC support
     QString nUrl = url;
     nUrl.remove(0, 3);
-//    qDebug() << nUrl;
     QImage tempImage(nUrl);
     terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
-//    qDebug() << "Got terrain info in C++. Height:" << terrainImage->width()
-//             << ". Height:" << terrainImage->height();
 }
 
 int CcfConfig::terrainPixelInfo(int x, int y)
@@ -238,4 +198,75 @@ QStringList CcfConfig::scenariosList()
 QString CcfConfig::scenarioPath(int index)
 {
     return m_scenariosList.at(index);
+}
+
+void CcfConfig::setUiMode(const QString &newMode)
+{
+    if (newMode.toLower() != configuration->value("uimode").first) {
+        if (newMode.toLower() == "desktop") {
+            replaceElement("uimode", "desktop");
+            statusMessage("Ui mode changed to: desktop");
+            emit uiModeChanged();
+        } else if (newMode.toLower() == "mobile") {
+            replaceElement("uimode", "mobile");
+            statusMessage("Ui mode changed to: mobile");
+            emit uiModeChanged();
+        }
+    }
+}
+
+void CcfConfig::setConfigWindowHeight(int height)
+{
+    runtimeHeight = height;
+    emit configWindowWidthChanged();
+}
+
+void CcfConfig::setConfigWindowWidth(int width)
+{
+    runtimeWidth = width;
+    emit configWindowHeightChanged();
+}
+
+void CcfConfig::forceSetConfigWindowWidth(int width)
+{
+    replaceElement("width", QString::number(width));
+}
+
+void CcfConfig::forceSetConfigWindowHeight(int height)
+{
+    replaceElement("height", QString::number(height));
+}
+
+bool CcfConfig::configMaximised()
+{
+    QString result = configuration->value("maximised").first;
+    return stringToBool(result);
+}
+
+void CcfConfig::setConfigMaximised(bool newValue)
+{
+    QString current = configuration->value("maximised").first;
+    bool currentBool = stringToBool(current);
+
+    if (currentBool != newValue) {
+        replaceElement("maximised", boolToString(newValue));
+        emit configMaximisedChanged();
+    }
+}
+
+bool CcfConfig::configRememberDimensions()
+{
+    QString result = configuration->value("remember dimensions on exit").first;
+    return stringToBool(result);
+}
+
+void CcfConfig::setConfigRememberDimensions(bool newValue)
+{
+    QString current = configuration->value("remember dimensions on exit").first;
+    bool currentBool = stringToBool(current);
+
+    if (currentBool != newValue) {
+        replaceElement("remember dimensions on exit", boolToString(newValue));
+        emit configRememberDimensionsChanged();
+    }
 }

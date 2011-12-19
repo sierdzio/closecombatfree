@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QApplication>
 #include <QWidget>
+#include <QSize>
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -15,6 +16,8 @@ class CcfMain : public QDeclarativeView, public CcfError
     Q_OBJECT
 public:
     explicit CcfMain(QWidget *parent = 0);
+    bool isConfigMaximised();
+    void resizeView(QSize newSize);
 
 public slots:
     void quit();

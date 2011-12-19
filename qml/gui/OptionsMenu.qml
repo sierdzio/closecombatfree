@@ -8,7 +8,6 @@ Item {
     property int size: preferencesEntry.width //30
 
     signal pauseEntryClicked();
-    signal optionsEntryClicked();
     signal uiModeEntryClicked();
     signal zoomIn();
     signal zoomOut();
@@ -19,9 +18,6 @@ Item {
     }
 
     signal preferencesEntryClicked()
-    onPreferencesEntryClicked: {
-        console.log("Preferences.");
-    }
 
     signal saveGameEntryClicked()
     onSaveGameEntryClicked: {
