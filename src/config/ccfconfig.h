@@ -61,7 +61,7 @@ public:
     // This would work better if done with Qt MVC!
     Q_INVOKABLE QStringList configShortcutNamesList();
     Q_INVOKABLE QStringList configShortcutValuesList();
-    Q_INVOKABLE void setConfigShortcut(QString option, QString value);
+    Q_INVOKABLE void setConfigShortcut(const QString &option, const QString &value);
     ////
     QString uiMode();
     QString terrainInfoMode();
@@ -92,7 +92,7 @@ private:
     bool stringToBool(const QString &stringToConvert);
     QString boolToString(bool boolToConvert);
     void replaceElement(const QString &elementToReplace, const QString &newValue);
-    QMap<QString, QString> getValidShortcuts();
+    void parseValidKeyboardShortcuts();
 
     int runtimeWidth, runtimeHeight;
 //    bool maximised, rememberDimensions;
@@ -104,6 +104,7 @@ private:
     CcfConfigParser *parser;
     CcfConfigSaver *saver;
     QMap<QString, QPair<QString, bool> > *configuration;
+    QMap<QString, QString> keyboardShortcuts;
 };
 
 #endif // CCFCONFIG_H

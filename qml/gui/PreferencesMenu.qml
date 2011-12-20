@@ -39,6 +39,14 @@ Rectangle {
         configWindowWidth = screenSize.getWidth();
         configWindowHeight = screenSize.getHeight();
 
+        // Keyboard shortcuts
+        console.log(shortcuts.count);
+        for (var i = 0; i < shortcuts.count; i++) {
+            shortcuts.currentIndex = i;
+            setConfigShortcut(shortcuts.currentItem.text, shortcuts.currentItem.getText());
+            console.log("Saving: " + shortcuts.currentItem.text + ", key: " + shortcuts.currentItem.getText());
+        }
+
         toggleVisibility();
     }
 
@@ -108,7 +116,7 @@ Rectangle {
         }
     }
 
-    //// Shortcuts area
+    // Shortcuts area
     ListModel {
         id: shortcutModel
     }
@@ -121,6 +129,7 @@ Rectangle {
 
     GridView {
         id: shortcuts
+        interactive: false
 
         anchors.top: parent.top
         anchors.left: entries.right
@@ -129,15 +138,14 @@ Rectangle {
         anchors.bottom: buttons.top
 
         width: entries.width
-        contentWidth: width
-        cellHeight: screenSize.height
+        cellHeight: screenSize.height + 5
         cellWidth: entries.width
 
         model: shortcutModel
         delegate: shortcutDelegate
     }
-    //// End of shortcuts area
 
+    // Bottom buttons
     Row {
         id: buttons
 

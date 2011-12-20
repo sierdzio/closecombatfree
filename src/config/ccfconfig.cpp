@@ -15,6 +15,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
         configuration = parser->configuration();
         runtimeWidth = configuration->value("width").first.toInt();
         runtimeHeight = configuration->value("height").first.toInt();
+        parseValidKeyboardShortcuts();
     } else {
         enterErrorState(parser->errorMessage());
     }
@@ -154,22 +155,18 @@ void CcfConfig::replaceElement(const QString &elementToReplace, const QString &n
     configuration->insert(elementToReplace, QPair<QString, bool>(newValue, true));
 }
 
-QMap<QString, QString> CcfConfig::getValidShortcuts()
+void CcfConfig::parseValidKeyboardShortcuts()
 {
-    QMap<QString, QString> result;
-
     foreach (QString key, configuration->keys()) {
         // This will probably not work well.
         // Some additional parsing is needed.
         QKeySequence valueToCheck = configuration->value(key).first;
         QString value = valueToCheck.toString().toLower();
         if (value != "") {
-            result.insert(key, value);
+            keyboardShortcuts.insert(key, value);
             qDebug() << "Inserting key:" << key << ", value: " << value;
         }
     }
-
-    return result;
 }
 
 void CcfConfig::windowResized(QSize newSize)
@@ -291,14 +288,21 @@ void CcfConfig::setConfigRememberDimensions(bool newValue)
 
 QStringList CcfConfig::configShortcutNamesList()
 {
-    return getValidShortcuts().keys();
+    return keyboardShortcuts.keys();
 }
 
 QStringList CcfConfig::configShortcutValuesList()
 {
-    return getValidShortcuts().values();
+    return keyboardShortcuts.values();
 }
 
-void CcfConfig::setConfigShortcut(QString option, QString value)
+void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
 {
+    QString lowOption = option.toLower();
+    if (keyboardShortcuts.contains(lowOption)
+            && (value != keyboardShortcuts.value(lowOption))
+            && (QKeySequence(value).toString() != "")) {
+        qDebug() << "Key found. Updating";
+        replaceElement(lowOption, value);
+    }
 }
