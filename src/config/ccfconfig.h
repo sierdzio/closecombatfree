@@ -57,6 +57,11 @@ public:
     Q_INVOKABLE void setConfigMaximised(bool newValue);
     Q_INVOKABLE bool configRememberDimensions();
     Q_INVOKABLE void setConfigRememberDimensions(bool newValue);
+    // Shortcuts list loading and saving (in-game preferences menu)
+    // This would work better if done with Qt MVC!
+    Q_INVOKABLE QStringList configShortcutNamesList();
+    Q_INVOKABLE QStringList configShortcutValuesList();
+    Q_INVOKABLE void setConfigShortcut(QString option, QString value);
     ////
     QString uiMode();
     QString terrainInfoMode();
@@ -87,6 +92,7 @@ private:
     bool stringToBool(const QString &stringToConvert);
     QString boolToString(bool boolToConvert);
     void replaceElement(const QString &elementToReplace, const QString &newValue);
+    QMap<QString, QString> getValidShortcuts();
 
     int runtimeWidth, runtimeHeight;
 //    bool maximised, rememberDimensions;

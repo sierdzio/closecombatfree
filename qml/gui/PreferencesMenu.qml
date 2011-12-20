@@ -18,6 +18,7 @@ Rectangle {
         saveButton.entryClicked.connect(savePreferences);
 
         fillPreferencesData();
+        populateShortcuts();
     }
 
     function toggleVisibility() {
@@ -39,6 +40,19 @@ Rectangle {
         configWindowHeight = screenSize.getHeight();
 
         toggleVisibility();
+    }
+
+    function populateShortcuts() {
+        var shortcutsList = configShortcutNamesList();
+        var valuesList = configShortcutValuesList();
+
+        for (var i = 0; i < shortcutsList.length; i++) {
+            var currentShortcut = shortcutsList[i];
+            shortcutModel.append({"label": currentShortcut});
+            shortcuts.currentIndex = i;
+            shortcuts.currentItem.setText(valuesList[i]);
+            shortcuts.currentItem.width = shortcuts.width;
+        }
     }
 
     MouseArea {
@@ -93,6 +107,36 @@ Rectangle {
             enabled: !rememberDimensions.checked
         }
     }
+
+    //// Shortcuts area
+    ListModel {
+        id: shortcutModel
+    }
+
+    Component {
+        id: shortcutDelegate
+
+        PreferencesSingleTextInputEntry { text: label }
+    }
+
+    GridView {
+        id: shortcuts
+
+        anchors.top: parent.top
+        anchors.left: entries.right
+        anchors.topMargin: parent.radius
+        anchors.leftMargin: parent.radius
+        anchors.bottom: buttons.top
+
+        width: entries.width
+        contentWidth: width
+        cellHeight: screenSize.height
+        cellWidth: entries.width
+
+        model: shortcutModel
+        delegate: shortcutDelegate
+    }
+    //// End of shortcuts area
 
     Row {
         id: buttons

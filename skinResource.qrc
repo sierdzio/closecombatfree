@@ -20,6 +20,7 @@
         <file alias="menuEntries/ContextMenuEntry.qml">qml/gui/menuEntries/ContextMenuEntry.qml</file>
         <file alias="menuEntries/PreferencesCheckboxEntry.qml">qml/gui/menuEntries/PreferencesCheckboxEntry.qml</file>
         <file alias="menuEntries/PreferencesScreenSizeEntry.qml">qml/gui/menuEntries/PreferencesScreenSizeEntry.qml</file>
+        <file alias="menuEntries/PreferencesSingleTextInputEntry.qml">qml/gui/menuEntries/PreferencesSingleTextInputEntry.qml</file>
         <file alias="menuEntries/MenuEntry.qml">qml/gui/menuEntries/MenuEntry.qml</file>
         <file alias="menuEntries/RosterMenuEntry.qml">qml/gui/menuEntries/RosterMenuEntry.qml</file>
         <file alias="menuEntries/StatusMessageMenuEntry.qml">qml/gui/menuEntries/StatusMessageMenuEntry.qml</file>

@@ -88,7 +88,8 @@ OTHER_FILES += \
     qml/gui/ScenarioMenuEntry.qml \
     qml/gui/PreferencesMenu.qml \
     qml/gui/menuEntries/PreferencesCheckboxEntry.qml \
-    qml/gui/menuEntries/PreferencesScreenSizeEntry.qml
+    qml/gui/menuEntries/PreferencesScreenSizeEntry.qml \
+    qml/gui/menuEntries/PreferencesSingleTextInputEntry.qml
 
 RESOURCES += \
     coreResource.qrc \

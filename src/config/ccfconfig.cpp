@@ -154,6 +154,24 @@ void CcfConfig::replaceElement(const QString &elementToReplace, const QString &n
     configuration->insert(elementToReplace, QPair<QString, bool>(newValue, true));
 }
 
+QMap<QString, QString> CcfConfig::getValidShortcuts()
+{
+    QMap<QString, QString> result;
+
+    foreach (QString key, configuration->keys()) {
+        // This will probably not work well.
+        // Some additional parsing is needed.
+        QKeySequence valueToCheck = configuration->value(key).first;
+        QString value = valueToCheck.toString().toLower();
+        if (value != "") {
+            result.insert(key, value);
+            qDebug() << "Inserting key:" << key << ", value: " << value;
+        }
+    }
+
+    return result;
+}
+
 void CcfConfig::windowResized(QSize newSize)
 {
     if (configWindowWidth() != newSize.width()) {
@@ -269,4 +287,18 @@ void CcfConfig::setConfigRememberDimensions(bool newValue)
         replaceElement("remember dimensions on exit", boolToString(newValue));
         emit configRememberDimensionsChanged();
     }
+}
+
+QStringList CcfConfig::configShortcutNamesList()
+{
+    return getValidShortcuts().keys();
+}
+
+QStringList CcfConfig::configShortcutValuesList()
+{
+    return getValidShortcuts().values();
+}
+
+void CcfConfig::setConfigShortcut(QString option, QString value)
+{
 }
