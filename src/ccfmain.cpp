@@ -12,12 +12,15 @@ CcfMain::CcfMain(QWidget *parent) :
     viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
     viewport()->setAttribute(Qt::WA_NoSystemBackground);
     connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
-    connect(this->engine(), SIGNAL(quit()), this, SLOT(quit()));
+    connect(configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
+    connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
+    connect(configuration, SIGNAL(configMaximise()), this, SLOT(showMaximized()));
+    connect(configuration, SIGNAL(configDemaximise()), this, SLOT(showNormal()));
 }
 
 bool CcfMain::isConfigMaximised()
 {
-    configuration->configMaximised();
+    return configuration->configMaximised();
 }
 
 void CcfMain::resizeView(QSize newSize)
@@ -29,11 +32,16 @@ void CcfMain::quit()
 {
     configuration->saveConfig();
     if (configuration->isErrorState()) {
-        qDebug() << configuration->errorMessage();
+        qWarning(configuration->errorMessage().toLocal8Bit());
     }
 
     delete configuration;
     qApp->quit();
+}
+
+void CcfMain::forceViewportResize(int width, int height)
+{
+    setGeometry(x(), y(), width, height);
 }
 
 bool CcfMain::initConfiguration()

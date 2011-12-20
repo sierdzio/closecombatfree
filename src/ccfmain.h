@@ -8,7 +8,7 @@
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
-#include <QDebug>
+//#include <QDebug>
 #include "config/ccfconfig.h"
 
 class CcfMain : public QDeclarativeView, public CcfError
@@ -21,6 +21,7 @@ public:
 
 public slots:
     void quit();
+    void forceViewportResize(int width, int height);
 
 private:
     bool initConfiguration();

@@ -11,7 +11,7 @@
 #include <QPoint>
 #include <QSize>
 #include <QColor>
-#include <QDebug>
+//#include <QDebug>
 ////
 #include <QStringList>
 #include <QDir>
@@ -84,7 +84,10 @@ signals:
                      QObject *sender);
     ////
     void configMaximisedChanged();
+    void configMaximise();
+    void configDemaximise();
     void configRememberDimensionsChanged();
+    void sizeModifiedInGame(int width, int height);
     ////
 
 private:
@@ -95,7 +98,6 @@ private:
     void parseValidKeyboardShortcuts();
 
     int runtimeWidth, runtimeHeight;
-//    bool maximised, rememberDimensions;
 
     QStringList m_scenariosList;
     QString m_terrainInfoMode;

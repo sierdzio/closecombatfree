@@ -9,6 +9,9 @@ Some more history can be devised from git sources (although even there, the thin
  - rename CHANGELOG to CHANGELOG_DETAILED
  - add CHANGELOG (for tagged releases only)
  - mark as v0.0.3
+ - fixed window maximisation
+ - fixed changind window dimensions from within the game (in preferences)
+ - allow dimensions to be changed in preferences even when "Remember dimensions" entry is on
 
 19.12.2011:
  - add PreferencesMenu with some basic options

@@ -34,17 +34,19 @@ Rectangle {
 
     function savePreferences() {
         uiMode = uimode.modeToShow;
-        configMaximised = maximised.checked;
+        configMaximised = maximised.checked;        
         configRememberDimensions = rememberDimensions.checked;
-        configWindowWidth = screenSize.getWidth();
-        configWindowHeight = screenSize.getHeight();
+        if ((configWindowWidth != screenSize.getWidth())
+                || (configWindowHeight != screenSize.getHeight())) {
+            configWindowWidth = screenSize.getWidth();
+            configWindowHeight = screenSize.getHeight();
+            sizeModifiedInGame(screenSize.getWidth(), screenSize.getHeight());
+        }
 
         // Keyboard shortcuts
-        console.log(shortcuts.count);
         for (var i = 0; i < shortcuts.count; i++) {
             shortcuts.currentIndex = i;
             setConfigShortcut(shortcuts.currentItem.text, shortcuts.currentItem.getText());
-            console.log("Saving: " + shortcuts.currentItem.text + ", key: " + shortcuts.currentItem.getText());
         }
 
         toggleVisibility();
@@ -112,7 +114,6 @@ Rectangle {
 
         PreferencesScreenSizeEntry {
             id: screenSize
-            enabled: !rememberDimensions.checked
         }
     }
 

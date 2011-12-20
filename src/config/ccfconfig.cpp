@@ -1,5 +1,4 @@
 #include "ccfconfig.h"
-//#include <QDebug>
 
 CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath)
@@ -73,13 +72,11 @@ void CcfConfig::toggleTerrainInfoMode()
 int CcfConfig::configWindowWidth()
 {
     return runtimeWidth;
-//    return configuration->value("width").first.toInt();
 }
 
 int CcfConfig::configWindowHeight()
 {
     return runtimeHeight;
-//    return configuration->value("height").first.toInt();
 }
 
 bool CcfConfig::saveConfig()
@@ -88,11 +85,9 @@ bool CcfConfig::saveConfig()
     if (configuration->value("remember dimensions on exit").first == "true") {
         if (configuration->value("height").first.toInt() != runtimeHeight) {
             replaceElement("height", QString::number(runtimeHeight));
-            qDebug() << "Height change saved in C++!";
         }
         if (configuration->value("width").first.toInt() != runtimeWidth) {
             replaceElement("width", QString::number(runtimeWidth));
-            qDebug() << "Width change saved in C++!";
         }
     }
 
@@ -138,6 +133,7 @@ bool CcfConfig::stringToBool(const QString &stringToConvert)
     } else if (stringToConvert == "false") {
         return false;
     }
+    return false;
 }
 
 QString CcfConfig::boolToString(bool boolToConvert)
@@ -147,6 +143,7 @@ QString CcfConfig::boolToString(bool boolToConvert)
     } else if (boolToConvert == false) {
         return "false";
     }
+    return QString();
 }
 
 void CcfConfig::replaceElement(const QString &elementToReplace, const QString &newValue)
@@ -164,19 +161,19 @@ void CcfConfig::parseValidKeyboardShortcuts()
         QString value = valueToCheck.toString().toLower();
         if (value != "") {
             keyboardShortcuts.insert(key, value);
-            qDebug() << "Inserting key:" << key << ", value: " << value;
         }
     }
 }
 
 void CcfConfig::windowResized(QSize newSize)
 {
-    if (configWindowWidth() != newSize.width()) {
-        setConfigWindowWidth(newSize.width());
-    }
+    if (configWindowWidth() != newSize.width()
+            || configWindowHeight() != newSize.height()) {
 
-    if (configWindowHeight() != newSize.height()) {
-        setConfigWindowHeight(newSize.height());
+        runtimeHeight = newSize.height();
+        runtimeWidth = newSize.width();
+        emit configWindowWidthChanged();
+        emit configWindowHeightChanged();
     }
 }
 
@@ -266,6 +263,10 @@ void CcfConfig::setConfigMaximised(bool newValue)
     if (currentBool != newValue) {
         replaceElement("maximised", boolToString(newValue));
         emit configMaximisedChanged();
+        if (newValue)
+            emit configMaximise();
+        else
+            emit configDemaximise();
     }
 }
 
@@ -302,7 +303,6 @@ void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
     if (keyboardShortcuts.contains(lowOption)
             && (value != keyboardShortcuts.value(lowOption))
             && (QKeySequence(value).toString() != "")) {
-        qDebug() << "Key found. Updating";
         replaceElement(lowOption, value);
     }
 }

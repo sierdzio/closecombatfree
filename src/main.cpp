@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QDebug>
 #include "ccfmain.h"
 
 int main(int argc, char *argv[])
@@ -15,7 +14,7 @@ int main(int argc, char *argv[])
         }
         return a.exec();
     } else {
-        qDebug() << viewer->errorMessage();
+        qFatal(viewer->errorMessage().toLocal8Bit());
         return 1;
     }
 }

@@ -15,8 +15,6 @@ New features:
  - add fuel and ammo caps for units
  - add in-game chat
  - add deployment phase before the battle
- - add unit destruction and health
- - add C++ proxy class, that will organise QML-C++ communication
  - add "tree clusters" or "forests" that automatically generate
    some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
