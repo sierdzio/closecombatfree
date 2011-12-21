@@ -306,3 +306,70 @@ void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
         replaceElement(lowOption, value);
     }
 }
+
+void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QString &mapFile, const QString &saveFileName)
+{
+    // As a first attempt, I will generate the whole file myself.
+    // A better approach for the future would be to copy and modify
+    // a real scenario file, OR create a QML element like ScenarioLoader
+    // which would have "map", "units" properties.
+
+    // Init. Read template.
+    QFile templateFile(":/core/config/saveFileTemplate.txt");
+    if (!templateFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qFatal("Template file could not be read! Cannot continue, bailing out.");
+        return;
+    }
+
+    // File numbers incrementation should go here, or at least overwrite warnings!
+    QFile saveFile(saveFileName);
+    if (!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        enterErrorState("Could not save the file: " + saveFileName);
+        return;
+    }
+
+    QString fileContent = templateFile.readAll();
+
+    // Fill template with given data.
+    fileContent.replace("%customImports%", "");
+    fileContent.replace("%mapFile%", mapFile);
+
+    // Save units. Hope this will work. If not - convert units list to string list in JS.
+    QString units;
+    QString tab = "    ";
+    for (int i = 0; i < unitsList.count(); i++) {
+        // In release code, this needs to include order queue,
+        // soldier states, damages etc.
+        QObject *unit = unitsList.at(i);
+        units += tab + unit->property("unitFileName").toString() + " {\n" //unit->metaObject()->superClass()->className()
+                + tab + tab + "objectName: \"" + unit->objectName() + "\"\n"
+                + tab + tab + "x: " + unit->property("x").toString() + "\n"
+                + tab + tab + "y: " + unit->property("y").toString() + "\n"
+                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
+                + tab + "}\n";
+        /*
+    Tank_tst3 {
+        objectName: "tank4"
+        x: 750
+        y: 400
+        rotation: 0
+
+        Component.onCompleted: {
+            queueOrder ("Move", 700, 300);
+            queueOrder ("Move", 500, 250);
+            queueOrder ("Attack", 50, 50);
+        }
+    }
+          */
+    }
+    qDebug(units.toLocal8Bit()); // For debugging
+    fileContent.replace("%units%", units);
+
+    QTextStream out(&saveFile);
+    out << fileContent;
+    saveFile.close();
+}
+
+QString CcfConfig::loadGame()
+{
+}

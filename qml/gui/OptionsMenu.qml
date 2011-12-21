@@ -20,9 +20,9 @@ Item {
     signal preferencesEntryClicked()
 
     signal saveGameEntryClicked()
-    onSaveGameEntryClicked: {
-        console.log("Save game.");
-    }
+//    onSaveGameEntryClicked: {
+//        console.log("Save game.");
+//    }
 
     signal loadGameEntryClicked()
     onLoadGameEntryClicked: {

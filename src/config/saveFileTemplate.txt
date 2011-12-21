@@ -1,0 +1,12 @@
+import QtQuick 1.1
+import "qrc:/units/tanks/tests"
+import "qrc:/core/units"
+%customImports%
+
+Item {
+    property string mapFile: "%mapFile%"
+
+    id: root
+
+%units%
+}

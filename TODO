@@ -26,6 +26,8 @@ New features:
  - adjust parameters to be more human-readable
  +/- add FPS counter
  - fragment resources
+ - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings)
+ - make use of Local Storage (essential for NaCl and mobile devices)
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles

@@ -11,14 +11,16 @@
 #include <QPoint>
 #include <QSize>
 #include <QColor>
-//#include <QDebug>
-////
+#include <QDebug>
 #include <QStringList>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QKeyEvent>
+//#include <QKeyEvent>
 #include <QKeySequence>
+////
+#include <QTextStream>
+#include <QDeclarativeListReference>
 ////
 #include "../ccferror.h"
 #include "ccfconfigparser.h"
@@ -45,7 +47,7 @@ public:
     Q_INVOKABLE int terrainPixelInfo(int x, int y);    
     Q_INVOKABLE QStringList scenariosList();
     Q_INVOKABLE QString scenarioPath(int index);
-    ////
+
     Q_INVOKABLE void setUiMode(const QString &newMode);
     Q_INVOKABLE void setConfigWindowWidth(int width);
     Q_INVOKABLE void setConfigWindowHeight(int height);
@@ -62,6 +64,13 @@ public:
     Q_INVOKABLE QStringList configShortcutNamesList();
     Q_INVOKABLE QStringList configShortcutValuesList();
     Q_INVOKABLE void setConfigShortcut(const QString &option, const QString &value);
+    ////
+    // Additional ideas:
+    //  - might add map damages info
+    Q_INVOKABLE void saveGame(const QDeclarativeListReference &unitsList,
+                              const QString &mapFile,
+                              const QString &saveFileName = "saves/save1.qml");
+    Q_INVOKABLE QString loadGame();
     ////
     QString uiMode();
     QString terrainInfoMode();

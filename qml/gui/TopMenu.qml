@@ -14,6 +14,7 @@ Item {
     signal terrainInfoEntryClicked();
     signal closeScenario();
     signal preferences();
+    signal save();
 
     onTerrainInfoEntryClicked: {
         toggleTerrainInfoMode();
@@ -32,6 +33,7 @@ Item {
         optionsEntry.entryClicked.connect(optionsEntryClicked);
         optionsMenu.preferencesEntryClicked.connect(preferences);
         optionsMenu.closeEntryClicked.connect(closeScenario);
+        optionsMenu.saveGameEntryClicked.connect(save);
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);

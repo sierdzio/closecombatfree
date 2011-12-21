@@ -41,6 +41,7 @@ Unit {
     onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
 
     id: root
+    unitFileName: "Tank"
     unitType: "Generic tank"
     unitLogo: "qrc:/img/units/generic_unit_logo.png"
     rotationSpeed: 1

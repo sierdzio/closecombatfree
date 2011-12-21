@@ -3,6 +3,8 @@ import "qrc:/core/units"
 import "qrc:/core/units/tanks"
 
 Tank {
+    id: root
+    unitFileName: "Tank_tst2"
     unitType: "Test tank 2"
     unitLogo: "qrc:/img/units/tanks/generic/tank_tst2_logo.png"
     hullColor: "#505050"

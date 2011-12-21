@@ -6,6 +6,9 @@ import "qrc:/core/engineActionLogic.js" as ActionLogic
 import "qrc:/tempJs.js" as OrderQueue
 
 Item {
+    // Sadly, this is needed for file saving:
+    property string unitFileName: "Unit"
+
     property string unitType: "Generic unit"
     property string unitLogo: "qrc:/img/units/generic_unit_logo.png"
     property string unitStatus: "READY"

@@ -5,6 +5,7 @@ import "qrc:/core/units/tanks"
 
 Tank {
     id: root
+    unitFileName: "Tank_tst3"
     unitType: "Test tank 3"
     unitLogo: "qrc:/img/units/tanks/generic/tank_tst3_logo.png"
     rotationSpeed: 55

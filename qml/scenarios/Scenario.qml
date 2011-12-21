@@ -39,7 +39,13 @@ Rectangle {
 
         configWindowWidthChanged.connect(updateWidth);
         updateWidth();
+        topMenu.save.connect(saveGameToFile);
         }
+    }
+
+    // This is a temp name to avoid name clash.
+    function saveGameToFile() {
+        saveGame(units.item.children, units.item.mapFile);
     }
 
     Keys.onPressed: {
