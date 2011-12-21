@@ -34,7 +34,7 @@ Rectangle {
 
     function savePreferences() {
         uiMode = uimode.modeToShow;
-        configMaximised = maximised.checked;        
+        configMaximised = maximised.checked;
         configRememberDimensions = rememberDimensions.checked;
         if ((configWindowWidth != screenSize.getWidth())
                 || (configWindowHeight != screenSize.getHeight())) {
@@ -70,80 +70,92 @@ Rectangle {
         anchors.fill: parent
     }
 
-    Column {
-        id: entries
-
-        spacing: 5
+    Flickable {
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: buttons.top
         anchors.topMargin: parent.radius
         anchors.leftMargin: parent.radius
-        anchors.bottom: buttons.top
-        width: screenSize.width
+        contentWidth: entries.width + shortcuts.width + 5
+        contentHeight: shortcuts.contentHeight + 2
+        clip: true
+        interactive: ((contentWidth > width) || (contentHeight > height))? true: false;
 
-        PreferencesCheckboxEntry {
-            property string modeToShow: uiMode
+        Column {
+            id: entries
 
-            id: uimode
-            text: "Ui mode: " + modeToShow;
-            width: parent.width
+            spacing: 5
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.topMargin: 2
+            anchors.bottom: parent.bottom
+            width: screenSize.width
 
-            onCheckedChanged: {
-                var newUiMode = ((checked)? "DESKTOP" : "MOBILE");
-                modeToShow = newUiMode;
+            PreferencesCheckboxEntry {
+                property string modeToShow: uiMode
+
+                id: uimode
+                text: "Ui mode: " + modeToShow;
+                width: parent.width
+
+                onCheckedChanged: {
+                    var newUiMode = ((checked)? "DESKTOP" : "MOBILE");
+                    modeToShow = newUiMode;
+                }
+            }
+
+            PreferencesCheckboxEntry {
+                id: maximised
+                text: "Maximised"
+                width: parent.width
+            }
+
+            PreferencesCheckboxEntry {
+                id: rememberDimensions
+                text: "Remember window dimensions on exit"
+                width: parent.width
+                enabled: !maximised.checked
+
+                onEnabledChanged: {
+                    if(!enabled)
+                        checked = true;
+                }
+            }
+
+            PreferencesScreenSizeEntry {
+                id: screenSize
             }
         }
 
-        PreferencesCheckboxEntry {
-            id: maximised
-            text: "Maximised"
-            width: parent.width
+        // Shortcuts area
+        ListModel {
+            id: shortcutModel
         }
 
-        PreferencesCheckboxEntry {
-            id: rememberDimensions
-            text: "Remember window dimensions on exit"
-            width: parent.width
-            enabled: !maximised.checked
+        Component {
+            id: shortcutDelegate
 
-            onEnabledChanged: {
-                if(!enabled)
-                    checked = true;
-            }
+            PreferencesSingleTextInputEntry { text: label }
         }
 
-        PreferencesScreenSizeEntry {
-            id: screenSize
+        GridView {
+            id: shortcuts
+            interactive: false
+
+            anchors.top: parent.top
+            anchors.left: entries.right
+            anchors.topMargin: 2
+            anchors.leftMargin: 5
+            anchors.bottom: parent.bottom
+
+            width: entries.width
+            cellHeight: screenSize.height + 5
+            cellWidth: entries.width
+
+            model: shortcutModel
+            delegate: shortcutDelegate
         }
-    }
-
-    // Shortcuts area
-    ListModel {
-        id: shortcutModel
-    }
-
-    Component {
-        id: shortcutDelegate
-
-        PreferencesSingleTextInputEntry { text: label }
-    }
-
-    GridView {
-        id: shortcuts
-        interactive: false
-
-        anchors.top: parent.top
-        anchors.left: entries.right
-        anchors.topMargin: parent.radius
-        anchors.leftMargin: parent.radius
-        anchors.bottom: buttons.top
-
-        width: entries.width
-        cellHeight: screenSize.height + 5
-        cellWidth: entries.width
-
-        model: shortcutModel
-        delegate: shortcutDelegate
     }
 
     // Bottom buttons

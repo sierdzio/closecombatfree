@@ -4,13 +4,17 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+21.12.2011:
+ - make PreferencesMenu flickable when window is small
+ - 
+
 20.12.2011:
  - add keyboard shortcuts to preferences menu
  - rename CHANGELOG to CHANGELOG_DETAILED
  - add CHANGELOG (for tagged releases only)
  - mark as v0.0.3
- - fixed window maximisation
- - fixed changind window dimensions from within the game (in preferences)
+ - fix window maximisation
+ - fix changing window dimensions from within the game (in preferences)
  - allow dimensions to be changed in preferences even when "Remember dimensions" entry is on
 
 19.12.2011:

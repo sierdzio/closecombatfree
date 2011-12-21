@@ -1,12 +1,10 @@
 Bugs & fixes:
  - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
- - add error checking to config system (check for invalidity of entries)
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
- - there's a strange bug when the last order in queue is attack, but first one - move
- - make changes to preferences (in-game) influence game window's size in real-time
- - fix game not maximising properly
+ - there is some strange order mixing when performing group queues
+ - simplify signal propagation by using QML Connections element
 
 New features:
  - add game menu
@@ -20,10 +18,7 @@ New features:
  - add Role enum to props. Might be good to create a specialised C++ class for that
  - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
-
  - add group following (not needed too much)
- - add IFDEFS for debug mode
- - make scripts (especially engineActionLogic) less dependant on QML variables and objects
  - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
