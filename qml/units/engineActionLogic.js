@@ -107,6 +107,8 @@ function continueQueue () {
         if (order.performed == true) {
             continue;
         } else {
+            currentOrder = i;
+
             if (order.operation == "Move") {
                 changeStatus("MOVING");
                 performMovement(order.x, order.y, 1);
@@ -124,7 +126,6 @@ function continueQueue () {
                 firing = true;
             }
 
-            currentOrder = i;
             order.performed = true;
             noOrdersLeft = false;
             // Ensures that unit performs one order at a time
@@ -134,7 +135,6 @@ function continueQueue () {
 
     if (noOrdersLeft == true) {
         clearOrderQueue();
-        currentOrder = -1;
     }
 }
 

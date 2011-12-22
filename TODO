@@ -4,7 +4,6 @@ Bugs & fixes:
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
  - there is some strange order mixing when performing group queues
- - simplify signal propagation by using QML Connections element
 
 New features:
  - add game menu
@@ -49,3 +48,4 @@ Done (this section gets occasionally cleaned):
  + firing animation is performed when a unit on the move stops while being followed
  + preferences menu
  + add game saving and loading
+ + get effects to work in loaded save games 

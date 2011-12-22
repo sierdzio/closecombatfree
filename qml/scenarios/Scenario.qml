@@ -125,6 +125,7 @@ Rectangle {
                             for (var i = 0; i < units.item.children.length; i++) {
                                 units.item.children[i].unitIndex = i;
                                 togglePause.connect(units.item.children[i].togglePause);
+                                units.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
                             }
 
                             map.item.setUnits(units.item.children);

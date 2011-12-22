@@ -33,7 +33,7 @@ Rectangle {
         scenarios.width = scenarioModel.count * scenarios.currentItem.width;
         scenarios.currentIndex = -1;
         quitButton.entryClicked.connect(quitEntryClicked);
-        entries.entryClicked.connect(loadNewSavedGame);
+        entries.entryClicked.connect(loadGame);
     }
 
     function closeScenario() {
@@ -43,12 +43,6 @@ Rectangle {
     function loadGame(path) {
         __tempReloadPath = "saves/" + path;
         root.state = "loadingSavedGame";
-    }
-
-    function loadNewSavedGame(path) {
-        scenario.scenarioFile = "saves/" + path;
-        scenario.source = "qrc:/core/scenarios/Scenario.qml";
-        root.state = "opened";
     }
 
     ListModel {

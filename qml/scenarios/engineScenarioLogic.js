@@ -138,7 +138,6 @@ function issueWaypointOrder(child, x, y) {
     child.changeStatus("READY");
 
     child.queueOrder(operation, x, y);
-    child.actionFinished.connect(actionFinished);
 
     setOrderMarker(child.unitIndex, child.getOrderQueue().length - 1, operation, x, y);
 }
@@ -164,59 +163,64 @@ function issueActionOrder(child, x, y) {
     } else if (operation == "Smoke") {
         child.smokeTo(x, y);
     }
-    child.actionFinished.connect(actionFinished);
 
     setOrderMarker(child.unitIndex, child.getOrderQueue().length - 1, operation, x, y);
 }
 
 function actionFinished(index, targetX, targetY) {
-    var scheduledOperation = units.item.children[index].scheduledOperation;
-    if ((scheduledOperation != "Move")
-            && (scheduledOperation != "Move fast")
-            && (scheduledOperation != "Sneak")
-            && (scheduledOperation != "Follow")) {
-        firingActionFinished(index, targetX, targetY);
-    }
+    var unit = units.item.children[index];
+    if (unit.currentOrder != -1) {
+        var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
+        if ((scheduledOperation != "Move")
+                && (scheduledOperation != "Move fast")
+                && (scheduledOperation != "Sneak")
+                && (scheduledOperation != "Follow")) {
+            firingActionFinished(index, targetX, targetY);
+        }
 
-    calculateOrderMarkerVisibility(index);
+        calculateOrderMarkerVisibility(index);
+    }
 }
 
 function firingActionFinished(index, targetX, targetY) {
-    // This component renders in-game effects (not all,
-    // but for example muzzle flashes, explosions etc.)
-    var component = Qt.createComponent("Effect.qml");
-
-    // A good place to include terrain recognition
-    // for landing shells
     var unit = units.item.children[index];
-    var effect;
 
-    if (component.status == Component.Ready) {
-        effect = component.createObject(itemContainer);
-    }
+    if (unit.currentOrder != -1) {
+        // This component renders in-game effects (not all,
+        // but for example muzzle flashes, explosions etc.)
+        var component = Qt.createComponent("qrc:/core/scenarios/Effect.qml");
 
-    effectsContainer.push(effect);
-    var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
+        // A good place to include terrain recognition
+        // for landing shells
+        var effect;
 
-    if (scheduledOperation == "Attack") {
-        effect.animationString = "gun_fire";
-
-        // Check, whether a unit was hit.
-        var hitee = childAt(targetX, targetY);
-        if ((hitee != null) && (hitee.unitIndex != undefined)) {
-            hitee.hit(unit.unitType, targetX, targetY);
+        if (component.status == Component.Ready) {
+            effect = component.createObject(itemContainer);
         }
-    }
-    else if(scheduledOperation == "Smoke") {
-        effect.animationString = "smoke_fire";
-    }
 
-    effect.x = targetX;
-    effect.y = targetY;
-    effect.running = true;
+        effectsContainer.push(effect);
+        var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
 
-    if (effectsTimer.running == false)
-        effectsTimer.start();
+        if (scheduledOperation == "Attack") {
+            effect.animationString = "gun_fire";
+
+            // Check, whether a unit was hit.
+            var hitee = childAt(targetX, targetY);
+            if ((hitee != null) && (hitee.unitIndex != undefined)) {
+                hitee.hit(unit.unitType, targetX, targetY);
+            }
+        }
+        else if(scheduledOperation == "Smoke") {
+            effect.animationString = "smoke_fire";
+        }
+
+        effect.x = targetX;
+        effect.y = targetY;
+        effect.running = true;
+
+        if (effectsTimer.running == false)
+            effectsTimer.start();
+    }
 }
 
 

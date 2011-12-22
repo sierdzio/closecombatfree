@@ -2,6 +2,7 @@
 Changes since v0.0.3 ():
  - add game saving and loading
  - add possibility to load non-qrc files
+ - numerous bug fixes
 
 2011.12.20 - v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336).
 Changes since v0.0.2 (3ff08fe849905f067877b86a81d26502a39336ba): 

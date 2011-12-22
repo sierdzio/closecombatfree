@@ -9,6 +9,8 @@ Some more history can be devised from git sources (although even there, the thin
  - add loading screen
  - add CcfMain::disableQrc()
  - fix and update game saving
+ - get effects to work in loaded save games 
+ - fix fire animation showing up on unit following
 
 21.12.2011:
  - make PreferencesMenu flickable when window is small
