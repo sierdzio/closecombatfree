@@ -1,10 +1,15 @@
 #include "ccfmain.h"
+#include <QDebug>
 
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
     initConfiguration();
     rootContext()->setContextObject(configuration);
+    QString pwd = qApp->applicationDirPath() + "/";
+    rootContext()->setContextProperty("PWD", pwd);
+//    engine()->addImportPath("saves/");
+//    qDebug() << engine()->importPathList();
 
     setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -16,6 +21,7 @@ CcfMain::CcfMain(QWidget *parent) :
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
     connect(configuration, SIGNAL(configMaximise()), this, SLOT(showMaximized()));
     connect(configuration, SIGNAL(configDemaximise()), this, SLOT(showNormal()));
+    connect(configuration, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
 }
 
 bool CcfMain::isConfigMaximised()
@@ -42,6 +48,12 @@ void CcfMain::quit()
 void CcfMain::forceViewportResize(int width, int height)
 {
     setGeometry(x(), y(), width, height);
+}
+
+void CcfMain::disableQrc(QObject *object)
+{
+    QDeclarativeContext *context = engine()->contextForObject(object);
+    context->setBaseUrl(QUrl::fromLocalFile(""));
 }
 
 bool CcfMain::initConfiguration()

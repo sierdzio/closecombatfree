@@ -22,6 +22,7 @@ public:
 public slots:
     void quit();
     void forceViewportResize(int width, int height);
+    void disableQrc(QObject *object);
 
 private:
     bool initConfiguration();

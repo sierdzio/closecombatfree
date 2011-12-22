@@ -15,6 +15,7 @@ Rectangle {
     property color menuBackgroundColor: "#7e8c24"
 
     signal closeScenario()
+    signal loadScenario(string path)
 
     signal togglePause ()
     onTogglePause: {
@@ -40,6 +41,7 @@ Rectangle {
         configWindowWidthChanged.connect(updateWidth);
         updateWidth();
         topMenu.save.connect(saveGameToFile);
+        loadGame.gameEntryClicked.connect(loadScenario);
         }
     }
 
@@ -96,7 +98,6 @@ Rectangle {
 
                 onLoaded: {
                     if (scenarioFile != "") {
-
                         height = map.item.height;
                         width = map.item.width;
                     }
@@ -106,7 +107,16 @@ Rectangle {
                     id: units
                     anchors.fill: parent
                     z: map.z + 1
-                    source: (scenarioFile != "")? scenarioFile : ""
+                    source: {
+                        if (scenarioFile == "") {
+                            return "";
+                        } else if ((scenarioFile.charAt(0) != 'q') && (scenarioFile.charAt(0) != ':')) {
+                            disableQrcUse(units);
+                            return scenarioFile;
+                        } else {
+                            return scenarioFile;
+                        }
+                    }
 
                     onLoaded: {
                         if (scenarioFile != "") {
@@ -359,6 +369,7 @@ Rectangle {
             topMenu.zoomOut.connect(root.zoomOut);
             topMenu.closeScenario.connect(root.closeScenario);
             topMenu.preferences.connect(togglePreferences);
+            topMenu.load.connect(loadGame.toggleVisibility);
         }
     }
 
@@ -370,6 +381,16 @@ Rectangle {
         id: preferences
         anchors.fill: parent
         visible: false
+    }
+
+    LoadGameMenu {
+        id: loadGame
+        anchors.fill: parent
+        visible: false
+
+//        onGameEntryClicked: {
+//            parent.loadScenario(gamePath);
+//        }
     }
 
     Item {

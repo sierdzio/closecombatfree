@@ -6,6 +6,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     configuration = new QMap<QString, QPair<QString, bool> >();
     parser = new CcfConfigParser(filePath, this);
     m_terrainInfoMode = "OFF";
+    tab = "    ";
 
     QDir scenarioDir(":/scenarios");
     m_scenariosList = scenarioDir.entryList();
@@ -336,17 +337,18 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
 
     // Save units. Hope this will work. If not - convert units list to string list in JS.
     QString units;
-    QString tab = "    ";
     for (int i = 0; i < unitsList.count(); i++) {
         // In release code, this needs to include order queue,
         // soldier states, damages etc.
         QObject *unit = unitsList.at(i);
-        units += tab + unit->property("unitFileName").toString() + " {\n" //unit->metaObject()->superClass()->className()
+        units += tab + unit->property("unitFileName").toString() + " {\n"
                 + tab + tab + "objectName: \"" + unit->objectName() + "\"\n"
                 + tab + tab + "x: " + unit->property("x").toString() + "\n"
                 + tab + tab + "y: " + unit->property("y").toString() + "\n"
-                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
-                + tab + "}\n";
+                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n";
+        units += addSavePropertyIfExists(unit, "turretRotation");
+        units += addSavePropertyIfExists(unit, "hullColor", true);
+        units += tab + "}\n";
         /*
     Tank_tst3 {
         objectName: "tank4"
@@ -362,7 +364,6 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
     }
           */
     }
-    qDebug(units.toLocal8Bit()); // For debugging
     fileContent.replace("%units%", units);
 
     QTextStream out(&saveFile);
@@ -370,6 +371,33 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
     saveFile.close();
 }
 
-QString CcfConfig::loadGame()
+//QString CcfConfig::loadGame()
+//{
+//}
+
+QStringList CcfConfig::savedGamesList()
 {
+    QDir saveDir("saves/");
+    return saveDir.entryList();
+}
+
+void CcfConfig::disableQrcUse(QObject *object)
+{
+    emit disableQrc(object);
+}
+
+QString CcfConfig::addSavePropertyIfExists(const QObject *object, const QString &propertyName, bool useQuotes)
+{
+    QString result;
+    QByteArray ba = propertyName.toLocal8Bit();
+    if (object->metaObject()->indexOfProperty(ba.data()) != -1) {
+        result = tab + tab + propertyName + ": ";
+        if (useQuotes)
+            result += "\"";
+        result += object->property(ba.data()).toString();
+        if (useQuotes)
+            result += "\"";
+        result += "\n";
+    }
+    return result;
 }

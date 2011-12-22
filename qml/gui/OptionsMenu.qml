@@ -25,9 +25,9 @@ Item {
 //    }
 
     signal loadGameEntryClicked()
-    onLoadGameEntryClicked: {
-        console.log("Load game.");
-    }
+//    onLoadGameEntryClicked: {
+//        console.log("Load game.");
+//    }
 
     signal closeEntryClicked()
 

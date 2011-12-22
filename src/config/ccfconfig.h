@@ -70,7 +70,9 @@ public:
     Q_INVOKABLE void saveGame(const QDeclarativeListReference &unitsList,
                               const QString &mapFile,
                               const QString &saveFileName = "saves/save1.qml");
-    Q_INVOKABLE QString loadGame();
+//    Q_INVOKABLE QString loadGame();
+    Q_INVOKABLE QStringList savedGamesList();
+    Q_INVOKABLE void disableQrcUse(QObject *object);
     ////
     QString uiMode();
     QString terrainInfoMode();
@@ -97,6 +99,7 @@ signals:
     void configDemaximise();
     void configRememberDimensionsChanged();
     void sizeModifiedInGame(int width, int height);
+    void disableQrc(QObject *object);
     ////
 
 private:
@@ -105,12 +108,14 @@ private:
     QString boolToString(bool boolToConvert);
     void replaceElement(const QString &elementToReplace, const QString &newValue);
     void parseValidKeyboardShortcuts();
+    QString addSavePropertyIfExists(const QObject *object, const QString &propertyName, bool useQuotes = false);
 
     int runtimeWidth, runtimeHeight;
 
     QStringList m_scenariosList;
     QString m_terrainInfoMode;
     QString filePath;
+    QString tab;
     QImage *terrainImage;
     CcfConfigParser *parser;
     CcfConfigSaver *saver;

@@ -3,6 +3,7 @@
         <file alias="BottomMenu.qml">qml/gui/BottomMenu.qml</file>
         <file alias="ContextMenu.qml">qml/gui/ContextMenu.qml</file>
         <file alias="DefenceSphere.qml">qml/gui/DefenceSphere.qml</file>
+        <file alias="LoadGameMenu.qml">qml/gui/LoadGameMenu.qml</file>
         <file alias="OptionsMenu.qml">qml/gui/OptionsMenu.qml</file>
         <file alias="OrderMarker.qml">qml/gui/OrderMarker.qml</file>
         <file alias="PopUpArrow.qml">qml/gui/PopUpArrow.qml</file>
@@ -18,6 +19,7 @@
         <file alias="ZoomBox.qml">qml/gui/ZoomBox.qml</file>
         <file alias="ZoomButton.qml">qml/gui/ZoomButton.qml</file>
         <file alias="menuEntries/ContextMenuEntry.qml">qml/gui/menuEntries/ContextMenuEntry.qml</file>
+        <file alias="menuEntries/LoadGameEntries.qml">qml/gui/menuEntries/LoadGameEntries.qml</file>
         <file alias="menuEntries/PreferencesCheckboxEntry.qml">qml/gui/menuEntries/PreferencesCheckboxEntry.qml</file>
         <file alias="menuEntries/PreferencesScreenSizeEntry.qml">qml/gui/menuEntries/PreferencesScreenSizeEntry.qml</file>
         <file alias="menuEntries/PreferencesSingleTextInputEntry.qml">qml/gui/menuEntries/PreferencesSingleTextInputEntry.qml</file>

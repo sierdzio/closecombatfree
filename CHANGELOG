@@ -1,21 +1,25 @@
+201x.xx.xx - v0.0.4 ()
+Changes since v0.0.3 ():
+ - add game saving and loading
+
 2011.12.20 - v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336).
 Changes since v0.0.2 (3ff08fe849905f067877b86a81d26502a39336ba): 
- - Add PreferencesMenu
- - Add prototype damage system
- - Make orders be cancelled ONLY on "Stop" oder
- - Add scription support (example script is in Scenario_tst2)
- - Add waypoint creation (with waypoint order markers)
- - Add order queues
- - Make group numbers always remain vertical
- - Add option to close scenario to OptionsMenu
- - Add pinch zooming, and zoom centering
- - Rebuild zooming so that gameArea's dimensions stay the same
- - Add dynamic ScenarioMenu
- - Remove all trial engines
- - Add Top- and BottomMenu flickability
- - Experimental, modular QRC implementation for CCF
- - Reorganise files into a new structure more appropriate for modding
- - Make QML use list and variant properties instead of JS Arrays
- - Add terrainInfoMode for mobile mode
+ - add PreferencesMenu
+ - add prototype damage system
+ - make orders be cancelled ONLY on "Stop" oder
+ - add scription support (example script is in Scenario_tst2)
+ - add waypoint creation (with waypoint order markers)
+ - add order queues
+ - make group numbers always remain vertical
+ - add option to close scenario to OptionsMenu
+ - add pinch zooming, and zoom centering
+ - rebuild zooming so that gameArea's dimensions stay the same
+ - add dynamic ScenarioMenu
+ - remove all trial engines
+ - add Top- and BottomMenu flickability
+ - experimental, modular QRC implementation for CCF
+ - reorganise files into a new structure more appropriate for modding
+ - make QML use list and variant properties instead of JS Arrays
+ - add terrainInfoMode for mobile mode
  - UI adjustments for better use and looks
- - Parametrized menus, so that they change size accordingly to local conditions
+ - parametrized menus, so that they change size accordingly to local conditions

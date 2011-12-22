@@ -2,6 +2,8 @@ import QtQuick 1.1
 import "qrc:/skin"
 
 Rectangle {
+    property string __tempReloadPath: ""
+
     signal scenarioEntryClicked (string scenarioPath)
     onScenarioEntryClicked: {
         scenario.scenarioFile = "qrc:/scenarios/" + scenarioPath;
@@ -14,8 +16,6 @@ Rectangle {
     }
 
     id: root
-//    width: 100
-//    height: 100
     state: "closed"
     color: "#5f5f5f"
 
@@ -85,8 +85,14 @@ Rectangle {
         onLoaded: {
             item.scenarioFile = scenarioFile;
             item.closeScenario.connect(root.closeScenario);
+            item.loadScenario.connect(root.loadGame)
             focus = true;
         }
+    }
+
+    function loadGame(path) {
+        __tempReloadPath = "saves/" + path;
+        root.state = "loadingSavedGame";
     }
 
     states: [
@@ -104,12 +110,19 @@ Rectangle {
                 target: scenario
                 anchors.left: root.left
             }
+        },
+
+        State {
+            name: "loadingSavedGame"
+            AnchorChanges {
+                target: scenario
+                anchors.left: root.right
+            }
         }
     ]
 
     transitions: [
         Transition {
-            from: "closed"
             to: "opened"
 
             SequentialAnimation {
@@ -137,6 +150,26 @@ Rectangle {
                         scenario.scenarioFile = "";
                         scenario.source = "";
                         scenario.visible = false;
+                    }
+                }
+            }
+        },
+
+        Transition {
+            to: "loadingSavedGame"
+
+            SequentialAnimation {
+                AnchorAnimation {
+                    duration: 500
+                }
+                ScriptAction {
+                    script: {
+                        scenario.scenarioFile = "";
+                        scenario.source = "";
+                        scenario.visible = false;
+                        scenario.scenarioFile = __tempReloadPath;
+                        scenario.source = "qrc:/core/scenarios/Scenario.qml";
+                        root.state = "opened";
                     }
                 }
             }

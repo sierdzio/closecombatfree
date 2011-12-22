@@ -90,7 +90,9 @@ OTHER_FILES += \
     qml/gui/menuEntries/PreferencesCheckboxEntry.qml \
     qml/gui/menuEntries/PreferencesScreenSizeEntry.qml \
     qml/gui/menuEntries/PreferencesSingleTextInputEntry.qml \
-    src/config/saveFileTemplate.txt
+    src/config/saveFileTemplate.txt \
+    qml/gui/LoadGameMenu.qml \
+    qml/gui/menuEntries/LoadGameEntries.qml
 
 RESOURCES += \
     coreResource.qrc \
