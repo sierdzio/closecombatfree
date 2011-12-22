@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "qrc:/skin"
+import "qrc:/skin/menuEntries"
 
 Rectangle {
     property string __tempReloadPath: ""
@@ -29,12 +30,25 @@ Rectangle {
 
         scenarios.currentIndex = 0;
         scenarios.height = scenarioModel.count * scenarios.currentItem.height;
+        scenarios.width = scenarioModel.count * scenarios.currentItem.width;
         scenarios.currentIndex = -1;
         quitButton.entryClicked.connect(quitEntryClicked);
+        entries.entryClicked.connect(loadNewSavedGame);
     }
 
     function closeScenario() {
         root.state = "closed";
+    }
+
+    function loadGame(path) {
+        __tempReloadPath = "saves/" + path;
+        root.state = "loadingSavedGame";
+    }
+
+    function loadNewSavedGame(path) {
+        scenario.scenarioFile = "saves/" + path;
+        scenario.source = "qrc:/core/scenarios/Scenario.qml";
+        root.state = "opened";
     }
 
     ListModel {
@@ -54,23 +68,31 @@ Rectangle {
         }
     }
 
-    ListView {
-        id: scenarios
-        height: 50
-        spacing: 2
+    Row {
+        id: entryBox
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        model: scenarioModel
-        delegate: scenarioDelegate
+        ListView {
+            id: scenarios
+            height: 50
+            spacing: 2
+
+            model: scenarioModel
+            delegate: scenarioDelegate
+        }
+
+        LoadGameEntries {
+            id: entries
+        }
     }
 
     ScenarioMenuEntry {
         id: quitButton
         text: "Quit"
-        anchors.top: scenarios.bottom
+        anchors.top: entryBox.bottom
         anchors.topMargin: 20
-        anchors.horizontalCenter: scenarios.horizontalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Loader {
@@ -88,11 +110,6 @@ Rectangle {
             item.loadScenario.connect(root.loadGame)
             focus = true;
         }
-    }
-
-    function loadGame(path) {
-        __tempReloadPath = "saves/" + path;
-        root.state = "loadingSavedGame";
     }
 
     states: [

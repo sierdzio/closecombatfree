@@ -7,6 +7,8 @@ Some more history can be devised from git sources (although even there, the thin
 22.12.2011:
  - add game loading
  - add loading screen
+ - add CcfMain::disableQrc()
+ - fix and update game saving
 
 21.12.2011:
  - make PreferencesMenu flickable when window is small

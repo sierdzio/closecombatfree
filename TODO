@@ -19,7 +19,6 @@ New features:
  - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
  - add group following (not needed too much)
- - add game saving and loading (maybe as a dynamically generated QML scenario/ campaign file?)
  - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
  - parametrize all unit actions (animation durations, acceleration etc.)
@@ -49,3 +48,4 @@ Done (this section gets occasionally cleaned):
  + add multiple-waypoint move orders
  + firing animation is performed when a unit on the move stops while being followed
  + preferences menu
+ + add game saving and loading

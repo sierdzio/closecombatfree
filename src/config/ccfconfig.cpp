@@ -377,8 +377,8 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
 
 QStringList CcfConfig::savedGamesList()
 {
-    QDir saveDir("saves/");
-    return saveDir.entryList();
+    QDir saveDir("saves");
+    return saveDir.entryList(QDir::Files);
 }
 
 void CcfConfig::disableQrcUse(QObject *object)
