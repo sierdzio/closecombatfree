@@ -33,6 +33,7 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: 2
         spacing: 2
+//        clip: true
 
             model: messageModel
 

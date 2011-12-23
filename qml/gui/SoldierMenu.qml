@@ -84,7 +84,6 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: 2
         interactive: false
-//        flickableDirection: Flickable.VerticalFlick
 
         anchors.top: parent.top
         anchors.left: parent.left

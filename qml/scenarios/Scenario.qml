@@ -296,6 +296,10 @@ Rectangle {
                     backgroundColor: menuBackgroundColor
                     z: roster.z - 1
 
+                    MouseArea {
+                        anchors.fill: parent
+                    }
+
                     Behavior on opacity { NumberAnimation {} }
                 }
 
