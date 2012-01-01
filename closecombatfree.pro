@@ -92,7 +92,8 @@ OTHER_FILES += \
     qml/gui/menuEntries/PreferencesSingleTextInputEntry.qml \
     src/config/saveFileTemplate.txt \
     qml/gui/LoadGameMenu.qml \
-    qml/gui/menuEntries/LoadGameEntries.qml
+    qml/gui/menuEntries/LoadGameEntries.qml \
+    qml/maps/props/PropCluster.qml
 
 RESOURCES += \
     coreResource.qrc \

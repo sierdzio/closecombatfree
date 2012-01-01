@@ -4,6 +4,10 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+01.01.2012:
+ - add PropCluster element. It can be used on maps to generate random clusters of objects
+   (e.g. a bunch of trees)
+
 22.12.2011:
  - add game loading
  - add loading screen

@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "qrc:/core/maps"
+import "qrc:/core/maps/props"
 import "props"
 
 Map {
@@ -25,6 +26,13 @@ Map {
     Tree_tst {
         x: 280
         y: 30
+    }
+
+    PropCluster {
+        x: 500
+        y: 30
+        numberOfObjects: 10
+        baseElement: "qrc:/maps/props/Tree_tst.qml"
     }
 
     Rectangle {
