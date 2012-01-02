@@ -311,7 +311,7 @@ void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
 void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QString &mapFile, const QString &saveFileName)
 {
     // As a first attempt, I will generate the whole file myself.
-    // A better approach for the future would be to copy and modify
+    // A better approach for the future might be to copy and modify
     // a real scenario file, OR create a QML element like ScenarioLoader
     // which would have "map", "units" properties.
 
@@ -349,20 +349,6 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
         units += addSavePropertyIfExists(unit, "turretRotation");
         units += addSavePropertyIfExists(unit, "hullColor", true);
         units += tab + "}\n";
-        /*
-    Tank_tst3 {
-        objectName: "tank4"
-        x: 750
-        y: 400
-        rotation: 0
-
-        Component.onCompleted: {
-            queueOrder ("Move", 700, 300);
-            queueOrder ("Move", 500, 250);
-            queueOrder ("Attack", 50, 50);
-        }
-    }
-          */
     }
     fileContent.replace("%units%", units);
 

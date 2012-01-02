@@ -1,6 +1,6 @@
 import QtQuick 1.1
 
-Rectangle {
+Item {
     property int numberOfObjects: 0
     property string baseElement: ""
 //    property bool allowVariation: false // this could be good to create
@@ -10,11 +10,19 @@ Rectangle {
     width: 300
     height: 262
 
-    color: "#00000000"
-    border.width: 1
-    border.color: "#ffff00"
+    function getProps() {
+        var result = new Array();
+
+        for (var i = 0; i < repeater.count; ++i) {
+            result.push(repeater.itemAt(i));
+//            console.log(result[i].item.objectName + ", " + result[i].x + ", " + result[i].y);
+        }
+
+        return result;
+    }
 
     Repeater {
+        id: repeater
         anchors.fill: parent
         model: numberOfObjects
 
