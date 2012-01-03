@@ -38,8 +38,7 @@ function targetDistance(originX, originY, targetX, targetY) {
     if (targetX == originX) {
         result = Math.abs(originY - targetY);
         return result;
-    }
-    else if (targetY == originY) {
+    } else if (targetY == originY) {
         result = Math.abs(originX - targetX);
         return result;
     }
@@ -148,33 +147,26 @@ function colorForStatus(statusMessage) {
 // Negative values - mean obscured.
 function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
     var result = 0;
-    var distance = LogicHelpers.targetDistance(x1, y1, x2, y2);
-    var angle360 = LogicHelpers.rotationAngle(x1, y1, x2, y2);
-    var tgAngle = 0;
+    var distance = targetDistance(x1, y1, x2, y2);
+    var a = (y2 - y1) / (x2 - x1);
+    var b = y1 - (a * x1);
+    var x = x2;
+    var y = y2;
 
-    if ((angle360 >= 0) && (angle360 <= 90))
-        tgAngle = Math.tan(((90 - angle360) * Math.PI) / 180);
-    else if ((angle360 > 90) && (angle360 < 360))
-        tgAngle = Math.tan(((360 - (angle360 - 90)) * Math.PI) / 180);
-    else if (angle360 == 360)
-        tgAngle = Math.tan((90 * Math.PI) / 180);
-
-    var x = 0;
-    var y = 0;
     for (var i = 0; i < distance; ++i) {
-        if ((x2 > x1) && (y2 < y1)) { // 1
+        if (x2 >= x1) {
+            // Prevent overlenghtening
+            if (x > x2)
+                break;
             x = x1 + i;
-            y = y1 - (tgAngle * i);
-        } else if ((x2 < x1) && (y2 < y1)) { // 2
+        } else {
+            // Prevent overlenghtening
+            if (x < x2)
+                break;
             x = x1 - i;
-            y = y1 + (tgAngle * i);
-        } else if ((x2 < x1) && (y2 > y1)) { // 3
-            x = x1 - i;
-            y = y1 + (tgAngle * i);
-        } else if ((x2 > x1) && (y2 > y1)) { // 4
-            x = x1 + i;
-            y = y1 - (tgAngle * i);
         }
+
+        y = (a * x) + b;
 
         for (var j = 0; j < items.length; ++j) {
             var item = items[j];
@@ -183,8 +175,7 @@ function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
             }
 
             if (((x <= item.x + item.width) && (x >= item.x)) && ((y <= item.y + item.height) && (y >= item.y))) {
-                console.log("Hit! Who: " + item);
-                result = LogicHelpers.targetDistance(x1, y1, x, y);
+                result = targetDistance(x1, y1, x, y);
                 return result;
             }
         }

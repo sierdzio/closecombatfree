@@ -103,17 +103,6 @@ Rectangle {
                     }
                 }
 
-                Rectangle {
-                    id: test1
-                    color: "#ffff22"
-                    width: 15
-                    height: 15
-                    z: map.z + 5
-
-                    Behavior on x { NumberAnimation {} }
-                    Behavior on y { NumberAnimation {} }
-                }
-
                 Loader {
                     id: units
                     anchors.fill: parent
