@@ -3,7 +3,7 @@ Changes since v0.0.3 ():
  - add game saving and loading
  - add possibility to load non-qrc files
  - add clusters of obstacles to map props
- - add LOS (Line Of Sight)
+ - add LOS (Line Of Sight) detection
  - numerous bug fixes
 
 2011.12.20 - v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336).

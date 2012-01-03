@@ -283,28 +283,47 @@ function updateAimLine() {
         aimLine.x = x1;
         aimLine.y = y1;
 
-        __aimLineRotation = LogicHelpers.rotationAngle(x2, y2, x1, y1);
-        aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
+        var newRotation = LogicHelpers.rotationAngle(x2, y2, x1, y1);
 
-        var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, child);
-        var unitsObscure = LogicHelpers.checkForObstaclesInLOS(units.item.children, x1, y1, x2, y2, child);
+        if (__aimLineRotation != newRotation) {
+            __aimLineRotation = newRotation;
+            aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
 
-        if (propsObscure != 0) {
-            if (propsObscure < 0) {
-                aimLine.obscureBeginning = -propsObscure;
+            var terrainObscure = checkForTerrainInLOS(x1, y1, x2, y2, child);
+            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, child);
+            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(units.item.children, x1, y1, x2, y2, child);
+
+            // Conditions here should be redesigned to save time.
+            // There is no need to update aimLine if a given Beginning
+            // is further than current one.
+            if (terrainObscure != 0) {
+                if (terrainObscure < 0) {
+                    aimLine.obscureBeginning = -terrainObscure;
+                } else {
+                    aimLine.invisibleBeginning = terrainObscure;
+                }
             } else {
-                aimLine.invisibleBeginning = propsObscure;
+                aimLine.obscureBeginning = aimLine.height;
+                aimLine.invisibleBeginning = aimLine.height;
             }
-        } else {
-            aimLine.obscureBeginning = aimLine.height;
-            aimLine.invisibleBeginning = aimLine.height;
-        }
 
-        if (unitsObscure != 0) {
-            if (unitsObscure < 0) {
-                aimLine.obscureBeginning = -unitsObscure;
-            } else {
-                aimLine.invisibleBeginning = unitsObscure;
+            if (propsObscure != 0) {
+                if (propsObscure < 0) {
+                    aimLine.obscureBeginning = -propsObscure;
+                } else {
+                    aimLine.invisibleBeginning = propsObscure;
+                }
+            }/* else {
+                aimLine.obscureBeginning = aimLine.height;
+                aimLine.invisibleBeginning = aimLine.height;
+            }*/
+
+            if (unitsObscure != 0) {
+                if (unitsObscure < 0) {
+                    aimLine.obscureBeginning = -unitsObscure;
+                } else {
+                    aimLine.invisibleBeginning = unitsObscure;
+                }
             }
         }
     } else {

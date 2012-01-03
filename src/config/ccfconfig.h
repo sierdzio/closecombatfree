@@ -21,6 +21,7 @@
 ////
 #include <QTextStream>
 #include <QDeclarativeListReference>
+#include <QtCore/qmath.h>
 ////
 #include "../ccferror.h"
 #include "ccfconfigparser.h"
@@ -73,6 +74,10 @@ public:
 //    Q_INVOKABLE QString loadGame();
     Q_INVOKABLE QStringList savedGamesList();
     Q_INVOKABLE void disableQrcUse(QObject *object);
+    //
+    Q_INVOKABLE int checkForTerrainInLOS(qreal x1, qreal y1,
+                                         qreal x2, qreal y2,
+                                         QObject *currentUnit);
     ////
     QString uiMode();
     QString terrainInfoMode();
@@ -109,6 +114,8 @@ private:
     void replaceElement(const QString &elementToReplace, const QString &newValue);
     void parseValidKeyboardShortcuts();
     QString addSavePropertyIfExists(const QObject *object, const QString &propertyName, bool useQuotes = false);
+    // This can be made invokable in the future.
+    qreal targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY);
 
     int runtimeWidth, runtimeHeight;
 

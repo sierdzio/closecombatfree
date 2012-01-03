@@ -6,7 +6,7 @@ Some more history can be devised from git sources (although even there, the thin
 === === === ===
 03.01.2012:
  - add aimLine "obscured" and "invisible" markers
- - add LOS detection
+ - add LOS detection of terrain, props and units
 
 02.01.2012:
  - some code cleaning,
