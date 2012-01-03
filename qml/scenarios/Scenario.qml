@@ -103,6 +103,17 @@ Rectangle {
                     }
                 }
 
+                Rectangle {
+                    id: test1
+                    color: "#ffff22"
+                    width: 15
+                    height: 15
+                    z: map.z + 5
+
+                    Behavior on x { NumberAnimation {} }
+                    Behavior on y { NumberAnimation {} }
+                }
+
                 Loader {
                     id: units
                     anchors.fill: parent
@@ -197,11 +208,11 @@ Rectangle {
                         z: aimLine.z + 1
                         width: parent.width
                         anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: aimLineInvisible.top //parent.bottom
+                        anchors.bottom: parent.bottom
                         visible: parent.visible
                         color: Qt.darker(parent.color, 1.5)
 
-                        height: parent.height/3 //parent.height - obscureBeginning
+                        height: parent.height - parent.obscureBeginning
                     }
 
                     Rectangle {
@@ -213,15 +224,8 @@ Rectangle {
                         visible: parent.visible
                         color: Qt.darker(parent.color, 2.0)
 
-                        height: parent.height/3 //parent.height - invisibleBeginning
+                        height: parent.height - parent.invisibleBeginning
                     }
-
-//                    onColorChanged: {
-//                        aimLineObscured.color = Qt.darker(aimLine.color, 1.5);
-//                        aimLineObscured.height = aimLine.height/3;
-//                        aimLineInvisible.color = Qt.darker(aimLine.color, 2.0);
-//                        aimLineInvisible.height = aimLine.height/3;
-//                    }
 
                     transform: Rotation {
                         origin.x: 1
@@ -537,6 +541,9 @@ Rectangle {
 //        color: "#ffff22"
 //        width: 15
 //        height: 15
+
+//        Behavior on x { NumberAnimation {} }
+//        Behavior on y { NumberAnimation {} }
 //    }
 
 //    Rectangle {

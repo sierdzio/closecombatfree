@@ -275,17 +275,41 @@ function updateAimLine() {
     var child = units.item.children[__unitIndex];
 
     if (aimLine.visible == true) {
-        aimLine.x = child.x + child.centerX;
-        aimLine.y = child.y + child.centerY;
+        var x1 = child.x + child.centerX;
+        var y1 = child.y + child.centerY;
+        var x2 = mouseAreaMain.mouseX;
+        var y2 = mouseAreaMain.mouseY;
 
-        __aimLineRotation = LogicHelpers.rotationAngle(mouseAreaMain.mouseX,
-                                                       mouseAreaMain.mouseY,
-                                                       child.x + child.centerX,
-                                                       child.y + child.centerY);
-        aimLine.height = LogicHelpers.targetDistance(child.x +  child.centerX,
-                                                     child.y + child.centerY,
-                                                     mouseAreaMain.mouseX,
-                                                     mouseAreaMain.mouseY);
+        aimLine.x = x1;
+        aimLine.y = y1;
+
+        __aimLineRotation = LogicHelpers.rotationAngle(x2, y2, x1, y1);
+        aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
+
+        var propsObscure = checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, child);
+        var unitsObscure = checkForObstaclesInLOS(units.item.children, x1, y1, x2, y2, child);
+
+        if (propsObscure != 0) {
+            if (propsObscure < 0) {
+                aimLine.obscureBeginning = -propsObscure;
+            } else {
+                aimLine.invisibleBeginning = propsObscure;
+            }
+        } else {
+            aimLine.obscureBeginning = aimLine.height;
+            aimLine.invisibleBeginning = aimLine.height;
+        }
+
+        if (unitsObscure != 0) {
+            if (unitsObscure < 0) {
+                aimLine.obscureBeginning = -unitsObscure;
+            } else {
+                aimLine.invisibleBeginning = unitsObscure;
+            }
+        } else {
+            aimLine.obscureBeginning = aimLine.height;
+            aimLine.invisibleBeginning = aimLine.height;
+        }
     } else {
         var tempRotation;
         tempRotation = LogicHelpers.rotationAngle(child.x + child.centerX,
@@ -296,6 +320,60 @@ function updateAimLine() {
                 + LogicHelpers.angleTo8Step(tempRotation);
     }
 }
+
+//// Experimental
+// 0 - means no obstruction.
+// Positive values - mean invisible.
+// Negative values - mean obscured.
+function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
+    var result = 0;
+    var distance = LogicHelpers.targetDistance(x1, y1, x2, y2);
+    var angle360 = LogicHelpers.rotationAngle(x1, y1, x2, y2);
+    var tgAngle = 0;
+
+    if ((angle360 >= 0) && (angle360 <= 90))
+        tgAngle = Math.tan(((90 - angle360) * Math.PI) / 180);
+    else if ((angle360 > 90) && (angle360 < 360))
+        tgAngle = Math.tan(((360 - (angle360 - 90)) * Math.PI) / 180);
+    else if (angle360 == 360)
+        tgAngle = Math.tan((90 * Math.PI) / 180);
+
+    var x = 0;
+    var y = 0;
+    for (var i = 0; i < distance; ++i) {
+        if ((x2 > x1) && (y2 < y1)) { // 1
+            x = x1 + i;
+            y = y1 - (tgAngle * i);
+        } else if ((x2 < x1) && (y2 < y1)) { // 2
+            x = x1 - i;
+            y = y1 + (tgAngle * i);
+        } else if ((x2 < x1) && (y2 > y1)) { // 3
+            x = x1 - i;
+            y = y1 + (tgAngle * i);
+        } else if ((x2 > x1) && (y2 > y1)) { // 4
+            x = x1 + i;
+            y = y1 - (tgAngle * i);
+        }
+
+        test1.x = x;
+        test1.y = y;
+
+        for (var j = 0; j < items.length; ++j) {
+            var item = items[j];
+            if (item == currentUnit) {
+                continue;
+            }
+
+            if (((x <= item.x + item.width) && (x >= item.x)) && ((y <= item.y + item.height) && (y >= item.y))) {
+                console.log("Hit! Who: " + item);
+                result = LogicHelpers.targetDistance(x1, y1, x, y);
+                return result;
+            }
+        }
+    }
+    return result;
+}
+
 
 function handleLeftMouseClick(mouse) {
     if (contextLoader.visible == false) {

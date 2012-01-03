@@ -96,7 +96,7 @@ function colorForOrder(orderName) {
     if (orderName == "Move") {
         result = "#22ff22";
     } else if (orderName == "Move fast") {
-        result = "#771b91";
+        result = "#b75bd1";
     } else if (orderName == "Sneak") {
         result = "#f0dd0c";
     } else if (orderName == "Smoke") {
@@ -139,5 +139,55 @@ function colorForStatus(statusMessage) {
         result = "#aa1111";
     }
 
+    return result;
+}
+
+//// Experimental
+// 0 - means no obstruction.
+// Positive values - mean invisible.
+// Negative values - mean obscured.
+function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
+    var result = 0;
+    var distance = LogicHelpers.targetDistance(x1, y1, x2, y2);
+    var angle360 = LogicHelpers.rotationAngle(x1, y1, x2, y2);
+    var tgAngle = 0;
+
+    if ((angle360 >= 0) && (angle360 <= 90))
+        tgAngle = Math.tan(((90 - angle360) * Math.PI) / 180);
+    else if ((angle360 > 90) && (angle360 < 360))
+        tgAngle = Math.tan(((360 - (angle360 - 90)) * Math.PI) / 180);
+    else if (angle360 == 360)
+        tgAngle = Math.tan((90 * Math.PI) / 180);
+
+    var x = 0;
+    var y = 0;
+    for (var i = 0; i < distance; ++i) {
+        if ((x2 > x1) && (y2 < y1)) { // 1
+            x = x1 + i;
+            y = y1 - (tgAngle * i);
+        } else if ((x2 < x1) && (y2 < y1)) { // 2
+            x = x1 - i;
+            y = y1 + (tgAngle * i);
+        } else if ((x2 < x1) && (y2 > y1)) { // 3
+            x = x1 - i;
+            y = y1 + (tgAngle * i);
+        } else if ((x2 > x1) && (y2 > y1)) { // 4
+            x = x1 + i;
+            y = y1 - (tgAngle * i);
+        }
+
+        for (var j = 0; j < items.length; ++j) {
+            var item = items[j];
+            if (item == currentUnit) {
+                continue;
+            }
+
+            if (((x <= item.x + item.width) && (x >= item.x)) && ((y <= item.y + item.height) && (y >= item.y))) {
+                console.log("Hit! Who: " + item);
+                result = LogicHelpers.targetDistance(x1, y1, x, y);
+                return result;
+            }
+        }
+    }
     return result;
 }

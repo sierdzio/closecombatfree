@@ -84,6 +84,16 @@ Item {
             return true;
     }
 
+    function getProps() {
+        var result = new Array(children.length - 2);
+
+        for (var i = 0; i < children.length - 2; ++i) {
+            result[i] = (children[i + 2]);
+        }
+
+        return result;
+    }
+
     function terrainInfo(x, y) {
         // This method is intended to extract terrain information on a given point.
         // This info should include: type of terrain/ obstacle/ prop, height over "0" level,
