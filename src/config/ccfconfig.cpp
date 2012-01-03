@@ -345,7 +345,8 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
                 + tab + tab + "objectName: \"" + unit->objectName() + "\"\n"
                 + tab + tab + "x: " + unit->property("x").toString() + "\n"
                 + tab + tab + "y: " + unit->property("y").toString() + "\n"
-                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n";
+                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
+                + tab + tab + "unitSide: " + unit->property("unitSide").toString() + "\n";
         units += addSavePropertyIfExists(unit, "turretRotation");
         units += addSavePropertyIfExists(unit, "hullColor", true);
         units += tab + "}\n";

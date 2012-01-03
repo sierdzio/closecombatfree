@@ -183,11 +183,45 @@ Rectangle {
                 }
 
                 Rectangle {
+                    property real obscureBeginning: height
+                    property real invisibleBeginning: height
+
                     id: aimLine
                     z: root.z + 1
                     visible: false
                     width: 3
                     height: 150
+
+                    Rectangle {
+                        id: aimLineObscured
+                        z: aimLine.z + 1
+                        width: parent.width
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottom: aimLineInvisible.top //parent.bottom
+                        visible: parent.visible
+                        color: Qt.darker(parent.color, 1.5)
+
+                        height: parent.height/3 //parent.height - obscureBeginning
+                    }
+
+                    Rectangle {
+                        id: aimLineInvisible
+                        z: aimLineObscured.z + 1
+                        width: parent.width
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottom: parent.bottom
+                        visible: parent.visible
+                        color: Qt.darker(parent.color, 2.0)
+
+                        height: parent.height/3 //parent.height - invisibleBeginning
+                    }
+
+//                    onColorChanged: {
+//                        aimLineObscured.color = Qt.darker(aimLine.color, 1.5);
+//                        aimLineObscured.height = aimLine.height/3;
+//                        aimLineInvisible.color = Qt.darker(aimLine.color, 2.0);
+//                        aimLineInvisible.height = aimLine.height/3;
+//                    }
 
                     transform: Rotation {
                         origin.x: 1

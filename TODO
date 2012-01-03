@@ -12,8 +12,6 @@ New features:
  - add fuel and ammo caps for units
  - add in-game chat
  - add deployment phase before the battle
- - add "tree clusters" or "forests" that automatically generate
-   some forest-looking areas
  - add Role enum to props. Might be good to create a specialised C++ class for that
  - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
@@ -24,7 +22,8 @@ New features:
  - adjust parameters to be more human-readable
  +/- add FPS counter
  - fragment resources
- - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings)
+ - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
+   positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
 
 Big ideas for the future:
@@ -48,4 +47,6 @@ Done (this section gets occasionally cleaned):
  + firing animation is performed when a unit on the move stops while being followed
  + preferences menu
  + add game saving and loading
- + get effects to work in loaded save games 
+ + get effects to work in loaded save games
+ + add "tree clusters" or "forests" that automatically generate
+   some forest-looking areas
