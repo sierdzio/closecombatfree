@@ -31,3 +31,5 @@ attack = a
 smoke = k
 defend = d
 ambush = b
+toggle top menu = t
+toggle bottom menu = g

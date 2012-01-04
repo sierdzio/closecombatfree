@@ -25,6 +25,9 @@ Item {
     signal openMenu();
     onOpenMenu: trigger.poppedUp = true;
 
+    signal toggleMenu();
+    onToggleMenu: trigger.poppedUp = !trigger.poppedUp;
+
     onOptionsEntryClicked: {
         optionsMenu.toggleMenu();
     }

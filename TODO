@@ -4,6 +4,7 @@ Bugs & fixes:
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
  - there is some strange order mixing when performing group queues
+ - look into memory consumption - scenarios are not fully cleared from memory on close
 
 New features:
  - add game menu
@@ -16,7 +17,6 @@ New features:
  - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
  - add group following (not needed too much)
- - add 2 sides (player/ opponent), or even leave it open for any number of players
  - add AI (well, obviously)
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
@@ -25,6 +25,9 @@ New features:
  - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
+
+ - prevent firing when target is invisible/ obscured
+ - add ability for player to swap sides
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
@@ -50,3 +53,4 @@ Done (this section gets occasionally cleaned):
  + get effects to work in loaded save games
  + add "tree clusters" or "forests" that automatically generate
    some forest-looking areas
+ +/- add 2 sides (player/ opponent), or even leave it open for any number of players

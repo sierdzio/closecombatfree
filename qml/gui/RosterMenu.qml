@@ -11,8 +11,6 @@ Rectangle {
 
     id: root
     width: units.width
-//    height: units.height
-//    width: entryWidth
     height: (entryHeight * 4) + 3
 
     color: backgroundColor
@@ -28,7 +26,7 @@ Rectangle {
                                  "unitLogo": currentUnit.unitLogo,
                                  "unitStatus": currentUnit.unitStatus,
                                  "unitSelected": currentUnit.selected});
-            currentUnit.unitStatusChanged.connect(changeStatus);
+            currentUnit['unitStatusChanged(QString, int)'].connect(changeStatus);
             currentUnit.selectionChanged.connect(selectionChanged);
         }
 
@@ -83,16 +81,23 @@ Rectangle {
         var result = {"x": ((column * units.cellWidth) + (units.cellWidth/2)),
             "y": ((row * units.cellHeight) + (units.cellHeight/2))};
 
-        console.log("x: " + result.x + ", y " + result.y);
         return result;
     }
 
     function changeStatus(newStatus, index) {
-        unitModel.set(index, {"unitStatus": newStatus});
+        unitModel.set(findListIndex(index), {"unitStatus": newStatus});
     }
 
     function selectionChanged(state, index) {
-        unitModel.set(index, {"unitSelected": state});
+        unitModel.set(findListIndex(index), {"unitSelected": state});
+    }
+
+    function findListIndex(unitIndex) {
+        for (var i = 0; i < units.count; ++i) {
+            if (unitsList[i].unitIndex == unitIndex) {
+                return i;
+            }
+        }
     }
 
     ListModel {

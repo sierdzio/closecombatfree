@@ -93,7 +93,8 @@ OTHER_FILES += \
     src/config/saveFileTemplate.txt \
     qml/gui/LoadGameMenu.qml \
     qml/gui/menuEntries/LoadGameEntries.qml \
-    qml/maps/props/PropCluster.qml
+    qml/maps/props/PropCluster.qml \
+    scenarios/Scenario_tst4.qml
 
 RESOURCES += \
     coreResource.qrc \

@@ -289,6 +289,8 @@ function updateAimLine() {
             __aimLineRotation = newRotation;
             aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
 
+            // If obscuring should be turned off for some actions (movement)
+            // an if clause here would do the trick.
             var terrainObscure = checkForTerrainInLOS(x1, y1, x2, y2, child);
             var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, child);
             var unitsObscure = LogicHelpers.checkForObstaclesInLOS(units.item.children, x1, y1, x2, y2, child);
@@ -313,10 +315,7 @@ function updateAimLine() {
                 } else {
                     aimLine.invisibleBeginning = propsObscure;
                 }
-            }/* else {
-                aimLine.obscureBeginning = aimLine.height;
-                aimLine.invisibleBeginning = aimLine.height;
-            }*/
+            }
 
             if (unitsObscure != 0) {
                 if (unitsObscure < 0) {
@@ -356,6 +355,10 @@ function handleRightMouseClick(mouse) {
 
     var child;
     child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+
+    if (child.unitSide != playerSide) {
+        return;
+    }
 
     if (child == mouseAreaMain || child == null) {
         deselectAllUnits();
@@ -466,6 +469,10 @@ function handleKeyPress(event) {
                 zoomIn();
             } else if (event.key == keyForFunction("zoom out")) {
                 zoomOut();
+            } else if (event.key == keyForFunction("toggle top menu")) {
+                topMenu.toggleMenu();
+            } else if (event.key == keyForFunction("toggle bottom menu")) {
+                bottomMenu.toggleMenu();
             } else if (event.key == keyForFunction("follow")) {
                 var selectedOnes = selectedUnits();
                 if ((followedUnit.running == false) && (selectedUnitsCount() > 0)) {
@@ -664,6 +671,10 @@ function selectUnitFromRoster(mouse) {
 }
 
 function selectUnit(index, modifier) {
+    if (units.item.children[index].unitSide != playerSide) {
+        return;
+    }
+
     if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
         deselectAllUnits();
         units.item.children[index].selected = true;

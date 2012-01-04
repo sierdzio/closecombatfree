@@ -78,6 +78,7 @@ Rectangle {
 
         LoadGameEntries {
             id: entries
+            height: entryBox.height
         }
     }
 
@@ -87,6 +88,16 @@ Rectangle {
         anchors.top: entryBox.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Text {
+        id: notice
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        text: "For now, player is assumed to be on \"neutral\" side.\nSide choosing will be added later."
+        font.pointSize: 10
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
     }
 
     Loader {

@@ -5,6 +5,7 @@ import "qrc:/core/engineScenarioLogic.js" as ScenarioLogic
 
 Rectangle {
     property string scenarioFile: ""
+    property string playerSide: "neutral" // Experimental!
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
@@ -48,6 +49,21 @@ Rectangle {
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
         saveGame(units.item.children, units.item.mapFile);
+    }
+
+    function playerUnits(player) {
+        if (player == "") {
+            return units.item.children;
+        }
+
+        var allUnits = units.item.children;
+        var unitsArray = new Array();
+        for (var i = 0; i < allUnits.length; ++i) {
+            if (allUnits[i].unitSide == player) {
+                unitsArray.push(allUnits[i]);
+            }
+        }
+        return unitsArray;
     }
 
     Keys.onPressed: {
@@ -131,7 +147,8 @@ Rectangle {
                             map.item.setUnits(units.item.children);
                             // Creates base for order markers.
                             ScenarioLogic.initOrderMarkers();
-                            roster.populateUnits(units.item.children);
+//                            roster.populateUnits(units.item.children);
+                            roster.populateUnits(playerUnits(playerSide));
                         }
                     }
                 }
