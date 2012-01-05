@@ -4,6 +4,9 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+05.01.2012:
+ - add experimental recognition of winning a scenario (on all enemies destroyed)
+
 04.01.2012:
  - prepare multiple players support
  - add "toggle top menu", and "toggle bottom menu" config options - and keyboard shortcuts

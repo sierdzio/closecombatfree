@@ -239,4 +239,17 @@ Item {
         easing.type: Easing.InOutQuad
         paused: running? root.paused : false
     }
+
+    //// Temp debug
+    Rectangle {
+        id: destroyedState
+        visible: (parent.state == "healthy")? false : true;
+        width: 10
+        height: width
+        radius: 10
+        color: "#ff3333"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        z: 10
+    }
 }
