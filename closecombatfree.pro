@@ -94,7 +94,8 @@ OTHER_FILES += \
     qml/gui/LoadGameMenu.qml \
     qml/gui/menuEntries/LoadGameEntries.qml \
     qml/maps/props/PropCluster.qml \
-    scenarios/Scenario_tst4.qml
+    scenarios/Scenario_tst4.qml \
+    editor/ScenarioEditor.qml
 
 RESOURCES += \
     coreResource.qrc \

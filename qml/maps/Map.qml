@@ -33,11 +33,7 @@ Item {
         z: -1
 
         Component.onCompleted: {
-//            console.log("Sending terrain info to C++. Image URL: " + hipsometricImage
-//                        + " . Width: " + hipsometricMap.width
-//                        + " . Height: " + hipsometricMap.height);
             setTerrainImageUrl(hipsometricImage, hipsometricMap.width, hipsometricMap.height);
-//            console.log("H: " + height + ", w: " + width);
         }
     }
 
