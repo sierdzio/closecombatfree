@@ -210,7 +210,7 @@ function firingActionFinished(index, targetX, targetY) {
     if (unit.currentOrder != -1) {
         // This component renders in-game effects (not all,
         // but for example muzzle flashes, explosions etc.)
-        var component = Qt.createComponent("qrc:/core/scenarios/Effect.qml");
+        var component = Qt.createComponent("../qml/scenarios/Effect.qml");
 
         // A good place to include terrain recognition
         // for landing shells
@@ -275,7 +275,7 @@ function switchEffectFrame(effectIndex) {
 
     if (imgNumber != 5) {
         effectsContainer[i].imageNumber = imgNumber + 1;
-        effectsContainer[i].source = "qrc:/img/effects/" + effectsContainer[i].animationString
+        effectsContainer[i].source = "../img/effects/" + effectsContainer[i].animationString
                 + (imgNumber + 1) + ".png";
     } else if (imgNumber == 5) {
         effectsContainer[i].imageNumber = 0;
@@ -402,7 +402,7 @@ function handleRightMouseClick(mouse) {
 
         __unitIndex = childIndex(child);
         // Displays the context menu. This is suboptimal.
-        contextLoader.source = "qrc:/skin/ContextMenu.qml";
+        contextLoader.source = "../qml/gui/ContextMenu.qml";
         contextLoader.item.unitIndex = __unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
@@ -437,7 +437,7 @@ function handleRightMouseClickRoster(mouse) {
 
         __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
-        contextLoader.source = "qrc:/skin/ContextMenu.qml";
+        contextLoader.source = "../qml/gui/ContextMenu.qml";
         contextLoader.item.unitIndex = __unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
@@ -858,7 +858,7 @@ function calculateOrderMarkerVisibility(index) {
 
 function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     // This component renders an order marker.
-    var component = Qt.createComponent("qrc:/skin/OrderMarker.qml");
+    var component = Qt.createComponent("../qml/gui/OrderMarker.qml");
     var marker;
 
     if (component.status == Component.Ready) {

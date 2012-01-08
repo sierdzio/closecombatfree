@@ -5,7 +5,7 @@ Item {
     property string role: "Infantryman"
     property string status: "READY"
     property string weapon: ""
-    property string soldierLogo: "qrc:/img/units/generic_soldier_logo.png"
+    property string soldierLogo: "../../../img/units/generic_soldier_logo.png"
 
     signal unitStatusChanged(string newStatus)
     function changeStatus(newStatusMessage) {

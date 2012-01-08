@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "qrc:/core/menus"
+import "../qml/menus"
 
 Rectangle {
     id: root

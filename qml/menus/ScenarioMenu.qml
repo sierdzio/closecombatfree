@@ -1,14 +1,15 @@
 import QtQuick 1.1
-import "qrc:/skin"
-import "qrc:/skin/menuEntries"
+import "../../qml/gui"
+import "../../qml/gui/menuEntries"
 
 Rectangle {
     property string __tempReloadPath: ""
 
     signal scenarioEntryClicked (string scenarioPath)
     onScenarioEntryClicked: {
-        scenario.scenarioFile = "qrc:/scenarios/" + scenarioPath;
-        scenario.source = "qrc:/core/scenarios/Scenario.qml";
+//        scenario.scenarioFile = "../../scenarios/" + scenarioPath;
+        scenario.scenarioFile = "scenarios/" + scenarioPath;
+        scenario.source = "../../qml/scenarios/Scenario.qml";
         root.state = "opened";
     }
     signal quitEntryClicked (string ignoreThisString)
@@ -190,7 +191,7 @@ Rectangle {
                         scenario.source = "";
                         scenario.visible = false;
                         scenario.scenarioFile = __tempReloadPath;
-                        scenario.source = "qrc:/core/scenarios/Scenario.qml";
+                        scenario.source = "../../qml/scenarios/Scenario.qml";
                         root.state = "opened";
                     }
                 }

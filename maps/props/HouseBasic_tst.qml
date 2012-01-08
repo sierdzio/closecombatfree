@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "qrc:/core/maps/props"
+import "../../qml/maps/props"
 
 PropRectangle {
     objectName: "house"
@@ -22,6 +22,6 @@ PropRectangle {
         id: roof
         visible: topVisible
         anchors.fill: parent
-        source: "qrc:/img/maps/props/HouseBasicRoof1.png"
+        source: "../../img/maps/props/HouseBasicRoof1.png"
     }
 }

@@ -1,15 +1,15 @@
 import QtQuick 1.1
-import "qrc:/skin"
-import "qrc:/core/units"
-import "qrc:/core/engineLogicHelpers.js" as Logic
-import "qrc:/core/engineActionLogic.js" as ActionLogic
-import "qrc:/tempJs.js" as OrderQueue
+import "../../qml/gui"
+import "../../qml/units"
+import "../../qml/engineLogicHelpers.js" as Logic
+import "../../qml/units/engineActionLogic.js" as ActionLogic
+import "../../qml/units/tempJs.js" as OrderQueue
 
 Item {
     // Sadly, this is needed for file saving:
     property string unitFileName: "Unit"
     property string unitType: "Generic unit"
-    property string unitLogo: "qrc:/img/units/generic_unit_logo.png"
+    property string unitLogo: "../../img/units/generic_unit_logo.png"
     property string unitStatus: "READY"
     property string unitSide: "neutral"
     property int groupNumber: 0 // For now, a unit can be only in one group
@@ -181,7 +181,7 @@ Item {
             if (defenceSphereColor == "")
                 return "";
             else
-                return "qrc:/img/gui/defenceSphere_" + defenceSphereColor + ".png"
+                return "../../img/gui/defenceSphere_" + defenceSphereColor + ".png"
 
         }
         anchors {

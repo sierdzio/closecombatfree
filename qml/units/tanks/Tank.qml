@@ -1,9 +1,9 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
-import "qrc:/core/units"
-import "qrc:/skin"
-import "qrc:/core/engineLogicHelpers.js" as Logic
-import "qrc:/core/engineActionLogic.js" as ActionLogic
+import "../../../qml/units"
+import "../../../qml/gui"
+import "../../../qml/engineLogicHelpers.js" as Logic
+import "../../../qml/units/engineActionLogic.js" as ActionLogic
 
 Unit {
     // Tank properties.
@@ -43,7 +43,7 @@ Unit {
     id: root
     unitFileName: "Tank"
     unitType: "Generic tank"
-    unitLogo: "qrc:/img/units/generic_unit_logo.png"
+    unitLogo: "../../../img/units/generic_unit_logo.png"
     rotationSpeed: 1
     turretRotationSpeed: 1
     maxSpeed: 1
@@ -93,7 +93,7 @@ Unit {
         lifeSpan: 600; lifeSpanDeviation: 800
         angle: rotation + 90; angleDeviation: 60;
         velocity: 5; velocityDeviation: 10
-        source: "qrc:/img/effects/vehicle_smoke.png"
+        source: "../../../img/effects/vehicle_smoke.png"
     }
 
     Particles {
@@ -107,7 +107,7 @@ Unit {
         lifeSpan: 1000; lifeSpanDeviation: 400
         angle: rotation + 90; angleDeviation: 60;
         velocity: 40; velocityDeviation: 60
-        source: "qrc:/img/effects/vehicle_smoke.png"
+        source: "../../../img/effects/vehicle_smoke.png"
     }
 
     Particles {
@@ -122,7 +122,7 @@ Unit {
         lifeSpan: 300; lifeSpanDeviation: 800
         angle: 0; angleDeviation: 360;
         velocity: 400; velocityDeviation: 120
-        source: "qrc:/img/effects/vehicle_smoke.png"
+        source: "../../../img/effects/vehicle_smoke.png"
     }
 
     // Implement transitions in children

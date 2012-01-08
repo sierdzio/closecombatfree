@@ -16,7 +16,7 @@ Rectangle {
         opacity: 0.7
         width: parent.width - 10
         height: width
-        source: "qrc:/img/gui/popUpArrow.png"
+        source: "../../img/gui/popUpArrow.png"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         rotation: (poppedUp)? 180 : 0

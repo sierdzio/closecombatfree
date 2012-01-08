@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "qrc:/skin/menuEntries"
+import "../../qml/gui/menuEntries"
 
 Item {
     property int currentZoom: 100

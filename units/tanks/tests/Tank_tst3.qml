@@ -1,13 +1,13 @@
 import QtQuick 1.1
 import Qt.labs.particles 1.0
-import "qrc:/core/units"
-import "qrc:/core/units/tanks"
+import "../../../qml/units"
+import "../../../qml/units/tanks"
 
 Tank {
     id: root
     unitFileName: "Tank_tst3"
     unitType: "Test tank 3"
-    unitLogo: "qrc:/img/units/tanks/generic/tank_tst3_logo.png"
+    unitLogo: "../../../img/units/tanks/generic/tank_tst3_logo.png"
     rotationSpeed: 55
     turretRotationSpeed: 55
     turretSize: 44
@@ -24,9 +24,9 @@ Tank {
 
     TurretImage {
         id: turret
-        bodyTexture: "qrc:/img/units/tanks/generic/tank_tst3_turret_main.png"
-        barrelBaseTexture: "qrc:/img/units/tanks/generic/turret_barrelBase.png"
-        barrelSegment1Texture: "qrc:/img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
+        bodyTexture: "../../../img/units/tanks/generic/tank_tst3_turret_main.png"
+        barrelBaseTexture: "../../../img/units/tanks/generic/turret_barrelBase.png"
+        barrelSegment1Texture: "../../../img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
     }
 
     soldiers: [
@@ -60,7 +60,7 @@ Tank {
         lifeSpan: 500; lifeSpanDeviation: 800
         angle: 0; angleDeviation: 360;
         velocity: 80; velocityDeviation: 50
-        source: "qrc:/img/effects/vehicle_fire.png"
+        source: "../../../img/effects/vehicle_fire.png"
     }
 
     states: [

@@ -28,7 +28,7 @@ Text {
         Image {
             id: tickImage
             anchors.fill: parent
-            source: "qrc:/img/gui/checkBoxTick.png"
+            source: "../../../img/gui/checkBoxTick.png"
             visible: checked
         }
     }

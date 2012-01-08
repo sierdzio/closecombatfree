@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "qrc:/skin/menuEntries"
-import "qrc:/skin"
+import "../../qml/gui/menuEntries"
+import "../../qml/gui"
 
 Rectangle {
     property color backgroundColor: "#bb333232"

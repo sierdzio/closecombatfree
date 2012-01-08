@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "qrc:/core/maps"
+import "../qml/maps"
 
 Map {
-    backgroundImage: "qrc:/img/maps/test2.jpg"
+    backgroundImage: "../../img/maps/test2.jpg"
 }

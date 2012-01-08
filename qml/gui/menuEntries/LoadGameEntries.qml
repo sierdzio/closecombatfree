@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "qrc:/skin/"
+import "../../../qml/gui/"
 
 Item {
     id: root

@@ -1,7 +1,7 @@
 import QtQuick 1.1
-import "qrc:/skin"
-import "qrc:/core/engineLogicHelpers.js" as LogicHelpers
-import "qrc:/core/engineScenarioLogic.js" as ScenarioLogic
+import "../../qml/gui"
+import "../../qml/engineLogicHelpers.js" as LogicHelpers
+import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 
 Rectangle {
     property string scenarioFile: ""

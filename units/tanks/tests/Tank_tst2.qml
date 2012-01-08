@@ -1,12 +1,12 @@
 import QtQuick 1.1
-import "qrc:/core/units"
-import "qrc:/core/units/tanks"
+import "../../../qml/units"
+import "../../../qml/units/tanks"
 
 Tank {
     id: root
     unitFileName: "Tank_tst2"
     unitType: "Test tank 2"
-    unitLogo: "qrc:/img/units/tanks/generic/tank_tst2_logo.png"
+    unitLogo: "../../../img/units/tanks/generic/tank_tst2_logo.png"
     hullColor: "#505050"
     rotationSpeed: 40
     turretRotationSpeed: 35

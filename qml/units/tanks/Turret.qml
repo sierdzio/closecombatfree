@@ -74,7 +74,7 @@ Item {
 
             if (imgNumber != 5) {
                 fireImage.imageNumber = imgNumber + 1;
-                fireImage.source = "qrc:/img/effects/gun_fire" + (imgNumber + 1) + ".png";
+                fireImage.source = "../../../img/effects/gun_fire" + (imgNumber + 1) + ".png";
             } else if (imgNumber == 5) {
                 fireImage.imageNumber = 0;
                 fireImage.source = "";

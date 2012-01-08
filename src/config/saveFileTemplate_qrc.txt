@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import "../units/tanks/tests"
-import "../qml/units"
+import "qrc:/units/tanks/tests"
+import "qrc:/core/units"
 %customImports%
 
 Item {

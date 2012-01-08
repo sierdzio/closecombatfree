@@ -8,7 +8,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     m_terrainInfoMode = "OFF";
     tab = "    ";
 
-    QDir scenarioDir(":/scenarios");
+    QDir scenarioDir("scenarios");
     m_scenariosList = scenarioDir.entryList();
 
     if (!parser->isErrorState()) {
@@ -190,9 +190,15 @@ void CcfConfig::statusMessage(const QString &message)
 
 void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
 {
+//    qDebug() << url;
     // Hack for QRC support
     QString nUrl = url;
-    nUrl.remove(0, 3);
+    if (url.mid(0, 3) == "qrc") {
+        nUrl.remove(0, 3);
+    } else {
+        nUrl.remove(0, 6);
+    }
+//    qDebug() << nUrl;
     QImage tempImage(nUrl);
     terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
 }
@@ -316,7 +322,7 @@ void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QStri
     // which would have "map", "units" properties.
 
     // Init. Read template.
-    QFile templateFile(":/core/config/saveFileTemplate.txt");
+    QFile templateFile("src/config/saveFileTemplate.txt");
     if (!templateFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qFatal("Template file could not be read! Cannot continue, bailing out.");
         return;

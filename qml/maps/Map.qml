@@ -8,7 +8,7 @@ Item {
     // Terrain defined by intensity of color in the image.
     // Should be the same size as backgroundImage. If it's not,
     // it will be stretched to match background.
-    property string hipsometricImage: "qrc:/img/maps/hipsometric_default.png"
+    property string hipsometricImage: "../../img/maps/hipsometric_default.png"
     // Defines, whether hipsometric map should be visible
     property bool hipsometricMapInFront: false
     // Defines global opacity value.

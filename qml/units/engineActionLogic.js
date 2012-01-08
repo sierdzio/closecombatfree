@@ -78,6 +78,7 @@ function cancelOrder () {
 
 // Puts a new order at the end of a queue.
 function queueOrder (orderName, newX, newY) {
+//    var component = Qt.createComponent("../../qml/units/Order.qml");
     var component = Qt.createComponent("qrc:/core/units/Order.qml");
     var order;
 

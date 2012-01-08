@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 Item {
-    property string imageSource: "qrc:/img/gui/defenceSphere_blue.png"
+    property string imageSource: "../../img/gui/defenceSphere_blue.png"
 
     id: root
     width: 120

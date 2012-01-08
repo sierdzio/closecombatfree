@@ -1,11 +1,12 @@
 import QtQuick 1.1
-import "qrc:/core/maps"
-import "qrc:/core/maps/props"
-import "props"
+import "../qml/maps"
+import "../qml/maps/props"
+import "../maps/props"
+import "../maps"
 
 Map {
-    backgroundImage: "qrc:/img/maps/test2.jpg"
-    hipsometricImage: "qrc:/img/maps/hipsometric_test1.png"
+    backgroundImage: "../../img/maps/test2.jpg"
+    hipsometricImage: "../../img/maps/hipsometric_test1.png"
 
     HouseBasic_tst {
         id: house1
@@ -32,7 +33,7 @@ Map {
         x: 500
         y: 30
         numberOfObjects: 10
-        baseElement: "qrc:/maps/props/Tree_tst.qml"
+        baseElement: "../../../maps/props/Tree_tst.qml"
     }
 
     Rectangle {
