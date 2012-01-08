@@ -19,16 +19,14 @@ RCC_DIR = $${BUILD_DIRECTORY}
 TEMPLATE = app
 
 HEADERS += \ 
-    convertermain.h \
     converterflags.h \
-    convertercore.h \
     converterfile.h \
-    ../../src/ccferror.h
+    ../../src/ccferror.h \
+    convertercore.h
 
 SOURCES += \ 
-    convertermain.cpp \
     converterflags.cpp \
-    convertercore.cpp \
     converterfile.cpp \
     ../../src/ccferror.cpp \
-    converter.cpp
+    convertercore.cpp \
+    convertermain.cpp

@@ -1,18 +1,17 @@
-#include "convertermain.h"
+#include <QtCore/qcoreapplication.h>
+#include "convertercore.h"
 
-ConverterMain::ConverterMain(const QStringList &args, QObject *parent) :
-    QObject(parent), CcfError()
+int main(int argc, char *argv[])
 {
-}
+    QCoreApplication a(argc, argv);
 
-void ConverterMain::setFlags()
-{
-}
+    ConverterCore converter(a.arguments());
+    if (!converter.isErrorState()) {
+        converter.convert();
+    }
 
-void ConverterMain::convert()
-{
-}
+    if (converter.isErrorState())
+        qFatal(converter.errorMessage().toLocal8Bit());
 
-void ConverterMain::displayHelp()
-{
+    return 0;//    a.exec();
 }

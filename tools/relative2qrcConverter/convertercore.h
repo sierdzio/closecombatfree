@@ -1,22 +1,26 @@
-#ifndef CONVERTERCORE_H
-#define CONVERTERCORE_H
+#ifndef CONVERTERMAIN_H
+#define CONVERTERMAIN_H
 
 #include <QtCore/qobject.h>
+#include <QtCore/qchar.h>
 #include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #include "../../src/ccferror.h"
 #include "converterflags.h"
-#include "converterfile.h"
 
 class ConverterCore : public QObject, public CcfError
 {
     Q_OBJECT
 public:
-    explicit ConverterCore(QObject *parent = 0);
+    explicit ConverterCore(const QStringList &args, QObject *parent = 0);
+    void convert();
 
 private:
-    void init();
+    void setFlags(const QStringList &args);
+    void displayHelp();
 
+    bool helpMode;
     ConverterFlags *flags;
 };
 
-#endif // CONVERTERCORE_H
+#endif // CONVERTERMAIN_H
