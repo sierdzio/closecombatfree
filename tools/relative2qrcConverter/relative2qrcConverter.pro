@@ -9,8 +9,6 @@
 
 include(../../globalImports.pri)
 
-QT       += widgets
-
 TARGET = relative2qrcConverter
 
 DESTDIR = $${EXEC_DIRECTORY}
@@ -20,19 +18,17 @@ RCC_DIR = $${BUILD_DIRECTORY}
 
 TEMPLATE = app
 
-HEADERS += 
+HEADERS += \ 
+    convertermain.h \
+    converterflags.h \
+    convertercore.h \
+    converterfile.h \
+    ../../src/ccferror.h
 
-SOURCES += 
-
-
-
-
-
-
-
-
-
-
-
-
-
+SOURCES += \ 
+    convertermain.cpp \
+    converterflags.cpp \
+    convertercore.cpp \
+    converterfile.cpp \
+    ../../src/ccferror.cpp \
+    converter.cpp

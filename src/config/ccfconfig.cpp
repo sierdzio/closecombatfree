@@ -9,7 +9,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
     tab = "    ";
 
     QDir scenarioDir("scenarios");
-    m_scenariosList = scenarioDir.entryList();
+    m_scenariosList = scenarioDir.entryList(QDir::Files);
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
