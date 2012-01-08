@@ -7,13 +7,16 @@
 # sierdzio.com
 #-------------------------------------------------
 
-QT       = core gui declarative
+include(globalImports.pri)
+
+QT       += declarative
 
 TARGET = closecombatfree
 
-OBJECTS_DIR = build
-MOC_DIR = build
-RCC_DIR = build
+DESTDIR = $${EXEC_DIRECTORY}
+OBJECTS_DIR = $${BUILD_DIRECTORY}
+MOC_DIR = $${BUILD_DIRECTORY}
+RCC_DIR = $${BUILD_DIRECTORY}
 
 TEMPLATE = app
 
@@ -98,10 +101,10 @@ OTHER_FILES += \
     editor/ScenarioEditor.qml
 
 RESOURCES += \
-    coreResource.qrc \
-    skinResource.qrc \
-    tempResource.qrc \
-    imgResource.qrc
+    src/coreResource.qrc \
+    src/skinResource.qrc \
+    src/tempResource.qrc \
+    src/imgResource.qrc
 
 
 
@@ -116,3 +119,4 @@ RESOURCES += \
 
 
 
+ 

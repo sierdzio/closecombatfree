@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/core">
+        <file alias="engineLogicHelpers.js">../qml/engineLogicHelpers.js</file>
+        <file alias="engineActionLogic.js">../qml/units/engineActionLogic.js</file>
+        <file alias="engineScenarioLogic.js">../qml/scenarios/engineScenarioLogic.js</file>
+        <file alias="main.qml">../qml/main.qml</file>
+        <file alias="scenarios/Scenario.qml">../qml/scenarios/Scenario.qml</file>
+        <file alias="scenarios/Effect.qml">../qml/scenarios/Effect.qml</file>
+        <file alias="units/Order.qml">../qml/units/Order.qml</file> <!-- This part is crucial for orders to work! -->
+        <file alias="units/Soldier.qml">../qml/units/Soldier.qml</file>
+        <file alias="units/Unit.qml">../qml/units/Unit.qml</file>
+        <file alias="units/tanks/Hull.qml">../qml/units/tanks/Hull.qml</file>
+        <file alias="units/tanks/Tank.qml">../qml/units/tanks/Tank.qml</file>
+        <file alias="units/tanks/Turret.qml">../qml/units/tanks/Turret.qml</file>
+        <file alias="units/tanks/TurretImage.qml">../qml/units/tanks/TurretImage.qml</file>
+        <file alias="maps/props/Prop.qml">../qml/maps/props/Prop.qml</file>
+        <file alias="maps/props/PropCluster.qml">../qml/maps/props/PropCluster.qml</file>
+        <file alias="maps/props/PropRectangle.qml">../qml/maps/props/PropRectangle.qml</file>
+        <file alias="maps/Map.qml">../qml/maps/Map.qml</file>
+        <file alias="menus/ScenarioMenu.qml">../qml/menus/ScenarioMenu.qml</file>
+        <file alias="config/saveFileTemplate.txt">../src/config/saveFileTemplate.txt</file>
+    </qresource>
+</RCC>
