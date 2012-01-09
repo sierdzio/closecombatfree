@@ -59,15 +59,22 @@ void ConverterCore::convert()
     }
 
     QDir inputDir(input);
-    QDir outputDir(input);
+    QDir outputDir(output);
 
     convertDirectory(inputDir, outputDir);
 }
 
 void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
 {
-    QStringList dirs(input.entryList(QDir::Dirs));
+    QStringList dirs(input.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     QStringList files(input.entryList(QDir::Files));
+
+    QDir tempOutput = output;
+    tempOutput.makeAbsolute();
+    if (!tempOutput.exists()) {
+        if (!tempOutput.mkpath(output.path()))
+            qFatal("Creating directory failed! %s", tempOutput.path().toLocal8Bit().data());
+    }
 
     foreach (const QString &file, files) {
         ConverterFile converter(file, output.path() + "/" + file, flags);
@@ -75,7 +82,13 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
     }
 
     foreach (const QString &dir, dirs) {
-        convertDirectory(QDir(dir), QDir(output.path() + "/" + dir));
+        QString outputPath = tempOutput.path() + "/" + dir;
+        QDir outputDir(outputPath);
+//        if (!outputDir.exists()) {
+//            outputDir.mkdir(outputPath);
+//        }
+
+        convertDirectory(QDir(dir), outputDir);
     }
 }
 

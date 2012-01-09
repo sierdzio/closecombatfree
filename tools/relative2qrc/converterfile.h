@@ -7,8 +7,11 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qiodevice.h>
 #include <QtCore/qfile.h>
+#include <QtCore/qtextstream.h>
 #include "../../src/ccferror.h"
 #include "converterflags.h"
+
+#include <qdebug.h>
 
 class ConverterFile : public QObject, public CcfError
 {

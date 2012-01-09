@@ -12,6 +12,8 @@
 #include "converterflags.h"
 #include "converterfile.h"
 
+#include <QDebug>
+
 class ConverterCore : public QObject, public CcfError
 {
     Q_OBJECT

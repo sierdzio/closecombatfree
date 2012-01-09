@@ -11,6 +11,8 @@ void ConverterFile::convertToQrc()
     QFile input(inputFile);
     QFile output(outputFile + flags->suffix());
 
+    qDebug() << input.fileName() << output.fileName();
+
     // All files that do not require conversion.
     // TODO: handle C++ files.
     QString tempExt = inputFile.right(4);
@@ -31,7 +33,7 @@ void ConverterFile::convertToQrc()
         return;
     }
 
-    if (!output.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!output.open(QIODevice::WriteOnly | QIODevice::Text)) {
         enterErrorState("Could not open file to save data: " + output.fileName());
         return;
     }
@@ -50,6 +52,11 @@ void ConverterFile::convertToQrc()
             ++beginIndex;
         }
     }
+
+    input.close();
+    QTextStream out(&output);
+    out << inputData;
+    output.close();
 }
 
 int ConverterFile::findPath(QString &fileText, int beginIndex)
