@@ -66,8 +66,14 @@ void ConverterCore::convert()
 
 void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
 {
-    QStringList dirs(input.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    QStringList files(input.entryList(QDir::Files));
+    QDir tempInput = input;
+    tempInput.makeAbsolute();
+    if (!tempInput.exists()) {
+        qFatal("Error! Input: %s does not exist!", tempInput.path().toLocal8Bit().data());
+    }
+
+    QStringList dirs(tempInput.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    QStringList files(tempInput.entryList(QDir::Files));
 
     QDir tempOutput = output;
     tempOutput.makeAbsolute();
@@ -76,19 +82,28 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
             qFatal("Creating directory failed! %s", tempOutput.path().toLocal8Bit().data());
     }
 
+//    qDebug() << tempInput.path() << tempOutput.path();
+
     foreach (const QString &file, files) {
-        ConverterFile converter(file, output.path() + "/" + file, flags);
+        ConverterFile converter(tempInput.path() + "/" + file, output.path() + "/" + file, flags);
         converter.convertToQrc();
     }
 
     foreach (const QString &dir, dirs) {
+        if ((dir.at(0) == QChar('.'))
+                || (dir.right(5) == "build")
+                || (dir.right(flags->outputDirectory().length()) == flags->outputDirectory())) {
+            // Don't touch hidden directiories
+            // Don't touch build directory
+            // Don't touch output directory
+            continue;
+        }
+
         QString outputPath = tempOutput.path() + "/" + dir;
         QDir outputDir(outputPath);
-//        if (!outputDir.exists()) {
-//            outputDir.mkdir(outputPath);
-//        }
-
-        convertDirectory(QDir(dir), outputDir);
+        QDir inputDir(tempInput.path() + "/" + dir);
+//        inputDir.makeAbsolute();
+        convertDirectory(inputDir, outputDir);
     }
 }
 

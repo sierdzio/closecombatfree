@@ -11,12 +11,13 @@ void ConverterFile::convertToQrc()
     QFile input(inputFile);
     QFile output(outputFile + flags->suffix());
 
-    qDebug() << input.fileName() << output.fileName();
+    qDebug() << inputFile << outputFile;
 
     // All files that do not require conversion.
     // TODO: handle C++ files.
-    QString tempExt = inputFile.right(4);
-    if ((tempExt != ".qml") && (tempExt != ".js")) {
+    QString tempQml = inputFile.right(4);
+    QString tempJs = inputFile.right(3);
+    if ((tempQml != ".qml") && (tempJs != ".js")) {
         if (input.copy(outputFile + flags->suffix())) {
             return;
         } else {
@@ -64,7 +65,7 @@ int ConverterFile::findPath(QString &fileText, int beginIndex)
     int endIndex = 0;
 
     beginIndex = fileText.indexOf("\"", beginIndex);
-    endIndex = fileText.indexOf("\"", beginIndex + 1) + 1;
+    endIndex = fileText.indexOf("\"", beginIndex + 1);// + 1;
 
     if ((fileText.mid(endIndex - 4, 4) == ".qml") || (fileText.mid(endIndex - 3, 3) == ".js")) {
         // This indeed is a path.
@@ -76,7 +77,7 @@ int ConverterFile::findPath(QString &fileText, int beginIndex)
 
 int ConverterFile::replacePath(QString &fileText, int beginIndex)
 {
-    int endIndex = fileText.indexOf("\"", beginIndex + 1) + 1;
+    int endIndex = fileText.indexOf("\"", beginIndex + 1);// + 1;
 
     fileText.replace(beginIndex, endIndex - beginIndex, "Temp test text");
 
