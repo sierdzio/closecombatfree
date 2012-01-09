@@ -10,4 +10,4 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    relative2qrcConverter
+    relative2qrc

@@ -4,6 +4,12 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+09.01.2012:
+ - add updateQmlTo2.0 shell script to tools/
+ - update keyboard reference
+ - continue working on converter
+ - comment out resources from src.pro
+
 08.01.2012:
  - move back to non-qrc paths (experimental. QRC will be there only in binary releases)
  - move resources to src/

@@ -7,7 +7,7 @@
 # sierdzio.com
 #-------------------------------------------------
 
-include(../globalImports.pri)
+include(globalImports.pri)
 
 QT       += declarative
 
@@ -100,11 +100,11 @@ OTHER_FILES += \
     ../scenarios/Scenario_tst4.qml \
     ../editor/ScenarioEditor.qml
 
-RESOURCES += \
-    coreResource.qrc \
-    skinResource.qrc \
-    tempResource.qrc \
-    imgResource.qrc
+#RESOURCES += \
+#    coreResource.qrc \
+#    skinResource.qrc \
+#    tempResource.qrc \
+#    imgResource.qrc
 
 
 

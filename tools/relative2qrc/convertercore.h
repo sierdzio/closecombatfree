@@ -5,8 +5,12 @@
 #include <QtCore/qchar.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
+#include <QtCore/qiodevice.h>
+#include <QtCore/qdir.h>
+#include <QtCore/qfile.h>
 #include "../../src/ccferror.h"
 #include "converterflags.h"
+#include "converterfile.h"
 
 class ConverterCore : public QObject, public CcfError
 {
@@ -18,6 +22,7 @@ public:
 private:
     void setFlags(const QStringList &args);
     void displayHelp();
+    void convertDirectory(const QDir &input, const QDir &output);
 
     bool helpMode;
     ConverterFlags *flags;

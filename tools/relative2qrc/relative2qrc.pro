@@ -7,9 +7,9 @@
 # sierdzio.com
 #-------------------------------------------------
 
-include(../../globalImports.pri)
+include(../../src/globalImports.pri)
 
-TARGET = relative2qrcConverter
+TARGET = relative2qrc
 
 DESTDIR = $${EXEC_DIRECTORY}
 OBJECTS_DIR = $${BUILD_DIRECTORY}
@@ -30,3 +30,6 @@ SOURCES += \
     ../../src/ccferror.cpp \
     convertercore.cpp \
     convertermain.cpp
+
+RESOURCES += \
+    converterResource.qrc

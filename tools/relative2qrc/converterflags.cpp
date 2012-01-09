@@ -3,6 +3,8 @@
 ConverterFlags::ConverterFlags(QObject *parent) :
     QObject(parent), CcfError()
 {
+    m_flags &= ConverterFlags::Suffix;
+    m_suffix = "_old";
 }
 
 bool ConverterFlags::setFlags(const QStringList &appArguments)
@@ -25,6 +27,9 @@ bool ConverterFlags::setFlags(const QStringList &appArguments)
             } else if ((current == "-s") || (current == "--suffix")) {
                 m_flags &= ConverterFlags::Suffix;
                 m_suffix = appArguments.at(++i);
+            } else if ((current == "-n") || (current == "--no-suffix")) {
+                m_flags ^= ConverterFlags::Suffix;
+                m_suffix = QString();
             } else if ((current == "-d") || (current == "--no-old-versions")) {
                 m_flags &= ConverterFlags::NoOldVersions;
             } else if ((current == "-f") || (current == "--force")) {
@@ -73,12 +78,5 @@ QString ConverterFlags::suffix() const
 QString ConverterFlags::checkPath(const QString &pathToCheck)
 {
     // TODO: Need to add true checking here!
-
-//    if (QDir::fromNativeSeparators(pathToCheck)) {
-        return QDir::fromNativeSeparators(pathToCheck);
-//    } else {
-//        enterErrorState(pathToCheck + " is not a valid value.");
-//    }
-
-//    return QString();
+    return QDir::fromNativeSeparators(pathToCheck);
 }

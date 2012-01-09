@@ -7,6 +7,9 @@ Ctrl + LMB - select multiple units
 Ctrl + [digit] - create a unit group
 [digit] - select a previously created unit group
 
+T - toggle top menu
+G - toggle bottom menu
+
 P - pause
 S - cancel order (stop)
 F - follow unit
