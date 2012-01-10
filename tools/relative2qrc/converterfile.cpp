@@ -62,22 +62,13 @@ void ConverterFile::convertToQrc()
 
 int ConverterFile::findPath(QString &fileText, int beginIndex)
 {
-    int endIndex = 0;
-
-    beginIndex = fileText.indexOf("\"", beginIndex);
-    endIndex = fileText.indexOf("\"", beginIndex + 1);// + 1;
-
-    if ((fileText.mid(endIndex - 4, 4) == ".qml") || (fileText.mid(endIndex - 3, 3) == ".js")) {
-        // This indeed is a path.
-        return beginIndex;
-    }
-
-    return -1;
+    return fileText.indexOf("\"../", beginIndex);
 }
 
 int ConverterFile::replacePath(QString &fileText, int beginIndex)
 {
-    int endIndex = fileText.indexOf("\"", beginIndex + 1);// + 1;
+    ++beginIndex; // To move past the opening quotation mark.
+    int endIndex = fileText.indexOf("\"", beginIndex);// + 1;
 
     fileText.replace(beginIndex, endIndex - beginIndex, "Temp test text");
 
