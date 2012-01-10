@@ -11,7 +11,7 @@ void ConverterFile::convertToQrc()
     QFile input(inputFile);
     QFile output(outputFile + flags->suffix());
 
-    qDebug() << inputFile << outputFile;
+//    qDebug() << inputFile << outputFile;
 
     // All files that do not require conversion.
     // TODO: handle C++ files.
@@ -68,9 +68,46 @@ int ConverterFile::findPath(QString &fileText, int beginIndex)
 int ConverterFile::replacePath(QString &fileText, int beginIndex)
 {
     ++beginIndex; // To move past the opening quotation mark.
-    int endIndex = fileText.indexOf("\"", beginIndex);// + 1;
+    int endIndex = fileText.indexOf("\"", beginIndex);
 
-    fileText.replace(beginIndex, endIndex - beginIndex, "Temp test text");
+    //// TODO: add path parsing logic here
+
+    QString oldPath = fileText.mid(beginIndex, endIndex - beginIndex);
+
+//    qDebug() << oldPath;
+
+    int jumpsUp = countJumpsToRoot(oldPath);
+
+    if (jumpsUp == 0) {
+        enterErrorState("Wrong path detected!");
+        return -1;
+    }
+
+    // TODO: recognise which resource prefix should be added.
+    QString newPath("qrc:/" + oldPath.mid(oldPath.lastIndexOf("../") + 3));
+
+    //// EOTODO
+
+    fileText.replace(beginIndex, endIndex - beginIndex, newPath);
 
     return -1;
+}
+
+int ConverterFile::countJumpsToRoot(const QString &text)
+{
+    int result = 0;
+    int beginIndex = 0;
+    forever {
+        beginIndex = text.indexOf("../", beginIndex);
+        if (beginIndex == -1) {
+            break;
+        } else {
+            ++beginIndex;
+            ++result;
+        }
+    }
+
+    qDebug() << text << result;
+
+    return result;
 }
