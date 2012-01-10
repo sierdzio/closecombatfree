@@ -8,4 +8,5 @@ lib/
 *~
 Makefile
 closecombatfree
+relative2qrc
 save*.qml
