@@ -29,6 +29,12 @@ New features:
  - prevent firing when target is invisible/ obscured
  - add ability for player to swap sides
 
+// relative2qrc:
+ - prevent empty paths creation ("qrc://")
+ - add tempResource support
+ - add support for all flags
+ - add QRC file generation
+
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
    at will. Also, it shall include more realistic (when compared to TripleA) production, research, movement functionalities)

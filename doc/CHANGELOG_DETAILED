@@ -6,9 +6,12 @@ Some more history can be devised from git sources (although even there, the thin
 Example command for converter: ./relative2qrc -o ../myTempDir -n
 
 === === === ===
+11.01.2012:
+ - added some info to developer readme
+ - further enhancements to relative2qrc application
+
 10.01.2012:
  - make converter properly recognise paths
- - 
 
 09.01.2012:
  - add updateQmlTo2.0 shell script to tools/

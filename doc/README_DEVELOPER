@@ -11,3 +11,9 @@ Props on the map should have 2 properties set: "objectName" and "cover". If you 
 
 Player sides:
 For now, player is considered to be on "neutral" side. All others are considered to be other players. In the future, side choosing will be implemented.
+
+Paths in QML.
+All paths should return to root before progressing into source tree. For example, let's consider a file "qml/temp/MyFile.qml", that wants to access "img/newFolder/myFancyFile.png". Correct path to this file should be "../../img/newFolder/myFancyFile.png". This is pretty straight forward. But now, be also need to import "qml/temp/foo/Bar.qml". Correct path in CCF is "../../qml/temp/foo/", and NOT just "foo/".
+
+Why?
+This helps us maintain the code. It's easier to move files around this way. But, most importantly, that is what realtive2qrc script assumes and requires. So, by following that convention, we gain easy porting to mobile platforms, easier distribution on all platforms (by the means of QRC), and easy mod/ skin support.

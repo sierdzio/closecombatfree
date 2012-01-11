@@ -28,6 +28,7 @@ private:
     int findPath(QString &fileText, int beginIndex);
     int replacePath(QString &fileText, int beginIndex);
     int countJumpsToRoot(const QString &text);
+    QString determineQrcPath(const QString &text);
 
     QString inputFile;
     QString outputFile;

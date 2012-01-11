@@ -70,23 +70,18 @@ int ConverterFile::replacePath(QString &fileText, int beginIndex)
     ++beginIndex; // To move past the opening quotation mark.
     int endIndex = fileText.indexOf("\"", beginIndex);
 
-    //// TODO: add path parsing logic here
-
     QString oldPath = fileText.mid(beginIndex, endIndex - beginIndex);
+//    int jumpsUp = countJumpsToRoot(oldPath);
 
-//    qDebug() << oldPath;
-
-    int jumpsUp = countJumpsToRoot(oldPath);
-
-    if (jumpsUp == 0) {
-        enterErrorState("Wrong path detected!");
-        return -1;
+    QString file(oldPath.mid(oldPath.lastIndexOf('/') + 1));
+    if (!file.contains(QChar('.'))) {
+        file.clear();
     }
 
-    // TODO: recognise which resource prefix should be added.
-    QString newPath("qrc:/" + oldPath.mid(oldPath.lastIndexOf("../") + 3));
-
-    //// EOTODO
+    QString newPath("qrc:/"
+                    + determineQrcPath(oldPath)
+                    + "/"
+                    + file);
 
     fileText.replace(beginIndex, endIndex - beginIndex, newPath);
 
@@ -97,6 +92,7 @@ int ConverterFile::countJumpsToRoot(const QString &text)
 {
     int result = 0;
     int beginIndex = 0;
+
     forever {
         beginIndex = text.indexOf("../", beginIndex);
         if (beginIndex == -1) {
@@ -107,7 +103,40 @@ int ConverterFile::countJumpsToRoot(const QString &text)
         }
     }
 
-    qDebug() << text << result;
+    return result;
+}
+
+QString ConverterFile::determineQrcPath(const QString &text)
+{
+    QString result;
+    QStringList dirs;
+    int beginIndex = text.lastIndexOf("../") + 2;
+    int endIndex = text.lastIndexOf("/");
+
+    if (beginIndex == endIndex) { // There is only one dir after path jumps
+        ++beginIndex;
+        ++endIndex;
+        dirs.append(text.mid(endIndex));
+    } else { // There are many dirs after path jumps
+        ++beginIndex;
+        QString subpath(text.mid(beginIndex, endIndex - beginIndex));
+        dirs = subpath.split(QChar('/'));
+    }
+
+//    qDebug() << text << "|" << dirs.length() << "|" << dirs;
+
+    if ((dirs.at(0) == "qml")
+            && (dirs.length() > 1) // Prevents segfault in next line
+            && (dirs.at(1) == "gui")) {
+        result = "skin";
+    } else if (dirs.at(0) == "qml") {
+        result = "core";
+    } else {
+//        // Absolute fallback. Dangerous!
+//        result = text.mid(text.lastIndexOf("../") + 3);
+
+        result = text.mid(beginIndex, endIndex - beginIndex);
+    }
 
     return result;
 }
