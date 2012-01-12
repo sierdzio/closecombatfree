@@ -6,6 +6,10 @@ Some more history can be devised from git sources (although even there, the thin
 Example command for converter: ./relative2qrc -o ../myTempDir -n
 
 === === === ===
+12.01.2012:
+ - fix empty path generation ("qrc://") and trailing slashes
+ -
+
 11.01.2012:
  - added some info to developer readme
  - further enhancements to relative2qrc application

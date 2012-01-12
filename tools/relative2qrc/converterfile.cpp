@@ -76,11 +76,13 @@ int ConverterFile::replacePath(QString &fileText, int beginIndex)
     QString file(oldPath.mid(oldPath.lastIndexOf('/') + 1));
     if (!file.contains(QChar('.'))) {
         file.clear();
+    } else {
+        file.prepend("/");
     }
 
     QString newPath("qrc:/"
                     + determineQrcPath(oldPath)
-                    + "/"
+//                    + "/"
                     + file);
 
     fileText.replace(beginIndex, endIndex - beginIndex, newPath);

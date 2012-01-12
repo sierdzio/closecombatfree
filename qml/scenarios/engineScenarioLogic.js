@@ -275,7 +275,7 @@ function switchEffectFrame(effectIndex) {
 
     if (imgNumber != 5) {
         effectsContainer[i].imageNumber = imgNumber + 1;
-        effectsContainer[i].source = "../img/effects/" + effectsContainer[i].animationString
+        effectsContainer[i].source = "../img/effects" + "/" + effectsContainer[i].animationString
                 + (imgNumber + 1) + ".png";
     } else if (imgNumber == 5) {
         effectsContainer[i].imageNumber = 0;
