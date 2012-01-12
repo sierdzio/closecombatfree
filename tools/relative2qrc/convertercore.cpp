@@ -87,6 +87,11 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
     foreach (const QString &file, files) {
         ConverterFile converter(tempInput.path() + "/" + file, output.path() + "/" + file, flags);
         converter.convertToQrc();
+
+        if (converter.isErrorState()) {
+            enterErrorState(converter.errorMessage());
+            return;
+        }
     }
 
     foreach (const QString &dir, dirs) {

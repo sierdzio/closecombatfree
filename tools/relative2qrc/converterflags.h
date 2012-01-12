@@ -6,6 +6,9 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdir.h>
+#include <QtCore/QFlag>
+#include <QtCore/QFlags>
+#include <qdebug.h>
 #include "../../src/ccferror.h"
 
 class ConverterFlags : public QObject, public CcfError

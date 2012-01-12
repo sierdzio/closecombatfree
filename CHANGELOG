@@ -1,10 +1,11 @@
-201x.xx.xx - v0.0.4 ()
+2012.xx.xx - v0.0.4 ()
 Changes since v0.0.3 ():
  - add game saving and loading
  - add possibility to load non-qrc files
  - add clusters of obstacles to map props
  - add LOS (Line Of Sight) detection
- - make modding easier
+ - add scenario editor helper file
+ - add path converter, that makes it easy to generate QRC code
  - make use of both QRC and non-QRC implementation possible
  - numerous bug fixes
 

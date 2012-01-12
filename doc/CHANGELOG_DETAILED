@@ -8,7 +8,10 @@ Example command for converter: ./relative2qrc -o ../myTempDir -n
 === === === ===
 12.01.2012:
  - fix empty path generation ("qrc://") and trailing slashes
- -
+ - remove -n and -d flags
+ - fix --force and --suffix to work properly
+ - update helpMessage.txt
+ - fix path generation
 
 11.01.2012:
  - added some info to developer readme

@@ -9,21 +9,31 @@ ConverterFile::ConverterFile(const QString &fileToConvert, const QString &result
 void ConverterFile::convertToQrc()
 {
     QFile input(inputFile);
-    QFile output(outputFile + flags->suffix());
+    QFile output(outputFile);
 
-//    qDebug() << inputFile << outputFile;
+    // If we are not allowed to overwrite, but source exists.
+    if ((output.exists())
+            && !(flags->flags() & ConverterFlags::Suffix)
+            && !(flags->flags() & ConverterFlags::Force)) {
+        enterErrorState("Destination file already exists. Will not overwrite.\n"
+                        "If you want to force overwrite, use -f (--force).\n"
+                        "If you prefer to backing-up, use -s (--suffix).");
+        return;
+    }
 
     // All files that do not require conversion.
     // TODO: handle C++ files.
-    QString tempQml = inputFile.right(4);
-    QString tempJs = inputFile.right(3);
-    if ((tempQml != ".qml") && (tempJs != ".js")) {
-        if (input.copy(outputFile + flags->suffix())) {
-            return;
-        } else {
-            enterErrorState("Could not copy file: " + input.fileName()
-                            + ", to: " + (outputFile + flags->suffix()));
-            return;
+    if (!(flags->flags() & ConverterFlags::Force)) {
+        QString tempQml = inputFile.right(4);
+        QString tempJs = inputFile.right(3);
+        if ((tempQml != ".qml") && (tempJs != ".js")) {
+            if (input.copy(outputFile + flags->suffix())) {
+                return;
+            } else {
+                enterErrorState("Could not copy file: " + input.fileName()
+                                + ", to: " + (outputFile + flags->suffix()));
+                return;
+            }
         }
     }
 
@@ -71,19 +81,7 @@ int ConverterFile::replacePath(QString &fileText, int beginIndex)
     int endIndex = fileText.indexOf("\"", beginIndex);
 
     QString oldPath = fileText.mid(beginIndex, endIndex - beginIndex);
-//    int jumpsUp = countJumpsToRoot(oldPath);
-
-    QString file(oldPath.mid(oldPath.lastIndexOf('/') + 1));
-    if (!file.contains(QChar('.'))) {
-        file.clear();
-    } else {
-        file.prepend("/");
-    }
-
-    QString newPath("qrc:/"
-                    + determineQrcPath(oldPath)
-//                    + "/"
-                    + file);
+    QString newPath("qrc:/" + determineQrcPath(oldPath) );
 
     fileText.replace(beginIndex, endIndex - beginIndex, newPath);
 
@@ -113,7 +111,7 @@ QString ConverterFile::determineQrcPath(const QString &text)
     QString result;
     QStringList dirs;
     int beginIndex = text.lastIndexOf("../") + 2;
-    int endIndex = text.lastIndexOf("/");
+    int endIndex = text.length();
 
     if (beginIndex == endIndex) { // There is only one dir after path jumps
         ++beginIndex;
@@ -125,8 +123,6 @@ QString ConverterFile::determineQrcPath(const QString &text)
         dirs = subpath.split(QChar('/'));
     }
 
-//    qDebug() << text << "|" << dirs.length() << "|" << dirs;
-
     if ((dirs.at(0) == "qml")
             && (dirs.length() > 1) // Prevents segfault in next line
             && (dirs.at(1) == "gui")) {
@@ -134,10 +130,11 @@ QString ConverterFile::determineQrcPath(const QString &text)
     } else if (dirs.at(0) == "qml") {
         result = "core";
     } else {
-//        // Absolute fallback. Dangerous!
-//        result = text.mid(text.lastIndexOf("../") + 3);
+        result = dirs.at(0);
+    }
 
-        result = text.mid(beginIndex, endIndex - beginIndex);
+    for (int i = 1; i < dirs.length(); ++i) {
+        result += "/" + dirs.at(i);
     }
 
     return result;

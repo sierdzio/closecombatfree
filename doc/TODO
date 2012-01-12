@@ -30,10 +30,10 @@ New features:
  - add ability for player to swap sides
 
 // relative2qrc:
- - prevent empty paths creation ("qrc://")
  - add tempResource support
  - add support for all flags
  - add QRC file generation
+ - add --skip flag (allows to specify which files should not be copied when converting)
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
@@ -51,12 +51,3 @@ Big ideas for the future:
  - add resource wrapper app for modders
 
 Done (this section gets occasionally cleaned):
- + add per-unit order queues (that is a big one, but might help a lot in the future)
- + add multiple-waypoint move orders
- + firing animation is performed when a unit on the move stops while being followed
- + preferences menu
- + add game saving and loading
- + get effects to work in loaded save games
- + add "tree clusters" or "forests" that automatically generate
-   some forest-looking areas
- + add 2 sides (player/ opponent), or even leave it open for any number of players
