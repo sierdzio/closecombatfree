@@ -25,8 +25,7 @@ public:
         TempResource     = 0x000008,
         Force            = 0x000010,
         Skip             = 0x000020,
-//        NoOldVersions    = 0x000020,
-        NoQrc            = 0x000030,
+        NoQrc            = 0x000040,
         NoCore           = 0x000080,
         NoImg            = 0x000100,
         NoSkin           = 0x000200

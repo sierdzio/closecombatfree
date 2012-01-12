@@ -36,12 +36,12 @@ void ConverterCore::convert()
     if (helpMode)
         return;
 
-//    if ((flags->inputDirectory() == flags->outputDirectory())
-//            && !(flags->flags() & ConverterFlags::Force)
-//            && (flags->flags() & ConverterFlags::Suffix)) {
-//        enterErrorState("Will not overwrite without --force or a given --suffix.");
-//        return;
-//    }
+    if ((flags->inputDirectory() == flags->outputDirectory())
+            && !(flags->flags() & ConverterFlags::Force)
+            && !(flags->flags() & ConverterFlags::Suffix)) {
+        enterErrorState("Will not overwrite without --force or a given --suffix.");
+        return;
+    }
 
     QString input;
     QString output;
@@ -62,6 +62,12 @@ void ConverterCore::convert()
     QDir outputDir(output);
 
     convertDirectory(inputDir, outputDir);
+
+    ConverterQrcGenerator qrcGenerator(flags, this);
+    qrcGenerator.createQrcFiles();
+    if (qrcGenerator.isErrorState()) {
+        enterErrorState(qrcGenerator.errorMessage());
+    }
 }
 
 void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
@@ -81,8 +87,6 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
         if (!tempOutput.mkpath(output.path()))
             qFatal("Creating directory failed! %s", tempOutput.path().toLocal8Bit().data());
     }
-
-//    qDebug() << tempInput.path() << tempOutput.path();
 
     foreach (const QString &file, files) {
         ConverterFile converter(tempInput.path() + "/" + file, output.path() + "/" + file, flags);
@@ -107,7 +111,6 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
         QString outputPath = tempOutput.path() + "/" + dir;
         QDir outputDir(outputPath);
         QDir inputDir(tempInput.path() + "/" + dir);
-//        inputDir.makeAbsolute();
         convertDirectory(inputDir, outputDir);
     }
 }

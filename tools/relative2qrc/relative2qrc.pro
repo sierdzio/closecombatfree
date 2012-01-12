@@ -22,14 +22,16 @@ HEADERS += \
     converterflags.h \
     converterfile.h \
     ../../src/ccferror.h \
-    convertercore.h
+    convertercore.h \
+    converterqrcgenerator.h
 
 SOURCES += \ 
     converterflags.cpp \
     converterfile.cpp \
     ../../src/ccferror.cpp \
     convertercore.cpp \
-    convertermain.cpp
+    convertermain.cpp \
+    converterqrcgenerator.cpp
 
 RESOURCES += \
     converterResource.qrc

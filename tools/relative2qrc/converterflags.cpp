@@ -30,11 +30,6 @@ bool ConverterFlags::setFlags(const QStringList &appArguments)
             } else if (current == "--skip") {
                 m_flags |= ConverterFlags::Skip;
                 m_skip = parseSkipCommand(appArguments.at(++i));
-//            } else if ((current == "-n") || (current == "--no-suffix")) {
-//                m_flags ^= ConverterFlags::Suffix;
-//                m_suffix = QString();
-//            } else if ((current == "-d") || (current == "--no-old-versions")) {
-//                m_flags &= ConverterFlags::NoOldVersions;
             } else if ((current == "-f") || (current == "--force")) {
                 m_flags |= ConverterFlags::Force;
             } else if ((current == "-t") || (current == "--temp-resource")) {

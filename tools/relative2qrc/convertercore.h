@@ -11,6 +11,7 @@
 #include "../../src/ccferror.h"
 #include "converterflags.h"
 #include "converterfile.h"
+#include "converterqrcgenerator.h"
 
 #include <QDebug>
 
