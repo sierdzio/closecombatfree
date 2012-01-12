@@ -31,7 +31,6 @@ New features:
 
 // relative2qrc:
  - add tempResource support
- - add support for all flags
  - add QRC file generation
  - add --skip flag (allows to specify which files should not be copied when converting)
 

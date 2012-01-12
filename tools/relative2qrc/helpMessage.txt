@@ -13,4 +13,4 @@ Commands (unavailable marked with *):
 *  --no-core			does not generate coreResource.qrc
 *  --no-img			does not generate imgResource.qrc
 *  --no-skin			does not generate skinResource.qrc
-*  --skip			allows to specify which files should not be copied when converting
+  --skip			allows to specify which files should not be copied when converting, comma-separated (','). Allowed are (for now) only concrete names (like "myFile.txt") and ones where the first character is a star (like "*.img")

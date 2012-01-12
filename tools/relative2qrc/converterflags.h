@@ -24,7 +24,8 @@ public:
         Suffix           = 0x000004,
         TempResource     = 0x000008,
         Force            = 0x000010,
-        NoOldVersions    = 0x000020,
+        Skip             = 0x000020,
+//        NoOldVersions    = 0x000020,
         NoQrc            = 0x000030,
         NoCore           = 0x000080,
         NoImg            = 0x000100,
@@ -42,14 +43,17 @@ public:
     QString inputDirectory() const;
     QString outputDirectory() const;
     QString suffix() const;
+    QStringList skip() const;
 
 private:
     QString checkPath(const QString &pathToCheck);
+    QStringList parseSkipCommand(const QString &commandText);
 
     Options m_flags;
     QString m_inputDirectory;
     QString m_outputDirectory;
     QString m_suffix;
+    QStringList m_skip;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(ConverterFlags::Options)

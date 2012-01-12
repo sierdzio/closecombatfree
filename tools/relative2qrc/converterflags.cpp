@@ -27,6 +27,9 @@ bool ConverterFlags::setFlags(const QStringList &appArguments)
             } else if ((current == "-s") || (current == "--suffix")) {
                 m_flags |= ConverterFlags::Suffix;
                 m_suffix = appArguments.at(++i);
+            } else if (current == "--skip") {
+                m_flags |= ConverterFlags::Skip;
+                m_skip = parseSkipCommand(appArguments.at(++i));
 //            } else if ((current == "-n") || (current == "--no-suffix")) {
 //                m_flags ^= ConverterFlags::Suffix;
 //                m_suffix = QString();
@@ -75,8 +78,19 @@ QString ConverterFlags::suffix() const
     return m_suffix;
 }
 
+QStringList ConverterFlags::skip() const
+{
+    return m_skip;
+}
+
 QString ConverterFlags::checkPath(const QString &pathToCheck)
 {
     // TODO: Need to add true checking here!
     return QDir::fromNativeSeparators(pathToCheck);
+}
+
+QStringList ConverterFlags::parseSkipCommand(const QString &commandText)
+{
+    // TODO: check for wrong entries!
+    return commandText.split(QChar(','));
 }

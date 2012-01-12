@@ -11,6 +11,20 @@ void ConverterFile::convertToQrc()
     QFile input(inputFile);
     QFile output(outputFile);
 
+    // Handle skipping
+    if (flags->flags() & ConverterFlags::Skip) {
+        foreach (const QString &s, flags->skip()) {
+            if (input.fileName() == s) {
+                return;
+            } else if (s.at(0) == QChar('*')) {
+                QString temp = s.mid(1);
+                if (input.fileName().right(temp.length()) == temp) {
+                    return;
+                }
+            }
+        }
+    }
+
     // If we are not allowed to overwrite, but source exists.
     if ((output.exists())
             && !(flags->flags() & ConverterFlags::Suffix)
