@@ -15,6 +15,7 @@ Example command for converter: ./relative2qrc -o ../myTempDir -f
  - add --skip flag support
  - add support for all remaining flags
  - add full QRC generation
+ - change relative2qrc target to convert2qrc. This is a - probably - temporary hack to fool (fix) git
 
 11.01.2012:
  - added some info to developer readme

@@ -9,7 +9,7 @@
 
 include(../../src/globalImports.pri)
 
-TARGET = relative2qrc
+TARGET = convert2qrc
 
 DESTDIR = $${EXEC_DIRECTORY}
 OBJECTS_DIR = $${BUILD_DIRECTORY}

@@ -30,9 +30,7 @@ New features:
  - add ability for player to swap sides
 
 // relative2qrc:
- - add tempResource support
- - add QRC file generation
- - add --skip flag (allows to specify which files should not be copied when converting)
+ - make relative2qrc respect gitignore (maybe?)
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
