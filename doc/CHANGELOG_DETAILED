@@ -3,7 +3,7 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
-Example command for converter: ./relative2qrc -o ../myTempDir -n
+Example command for converter: ./relative2qrc -o ../myTempDir -f
 
 === === === ===
 12.01.2012:
@@ -13,7 +13,8 @@ Example command for converter: ./relative2qrc -o ../myTempDir -n
  - update helpMessage.txt
  - fix path generation
  - add --skip flag support
- - initial QRC generation
+ - add support for all remaining flags
+ - add full QRC generation
 
 11.01.2012:
  - added some info to developer readme
