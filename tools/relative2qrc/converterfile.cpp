@@ -8,6 +8,11 @@ ConverterFile::ConverterFile(const QString &fileToConvert, const QString &result
 
 void ConverterFile::convertToQrc()
 {
+    // Skip .pro.user files
+    if (inputFile.right(9) == ".pro.user") {
+        return;
+    }
+
     QFile input(inputFile);
     QFile output(outputFile);
 
@@ -37,12 +42,17 @@ void ConverterFile::convertToQrc()
 
     // All files that do not require conversion.
     // TODO: handle C++ files.
-    if (!(flags->flags() & ConverterFlags::Force)) {
+//    if (!(flags->flags() & ConverterFlags::Force)) {
         QString tempQml = inputFile.right(4);
         QString tempJs = inputFile.right(3);
         if ((tempQml != ".qml")
                 && (tempJs != ".js")
-                && (inputFile.right(8) != "main.cpp")) {
+                && (inputFile.right(8) != "main.cpp")
+                && (inputFile.right(7) != "src.pro")) {
+            if (flags->flags() & ConverterFlags::Force) {
+                output.remove();
+            }
+
             if (input.copy(outputFile + flags->suffix())) {
                 return;
             } else {
@@ -51,7 +61,7 @@ void ConverterFile::convertToQrc()
                 return;
             }
         }
-    }
+//    }
 
     // QML and JS file handling.
     // TODO: (optional) move to a separate method.
@@ -73,7 +83,10 @@ void ConverterFile::convertToQrc()
     // main.cpp handling
     if (inputFile.right(8) == "main.cpp") {
         inputData.replace("qml/main.qml", "qrc:/core/main.qml");
-    } else {
+    } else if (inputFile.right(7) == "src.pro") {
+        inputData.replace("#RESOURCES", "RESOURCES");
+        inputData.replace("#    ", "    ");
+    }else {
         // All remaining files
         forever {
             beginIndex = findPath(inputData, beginIndex);
@@ -145,17 +158,21 @@ QString ConverterFile::determineQrcPath(const QString &text)
         dirs = subpath.split(QChar('/'));
     }
 
+    int i = 0; // Starting point
     if ((dirs.at(0) == "qml")
             && (dirs.length() > 1) // Prevents segfault in next line
             && (dirs.at(1) == "gui")) {
         result = "skin";
+        i = 2;
     } else if (dirs.at(0) == "qml") {
         result = "core";
+        i = 1;
     } else {
         result = dirs.at(0);
+        i = 1;
     }
 
-    for (int i = 1; i < dirs.length(); ++i) {
+    for (; i < dirs.length(); ++i) {
         result += "/" + dirs.at(i);
     }
 

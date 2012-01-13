@@ -3,9 +3,17 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
-Example command for converter: ./relative2qrc -o ../myTempDir -f
+Example command for converter: ./convert2qrc -o ../myTempDir -f
 
 === === === ===
+13.01.2012:
+ - converter now changes main.cpp, too
+ - stop converter from modifying includes in c++ headers
+ - fix imgResource paths in QML and JS files
+ - make converter un-comment resources in src.pro
+ - prevent converter from copying .pro.user
+ - code that is put out by converter comiles without errors now
+
 12.01.2012:
  - fix empty path generation ("qrc://") and trailing slashes
  - remove -n and -d flags
