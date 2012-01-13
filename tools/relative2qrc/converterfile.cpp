@@ -40,7 +40,9 @@ void ConverterFile::convertToQrc()
     if (!(flags->flags() & ConverterFlags::Force)) {
         QString tempQml = inputFile.right(4);
         QString tempJs = inputFile.right(3);
-        if ((tempQml != ".qml") && (tempJs != ".js")) {
+        if ((tempQml != ".qml")
+                && (tempJs != ".js")
+                && (inputFile.right(8) != "main.cpp")) {
             if (input.copy(outputFile + flags->suffix())) {
                 return;
             } else {
@@ -68,13 +70,19 @@ void ConverterFile::convertToQrc()
     int beginIndex = 0;
     QString inputData = input.readAll();
 
-    forever {
-        beginIndex = findPath(inputData, beginIndex);
-        if (beginIndex == -1) {
-            break;
-        } else {
-            beginIndex = replacePath(inputData, beginIndex);
-            ++beginIndex;
+    // main.cpp handling
+    if (inputFile.right(8) == "main.cpp") {
+        inputData.replace("qml/main.qml", "qrc:/core/main.qml");
+    } else {
+        // All remaining files
+        forever {
+            beginIndex = findPath(inputData, beginIndex);
+            if (beginIndex == -1) {
+                break;
+            } else {
+                beginIndex = replacePath(inputData, beginIndex);
+                ++beginIndex;
+            }
         }
     }
 
