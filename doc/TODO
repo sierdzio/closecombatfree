@@ -40,11 +40,10 @@ Big ideas for the future:
  - add per-commander multiplayer (or even per-unit). That is, several people could fight on one side, steering certain platoons,
    and communicating with others about general tactics
  - add online updates and units/maps/scenario/campaign repositories
- - modding tools (Qt Creator is fine here, but it has to be checked and probably expanded)
+ - modding tools (partially done)
  - parametrize UI to allow easy modding and skins creation
  - add naval warfare
- - redesign Scenarios so that they can be easily constructed in Qt Creator by modders
  - add loadable resources (on runtime)
- - add resource wrapper app for modders
+ - add resource wrapper app for modders (for now, relative2qc can do that)
 
-Done (this section gets occasionally cleaned):
+Done (this section gets cleaned occasionally):

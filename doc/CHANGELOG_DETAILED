@@ -12,7 +12,8 @@ Example command for converter: ./convert2qrc -o ../myTempDir -f
  - fix imgResource paths in QML and JS files
  - make converter un-comment resources in src.pro
  - prevent converter from copying .pro.user
- - code that is put out by converter comiles without errors now
+ - code that is put out by converter compiles without errors now
+ - additional fixes to make code work on Android out of the box
 
 12.01.2012:
  - fix empty path generation ("qrc://") and trailing slashes

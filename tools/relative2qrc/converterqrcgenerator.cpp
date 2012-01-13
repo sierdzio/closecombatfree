@@ -108,6 +108,7 @@ void ConverterQrcGenerator::createTempResource()
     body = recursivelyAddAllFiles(inputPath + "/scenarios");
     body += recursivelyAddAllFiles(inputPath + "/maps");
     body += recursivelyAddAllFiles(inputPath + "/units");
+    body += recursivelyAddAllFiles(inputPath + "/saves");
     body += addSingleFile("", "config", false);
     body += addSingleFile("", "config_old", false);
 

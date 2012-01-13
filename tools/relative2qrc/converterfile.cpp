@@ -48,7 +48,8 @@ void ConverterFile::convertToQrc()
         if ((tempQml != ".qml")
                 && (tempJs != ".js")
                 && (inputFile.right(8) != "main.cpp")
-                && (inputFile.right(7) != "src.pro")) {
+                && (inputFile.right(7) != "src.pro")
+                && (inputFile.right(13) != "ccfconfig.cpp")) {
             if (flags->flags() & ConverterFlags::Force) {
                 output.remove();
             }
@@ -86,7 +87,14 @@ void ConverterFile::convertToQrc()
     } else if (inputFile.right(7) == "src.pro") {
         inputData.replace("#RESOURCES", "RESOURCES");
         inputData.replace("#    ", "    ");
-    }else {
+    } else if (inputFile.right(13) == "ccfconfig.cpp") {
+        inputData.replace("QDir scenarioDir(\"scenarios\");", "QDir scenarioDir(\":/scenarios\");");
+        inputData.replace("QDir saveDir(\"saves\");", "QDir saveDir(\":/saves\");");
+    } else {
+        if (inputFile.right(16) == "ScenarioMenu.qml") {
+            inputData.replace("\"scenarios/\" + scenarioPath;", "\"qrc:/scenarios/\" + scenarioPath;");
+            inputData.replace("\"saves/\" + path;", "\"qrc:/saves/\" + path;");
+        }
         // All remaining files
         forever {
             beginIndex = findPath(inputData, beginIndex);

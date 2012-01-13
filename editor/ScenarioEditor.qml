@@ -33,6 +33,13 @@ Rectangle {
         hipsometricImage: "../../img/maps/hipsometric_default.png"
         backgroundImage: "../../img/maps/test1.jpg"
         anchors.fill: parent
+
+        Tank_tst2 {
+            id: tank_tst21
+            x: 571
+            y: 641
+            centerY: 36
+        }
     }
 }
 
