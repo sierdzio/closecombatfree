@@ -5,6 +5,7 @@ import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 
 Rectangle {
     property string scenarioFile: ""
+    property string scenarioWinStatus: "no" // won, lost, ...
     property string playerSide: "neutral" // Experimental!
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
@@ -88,6 +89,9 @@ Rectangle {
                 break;
             }
         }
+
+        scenarioWinStatus = "no";
+        ScenarioLogic.checkScenarioFinished();
     }
 
     Keys.onPressed: {

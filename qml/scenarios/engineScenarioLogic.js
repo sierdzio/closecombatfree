@@ -177,30 +177,35 @@ function actionFinished(index, targetX, targetY) {
                 && (scheduledOperation != "Sneak")
                 && (scheduledOperation != "Follow")) {
             firingActionFinished(index, targetX, targetY);
-            //// Experimental - unit destruction detection
-            // It's probable that this should be done elsewhere.
-            var areAllEnemiesDestroyed = true;
-            var areAllAlliesDestroyed = true;
-            for (var i = 0; i < units.item.children.length; ++i) {
-                var currentUnit = units.item.children[i];
-                if ((currentUnit.unitSide != playerSide) && (currentUnit.state == "healthy")) {
-                    areAllEnemiesDestroyed = false;
-                } else if ((currentUnit.unitSide == playerSide) && (currentUnit.state == "healthy")) {
-                    areAllAlliesDestroyed = false;
-                }
-            }
-
-            if (areAllEnemiesDestroyed) {
-                statusMessage("All enemies destroyed. You have won!");
-            }
-
-            if (areAllAlliesDestroyed) {
-                statusMessage("All allies destroyed. You have lost!");
-            }
-            ////
+            checkScenarioFinished();
         }
 
         calculateOrderMarkerVisibility(index);
+    }
+}
+
+function checkScenarioFinished() {
+    //// Experimental - unit destruction detection
+    // It's probable that this should be done elsewhere.
+    var areAllEnemiesDestroyed = true;
+    var areAllAlliesDestroyed = true;
+    for (var i = 0; i < units.item.children.length; ++i) {
+        var currentUnit = units.item.children[i];
+        if ((currentUnit.unitSide != playerSide) && (currentUnit.state == "healthy")) {
+            areAllEnemiesDestroyed = false;
+        } else if ((currentUnit.unitSide == playerSide) && (currentUnit.state == "healthy")) {
+            areAllAlliesDestroyed = false;
+        }
+    }
+
+    if (scenarioWinStatus == "no") {
+        if (areAllEnemiesDestroyed) {
+            scenarioWinStatus = "won";
+            statusMessage("All enemies destroyed. You have won!");
+        } else if (areAllAlliesDestroyed) {
+            scenarioWinStatus = "lost";
+            statusMessage("All allies destroyed. You have lost!");
+        }
     }
 }
 
