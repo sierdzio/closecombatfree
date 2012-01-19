@@ -100,23 +100,9 @@ OTHER_FILES += \
     ../scenarios/Scenario_tst4.qml \
     ../editor/ScenarioEditor.qml
 
-#RESOURCES += \
-#    coreResource.qrc \
+RESOURCES += \
+    coreResource.qrc
 #    skinResource.qrc \
 #    tempResource.qrc \
 #    imgResource.qrc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
