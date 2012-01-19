@@ -485,6 +485,8 @@ function handleKeyPress(event) {
         // Development key bindings.
         if (event.key == Qt.Key_BracketRight) {
             map.item.hipsometricMapInFront = !map.item.hipsometricMapInFront;
+        } else if (event.key == Qt.Key_BracketLeft) {
+            togglePlayer();
         } else
             // end of dev key bindings
             if (event.key == keyForFunction("zoom in")) {

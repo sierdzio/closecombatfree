@@ -33,16 +33,16 @@ Rectangle {
 
     onScenarioFileChanged: {
         if (scenarioFile != "") {
-        // If it' desktop, menus should be unrolled:
-        if (uiMode == "DESKTOP") {
-            topMenu.openMenu();
-            bottomMenu.openMenu();
-        }
+            // If it' desktop, menus should be unrolled:
+            if (uiMode == "DESKTOP") {
+                topMenu.openMenu();
+                bottomMenu.openMenu();
+            }
 
-        configWindowWidthChanged.connect(updateWidth);
-        updateWidth();
-        topMenu.save.connect(saveGameToFile);
-        loadGame.gameEntryClicked.connect(loadScenario);
+            configWindowWidthChanged.connect(updateWidth);
+            updateWidth();
+            topMenu.save.connect(saveGameToFile);
+            loadGame.gameEntryClicked.connect(loadScenario);
         }
     }
 
@@ -64,6 +64,30 @@ Rectangle {
             }
         }
         return unitsArray;
+    }
+
+    function togglePlayer() {
+        var sides = new Array();
+        // Find all available sides. TEMP!
+        for (var i = 0; i < units.item.children.length; ++i) {
+            if (LogicHelpers.arrayContains(sides, units.item.children[i].unitSide) == -1) {
+                sides.push(units.item.children[i].unitSide);
+            }
+        }
+
+        // Switch to next one in line.
+        for (var j = 0; j < sides.length; ++j) {
+            if (sides[j] == playerSide) {
+                if (j != (sides.length - 1)) {
+                    playerSide = sides[j + 1];
+                } else {
+                    playerSide = sides[0];
+                }
+
+                statusMessage("Player side changed to: " + playerSide);
+                break;
+            }
+        }
     }
 
     Keys.onPressed: {

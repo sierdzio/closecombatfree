@@ -6,6 +6,10 @@ Some more history can be devised from git sources (although even there, the thin
 Example command for converter: ./convert2qrc -o ../myTempDir -f
 
 === === === ===
+19.01.2012:
+ - fix some last (hopefully) QRC issues
+ - add side changing (bound to '[') possibility
+
 13.01.2012:
  - converter now changes main.cpp, too
  - stop converter from modifying includes in c++ headers

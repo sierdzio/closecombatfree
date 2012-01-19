@@ -1,5 +1,17 @@
 .pragma library
 
+// Checks whether array contains a given object.
+// Returns -1 if it does not, otherwise index
+// of first hit is returned.
+function arrayContains(array, objToCheck) {
+    for (var i = 0; i < array.length; ++i) {
+        if (array[i] == objToCheck) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 function rotationAngle(oldX, oldY, newX, newY) {
     var result = 0;
 
