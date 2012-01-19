@@ -700,7 +700,8 @@ function selectUnitFromRoster(mouse) {
 }
 
 function selectUnit(index, modifier) {
-    if (units.item.children[index].unitSide != playerSide) {
+    if ((units.item.children[index].unitSide != playerSide)
+            || (units.item.children[index].state != "healthy")) {
         return;
     }
 

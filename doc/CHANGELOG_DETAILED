@@ -10,6 +10,7 @@ Example command for converter: ./convert2qrc -o ../myTempDir -f
  - fix some last (hopefully) QRC issues
  - add side changing (bound to '[') possibility
  - make info about winning/ losing a scenario be displayed only once
+ - make it impossible to select a destroyed unit
 
 13.01.2012:
  - converter now changes main.cpp, too
