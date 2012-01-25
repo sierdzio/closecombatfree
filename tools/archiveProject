@@ -16,7 +16,7 @@ cd ${1}
 LAST_COMMIT=$(git log -1 --pretty --format=format:"%H")
 cd ..
 
-CURRENT_DATE=$(date +%d.%m.%Y)
+CURRENT_DATE=$(date +%Y.%m.%d)
 
 # This does not check for trailing slashes ('/'). It does not, in fact
 # check for anything.
