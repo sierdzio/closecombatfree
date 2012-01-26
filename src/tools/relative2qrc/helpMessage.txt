@@ -1,0 +1,19 @@
+relative2qrc [-i input/path] [-o output/path] [-s] [-n] [-t] [-h] [-d] [-f] [-no-{qrc,core,img,skin}] [--skip]
+
+An application that automatically converts CCF from relative paths to QRC. Useful for building for mobile devices, and generating release builds. By default, it will:
+ - not overwrite any files
+ - not generate tempResource.qrc
+ - generate coreResource.qrc, imgResource.qrc, skinResource.qrc
+
+Commands (unavailable marked with *):
+  -i				input folder. Defaults to "." (current)
+  -o				output folder. Defaults to "." (current)
+  -s	--suffix		suffix to append to old files' names (to prevent overwriting)
+  -h	--help			display this help message and exit. This flag overrides all others
+  -f	--force			will force the run. Files will be overwritten without notice
+  -t	--temp-resource		also generate tempResource.qrc (needed on mobile devices)
+  --no-qrc			does not generate QRC files (only in-file paths are changed)
+  --no-core			does not generate coreResource.qrc
+  --no-img			does not generate imgResource.qrc
+  --no-skin			does not generate skinResource.qrc
+  --skip			allows to specify which files should not be copied when converting, comma-separated (','). Allowed are (for now) only concrete names (like "myFile.txt") and ones where the first character is a star (like "*.img").

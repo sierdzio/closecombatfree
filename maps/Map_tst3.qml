@@ -4,7 +4,7 @@ import "../maps/props"
 import "../maps"
 
 Map {
-    backgroundImage: "../../img/maps/test3.jpg"
+    backgroundImage: "../../img/maps/test3.png"
     hipsometricImage: "../../img/maps/hipsometric_test1.png"
 
     HouseBasic_tst {

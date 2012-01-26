@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/converter">
-        <file>helpMessage.txt</file>
-    </qresource>
-</RCC>

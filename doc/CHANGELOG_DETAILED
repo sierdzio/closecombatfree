@@ -4,8 +4,16 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 Example command for converter: ./convert2qrc -o ../myTempDir -f
+Command to archive the project easily (to be executed from on dir
+above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
+26.01.2012:
+ - add archiveProject tool
+ - convert maps to .png (needed due to some Qt issues, hopefully temporary)
+ - move sources of tools into scr/tools
+ - create tools/ in root, containing only binaries/ symlinks to tools
+
 19.01.2012:
  - fix some last (hopefully) QRC issues
  - add side changing (bound to '[') possibility

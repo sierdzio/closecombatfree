@@ -11,4 +11,4 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     src \
-    tools
+    src/tools
