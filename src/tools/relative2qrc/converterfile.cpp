@@ -4,12 +4,22 @@ ConverterFile::ConverterFile(const QString &fileToConvert, const QString &result
                              ConverterFlags *flgs, QObject *parent) :
     QObject(parent), CcfError(), flags(flgs), inputFile(fileToConvert), outputFile(resultingFile)
 {
+//    qDebug() << inputFile << "=>" << outputFile;
 }
 
 void ConverterFile::convertToQrc()
 {
     // Skip .pro.user files
-    if (inputFile.right(9) == ".pro.user") {
+    if ((inputFile.right(9) == ".pro.user")
+            || (inputFile == "Makefile")
+            || (inputFile.at(inputFile.length() - 1) == QChar('~'))) {
+        return;
+    }
+
+    int lastDotIndex = inputFile.lastIndexOf(QChar('.'));
+    QString extension = inputFile.right(lastDotIndex + 1);
+
+    if (extension == "xcf") {
         return;
     }
 
@@ -42,27 +52,25 @@ void ConverterFile::convertToQrc()
 
     // All files that do not require conversion.
     // TODO: handle C++ files.
-//    if (!(flags->flags() & ConverterFlags::Force)) {
-        QString tempQml = inputFile.right(4);
-        QString tempJs = inputFile.right(3);
-        if ((tempQml != ".qml")
-                && (tempJs != ".js")
-                && (inputFile.right(8) != "main.cpp")
-                && (inputFile.right(7) != "src.pro")
-                && (inputFile.right(13) != "ccfconfig.cpp")) {
-            if (flags->flags() & ConverterFlags::Force) {
-                output.remove();
-            }
-
-            if (input.copy(outputFile + flags->suffix())) {
-                return;
-            } else {
-                enterErrorState("Could not copy file: " + input.fileName()
-                                + ", to: " + (outputFile + flags->suffix()));
-                return;
-            }
+    QString tempQml = inputFile.right(4);
+    QString tempJs = inputFile.right(3);
+    if ((tempQml != ".qml")
+            && (tempJs != ".js")
+            && (inputFile.right(8) != "main.cpp")
+            && (inputFile.right(7) != "src.pro")
+            && (inputFile.right(13) != "ccfconfig.cpp")) {
+        if (flags->flags() & ConverterFlags::Force) {
+            output.remove();
         }
-//    }
+
+        if (input.copy(outputFile + flags->suffix())) {
+            return;
+        } else {
+            enterErrorState("Could not copy file: " + input.fileName()
+                            + ", to: " + (outputFile + flags->suffix()));
+            return;
+        }
+    }
 
     // QML and JS file handling.
     // TODO: (optional) move to a separate method.

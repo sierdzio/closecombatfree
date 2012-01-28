@@ -3,9 +3,11 @@ relative2qrc [-i input/path] [-o output/path] [-s] [-n] [-t] [-h] [-d] [-f] [-no
 An application that automatically converts CCF from relative paths to QRC. Useful for building for mobile devices, and generating release builds. By default, it will:
  - not overwrite any files
  - not generate tempResource.qrc
+ - not copy .xcf files, Makefile files, files ending with '~'
+ - not copy any hidden directories, build directory
  - generate coreResource.qrc, imgResource.qrc, skinResource.qrc
 
-Commands (unavailable marked with *):
+Commands:
   -i				input folder. Defaults to "." (current)
   -o				output folder. Defaults to "." (current)
   -s	--suffix		suffix to append to old files' names (to prevent overwriting)

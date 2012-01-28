@@ -16,7 +16,6 @@ New features:
  - add Role enum to props. Might be good to create a specialised C++ class for that
  - (maybe) add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
- - add group following (not needed too much)
  - add AI (well, obviously)
  - parametrize all unit actions (animation durations, acceleration etc.)
  - adjust parameters to be more human-readable
@@ -25,9 +24,10 @@ New features:
  - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
-
  - prevent firing when target is invisible/ obscured
- - add ability for player to swap sides
+ 
+ - use QObject bindings added as rootContextProperty to get more dispersed, modular
+   C++ architecture (for example CcfSaver as a separate object in context)
 
 // relative2qrc:
  - make relative2qrc respect gitignore (maybe?)

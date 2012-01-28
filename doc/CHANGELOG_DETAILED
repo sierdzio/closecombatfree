@@ -3,7 +3,8 @@ CHANGELOG for Close Combat Free.
 Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
-Example command for converter: ./convert2qrc -o ../myTempDir -f
+Example command for converter: ./convert2qrc -o ../../myTempDir -f
+Create code ready for mobile (Necessitas): ./convert2qrc -i ../ -o ../../closecombatfree_android -f -t
 Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 

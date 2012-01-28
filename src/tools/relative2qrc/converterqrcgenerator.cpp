@@ -141,8 +141,20 @@ QString ConverterQrcGenerator::addAllFiles(const QString &directory, bool useAli
 {
     QString result;
     QStringList files = QDir(directory).entryList(QDir::Files);
+
+    QString basePath = directory.mid(2);
+
+    forever {
+        if (basePath.at(0) == QChar('/')) {
+            basePath = basePath.mid(1);
+        } else {
+            break;
+        }
+    }
+//    qDebug() << directory << "=>" << basePath;
+
     foreach (const QString &file, files) {
-        QString path = directory.mid(2);
+        QString path = basePath;
 
         if (directory == ".") {
             path += file;

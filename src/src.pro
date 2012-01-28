@@ -101,8 +101,8 @@ OTHER_FILES += \
     ../editor/ScenarioEditor.qml
 
 RESOURCES += \
-    coreResource.qrc
 #    skinResource.qrc \
 #    tempResource.qrc \
-#    imgResource.qrc
+#    imgResource.qrc \
+    coreResource.qrc
  
