@@ -582,6 +582,7 @@ function centerViewOn(x, y) {
 function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
+    centerViewOnUnit(unit);
     followingInfoBox.bodyText = "Unit name: " + units.item.children[index].unitType
             + "\nDouble click to stop.";
 
@@ -606,17 +607,19 @@ function updateFollowingUnit() {
     if (unit.moving == true) {
         centerViewOnUnit(unit);
     } else {
-        console.log("Following a unit. Timer stopped.");
         followingTimer.stop();
     }
 }
 
 function handleUnitMovement(isMoving, unitIndex) {
+    if (followedUnit.index != unitIndex) {
+        return;
+    }
+
     if (isMoving == true) {
-        if (followedUnit.index == unitIndex) {
-            console.log("Following a unit. Timer resumed.");
-            followingTimer.start();
-        }
+        followingTimer.start();
+    } else if (isMoving == false) {
+        followingTimer.stop();
     }
 }
 

@@ -49,11 +49,9 @@ Item {
         }
     }
 
-    signal movementBegan(bool movingState, int unitIndex)
+    signal movementStateChange(bool movingState, int unitIndex)
     onMovingChanged: {
-        if (moving == true) {
-            movementBegan(true, unitIndex);
-        }
+        movementStateChange(moving, unitIndex);
     }
 
 
@@ -230,7 +228,11 @@ Item {
         easing.type: Easing.InOutQuad
         paused: running? root.paused : false
 
-        onRunningChanged: {
+        onRunningChanged: {            
+            if (!xMoveAnimation.running) {
+                moving = false;
+            }
+
             if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
@@ -238,10 +240,6 @@ Item {
                 queueOrderFinished();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
-            }
-
-            if (!xMoveAnimation.running) {
-                moving = false;
             }
         }
     }
