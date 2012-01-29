@@ -49,15 +49,15 @@ Rectangle {
 
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
-        saveGame(units.item.children, units.item.mapFile);
+        saveGame(unitsLoader.item.children, unitsLoader.item.mapFile);
     }
 
     function playerUnits(player) {
         if (player == "") {
-            return units.item.children;
+            return unitsLoader.item.children;
         }
 
-        var allUnits = units.item.children;
+        var allUnits = unitsLoader.item.children;
         var unitsArray = new Array();
         for (var i = 0; i < allUnits.length; ++i) {
             if (allUnits[i].unitSide == player) {
@@ -70,9 +70,9 @@ Rectangle {
     function togglePlayer() {
         var sides = new Array();
         // Find all available sides. TEMP!
-        for (var i = 0; i < units.item.children.length; ++i) {
-            if (LogicHelpers.arrayContains(sides, units.item.children[i].unitSide) == -1) {
-                sides.push(units.item.children[i].unitSide);
+        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
+            if (LogicHelpers.arrayContains(sides, unitsLoader.item.children[i].unitSide) == -1) {
+                sides.push(unitsLoader.item.children[i].unitSide);
             }
         }
 
@@ -148,14 +148,14 @@ Rectangle {
                 }
 
                 Loader {
-                    id: units
+                    id: unitsLoader
                     anchors.fill: parent
                     z: map.z + 1
                     source: {
                         if (scenarioFile == "") {
                             return "";
                         } else if ((scenarioFile.charAt(0) != 'q') && (scenarioFile.charAt(0) != ':')) {
-                            disableQrcUse(units);
+                            disableQrcUse(unitsLoader);
                             return scenarioFile;
                         } else {
                             return scenarioFile;
@@ -164,16 +164,16 @@ Rectangle {
 
                     onLoaded: {
                         if (scenarioFile != "") {
-                            map.source = units.item.mapFile
+                            map.source = unitsLoader.item.mapFile
 
-                            for (var i = 0; i < units.item.children.length; i++) {
-                                units.item.children[i].unitIndex = i;
-                                togglePause.connect(units.item.children[i].togglePause);
-                                units.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
-                                units.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                            for (var i = 0; i < unitsLoader.item.children.length; i++) {
+                                unitsLoader.item.children[i].unitIndex = i;
+                                togglePause.connect(unitsLoader.item.children[i].togglePause);
+                                unitsLoader.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
+                                unitsLoader.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
                             }
 
-                            map.item.setUnits(units.item.children);
+                            map.item.setUnits(unitsLoader.item.children);
                             // Creates base for order markers.
                             ScenarioLogic.initOrderMarkers();
 //                            roster.populateUnits(units.item.children);
@@ -531,15 +531,15 @@ Rectangle {
     }
 
     function childAt(x, y) {
-        return units.item.childAt(x, y);
+        return unitsLoader.item.childAt(x, y);
     }
 
     function childIndexAt(x, y) {
         var result = 0;
-        var child = units.item.childAt(x, y);
+        var child = unitsLoader.item.childAt(x, y);
 
-        for (var i = 0; i < units.item.children.length; i++) {
-            if (child == units.item.children[i]) {
+        for (var i = 0; i < unitsLoader.item.children.length; i++) {
+            if (child == unitsLoader.item.children[i]) {
                 result = i;
                 break;
             }
@@ -551,8 +551,8 @@ Rectangle {
     function childIndex(child) {
         var result = 0;
 
-        for (var i = 0; i < units.item.children.length; i++) {
-            if (child == units.item.children[i]) {
+        for (var i = 0; i < unitsLoader.item.children.length; i++) {
+            if (child == unitsLoader.item.children[i]) {
                 result = i;
                 break;
             }

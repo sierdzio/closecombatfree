@@ -3,40 +3,40 @@ var orderMarkersContainer = new Array();
 var unitGroups = new Array(10);
 
 function scheduleContextAction(index, operation) {
-    var children;
-    var child;
+    var units;
+    var unit;
 
-    children = selectedUnits();
-    if (units.item.children[index] != undefined) {
-        child = units.item.children[index];
+    units = selectedUnits();
+    if (unitsLoader.item.children[index] != undefined) {
+        unit = unitsLoader.item.children[index];
     } else {
-        child = children[0];
-        __unitIndex = child.unitIndex;
+        unit = units[0];
+        __unitIndex = unit.unitIndex;
     }
 
-    child.scheduledOperation = operation;
+    unit.scheduledOperation = operation;
     contextLoader.source = "";
     contextLoader.visible = false;
 
     // Prevents some strange errors in certain situations.
-    if (child.centerY != undefined) {
+    if (unit.centerY != undefined) {
         if (operation == "Stop") {
             // Iterate over every unit!
-            for (var i = 0; i < children.length; i++) {
-                children[i].cancelOrder();
-                calculateOrderMarkerVisibility(children[i].unitIndex);
+            for (var i = 0; i < units.length; i++) {
+                units[i].cancelOrder();
+                calculateOrderMarkerVisibility(units[i].unitIndex);
             }
             cleanContextAction();
         } else if (operation == "Follow") {
             if (isFollowingOn() == true)
                 stopFollowingUnit();
             else
-                startFollowingUnit(child.unitIndex);
+                startFollowingUnit(unit.unitIndex);
         } else
             // Draw aim line for all move/attack operations.
             if ((operation != "Ambush") && (operation != "Defend")) {
-                aimLine.x = child.x + child.centerX;
-                aimLine.y = child.y + child.centerY;
+                aimLine.x = unit.x + unit.centerX;
+                aimLine.y = unit.y + unit.centerY;
 
                 aimLine.color = LogicHelpers.colorForOrder(operation);
                 rotationTimer.start();
@@ -44,15 +44,15 @@ function scheduleContextAction(index, operation) {
 
             } else { // Draw defense 'spheres'
                 if (operation == "Ambush") {
-                    for (var i = 0; i < children.length; i++) {
-                        children[i].defenceSphereColor = "green";
-                        children[i].changeStatus("AMBUSHING");
+                    for (var i = 0; i < units.length; i++) {
+                        units[i].defenceSphereColor = "green";
+                        units[i].changeStatus("AMBUSHING");
                     }
                 }
                 else if (operation == "Defend") {
-                    for (var i = 0; i < children.length; i++) {
-                        children[i].defenceSphereColor = "blue";
-                        children[i].changeStatus("DEFENDING");
+                    for (var i = 0; i < units.length; i++) {
+                        units[i].defenceSphereColor = "blue";
+                        units[i].changeStatus("DEFENDING");
                     }
                 }
                 rotationTimer.start();
@@ -61,9 +61,9 @@ function scheduleContextAction(index, operation) {
 }
 
 function performContextAction(index, targetX, targetY) {
-    var children = selectedUnits();
-    var child = units.item.children[index];
-    var scheduledOperation = child.scheduledOperation;
+    var selectedGroup = selectedUnits();
+    var unit = unitsLoader.item.children[index];
+    var scheduledOperation = unit.scheduledOperation;
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
@@ -72,30 +72,30 @@ function performContextAction(index, targetX, targetY) {
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
-        issueActionOrder(child, targetX, targetY);
+        issueActionOrder(unit, targetX, targetY);
 
-        for (var i = 0; i < children.length; i++) {
-            child = children[i];
+        for (var i = 0; i < selectedGroup.length; i++) {
+            unit = selectedGroup[i];
 
             // This unit's order is already issued.
-            if (child.unitIndex == index)
+            if (unit.unitIndex == index)
                 continue;
 
             // Sets schedule for all units.
-            child.scheduledOperation = scheduledOperation;
+            unit.scheduledOperation = scheduledOperation;
 
-            var tempX = targetX + (child.x - units.item.children[index].x);
-            var tempY = targetY + (child.y - units.item.children[index].y);
+            var tempX = targetX + (unit.x - unitsLoader.item.children[index].x);
+            var tempY = targetY + (unit.y - unitsLoader.item.children[index].y);
 
-            issueActionOrder(child, tempX, tempY);
+            issueActionOrder(unit, tempX, tempY);
         }
     }
     cleanContextAction();
 }
 
 function placeWaypoint(index, targetX, targetY) {
-    var children = selectedUnits();
-    var child = units.item.children[index];
+    var selectedGroup = selectedUnits();
+    var unit = unitsLoader.item.children[index];
     var scheduledOperation = child.scheduledOperation;
 
     if ((scheduledOperation != "Ambush")
@@ -105,70 +105,70 @@ function placeWaypoint(index, targetX, targetY) {
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
-        issueWaypointOrder(child, targetX, targetY);
+        issueWaypointOrder(unit, targetX, targetY);
 
 
-        for (var i = 0; i < children.length; i++) {
-            child = children[i];
+        for (var i = 0; i < selectedGroup.length; i++) {
+            unit = selectedGroup[i];
 
             // This unit's order is already issued.
-            if (child.unitIndex == index)
+            if (unit.unitIndex == index)
                 continue;
 
             // Sets schedule for all units.
-            child.scheduledOperation = scheduledOperation;
+            unit.scheduledOperation = scheduledOperation;
 
-            var tempX = targetX + (child.x - units.item.children[index].x);
-            var tempY = targetY + (child.y - units.item.children[index].y);
+            var tempX = targetX + (unit.x - unitsLoader.item.children[index].x);
+            var tempY = targetY + (unit.y - unitsLoader.item.children[index].y);
 
-            issueWaypointOrder(child, tempX, tempY);
+            issueWaypointOrder(unit, tempX, tempY);
         }
     }
     //    cleanContextAction();
 }
 
-function issueWaypointOrder(child, x, y) {
-    var operation = child.scheduledOperation;
+function issueWaypointOrder(unit, x, y) {
+    var operation = unit.scheduledOperation;
 
     // WARNING! Order canceling IS important!
-    //    child.cancelOrder();
+    //    unit.cancelOrder();
 
     // Clear defence, if it is on.
-    child.defenceSphereColor = "";
-    child.changeStatus("READY");
+    unit.defenceSphereColor = "";
+    unit.changeStatus("READY");
 
-    child.queueOrder(operation, x, y);
+    unit.queueOrder(operation, x, y);
 
-    setOrderMarker(child.unitIndex, child.getOrderQueue().length - 1, operation, x, y);
+    setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
 }
 
-function issueActionOrder(child, x, y) {
-    var operation = child.scheduledOperation;
+function issueActionOrder(unit, x, y) {
+    var operation = unit.scheduledOperation;
 
     // WARNING! Order canceling IS important!
-    //    child.cancelOrder();
+    //    unit.cancelOrder();
 
     // Clear defence, if it is on.
-    child.defenceSphereColor = "";
-    child.changeStatus("READY");
+    unit.defenceSphereColor = "";
+    unit.changeStatus("READY");
 
     if (operation == "Move") {
-        child.moveTo(x, y);
+        unit.moveTo(x, y);
     } else if (operation == "Move fast") {
-        child.moveFastTo(x, y);
+        unit.moveFastTo(x, y);
     } else if (operation == "Sneak") {
-        child.sneakTo(x, y);
+        unit.sneakTo(x, y);
     } else if (operation == "Attack") {
-        child.fireTo(x, y);
+        unit.fireTo(x, y);
     } else if (operation == "Smoke") {
-        child.smokeTo(x, y);
+        unit.smokeTo(x, y);
     }
 
-    setOrderMarker(child.unitIndex, child.getOrderQueue().length - 1, operation, x, y);
+    setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
 }
 
 function actionFinished(index, targetX, targetY) {
-    var unit = units.item.children[index];
+    var unit = unitsLoader.item.children[index];
 
     if (unit.currentOrder != -1) {
         var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
@@ -189,8 +189,8 @@ function checkScenarioFinished() {
     // It's probable that this should be done elsewhere.
     var areAllEnemiesDestroyed = true;
     var areAllAlliesDestroyed = true;
-    for (var i = 0; i < units.item.children.length; ++i) {
-        var currentUnit = units.item.children[i];
+    for (var i = 0; i < unitsLoader.item.children.length; ++i) {
+        var currentUnit = unitsLoader.item.children[i];
         if ((currentUnit.unitSide != playerSide) && (currentUnit.state == "healthy")) {
             areAllEnemiesDestroyed = false;
         } else if ((currentUnit.unitSide == playerSide) && (currentUnit.state == "healthy")) {
@@ -210,7 +210,7 @@ function checkScenarioFinished() {
 }
 
 function firingActionFinished(index, targetX, targetY) {
-    var unit = units.item.children[index];
+    var unit = unitsLoader.item.children[index];
 
     if (unit.currentOrder != -1) {
         // This component renders in-game effects (not all,
@@ -299,11 +299,11 @@ function cleanContextAction() {
 }
 
 function updateAimLine() {
-    var child = units.item.children[__unitIndex];
+    var unit = unitsLoader.item.children[__unitIndex];
 
     if (aimLine.visible == true) {
-        var x1 = child.x + child.centerX;
-        var y1 = child.y + child.centerY;
+        var x1 = unit.x + unit.centerX;
+        var y1 = unit.y + unit.centerY;
         var x2 = mouseAreaMain.mouseX;
         var y2 = mouseAreaMain.mouseY;
 
@@ -318,9 +318,9 @@ function updateAimLine() {
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
-            var terrainObscure = checkForTerrainInLOS(x1, y1, x2, y2, child);
-            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, child);
-            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(units.item.children, x1, y1, x2, y2, child);
+            var terrainObscure = checkForTerrainInLOS(x1, y1, x2, y2, unit);
+            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, unit);
+            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(unitsLoader.item.children, x1, y1, x2, y2, unit);
 
             // Conditions here should be redesigned to save time.
             // There is no need to update aimLine if a given Beginning
@@ -354,11 +354,11 @@ function updateAimLine() {
         }
     } else {
         var tempRotation;
-        tempRotation = LogicHelpers.rotationAngle(child.x + child.centerX,
-                                                  child.y + child.centerY,
+        tempRotation = LogicHelpers.rotationAngle(unit.x + unit.centerX,
+                                                  unit.y + unit.centerY,
                                                   mouseAreaMain.mouseX,
                                                   mouseAreaMain.mouseY);
-        child.defenceSphereRotation = child.rotation
+        unit.defenceSphereRotation = unit.rotation
                 + LogicHelpers.angleTo8Step(tempRotation);
     }
 }
@@ -389,28 +389,28 @@ function handleRightMouseClick(mouse) {
     if (aimLine.visible == true)
         cancelAllSelectedOrders();
 
-    var child;
-    child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+    var unit;
+    unit = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-    if ((child == mouseAreaMain) || (child == null) || (child.unitSide != playerSide)) {
+    if ((unit == mouseAreaMain) || (unit == null) || (unit.unitSide != playerSide)) {
         deselectAllUnits();
         return;
     }
 
-    if (child.centerX != undefined) {
-        if (child.selected == false) {
+    if (unit.centerX != undefined) {
+        if (unit.selected == false) {
             selectUnitFromGameArea(mouse);
         }
 
-        // Fixes context menu at the centre of child object.
+        // Fixes context menu at the centre of unit object.
         var mappedCoords = root.mapFromItem(gameArea,
-                                            (child.x + child.centerX) * zoom,
-                                            (child.y + child.centerY) * zoom);
+                                            (unit.x + unit.centerX) * zoom,
+                                            (unit.y + unit.centerY) * zoom);
         setContextMenuPosition(contextLoader,
                                mappedCoords.x - (gameArea.contentX),
                                mappedCoords.y - (gameArea.contentY));
 
-        __unitIndex = childIndex(child);
+        __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
         contextLoader.source = "../qml/gui/ContextMenu.qml";
         contextLoader.item.unitIndex = __unitIndex;
@@ -431,8 +431,8 @@ function handleLeftMouseClickRoster(mouse) {
 function handleRightMouseClickRoster(mouse) {
     cleanContextAction();
 
-    var child;
-    child = roster.childCenterCoords(mouse.x, mouse.y);
+    var unit;
+    unit = roster.childCenterCoords(mouse.x, mouse.y);
     var unit;
     unit = roster.getUnitAt(mouse.x, mouse.y);
 
@@ -440,10 +440,10 @@ function handleRightMouseClickRoster(mouse) {
         if (unit.selected == false) {
             selectUnitFromRoster(mouse);
         }
-        // Fixes context menu at the centre of child object.
+        // Fixes context menu at the centre of unit object.
         setContextMenuPosition(contextLoader,
-                               menu.x + child.x,
-                               root.height + menu.y + child.y);
+                               menu.x + unit.x,
+                               root.height + menu.y + unit.y);
 
         __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
@@ -583,7 +583,7 @@ function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
     centerViewOnUnit(unit);
-    followingInfoBox.bodyText = "Unit name: " + units.item.children[index].unitType
+    followingInfoBox.bodyText = "Unit name: " + unitsLoader.item.children[index].unitType
             + "\nDouble click to stop.";
 
     if (followingTimer.running == false)
@@ -603,7 +603,7 @@ function isFollowingOn() {
 }
 
 function updateFollowingUnit() {
-    var unit = units.item.children[followedUnit.index];
+    var unit = unitsLoader.item.children[followedUnit.index];
     if (unit.moving == true) {
         centerViewOnUnit(unit);
     } else {
@@ -684,58 +684,58 @@ function updateRubberBand(x, y) {
     //    test2.y = rubberY2;
 
     // Selecting units:
-    var children = units.item.children;
-    for (var i = 0; i < children.length; i++) {
-        var child = children[i];
+    var units = unitsLoader.item.children;
+    for (var i = 0; i < units.length; i++) {
+        var unit = units[i];
 
-        if (child.selected == true)
+        if (unit.selected == true)
             continue;
 
-        if ((child.x <= rubberX2) && (child.x >= rubberX)
-                && (child.y <= rubberY2) && (child.y >= rubberY)) {
-            selectUnit(child.unitIndex, Qt.ControlModifier);
+        if ((unit.x <= rubberX2) && (unit.x >= rubberX)
+                && (unit.y <= rubberY2) && (unit.y >= rubberY)) {
+            selectUnit(unit.unitIndex, Qt.ControlModifier);
         }
     }
 }
 
 function selectUnitFromGameArea(mouse) {
-    var child = childAt(mouse.x, mouse.y);
+    var unit = childAt(mouse.x, mouse.y);
 
-    if (child == null) {
+    if (unit == null) {
         deselectAllUnits();
         return;
     }
 
-    if (child.unitStatus != undefined) {
-        selectUnit(child.unitIndex, mouse.modifiers);
+    if (unit.unitStatus != undefined) {
+        selectUnit(unit.unitIndex, mouse.modifiers);
     } else {
         deselectAllUnits();
     }
 }
 
 function selectUnitFromRoster(mouse) {
-    var child = roster.getUnitAt(mouse.x, mouse.y);
+    var unit = roster.getUnitAt(mouse.x, mouse.y);
 
-    if (child != 0) {
-        selectUnit(child.unitIndex, mouse.modifiers);
+    if (unit != 0) {
+        selectUnit(unit.unitIndex, mouse.modifiers);
     }
 }
 
 function selectUnit(index, modifier) {
-    if ((units.item.children[index].unitSide != playerSide)
-            || (units.item.children[index].state != "healthy")) {
+    if ((unitsLoader.item.children[index].unitSide != playerSide)
+            || (unitsLoader.item.children[index].state != "healthy")) {
         return;
     }
 
     if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
         deselectAllUnits();
-        units.item.children[index].selected = true;
-        soldierMenu.populateSoldiers(units.item.children[index].soldiers);
+        unitsLoader.item.children[index].selected = true;
+        soldierMenu.populateSoldiers(unitsLoader.item.children[index].soldiers);
     } else if ((modifier == Qt.ControlModifier) || (uiMode == "MOBILE")) {
-        if (units.item.children[index].selected == true)
-            units.item.children[index].selected = false;
-        else if (units.item.children[index].selected == false)
-            units.item.children[index].selected = true;
+        if (unitsLoader.item.children[index].selected == true)
+            unitsLoader.item.children[index].selected = false;
+        else if (unitsLoader.item.children[index].selected == false)
+            unitsLoader.item.children[index].selected = true;
 
         if (selectedUnitsCount() > 1) {
             soldierMenu.clear();
@@ -748,24 +748,24 @@ function selectUnit(index, modifier) {
 }
 
 function deselectUnit(index) {
-    units.item.children[index].selected = false;
+    unitsLoader.item.children[index].selected = false;
     calculateOrderMarkerVisibility(index);
     //    soldierMenu.clear();
 }
 
 function deselectAllUnits() {
     soldierMenu.clear();
-    var children = units.item.children;
-    for (var i = 0; i < children.length; i++) {
+    var units = unitsLoader.item.children;
+    for (var i = 0; i < units.length; i++) {
         deselectUnit(i);
     }
 }
 
 function selectedUnitsCount() {
     var result = 0;
-    var children = units.item.children;
-    for (var i = 0; i < children.length; i++) {
-        if (children[i].selected == true)
+    var units = unitsLoader.item.children;
+    for (var i = 0; i < units.length; i++) {
+        if (units[i].selected == true)
             result ++;
     }
     return result;
@@ -773,10 +773,10 @@ function selectedUnitsCount() {
 
 function selectedUnits() {
     var result = new Array();
-    var children = units.item.children;
-    for (var i = 0; i < children.length; i++) {
-        if (children[i].selected == true)
-            result.push(children[i]);
+    var units = unitsLoader.item.children;
+    for (var i = 0; i < units.length; i++) {
+        if (units[i].selected == true)
+            result.push(units[i]);
     }
     return result;
 }
@@ -859,10 +859,10 @@ function digitPressed(event) {
 
 function calculateOrderMarkerVisibility(index) {
     var orderMarker = orderMarkersContainer[index];
-    var child = units.item.children[index];
+    var unit = unitsLoader.item.children[index];
 
     var anyOrdersLeft = false;
-    var orders = child.getOrderQueue();
+    var orders = unit.getOrderQueue();
 
     if (orders.length == 0) {
         for (var i = 0; i < orderMarker.length; i++) {
@@ -910,7 +910,7 @@ function modifyTargetFromMarker(unitIndex, orderNumber) {
     var marker = orderMarkersContainer[unitIndex][orderNumber];
     var newX = marker.x + marker.centerX;
     var newY = marker.y + marker.centerY;
-    var unit = units.item.children[unitIndex];
+    var unit = unitsLoader.item.children[unitIndex];
 
     // Not sure whether this should stay!
     //    unit.cancelOrder();
@@ -918,7 +918,7 @@ function modifyTargetFromMarker(unitIndex, orderNumber) {
 }
 
 function initOrderMarkers() {
-    for (var i = 0; i < units.item.children.length; i++) {
+    for (var i = 0; i < unitsLoader.item.children.length; i++) {
         orderMarkersContainer[i] = new Array();
     }
 }

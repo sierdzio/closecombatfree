@@ -1,6 +1,4 @@
 Bugs & fixes:
- - change "child" variables in logic into "unit" variables
- - look for memory leaks in CcfConfig set of classes. There might be some
  - there is some strange order mixing when performing group queues
  - look into memory consumption - scenarios are not fully cleared from memory on close
 

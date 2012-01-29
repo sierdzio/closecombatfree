@@ -14,6 +14,8 @@ above the project root): ./closecombatfree/tools/archiveProject closecombatfree
  - fix issues when right-clicking while placing an order
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - add "moving" boolean property to Unit.qml
+ - change "child" variables in logic into "unit" variables, together with their plural forms
+ - change "units" Loader in Scenario.qml into "unitsLoader"
 
 28.01.2012:
  - add some exceptions to converter
