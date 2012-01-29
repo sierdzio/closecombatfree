@@ -96,7 +96,7 @@ function performContextAction(index, targetX, targetY) {
 function placeWaypoint(index, targetX, targetY) {
     var selectedGroup = selectedUnits();
     var unit = unitsLoader.item.children[index];
-    var scheduledOperation = child.scheduledOperation;
+    var scheduledOperation = unit.scheduledOperation;
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")

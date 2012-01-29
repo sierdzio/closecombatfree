@@ -57,11 +57,11 @@ Rectangle {
             return unitsLoader.item.children;
         }
 
-        var allUnits = unitsLoader.item.children;
+        var units = unitsLoader.item.children;
         var unitsArray = new Array();
-        for (var i = 0; i < allUnits.length; ++i) {
-            if (allUnits[i].unitSide == player) {
-                unitsArray.push(allUnits[i]);
+        for (var i = 0; i < units.length; ++i) {
+            if (units[i].unitSide == player) {
+                unitsArray.push(units[i]);
             }
         }
         return unitsArray;
