@@ -38,6 +38,7 @@ Item {
     property int defenceSphereRotation: 0
     property string defenceSphereColor: ""
     property bool paused: false
+    property bool moving: false
 
     signal togglePause ()
     onTogglePause: {
@@ -47,6 +48,14 @@ Item {
             paused = true;
         }
     }
+
+    signal movementBegan(bool movingState, int unitIndex)
+    onMovingChanged: {
+        if (moving == true) {
+            movementBegan(true, unitIndex);
+        }
+    }
+
 
     signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
@@ -229,6 +238,10 @@ Item {
                 queueOrderFinished();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
+            }
+
+            if (!xMoveAnimation.running) {
+                moving = false;
             }
         }
     }

@@ -170,6 +170,7 @@ Rectangle {
                                 units.item.children[i].unitIndex = i;
                                 togglePause.connect(units.item.children[i].togglePause);
                                 units.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
+                                units.item.children[i].movementBegan.connect(ScenarioLogic.handleUnitMovement);
                             }
 
                             map.item.setUnits(units.item.children);

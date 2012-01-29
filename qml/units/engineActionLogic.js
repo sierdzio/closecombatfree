@@ -24,6 +24,7 @@ function performMovement (newX, newY, factor) {
                                                         newRotation, rotationSpeed);
     rotationAnimation.to = newRotation;
     rotationAnimation.running = true;
+    moving = true;
 
     var moveDuration = Logic.targetDistance(x, y,
                                             __tempX,
@@ -60,6 +61,7 @@ function performTurretShooting (targetX, targetY) {
 function cancelOrder () {
     changeStatus("STOPPED");
     clearOrderQueue();
+    moving = false;
 
     if ((firing == false) && (smoking == false))  {
         xMoveAnimation.stop();

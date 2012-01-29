@@ -603,7 +603,21 @@ function isFollowingOn() {
 
 function updateFollowingUnit() {
     var unit = units.item.children[followedUnit.index];
-    centerViewOnUnit(unit);
+    if (unit.moving == true) {
+        centerViewOnUnit(unit);
+    } else {
+        console.log("Following a unit. Timer stopped.");
+        followingTimer.stop();
+    }
+}
+
+function handleUnitMovement(isMoving, unitIndex) {
+    if (isMoving == true) {
+        if (followedUnit.index == unitIndex) {
+            console.log("Following a unit. Timer resumed.");
+            followingTimer.start();
+        }
+    }
 }
 
 function updateRubberBand(x, y) {

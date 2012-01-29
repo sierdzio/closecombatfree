@@ -1,5 +1,4 @@
 Bugs & fixes:
- - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
  - there is some strange order mixing when performing group queues

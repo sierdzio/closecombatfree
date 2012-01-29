@@ -12,6 +12,8 @@ above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 29.01.2012:
  - removed echo from updateQmlTo2.0
  - fix issues when right-clicking while placing an order
+ - optimise timer running when following a unit (it can be turned off when unit is stationary)
+ - add "moving" boolean property to Unit.qml
 
 28.01.2012:
  - add some exceptions to converter
