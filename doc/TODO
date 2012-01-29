@@ -1,5 +1,4 @@
 Bugs & fixes:
- - right-click when choosing target cancels the order but also deselects all units - it should not do the latter
  - optimise timer running when following a unit (it can be turned off when unit is stationary)
  - change "child" variables in logic into "unit" variables
  - look for memory leaks in CcfConfig set of classes. There might be some
@@ -29,9 +28,6 @@ New features:
  - use QObject bindings added as rootContextProperty to get more dispersed, modular
    C++ architecture (for example CcfSaver as a separate object in context)
 
-// relative2qrc:
- - make relative2qrc respect gitignore (maybe?)
-
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
    at will. Also, it shall include more realistic (when compared to TripleA) production, research, movement functionalities)
@@ -45,5 +41,3 @@ Big ideas for the future:
  - add naval warfare
  - add loadable resources (on runtime)
  - add resource wrapper app for modders (for now, relative2qc can do that)
-
-Done (this section gets cleaned occasionally):

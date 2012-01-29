@@ -9,6 +9,14 @@ Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
+29.01.2012:
+ - removed echo from updateQmlTo2.0
+ - fix issues when right-clicking while placing an order
+
+28.01.2012:
+ - add some exceptions to converter
+ - add info about new exceptions to converter's helpMessage
+
 26.01.2012:
  - add archiveProject tool
  - convert maps to .png (needed due to some Qt issues, hopefully temporary)

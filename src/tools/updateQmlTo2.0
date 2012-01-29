@@ -1,8 +1,8 @@
 #! /bin/bash
 for file in $(find . -name "*.qml")
     do
-        echo "Replacing on : $file"
+#        echo "Replacing on : $file"
         sed 's/import QtQuick 1.1/import QtQuick 2.0/' $file > $file.tmp
         mv $file.tmp $file
-        echo "Replacement done on : $file"
+#        echo "Replacement done on : $file"
 done 

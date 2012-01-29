@@ -363,6 +363,13 @@ function updateAimLine() {
     }
 }
 
+function cancelAllSelectedOrders() {
+    var selected = selectedUnits();
+    for (var i = 0; i < selectedUnitsCount(); ++i) {
+        selected[i].cancelOrder();
+    }
+}
+
 function handleLeftMouseClick(mouse) {
     if (contextLoader.visible == false) {
         if (mouse.modifiers == Qt.ShiftModifier) {
@@ -379,15 +386,13 @@ function handleLeftMouseClick(mouse) {
 
 function handleRightMouseClick(mouse) {
     cleanContextAction();
+    if (aimLine.visible == true)
+        cancelAllSelectedOrders();
 
     var child;
     child = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-    if (child.unitSide != playerSide) {
-        return;
-    }
-
-    if (child == mouseAreaMain || child == null) {
+    if ((child == mouseAreaMain) || (child == null) || (child.unitSide != playerSide)) {
         deselectAllUnits();
         return;
     }

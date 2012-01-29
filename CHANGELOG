@@ -7,6 +7,8 @@ Changes since v0.0.3 ():
  - add scenario editor helper file
  - add path converter, that makes it easy to generate QRC code
  - make use of both QRC and non-QRC implementation possible
+ - add project archiving tool (archiveProject)
+ - add tool for converting QML into QML 2.0
  - numerous bug fixes
 
 2011.12.20 - v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336).
