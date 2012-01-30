@@ -25,14 +25,20 @@ HEADERS += \
     config/ccfconfigparser.h \
     config/ccfconfigsaver.h \
     ccferror.h \
-    ccfmain.h
+    ccfmain.h \
+    ccfglobal.h \
+    ccfterrain.h \
+    ccfgamemanager.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
     config/ccfconfigparser.cpp \
     config/ccfconfigsaver.cpp \
     ccferror.cpp \
-    ccfmain.cpp
+    ccfmain.cpp \
+    ccfglobal.cpp \
+    ccfterrain.cpp \
+    ccfgamemanager.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \

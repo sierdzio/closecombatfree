@@ -4,108 +4,70 @@
 #include <QObject>
 #include <QString>
 #include <QMap>
-#include <QSize>
 #include <QPair>
-
-#include <QImage>
-#include <QPoint>
-#include <QSize>
-#include <QColor>
-#include <QDebug>
 #include <QStringList>
-#include <QDir>
-#include <QFile>
-#include <QFileInfo>
-//#include <QKeyEvent>
 #include <QKeySequence>
-////
-#include <QTextStream>
-#include <QDeclarativeListReference>
-#include <QtCore/qmath.h>
-////
+#include <QSize>
 #include "../ccferror.h"
+#include "../ccfglobal.h"
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
+
+#include <QDebug>
 
 class CcfConfig : public QObject, public CcfError
 {
     Q_OBJECT
     Q_PROPERTY(QString uiMode READ uiMode WRITE setUiMode NOTIFY uiModeChanged)
     Q_PROPERTY(QString terrainInfoMode READ terrainInfoMode NOTIFY uiModeChanged)
-    Q_PROPERTY(int configWindowWidth READ configWindowWidth WRITE setConfigWindowWidth NOTIFY configWindowWidthChanged)
-    Q_PROPERTY(int configWindowHeight READ configWindowHeight WRITE setConfigWindowHeight NOTIFY configWindowHeightChanged)
-    Q_PROPERTY(bool configMaximised READ configMaximised WRITE setConfigMaximised NOTIFY configMaximisedChanged)
-    Q_PROPERTY(bool configRememberDimensions READ configRememberDimensions WRITE setConfigRememberDimensions NOTIFY configRememberDimensionsChanged)
+    Q_PROPERTY(int windowWidth READ windowWidth WRITE setWindowWidth NOTIFY windowWidthChanged)
+    Q_PROPERTY(int windowHeight READ windowHeight WRITE setWindowHeight NOTIFY windowHeightChanged)
+    Q_PROPERTY(bool maximised READ maximised WRITE setMaximised NOTIFY maximisedChanged)
+    Q_PROPERTY(bool rememberDimensions READ rememberDimensions WRITE setRememberDimensions NOTIFY rememberDimensionsChanged)
 
 public:
-    explicit CcfConfig(const QString &configFilePath, QObject *parent = 0);
+    explicit CcfConfig(const QString &configFilePath, CcfGlobal *globalObject,
+                       QObject *parent = 0);
 
     Q_INVOKABLE QString configurationString();
     Q_INVOKABLE int keyForFunction(const QString &functionName);
     Q_INVOKABLE void toggleUiMode();
     Q_INVOKABLE void toggleTerrainInfoMode();
-    Q_INVOKABLE void setTerrainImageUrl(const QString &url, int width, int height);
-    Q_INVOKABLE int terrainPixelInfo(int x, int y);    
-    Q_INVOKABLE QStringList scenariosList();
-    Q_INVOKABLE QString scenarioPath(int index);
-
     Q_INVOKABLE void setUiMode(const QString &newMode);
-    Q_INVOKABLE void setConfigWindowWidth(int width);
-    Q_INVOKABLE void setConfigWindowHeight(int height);
+    Q_INVOKABLE void setWindowWidth(int width);
+    Q_INVOKABLE void setWindowHeight(int height);
     // For use when not remembering dimensions on exit
-    Q_INVOKABLE void forceSetConfigWindowWidth(int width);
-    Q_INVOKABLE void forceSetConfigWindowHeight(int height);
+    Q_INVOKABLE void forceSetWindowWidth(int width);
+    Q_INVOKABLE void forceSetWindowHeight(int height);
 
-    Q_INVOKABLE bool configMaximised();
-    Q_INVOKABLE void setConfigMaximised(bool newValue);
-    Q_INVOKABLE bool configRememberDimensions();
-    Q_INVOKABLE void setConfigRememberDimensions(bool newValue);
+    Q_INVOKABLE bool maximised();
+    Q_INVOKABLE void setMaximised(bool newValue);
+    Q_INVOKABLE bool rememberDimensions();
+    Q_INVOKABLE void setRememberDimensions(bool newValue);
     // Shortcuts list loading and saving (in-game preferences menu)
     // This would work better if done with Qt MVC!
-    Q_INVOKABLE QStringList configShortcutNamesList();
-    Q_INVOKABLE QStringList configShortcutValuesList();
-    Q_INVOKABLE void setConfigShortcut(const QString &option, const QString &value);
-    ////
-    // Additional ideas:
-    //  - might add map damages info
-    Q_INVOKABLE void saveGame(const QDeclarativeListReference &unitsList,
-                              const QString &mapFile,
-                              const QString &saveFileName = "saves/save1.qml");
-//    Q_INVOKABLE QString loadGame();
-    Q_INVOKABLE QStringList savedGamesList();
-    Q_INVOKABLE void disableQrcUse(QObject *object);
-    //
-    Q_INVOKABLE int checkForTerrainInLOS(qreal x1, qreal y1,
-                                         qreal x2, qreal y2,
-                                         QObject *currentUnit);
-    ////
+    Q_INVOKABLE QStringList shortcutNamesList();
+    Q_INVOKABLE QStringList shortcutValuesList();
+    Q_INVOKABLE void setShortcut(const QString &option, const QString &value);
     QString uiMode();
     QString terrainInfoMode();
-    int configWindowWidth();
-    int configWindowHeight();
-
+    int windowWidth();
+    int windowHeight();
     bool saveConfig();
 
 public slots:
     void windowResized(QSize newSize);
-    void statusMsg(const QString &message);
-    void statusMessage(const QString &message);
 
 signals:
-    void configWindowWidthChanged();
-    void configWindowHeightChanged();
+    void windowWidthChanged();
+    void windowHeightChanged();
     void uiModeChanged();
     void terrainInfoModeChanged();
-    void newStatusMessage(const QString &message,
-                     QObject *sender);
-    ////
-    void configMaximisedChanged();
-    void configMaximise();
-    void configDemaximise();
-    void configRememberDimensionsChanged();
+    void maximisedChanged();
+    void maximise();
+    void demaximise();
+    void rememberDimensionsChanged();
     void sizeModifiedInGame(int width, int height);
-    void disableQrc(QObject *object);
-    ////
 
 private:
     int findQtKey(QChar character);
@@ -113,17 +75,11 @@ private:
     QString boolToString(bool boolToConvert);
     void replaceElement(const QString &elementToReplace, const QString &newValue);
     void parseValidKeyboardShortcuts();
-    QString addSavePropertyIfExists(const QObject *object, const QString &propertyName, bool useQuotes = false);
-    // This can be made invokable in the future.
-    qreal targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY);
 
     int runtimeWidth, runtimeHeight;
-
-    QStringList m_scenariosList;
     QString m_terrainInfoMode;
     QString filePath;
-    QString tab;
-    QImage *terrainImage;
+    CcfGlobal *global;
     CcfConfigParser *parser;
     CcfConfigSaver *saver;
     QMap<QString, QPair<QString, bool> > *configuration;

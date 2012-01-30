@@ -1,15 +1,11 @@
 #include "ccfconfig.h"
 
-CcfConfig::CcfConfig(const QString &configFilePath, QObject *parent) :
-    QObject(parent), CcfError(), filePath(configFilePath)
+CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
+    QObject(parent), CcfError(), filePath(configFilePath), global(globalObject)
 {
     configuration = new QMap<QString, QPair<QString, bool> >();
     parser = new CcfConfigParser(filePath, this);
     m_terrainInfoMode = "OFF";
-    tab = "    ";
-
-    QDir scenarioDir("scenarios");
-    m_scenariosList = scenarioDir.entryList(QDir::Files);
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
@@ -45,12 +41,12 @@ void CcfConfig::toggleUiMode()
     if (mode == "desktop") {
         mode = "mobile";
         replaceElement("uimode", mode);
-        statusMessage("Ui mode changed to: " + mode);
+        global->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
         replaceElement("uimode", mode);
-        statusMessage("Ui mode changed to: " + mode);
+        global->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
 }
@@ -70,12 +66,12 @@ void CcfConfig::toggleTerrainInfoMode()
     emit terrainInfoModeChanged();
 }
 
-int CcfConfig::configWindowWidth()
+int CcfConfig::windowWidth()
 {
     return runtimeWidth;
 }
 
-int CcfConfig::configWindowHeight()
+int CcfConfig::windowHeight()
 {
     return runtimeHeight;
 }
@@ -168,55 +164,14 @@ void CcfConfig::parseValidKeyboardShortcuts()
 
 void CcfConfig::windowResized(QSize newSize)
 {
-    if (configWindowWidth() != newSize.width()
-            || configWindowHeight() != newSize.height()) {
+    if (windowWidth() != newSize.width()
+            || windowHeight() != newSize.height()) {
 
         runtimeHeight = newSize.height();
         runtimeWidth = newSize.width();
-        emit configWindowWidthChanged();
-        emit configWindowHeightChanged();
+        emit windowWidthChanged();
+        emit windowHeightChanged();
     }
-}
-
-void CcfConfig::statusMsg(const QString &message)
-{
-    statusMessage(message);
-}
-
-void CcfConfig::statusMessage(const QString &message)
-{
-    emit newStatusMessage(message, this->sender());
-}
-
-void CcfConfig::setTerrainImageUrl(const QString &url, int width, int height)
-{
-//    qDebug() << url;
-    // Hack for QRC support
-    QString nUrl = url;
-    if (url.mid(0, 3) == "qrc") {
-        nUrl.remove(0, 3);
-    } else {
-        nUrl.remove(0, 6);
-    }
-//    qDebug() << nUrl;
-    QImage tempImage(nUrl);
-    terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
-}
-
-int CcfConfig::terrainPixelInfo(int x, int y)
-{
-    QRgb result(terrainImage->pixel(QPoint(x, y)));
-    return qRed(result) + qGreen(result) + qBlue(result);
-}
-
-QStringList CcfConfig::scenariosList()
-{
-    return m_scenariosList;
-}
-
-QString CcfConfig::scenarioPath(int index)
-{
-    return m_scenariosList.at(index);
 }
 
 void CcfConfig::setUiMode(const QString &newMode)
@@ -224,87 +179,87 @@ void CcfConfig::setUiMode(const QString &newMode)
     if (newMode.toLower() != configuration->value("uimode").first) {
         if (newMode.toLower() == "desktop") {
             replaceElement("uimode", "desktop");
-            statusMessage("Ui mode changed to: desktop");
+            global->statusMessage("Ui mode changed to: desktop");
             emit uiModeChanged();
         } else if (newMode.toLower() == "mobile") {
             replaceElement("uimode", "mobile");
-            statusMessage("Ui mode changed to: mobile");
+            global->statusMessage("Ui mode changed to: mobile");
             emit uiModeChanged();
         }
     }
 }
 
-void CcfConfig::setConfigWindowHeight(int height)
+void CcfConfig::setWindowHeight(int height)
 {
     runtimeHeight = height;
-    emit configWindowWidthChanged();
+    emit windowWidthChanged();
 }
 
-void CcfConfig::setConfigWindowWidth(int width)
+void CcfConfig::setWindowWidth(int width)
 {
     runtimeWidth = width;
-    emit configWindowHeightChanged();
+    emit windowHeightChanged();
 }
 
-void CcfConfig::forceSetConfigWindowWidth(int width)
+void CcfConfig::forceSetWindowWidth(int width)
 {
     replaceElement("width", QString::number(width));
 }
 
-void CcfConfig::forceSetConfigWindowHeight(int height)
+void CcfConfig::forceSetWindowHeight(int height)
 {
     replaceElement("height", QString::number(height));
 }
 
-bool CcfConfig::configMaximised()
+bool CcfConfig::maximised()
 {
     QString result = configuration->value("maximised").first;
     return stringToBool(result);
 }
 
-void CcfConfig::setConfigMaximised(bool newValue)
+void CcfConfig::setMaximised(bool newValue)
 {
     QString current = configuration->value("maximised").first;
     bool currentBool = stringToBool(current);
 
     if (currentBool != newValue) {
         replaceElement("maximised", boolToString(newValue));
-        emit configMaximisedChanged();
+        emit maximisedChanged();
         if (newValue)
-            emit configMaximise();
+            emit maximise();
         else
-            emit configDemaximise();
+            emit demaximise();
     }
 }
 
-bool CcfConfig::configRememberDimensions()
+bool CcfConfig::rememberDimensions()
 {
     QString result = configuration->value("remember dimensions on exit").first;
     return stringToBool(result);
 }
 
-void CcfConfig::setConfigRememberDimensions(bool newValue)
+void CcfConfig::setRememberDimensions(bool newValue)
 {
     QString current = configuration->value("remember dimensions on exit").first;
     bool currentBool = stringToBool(current);
 
     if (currentBool != newValue) {
         replaceElement("remember dimensions on exit", boolToString(newValue));
-        emit configRememberDimensionsChanged();
+        emit rememberDimensionsChanged();
     }
 }
 
-QStringList CcfConfig::configShortcutNamesList()
+QStringList CcfConfig::shortcutNamesList()
 {
     return keyboardShortcuts.keys();
 }
 
-QStringList CcfConfig::configShortcutValuesList()
+QStringList CcfConfig::shortcutValuesList()
 {
     return keyboardShortcuts.values();
 }
 
-void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
+void CcfConfig::setShortcut(const QString &option, const QString &value)
 {
     QString lowOption = option.toLower();
     if (keyboardShortcuts.contains(lowOption)
@@ -312,141 +267,4 @@ void CcfConfig::setConfigShortcut(const QString &option, const QString &value)
             && (QKeySequence(value).toString() != "")) {
         replaceElement(lowOption, value);
     }
-}
-
-void CcfConfig::saveGame(const QDeclarativeListReference &unitsList, const QString &mapFile, const QString &saveFileName)
-{
-    // As a first attempt, I will generate the whole file myself.
-    // A better approach for the future might be to copy and modify
-    // a real scenario file, OR create a QML element like ScenarioLoader
-    // which would have "map", "units" properties.
-
-    // Init. Read template.
-    QFile templateFile("src/config/saveFileTemplate.txt");
-    if (!templateFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qFatal("Template file could not be read! Cannot continue, bailing out.");
-        return;
-    }
-
-    // File numbers incrementation should go here, or at least overwrite warnings!
-    QFile saveFile(saveFileName);
-    if (!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        enterErrorState("Could not save the file: " + saveFileName);
-        return;
-    }
-
-    QString fileContent = templateFile.readAll();
-
-    // Fill template with given data.
-    fileContent.replace("%customImports%", "");
-    fileContent.replace("%mapFile%", mapFile);
-
-    // Save units. Hope this will work. If not - convert units list to string list in JS.
-    QString units;
-    for (int i = 0; i < unitsList.count(); i++) {
-        // In release code, this needs to include order queue,
-        // soldier states, damages etc.
-        QObject *unit = unitsList.at(i);
-        units += tab + unit->property("unitFileName").toString() + " {\n"
-                + tab + tab + "objectName: \"" + unit->objectName() + "\"\n"
-                + tab + tab + "x: " + unit->property("x").toString() + "\n"
-                + tab + tab + "y: " + unit->property("y").toString() + "\n"
-                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
-                + tab + tab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n";
-        units += addSavePropertyIfExists(unit, "turretRotation");
-        units += addSavePropertyIfExists(unit, "hullColor", true);
-        units += tab + "}\n";
-    }
-    fileContent.replace("%units%", units);
-
-    QTextStream out(&saveFile);
-    out << fileContent;
-    saveFile.close();
-}
-
-//QString CcfConfig::loadGame()
-//{
-//}
-
-QStringList CcfConfig::savedGamesList()
-{
-    QDir saveDir("saves");
-    return saveDir.entryList(QDir::Files);
-}
-
-void CcfConfig::disableQrcUse(QObject *object)
-{
-    emit disableQrc(object);
-}
-
-int CcfConfig::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QObject *currentUnit)
-{
-//    int centerX = currentUnit->property("centerX").toInt();
-//    int centerY = currentUnit->property("centerY").toInt();
-
-    int result = 0;
-    qreal distance = targetDistance(x1, y1, x2, y2);
-    qreal a = (y2 - y1) / (x2 - x1);
-    qreal b = y1 - (a * x1);
-    qreal x = x2;
-    qreal y = y2;
-    // Will be needed to calculate too steep angles for firing
-//    qreal originHeight = terrainPixelInfo(x1, y1);
-    qreal targetHeight = terrainPixelInfo(x2, y2);
-
-    for (int i = 0; i < distance; ++i) {
-        if (x2 >= x1) {
-            // Prevent overlenghtening
-            if (x > x2)
-                break;
-            x = x1 + i;
-        } else {
-            // Prevent overlenghtening
-            if (x < x2)
-                break;
-            x = x1 - i;
-        }
-
-        y = (a * x) + b;
-
-        // Detect height in this particular pixel.
-        if (terrainPixelInfo(x, y) > targetHeight) {
-            result = targetDistance(x1, y1, x, y);
-            return result;
-        }
-    }
-    return result;
-}
-
-QString CcfConfig::addSavePropertyIfExists(const QObject *object, const QString &propertyName, bool useQuotes)
-{
-    QString result;
-    QByteArray ba = propertyName.toLocal8Bit();
-    if (object->metaObject()->indexOfProperty(ba.data()) != -1) {
-        result = tab + tab + propertyName + ": ";
-        if (useQuotes)
-            result += "\"";
-        result += object->property(ba.data()).toString();
-        if (useQuotes)
-            result += "\"";
-        result += "\n";
-    }
-    return result;
-}
-
-qreal CcfConfig::targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY)
-{
-    qreal result = 0;
-
-    if (targetX == originX) {
-        result = qAbs(originY - targetY);
-        return result;
-    } else if (targetY == originY) {
-        result = qAbs(originX - targetX);
-        return result;
-    }
-
-    result = qSqrt(qPow((originX - targetX), 2) + qPow((originY - targetY), 2));
-
-    return result;
 }

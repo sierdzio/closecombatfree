@@ -35,12 +35,12 @@ Rectangle {
     onScenarioFileChanged: {
         if (scenarioFile != "") {
             // If it' desktop, menus should be unrolled:
-            if (uiMode == "DESKTOP") {
+            if (Config.uiMode == "DESKTOP") {
                 topMenu.openMenu();
                 bottomMenu.openMenu();
             }
 
-            configWindowWidthChanged.connect(updateWidth);
+            Config.windowWidthChanged.connect(updateWidth);
             updateWidth();
             topMenu.save.connect(saveGameToFile);
             loadGame.gameEntryClicked.connect(loadScenario);
@@ -49,7 +49,7 @@ Rectangle {
 
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
-        saveGame(unitsLoader.item.children, unitsLoader.item.mapFile);
+        GameManager.saveGame(unitsLoader.item.children, unitsLoader.item.mapFile);
     }
 
     function playerUnits(player) {
@@ -85,7 +85,7 @@ Rectangle {
                     playerSide = sides[0];
                 }
 
-                statusMessage("Player side changed to: " + playerSide);
+                Global.statusMessage("Player side changed to: " + playerSide);
                 break;
             }
         }
@@ -109,7 +109,7 @@ Rectangle {
     Flickable {
         id: gameArea
         height: {
-            if ((bottomMenu.width < root.width) || (uiMode == "MOBILE"))
+            if ((bottomMenu.width < root.width) || (Config.uiMode == "MOBILE"))
                 return (parent.height - bottomMenu.visibleHeight);
             else
                 return parent.height;
@@ -155,7 +155,7 @@ Rectangle {
                         if (scenarioFile == "") {
                             return "";
                         } else if ((scenarioFile.charAt(0) != 'q') && (scenarioFile.charAt(0) != ':')) {
-                            disableQrcUse(unitsLoader);
+                            Global.disableQrcUse(unitsLoader);
                             return scenarioFile;
                         } else {
                             return scenarioFile;
@@ -197,14 +197,14 @@ Rectangle {
                         }
                     }
                     onPressAndHold: {
-                        if (uiMode == "DESKTOP") {
+                        if (Config.uiMode == "DESKTOP") {
                             gameArea.interactive = false;
                             if (mouse.button == Qt.LeftButton) {
                                 ScenarioLogic.handlePressAndHoldLeft(mouse);
                             } else if (mouse.button == Qt.RightButton) {
                                 ScenarioLogic.handlePressAndHoldRight(mouse);;
                             }
-                        } else if (uiMode == "MOBILE") {
+                        } else if (Config.uiMode == "MOBILE") {
                             if (terrainInfoMode == "OFF") {
                                 ScenarioLogic.handleRightMouseClick(mouse);
                             } else {
@@ -213,7 +213,7 @@ Rectangle {
                         }
                     }
                     onReleased: {
-                        if (uiMode == "DESKTOP") {
+                        if (Config.uiMode == "DESKTOP") {
                             ScenarioLogic.handleMouseReleased();
                             gameArea.interactive = true;
                         }
@@ -325,7 +325,7 @@ Rectangle {
                     height: roster.height
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
-                    opacity: (uiMode == "MOBILE")? 1: 0;
+                    opacity: (Config.uiMode == "MOBILE")? 1: 0;
 
                     Component.onCompleted: {
                         contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
@@ -523,8 +523,8 @@ Rectangle {
     }
 
     function updateWidth() {
-        if (configWindowWidth < menu.contentWidth) {
-            menu.width = configWindowWidth;
+        if (Config.windowWidth < menu.contentWidth) {
+            menu.width = Config.windowWidth;
         } else {
             menu.width = menu.contentWidth;
         }

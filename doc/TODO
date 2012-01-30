@@ -9,7 +9,6 @@ New features:
  - add fuel and ammo caps for units
  - add in-game chat
  - add deployment phase before the battle
- - add Role enum to props. Might be good to create a specialised C++ class for that
  - add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding curiously-shaped obstacles, like water etc.
  - add AI (well, obviously)
@@ -18,8 +17,6 @@ New features:
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
  - prevent firing when target is invisible/ obscured 
- - use QObject bindings added as rootContextProperty to get more dispersed, modular
-   C++ architecture (for example CcfSaver as a separate object in context)
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles

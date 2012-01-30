@@ -145,7 +145,7 @@ function continueQueue () {
 function hit(byWhat, xWhere, yWhere) {
     // For now, not much logic is in ... :)
     cancelOrder();
-    // Strangely, both state chang calls invoke on base state only once!
+    // Strangely, both state change calls invoke on base state only once!
 //    if (states.contains("destroyed"))
         state = "destroyed";
 //    else

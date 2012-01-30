@@ -9,8 +9,8 @@ Rectangle {
     border.color: Qt.tint(backgroundColor, "#88aaaaaa")
     border.width: 1
 
-    width: configWindowWidth
-    height: configWindowHeight
+    width: Config.windowWidth
+    height: Config.windowHeight
     radius: 20
 
     Component.onCompleted: {
@@ -26,35 +26,35 @@ Rectangle {
     }
 
     function fillPreferencesData() {
-        screenSize.setWidth(configWindowWidth);
-        screenSize.setHeight(configWindowHeight);
-        maximised.checked = configMaximised;
-        rememberDimensions.checked = configRememberDimensions;
+        screenSize.setWidth(Config.windowWidth);
+        screenSize.setHeight(Config.windowHeight);
+        maximised.checked = Config.maximised;
+        rememberDimensions.checked = Config.rememberDimensions;
     }
 
     function savePreferences() {
-        uiMode = uimode.modeToShow;
-        configMaximised = maximised.checked;
-        configRememberDimensions = rememberDimensions.checked;
-        if ((configWindowWidth != screenSize.getWidth())
-                || (configWindowHeight != screenSize.getHeight())) {
-            configWindowWidth = screenSize.getWidth();
-            configWindowHeight = screenSize.getHeight();
+        Config.uiMode = uimode.modeToShow;
+        Config.maximised = maximised.checked;
+        Config.rememberDimensions = rememberDimensions.checked;
+        if ((Config.windowWidth != screenSize.getWidth())
+                || (Config.windowHeight != screenSize.getHeight())) {
+            Config.windowWidth = screenSize.getWidth();
+            Config.windowHeight = screenSize.getHeight();
             sizeModifiedInGame(screenSize.getWidth(), screenSize.getHeight());
         }
 
         // Keyboard shortcuts
         for (var i = 0; i < shortcuts.count; i++) {
             shortcuts.currentIndex = i;
-            setConfigShortcut(shortcuts.currentItem.text, shortcuts.currentItem.getText());
+            Config.setShortcut(shortcuts.currentItem.text, shortcuts.currentItem.getText());
         }
 
         toggleVisibility();
     }
 
     function populateShortcuts() {
-        var shortcutsList = configShortcutNamesList();
-        var valuesList = configShortcutValuesList();
+        var shortcutsList = Config.shortcutNamesList();
+        var valuesList = Config.shortcutValuesList();
 
         for (var i = 0; i < shortcutsList.length; i++) {
             var currentShortcut = shortcutsList[i];
@@ -93,7 +93,7 @@ Rectangle {
             width: screenSize.width
 
             PreferencesCheckboxEntry {
-                property string modeToShow: uiMode
+                property string modeToShow: Config.uiMode
 
                 id: uimode
                 text: "Ui mode: " + modeToShow;

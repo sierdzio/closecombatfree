@@ -22,7 +22,7 @@ Rectangle {
     color: "#5f5f5f"
 
     Component.onCompleted: {
-        var list = scenariosList();
+        var list = GameManager.scenariosList();
 
         for (var i = 0; i < list.length; i++) {
             var current = list[i];

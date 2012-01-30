@@ -33,7 +33,7 @@ Item {
         z: -1
 
         Component.onCompleted: {
-            setTerrainImageUrl(hipsometricImage, hipsometricMap.width, hipsometricMap.height);
+            Terrain.setTerrainImageUrl(hipsometricImage, hipsometricMap.width, hipsometricMap.height);
         }
     }
 
@@ -102,7 +102,7 @@ Item {
             result.cover = child.cover;
         }
 
-        var pixelInfo = terrainPixelInfo(x, y);
+        var pixelInfo = Terrain.pixelInfo(x, y);
 //        console.log("Got terrain PIXEL info: " + pixelInfo);
         result.heightOverZero = pixelInfo / 10;
 

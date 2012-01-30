@@ -9,6 +9,10 @@ Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
+30.01.2012:
+ - use QObject bindings added as rootContextProperty to get more dispersed, modular
+   C++ architecture (for example CcfSaver as a separate object in context)
+
 29.01.2012:
  - removed echo from updateQmlTo2.0
  - fix issues when right-clicking while placing an order

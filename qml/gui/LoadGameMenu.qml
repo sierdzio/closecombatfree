@@ -10,8 +10,8 @@ Rectangle {
     border.color: Qt.tint(backgroundColor, "#88aaaaaa")
     border.width: 1
 
-    width: configWindowWidth
-    height: configWindowHeight
+    width: Config.windowWidth
+    height: Config.windowHeight
     radius: 20
 
     Component.onCompleted: {

@@ -14,7 +14,7 @@ Rectangle {
     border.width: 2
 
     Component.onCompleted: {
-        newStatusMessage.connect(newStatusMessageReceived);
+        Global.newStatusMessage.connect(newStatusMessageReceived);
     }
 
     function newStatusMessageReceived(message, object) {

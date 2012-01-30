@@ -8,8 +8,13 @@
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
-//#include <QDebug>
+
 #include "config/ccfconfig.h"
+#include "ccfglobal.h"
+#include "ccfgamemanager.h"
+#include "ccfterrain.h"
+
+#include <QDebug>
 
 class CcfMain : public QDeclarativeView, public CcfError
 {
@@ -28,6 +33,9 @@ private:
     bool initConfiguration();
 
     CcfConfig *configuration;
+    CcfGlobal *global;
+    CcfGameManager *gameManager;
+    CcfTerrain *terrain;
     QString pwd;
 };
 

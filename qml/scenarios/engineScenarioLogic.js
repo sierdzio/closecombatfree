@@ -201,10 +201,10 @@ function checkScenarioFinished() {
     if (scenarioWinStatus == "no") {
         if (areAllEnemiesDestroyed) {
             scenarioWinStatus = "won";
-            statusMessage("All enemies destroyed. You have won!");
+            Global.statusMessage("All enemies destroyed. You have won!");
         } else if (areAllAlliesDestroyed) {
             scenarioWinStatus = "lost";
-            statusMessage("All allies destroyed. You have lost!");
+            Global.statusMessage("All allies destroyed. You have lost!");
         }
     }
 }
@@ -318,7 +318,7 @@ function updateAimLine() {
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
-            var terrainObscure = checkForTerrainInLOS(x1, y1, x2, y2, unit);
+            var terrainObscure = Terrain.checkForTerrainInLOS(x1, y1, x2, y2, unit);
             var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, unit);
             var unitsObscure = LogicHelpers.checkForObstaclesInLOS(unitsLoader.item.children, x1, y1, x2, y2, unit);
 
@@ -499,15 +499,15 @@ function handleKeyPress(event) {
             togglePlayer();
         } else
             // end of dev key bindings
-            if (event.key == keyForFunction("zoom in")) {
+            if (event.key == Config.keyForFunction("zoom in")) {
                 zoomIn();
-            } else if (event.key == keyForFunction("zoom out")) {
+            } else if (event.key == Config.keyForFunction("zoom out")) {
                 zoomOut();
-            } else if (event.key == keyForFunction("toggle top menu")) {
+            } else if (event.key == Config.keyForFunction("toggle top menu")) {
                 topMenu.toggleMenu();
-            } else if (event.key == keyForFunction("toggle bottom menu")) {
+            } else if (event.key == Config.keyForFunction("toggle bottom menu")) {
                 bottomMenu.toggleMenu();
-            } else if (event.key == keyForFunction("follow")) {
+            } else if (event.key == Config.keyForFunction("follow")) {
                 var selectedOnes = selectedUnits();
                 if ((followedUnit.running == false) && (selectedUnitsCount() > 0)) {
                     __unitIndex = selectedOnes[0].unitIndex;
@@ -529,36 +529,36 @@ function handleKeyPress(event) {
                 }
             } else if (ScenarioLogic.selectedUnitsCount() > 0) {
                 var selectedOnes = selectedUnits();
-                if (event.key == keyForFunction("Stop")) {
+                if (event.key == Config.keyForFunction("Stop")) {
                     for (var i = 0; i < selectedOnes.length; i++) {
                         selectedOnes[i].cancelOrder();
                         calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
                     }
-                } else if (event.key == keyForFunction("Move fast")) {
+                } else if (event.key == Config.keyForFunction("Move fast")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Move fast");
-                } else if (event.key == keyForFunction("Move")) {
+                } else if (event.key == Config.keyForFunction("Move")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Move");
-                } else if (event.key == keyForFunction("Sneak")) {
+                } else if (event.key == Config.keyForFunction("Sneak")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Sneak");
-                } else if (event.key == keyForFunction("Attack")) {
+                } else if (event.key == Config.keyForFunction("Attack")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Attack");
-                } else if (event.key == keyForFunction("Smoke")) {
+                } else if (event.key == Config.keyForFunction("Smoke")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Smoke");
-                } else if (event.key == keyForFunction("Defend")) {
+                } else if (event.key == Config.keyForFunction("Defend")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Defend");
-                } else if (event.key == keyForFunction("Ambush")) {
+                } else if (event.key == Config.keyForFunction("Ambush")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Ambush");
                 }
             }
 
-        if (event.key == keyForFunction("pause")) {
+        if (event.key == Config.keyForFunction("pause")) {
             togglePause();
         }
 
@@ -582,7 +582,7 @@ function centerViewOn(x, y) {
 function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
-    centerViewOnUnit(unit);
+    centerViewOnUnit(index);
     followingInfoBox.bodyText = "Unit name: " + unitsLoader.item.children[index].unitType
             + "\nDouble click to stop.";
 
@@ -727,11 +727,11 @@ function selectUnit(index, modifier) {
         return;
     }
 
-    if ((modifier == Qt.NoModifier) && (uiMode == "DESKTOP")) {
+    if ((modifier == Qt.NoModifier) && (Config.uiMode == "DESKTOP")) {
         deselectAllUnits();
         unitsLoader.item.children[index].selected = true;
         soldierMenu.populateSoldiers(unitsLoader.item.children[index].soldiers);
-    } else if ((modifier == Qt.ControlModifier) || (uiMode == "MOBILE")) {
+    } else if ((modifier == Qt.ControlModifier) || (Config.uiMode == "MOBILE")) {
         if (unitsLoader.item.children[index].selected == true)
             unitsLoader.item.children[index].selected = false;
         else if (unitsLoader.item.children[index].selected == false)
@@ -801,7 +801,7 @@ function groupUnits(groupNumber) {
         group[i].groupNumber = groupNumber;
     }
     //    console.log("Group " + groupNumber + " created.");
-    statusMessage("Group " + groupNumber + " created.");
+    Global.statusMessage("Group " + groupNumber + " created.");
 }
 
 function selectGroup(groupNumber) {

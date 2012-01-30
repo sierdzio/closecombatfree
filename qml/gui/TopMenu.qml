@@ -18,8 +18,8 @@ Item {
     signal load();
 
     onTerrainInfoEntryClicked: {
-        toggleTerrainInfoMode();
-        terrainInfoEntry.additionalText = terrainInfoMode;
+        Config.toggleTerrainInfoMode();
+        terrainInfoEntry.additionalText = Config.terrainInfoMode;
     }
 
     signal openMenu();
@@ -42,7 +42,7 @@ Item {
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);
-        configWindowWidthChanged.connect(updateWidth);
+        Config.windowWidthChanged.connect(updateWidth);
     }
 
     id: root
@@ -56,8 +56,8 @@ Item {
     }
 
     function updateWidth() {
-        if (configWindowWidth < (menu.contentWidth + trigger.width)) {
-            menu.width = configWindowWidth - trigger.width;
+        if (Config.windowWidth < (menu.contentWidth + trigger.width)) {
+            menu.width = Config.windowWidth - trigger.width;
             return;
         } else {
             menu.width = menu.contentWidth;
@@ -96,8 +96,8 @@ Item {
                 height: root.height
                 // This is a serious and nasty hack, and should be
                 // redesigned.
-                opacity: (uiMode == "MOBILE")? 1 : 0.001;
-                enabled: (uiMode == "MOBILE")? true : false;
+                opacity: (Config.uiMode == "MOBILE")? 1 : 0.001;
+                enabled: (Config.uiMode == "MOBILE")? true : false;
 
                 Behavior on opacity {
                     NumberAnimation {}

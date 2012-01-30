@@ -8,7 +8,7 @@ Item {
 
     Component.onCompleted: {
         // Has to be redone every time this window opens!
-        var list = savedGamesList();
+        var list = GameManager.savedGamesList();
         for (var i = 0; i < list.length; i++) {
             var current = list[i];
             gameModel.append({"gameText": current});
