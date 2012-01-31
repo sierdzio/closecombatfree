@@ -1,24 +1,37 @@
+/****************************************************************************
+** Close Combat Free is a free, easily moddable CC-like game.
+** Copyright (C) 2011 Tomasz Siekierda
+** Email: sierdzio@gmail.com, website: http://www.sierdzio.com
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program (in doc/ directory).
+** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+****************************************************************************/
+
 #include "ccfmain.h"
-#include <QDebug>
 
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
-//    initConfiguration();
-//    rootContext()->setContextObject(configuration);
-
-    //// EXPERIMENTAL C++ MODULARISATION
     global = new CcfGlobal(this);
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
     initConfiguration();
 
-//    rootContext()->setContextObject(global);
     rootContext()->setContextProperty("Global", global);
     rootContext()->setContextProperty("Config", configuration);
     rootContext()->setContextProperty("GameManager", gameManager);
     rootContext()->setContextProperty("Terrain", terrain);
-    //// EO Experiment
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
@@ -35,7 +48,6 @@ CcfMain::CcfMain(QWidget *parent) :
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
     connect(configuration, SIGNAL(maximise()), this, SLOT(showMaximized()));
     connect(configuration, SIGNAL(demaximise()), this, SLOT(showNormal()));
-//    connect(configuration, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
     connect(global, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
 }
 

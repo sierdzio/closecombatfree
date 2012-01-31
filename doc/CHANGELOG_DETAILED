@@ -9,6 +9,11 @@ Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
+31.01.2012:
+ - add license information to all source files
+ - add LICENSE.txt file to doc/
+ - add some comments to C++ headers
+
 30.01.2012:
  - use QObject bindings added as rootContextProperty to get more dispersed, modular
    C++ architecture (for example CcfSaver as a separate object in context)
