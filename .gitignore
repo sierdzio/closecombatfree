@@ -2,6 +2,7 @@
 # Tells git to ignore build-related files.
 build/
 lib/
+doc/doxygen/
 *.autosave
 *.pro.user*
 *.kate-swp
