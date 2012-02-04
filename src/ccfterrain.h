@@ -32,6 +32,16 @@
 
 #include "ccferror.h"
 
+/*!
+  Class used in QML to get terrain information, mostly from textures.
+
+  Application uses hipsometric map for terrain height. Value ("height")
+  is calculated by ADDING int values (0-255) of red, green and blue components.
+  This is then converted into meters by dividing by 10. This means,
+  that the maximum height available in game is 76.5 meters.
+  Should that not be enough, a different algorithm can easily be added
+  ot substituted.
+  */
 class CcfTerrain : public QObject, public CcfError
 {
     Q_OBJECT

@@ -32,6 +32,17 @@
 #include <QPair>
 #include "../ccferror.h"
 
+/*!
+  Class for parsing configuration file.
+
+  Parsed options are stored in QMap<QString, QPair<QString, bool> >, where
+  first QString is the option name, the second QString
+  (accessible through .first) stores value, and the bool specifies, whether
+  the value was changed in-game (true if was, false by default).
+
+  Additional QList<QString> stores option names in ordered manner - this way
+  file saving can be optimised.
+  */
 class CcfConfigParser : public QObject, public CcfError
 {
     Q_OBJECT

@@ -32,6 +32,14 @@
 
 #include "ccferror.h"
 
+/*!
+  Class used in QML code as "GameManager" global object.
+
+  Can return all sorts of data about available scenarios
+  and saved games.
+
+  Is also used to save game state to a file.
+  */
 class CcfGameManager : public QObject, public CcfError
 {
     Q_OBJECT

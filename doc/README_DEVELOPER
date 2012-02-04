@@ -1,11 +1,4 @@
-CcfConfig set of classes is used to load and save config files.
-
-Parsed options are stored in QMap<QString, QPair<QString, bool> >, where first QString is the option name, the second QString (accessible through .first) stores value, and the bool specifies, whether the value was changed in-game (true if was, false by default).
-
-Additional QList<QString> stores option names in ordered manner - this was file saving can be optimised.
-
-// Terrain information
-Application uses hipsometric map for terrain height. Value ("height") is calculated by ADDING int values (0-255) of red, green and blue components. This is then converted into meters by dividing by 10. This means, that the maximum height available in gam is 76.5 meters. Should that not be enough, a different algorithm can easily be added.
+This document is currently just a stub. It should be expanded later on (and, most probably, moved to doxygen documentation). It is intended to be a starting point for newcoming developers, as well as a good reference for those already familiar with the code.
 
 Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).
 

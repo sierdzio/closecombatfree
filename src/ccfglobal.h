@@ -26,6 +26,12 @@
 
 #include "ccferror.h"
 
+/*!
+  Class used as "Global" object in QML.
+
+  Has some globally needed methods, like disabling QRC on a QObject,
+  sending statusMessages, etc.
+  */
 class CcfGlobal : public QObject, public CcfError
 {
     Q_OBJECT

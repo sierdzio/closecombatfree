@@ -9,6 +9,11 @@ Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
+04.02.2012:
+ - add some doxygen-style documentation comments
+ - add comments to scripts in src/tools
+ - update README_DEVELOPER
+
 31.01.2012:
  - add license information to all source files
  - add LICENSE.txt file to doc/

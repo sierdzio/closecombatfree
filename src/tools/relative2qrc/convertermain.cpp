@@ -21,6 +21,9 @@
 #include <QtCore/qcoreapplication.h>
 #include "convertercore.h"
 
+/**
+  Runs the converter.
+  */
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

@@ -34,6 +34,10 @@
 
 #include <qdebug.h>
 
+/*!
+  QRC generating class. Creates fragmented resources based on a set of
+  hard-coded rules. Some rules can be specified by flags, too.
+  */
 class ConverterQrcGenerator : public QObject, public CcfError
 {
     Q_OBJECT

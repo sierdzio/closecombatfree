@@ -31,24 +31,31 @@
 #include <qdebug.h>
 #include "../../ccferror.h"
 
+/*!
+  Class holding flags (console switches) specified by user.
+  Shared by all other classes in this project.
+  */
 class ConverterFlags : public QObject, public CcfError
 {
     Q_OBJECT
     Q_FLAGS(Options)
 
 public:
+    /*!
+      Enum holding state of all application switches.
+      */
     enum Option
     {
-        InputDirectory   = 0x000001,
-        OutputDirectory  = 0x000002,
-        Suffix           = 0x000004,
-        TempResource     = 0x000008,
-        Force            = 0x000010,
-        Skip             = 0x000020,
-        NoQrc            = 0x000040,
-        NoCore           = 0x000080,
-        NoImg            = 0x000100,
-        NoSkin           = 0x000200
+        InputDirectory   = 0x000001, //!< True if input dir was specified
+        OutputDirectory  = 0x000002, //!< True if output dir was specified
+        Suffix           = 0x000004, //!< True if suffix was specified
+        TempResource     = 0x000008, //!< True if -t switch was set
+        Force            = 0x000010, //!< True if -f switch was set
+        Skip             = 0x000020, //!< True if --skip switch was set
+        NoQrc            = 0x000040, //!< True if --no-qrc switch was set
+        NoCore           = 0x000080, //!< True if --no-core switch was set
+        NoImg            = 0x000100, //!< True if --no-img switch was set
+        NoSkin           = 0x000200  //!< True if --no-skin switch was set
     };
     Q_DECLARE_FLAGS(Options, Option)
 

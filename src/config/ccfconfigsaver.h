@@ -28,6 +28,9 @@
 #include <QFile>
 #include "../ccferror.h"
 
+/*!
+  Saves configuration back to a file.
+  */
 class CcfConfigSaver : public QObject, public CcfError
 {
     Q_OBJECT

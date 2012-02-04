@@ -23,6 +23,9 @@
 
 #include <QString>
 
+/*!
+  Global error reporting class. Inherited by all other C++ classes in CCF.
+  */
 class CcfError
 {
 public:

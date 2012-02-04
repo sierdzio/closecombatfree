@@ -33,6 +33,11 @@
 
 #include <qdebug.h>
 
+/*!
+  This class converts a single file, according to CcfFlags object
+  and some hard-coded rules. It is also responsible for skipping/ copying
+  without change some files.
+  */
 class ConverterFile : public QObject, public CcfError
 {
     Q_OBJECT

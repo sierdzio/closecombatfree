@@ -35,6 +35,10 @@
 
 #include <QDebug>
 
+/*!
+  Core class of QRC converter. Manages flags, displays help message,
+  initialises the conversion.
+  */
 class ConverterCore : public QObject, public CcfError
 {
     Q_OBJECT

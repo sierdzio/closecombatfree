@@ -36,6 +36,10 @@
 
 #include <QDebug>
 
+/*!
+  Class responsible for displaying the game content on screen,
+  connecting other C++ code to the game engine etc.
+  */
 class CcfMain : public QDeclarativeView, public CcfError
 {
     Q_OBJECT

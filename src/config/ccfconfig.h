@@ -35,7 +35,7 @@
 
 #include <QDebug>
 
-/**
+/*!
   This class is responsible for providing and modifying configuration
   to QML. It also loads config on init, and saves on exit (using CcfConfigParser
   and CcfConfigSaver).

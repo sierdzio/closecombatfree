@@ -2,7 +2,7 @@
 # This script automatically generates a tar.bz2 tarball.
 # Currently, implementation is pretty dumb. Here's what you have to
 # remember:
-#  - invoke from one directory higher than project root
+#  - invoke from directory one jump higher than project root
 #  - use game's directory name as first (and only) argument
 # This is pretty annoying, but works for now. Will probably
 # get better in the future.
