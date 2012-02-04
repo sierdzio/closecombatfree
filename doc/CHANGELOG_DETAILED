@@ -14,7 +14,7 @@ above the project root): ./closecombatfree/tools/archiveProject closecombatfree
  - add comments to scripts in src/tools
  - add modules to doxygen docs
  - update README_DEVELOPER
- - add configuration file for doxygen with HTML and QHP turned on
+ - add configuration file for doxygen with HTML, QHP and .QCH generation turned on
 
 31.01.2012:
  - add license information to all source files
