@@ -20,6 +20,11 @@
 
 #include "ccfmain.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
@@ -102,3 +107,5 @@ bool CcfMain::initConfiguration()
     }
     return true;
 }
+
+/*! @}*/

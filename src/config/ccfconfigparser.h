@@ -33,6 +33,11 @@
 #include "../ccferror.h"
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Class for parsing configuration file.
 
   Parsed options are stored in QMap<QString, QPair<QString, bool> >, where
@@ -58,5 +63,7 @@ private:
     QMap<QString, QPair<QString, bool> > *m_configuration;
     QList<QString> *m_configIndexes;
 };
+
+/*! @}*/
 
 #endif // CCFCONFIGPARSER_H

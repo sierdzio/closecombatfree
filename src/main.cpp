@@ -21,6 +21,11 @@
 #include <QApplication>
 #include "ccfmain.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -38,3 +43,5 @@ int main(int argc, char *argv[])
         return 1;
     }
 }
+
+/*! @}*/

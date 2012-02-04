@@ -33,6 +33,11 @@
 #include "ccferror.h"
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Class used in QML code as "GameManager" global object.
 
   Can return all sorts of data about available scenarios
@@ -60,5 +65,7 @@ private:
     QStringList m_scenariosList;
     QString tab;
 };
+
+/*! @}*/
 
 #endif // CCFGAMEMANAGER_H

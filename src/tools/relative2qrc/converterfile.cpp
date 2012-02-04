@@ -20,6 +20,11 @@
 
 #include "converterfile.h"
 
+/*!
+  \ingroup Converter
+  @{
+ */
+
 ConverterFile::ConverterFile(const QString &fileToConvert, const QString &resultingFile,
                              ConverterFlags *flgs, QObject *parent) :
     QObject(parent), CcfError(), flags(flgs), inputFile(fileToConvert), outputFile(resultingFile)
@@ -214,3 +219,5 @@ QString ConverterFile::determineQrcPath(const QString &text)
 
     return result;
 }
+
+/*! @}*/

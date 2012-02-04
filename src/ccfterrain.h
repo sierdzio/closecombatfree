@@ -33,6 +33,11 @@
 #include "ccferror.h"
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Class used in QML to get terrain information, mostly from textures.
 
   Application uses hipsometric map for terrain height. Value ("height")
@@ -57,5 +62,7 @@ private:
     qreal targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY);
     QImage *terrainImage;
 };
+
+/*! @}*/
 
 #endif // CCFTERRAIN_H

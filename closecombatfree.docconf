@@ -52,7 +52,7 @@ PROJECT_LOGO           = ccf_icon.png
 # If a relative path is entered, it will be relative to the location
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = doc/doxygen
+OUTPUT_DIRECTORY       = doc
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create
 # 4096 sub-directories (in 2 levels) under the output directory of each output
@@ -1034,7 +1034,7 @@ TOC_EXPAND             = NO
 # that can be used as input for Qt's qhelpgenerator to generate a
 # Qt Compressed Help (.qch) of the generated HTML documentation.
 
-GENERATE_QHP           = NO
+GENERATE_QHP           = YES
 
 # If the QHG_LOCATION tag is specified, the QCH_FILE tag can
 # be used to specify the file name of the resulting .qch file.
@@ -1046,13 +1046,13 @@ QCH_FILE               =
 # Qt Help Project output. For more information please see
 # http://doc.trolltech.com/qthelpproject.html#namespace
 
-QHP_NAMESPACE          = org.doxygen.Project
+QHP_NAMESPACE          = com.sierdzio.closecombatfree
 
 # The QHP_VIRTUAL_FOLDER tag specifies the namespace to use when generating
 # Qt Help Project output. For more information please see
 # http://doc.trolltech.com/qthelpproject.html#virtual-folders
 
-QHP_VIRTUAL_FOLDER     = doc
+QHP_VIRTUAL_FOLDER     = ccf
 
 # If QHP_CUST_FILTER_NAME is set, it specifies the name of a custom filter to
 # add. For more information please see
@@ -1210,7 +1210,7 @@ SERVER_BASED_SEARCH    = NO
 # If the GENERATE_LATEX tag is set to YES (the default) Doxygen will
 # generate Latex output.
 
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be

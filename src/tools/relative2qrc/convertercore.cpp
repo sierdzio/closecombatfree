@@ -21,6 +21,11 @@
 #include "convertercore.h"
 #include "iostream"
 
+/*!
+  \ingroup Converter
+  @{
+ */
+
 ConverterCore::ConverterCore(const QStringList &args, QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -149,3 +154,4 @@ void ConverterCore::displayHelp()
     std::cout << helpData.data() << std::endl;
 }
 
+/*! @}*/

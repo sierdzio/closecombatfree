@@ -20,6 +20,11 @@
 
 #include "converterqrcgenerator.h"
 
+/*!
+  \ingroup Converter
+  @{
+ */
+
 ConverterQrcGenerator::ConverterQrcGenerator(ConverterFlags *flgs, QObject *parent) :
     QObject(parent), CcfError(), flags(flgs)
 {
@@ -211,3 +216,5 @@ QString ConverterQrcGenerator::recursivelyAddAllFiles(const QString &directory)
     }
     return result;
 }
+
+/*! @}*/

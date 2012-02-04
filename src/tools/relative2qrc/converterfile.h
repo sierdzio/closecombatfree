@@ -34,6 +34,11 @@
 #include <qdebug.h>
 
 /*!
+  \ingroup Converter
+  @{
+ */
+
+/*!
   This class converts a single file, according to CcfFlags object
   and some hard-coded rules. It is also responsible for skipping/ copying
   without change some files.
@@ -59,5 +64,7 @@ private:
     QString outputFile;
     ConverterFlags *flags;
 };
+
+/*! @}*/
 
 #endif // CONVERTERFILE_H

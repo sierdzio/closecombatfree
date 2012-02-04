@@ -20,6 +20,11 @@
 
 #include "ccfterrain.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfTerrain::CcfTerrain(QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -101,3 +106,5 @@ qreal CcfTerrain::targetDistance(qreal originX, qreal originY, qreal targetX, qr
 
     return result;
 }
+
+/*! @}*/

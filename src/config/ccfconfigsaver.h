@@ -29,6 +29,11 @@
 #include "../ccferror.h"
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Saves configuration back to a file.
   */
 class CcfConfigSaver : public QObject, public CcfError
@@ -46,5 +51,7 @@ private:
     QList<QString> *m_configIndexes;
     QString m_configFilePath;
 };
+
+/*! @}*/
 
 #endif // CCFCONFIGSAVER_H

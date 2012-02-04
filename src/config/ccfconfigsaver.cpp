@@ -20,6 +20,11 @@
 
 #include "ccfconfigsaver.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
                                QList<QString> *configIndexes,
                                const QString &configFilePath,
@@ -96,3 +101,5 @@ void CcfConfigSaver::updateConfigFile()
     file.close();
     newFile.close();
 }
+
+/*! @}*/

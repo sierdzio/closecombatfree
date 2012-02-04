@@ -27,6 +27,11 @@
 #include "ccferror.h"
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Class used as "Global" object in QML.
 
   Has some globally needed methods, like disabling QRC on a QObject,
@@ -48,5 +53,7 @@ signals:
                           QObject *sender);
     void disableQrc(QObject *object);
 };
+
+/*! @}*/
 
 #endif // CCFGLOBAL_H

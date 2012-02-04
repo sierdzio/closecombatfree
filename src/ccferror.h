@@ -24,6 +24,11 @@
 #include <QString>
 
 /*!
+  \defgroup CcfError Base error class for CCF
+  @{
+ */
+
+/*!
   Global error reporting class. Inherited by all other C++ classes in CCF.
   */
 class CcfError
@@ -38,5 +43,7 @@ private:
     bool m_errorState;
     QString m_errorMessage;
 };
+
+/*! @}*/
 
 #endif // CCFERROR_H

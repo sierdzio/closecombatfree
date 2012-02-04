@@ -21,6 +21,11 @@
 #include <QtCore/qcoreapplication.h>
 #include "convertercore.h"
 
+/*!
+  \ingroup Converter
+  @{
+ */
+
 /**
   Runs the converter.
   */
@@ -38,3 +43,5 @@ int main(int argc, char *argv[])
 
     return 0;//    a.exec();
 }
+
+/*! @}*/

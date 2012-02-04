@@ -36,6 +36,11 @@
 #include <QDebug>
 
 /*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
+/*!
   This class is responsible for providing and modifying configuration
   to QML. It also loads config on init, and saves on exit (using CcfConfigParser
   and CcfConfigSaver).
@@ -110,5 +115,7 @@ private:
     QMap<QString, QPair<QString, bool> > *configuration;
     QMap<QString, QString> keyboardShortcuts;
 };
+
+/*! @}*/
 
 #endif // CCFCONFIG_H

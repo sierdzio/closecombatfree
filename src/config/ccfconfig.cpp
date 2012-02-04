@@ -20,6 +20,11 @@
 
 #include "ccfconfig.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath), global(globalObject)
 {
@@ -288,3 +293,5 @@ void CcfConfig::setShortcut(const QString &option, const QString &value)
         replaceElement(lowOption, value);
     }
 }
+
+/*! @}*/

@@ -35,6 +35,11 @@
 #include <qdebug.h>
 
 /*!
+  \ingroup Converter
+  @{
+ */
+
+/*!
   QRC generating class. Creates fragmented resources based on a set of
   hard-coded rules. Some rules can be specified by flags, too.
   */
@@ -60,5 +65,7 @@ private:
     QString outputPath;
     QString tab;
 };
+
+/*! @}*/
 
 #endif // CONVERTERQRCGENERATOR_H

@@ -20,6 +20,11 @@
 
 #include "ccferror.h"
 
+/*!
+  \ingroup CcfError
+  @{
+ */
+
 CcfError::CcfError()
 {
     m_errorState = false;
@@ -40,3 +45,5 @@ void CcfError::enterErrorState(const QString &errorMsg)
     m_errorState = true;
     m_errorMessage = errorMsg;
 }
+
+/*! @}*/

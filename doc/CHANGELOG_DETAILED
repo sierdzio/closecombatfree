@@ -10,9 +10,11 @@ above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 === === === ===
 04.02.2012:
- - add some doxygen-style documentation comments
+ - add some doxygen-style documentation comments, mostly to converter
  - add comments to scripts in src/tools
+ - add modules to doxygen docs
  - update README_DEVELOPER
+ - add configuration file for doxygen with HTML and QHP turned on
 
 31.01.2012:
  - add license information to all source files

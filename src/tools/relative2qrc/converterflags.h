@@ -32,6 +32,11 @@
 #include "../../ccferror.h"
 
 /*!
+  \ingroup Converter
+  @{
+ */
+
+/*!
   Class holding flags (console switches) specified by user.
   Shared by all other classes in this project.
   */
@@ -83,5 +88,7 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(ConverterFlags::Options)
+
+/*! @}*/
 
 #endif // CONVERTERFLAGS_H

@@ -20,6 +20,11 @@
 
 #include "ccfglobal.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfGlobal::CcfGlobal(QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -39,3 +44,5 @@ void CcfGlobal::disableQrcUse(QObject *object)
 {
     emit disableQrc(object);
 }
+
+/*! @}*/

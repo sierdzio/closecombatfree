@@ -36,6 +36,11 @@
 #include <QDebug>
 
 /*!
+  \defgroup Converter Converter (changes relative paths into QRC paths)
+  @{
+ */
+
+/*!
   Core class of QRC converter. Manages flags, displays help message,
   initialises the conversion.
   */
@@ -54,5 +59,7 @@ private:
     bool helpMode;
     ConverterFlags *flags;
 };
+
+/*! @}*/
 
 #endif // CONVERTERMAIN_H

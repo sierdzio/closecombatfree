@@ -20,6 +20,11 @@
 
 #include "ccfconfigparser.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -99,3 +104,5 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
 
     return true;
 }
+
+/*! @}*/

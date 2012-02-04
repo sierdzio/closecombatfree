@@ -20,6 +20,14 @@
 
 #include "converterflags.h"
 
+/*!
+  \ingroup Converter
+  @{
+ */
+
+/*!
+  Pretty much the default constructor.
+  */
 ConverterFlags::ConverterFlags(QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -27,6 +35,12 @@ ConverterFlags::ConverterFlags(QObject *parent) :
 //    m_suffix = "_old";
 }
 
+/*!
+  Parses a list of arguments (\a appArguments).
+
+  Based on information in the parsed list, it populates the flag parameter,
+  as well as some other ones (input path, suffix etc.).
+  */
 bool ConverterFlags::setFlags(const QStringList &appArguments)
 {
     for (int i = 0; i < appArguments.length(); ++i) {
@@ -73,26 +87,53 @@ bool ConverterFlags::setFlags(const QStringList &appArguments)
     return !isErrorState();
 }
 
+/*!
+  Returns the parsed flags as a QFlag (enum).
+  */
 ConverterFlags::Options ConverterFlags::flags() const
 {
     return m_flags;
 }
 
+/*!
+  Returns the input directory, or empty string if it was not specified.
+
+  You can check whether it was specified by checking flags
+  (for example: if (ConverterFlags::flags() & ConverterFlags::InputDirectory)
+  ...).
+  */
 QString ConverterFlags::inputDirectory() const
 {
     return m_inputDirectory;
 }
 
+/*!
+  Returns the output directory, or empty string if it was not specified.
+
+  You can check whether it was specified by checking flags
+  (for example: if (ConverterFlags::flags() & ConverterFlags::OutputDirectory)
+  ...).
+  */
 QString ConverterFlags::outputDirectory() const
 {
     return m_outputDirectory;
 }
 
+/*!
+  Returns the output directory, or empty string if it was not specified.
+
+  You can check whether it was specified by checking flags
+  (for example: if (ConverterFlags::flags() & ConverterFlags::Suffix)
+  ...).
+  */
 QString ConverterFlags::suffix() const
 {
     return m_suffix;
 }
 
+/*!
+  Returns a list of filter strings specifying files to skip.
+  */
 QStringList ConverterFlags::skip() const
 {
     return m_skip;
@@ -109,3 +150,5 @@ QStringList ConverterFlags::parseSkipCommand(const QString &commandText)
     // TODO: check for wrong entries!
     return commandText.split(QChar(','));
 }
+
+/*! @}*/

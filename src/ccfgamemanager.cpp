@@ -20,6 +20,11 @@
 
 #include "ccfgamemanager.h"
 
+/*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
 CcfGameManager::CcfGameManager(QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -112,3 +117,5 @@ QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
     }
     return result;
 }
+
+/*! @}*/

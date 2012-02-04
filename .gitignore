@@ -2,7 +2,8 @@
 # Tells git to ignore build-related files.
 build/
 lib/
-doc/doxygen/
+# Documentation should be included when code gets more mature
+doc/html/
 *.autosave
 *.pro.user*
 *.kate-swp

@@ -37,6 +37,11 @@
 #include <QDebug>
 
 /*!
+  \ingroup CloseCombatFree
+  @{
+ */
+
+/*!
   Class responsible for displaying the game content on screen,
   connecting other C++ code to the game engine etc.
   */
@@ -62,5 +67,7 @@ private:
     CcfTerrain *terrain;
     QString pwd;
 };
+
+/*! @}*/
 
 #endif // CCFMAIN_H
