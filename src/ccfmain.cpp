@@ -25,6 +25,12 @@
   @{
  */
 
+/*!
+  Main view's constructor, full of important stuff.
+
+  Sets all global properties, sizing policy, connects important
+  signals and slots, reads config file(s).
+  */
 CcfMain::CcfMain(QWidget *parent) :
     QDeclarativeView(parent), CcfError()
 {
@@ -56,16 +62,28 @@ CcfMain::CcfMain(QWidget *parent) :
     connect(global, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
 }
 
+/*!
+  Returns true if config is set to be maximised.
+  */
 bool CcfMain::isConfigMaximised()
 {
     return configuration->maximised();
 }
 
+/*!
+  Orders the view to be resized.
+  */
 void CcfMain::resizeView(QSize newSize)
 {
     configuration->windowResized(newSize);
 }
 
+/*!
+  Slot invoked when application is ordered to stop.
+
+  This is not called when user terminates by the 'x' button on windowing
+  system, or using process manager.
+  */
 void CcfMain::quit()
 {
     configuration->saveConfig();
@@ -77,17 +95,34 @@ void CcfMain::quit()
     qApp->quit();
 }
 
+/*!
+  Forces the window to be resized.
+
+  Invoked when user changes window size in game preferences.
+  */
 void CcfMain::forceViewportResize(int width, int height)
 {
     setGeometry(x(), y(), width, height);
 }
 
+/*!
+  Disables QRC reading on a given QObject (usually a Loader or Repeater).
+
+  Very important, enables loading of non-qrc paths in an app that uses QRC.
+  Usually, if you load any QML code through QRC, all subsequent loads will
+  also be performed through resource system - even when you specify a path that
+  is not present in any resource file. This method counters this by clearing
+  the "qrc mode".
+  */
 void CcfMain::disableQrc(QObject *object)
 {
     QDeclarativeContext *context = engine()->contextForObject(object);
     context->setBaseUrl(QUrl::fromLocalFile(""));
 }
 
+/*!
+  Initialises the configuration, loading default on error.
+  */
 bool CcfMain::initConfiguration()
 {
     configuration = new CcfConfig("config", global, this);

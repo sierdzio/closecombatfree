@@ -4,6 +4,9 @@ Quite a lot of basic engine stuff was done before this changelog was created.
 Some more history can be devised from git sources (although even there, the thing is not complete).
 
 === === === ===
+07-08.02.2012:
+ - add more comments to project's source code
+
 04.02.2012:
  - add some doxygen-style documentation comments, mostly to converter
  - add comments to scripts in src/tools

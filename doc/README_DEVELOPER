@@ -1,11 +1,13 @@
 This document is currently just a stub. It should be expanded later on (and, most probably, moved to doxygen documentation). It is intended to be a starting point for newcoming developers, as well as a good reference for those already familiar with the code.
 
+Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project's root, there is a file named "closecombatfree.docconf". It can be used to automatically generate HTML documentation in doc/html, using command "doxygen closecombatfree.docconf" in project's root. That file can be modified to generate other doc formats, too. HTML docs will probably be included in sources by default, too, but only after the API matures a bit.
+
+WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
+
 Example command for converter: ./convert2qrc -o ../../myTempDir -f
 Create code ready for mobile (Necessitas): ./convert2qrc -i ../ -o ../../closecombatfree_android -f -t
 Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
-
-WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
 
 Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).
 

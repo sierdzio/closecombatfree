@@ -25,6 +25,13 @@
   @{
  */
 
+/*!
+  Constructor, automatically proceeds with parsing the data.
+
+  Parsed config information can be extracted with configuration().
+
+  \sa configuration
+  */
 CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -33,16 +40,35 @@ CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent)
     parse(configFilePath);
 }
 
+/*!
+  Getter for parsed configuration information.
+
+  Returned in a form of QMap<QString, QPair<QString, bool> >, where:
+  \li first QString is the key (string before equals sign in config file),
+  \li second QString holds the value
+  \li bool is false if information was not changed in-game, true if it was
+         (for example in preferences menu)
+
+  */
 QMap<QString, QPair<QString, bool> > *CcfConfigParser::configuration()
 {
     return m_configuration;
 }
 
+/*!
+  Returns an ordered list of configuration options.
+
+  QString holds keys of the configuration file, while the index corresponds
+  to position of this entry in that file.
+  */
 QList<QString> *CcfConfigParser::configIndexes()
 {
     return m_configIndexes;
 }
 
+/*!
+  Parses the configuration file.
+  */
 void CcfConfigParser::parse(const QString &configFilePath)
 {
     // TODO: take QRC into account
@@ -62,6 +88,9 @@ void CcfConfigParser::parse(const QString &configFilePath)
     file.close();
 }
 
+/*!
+  Reads a single line from configuration file.
+  */
 bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
 {
     QString line = lineToParse.simplified();

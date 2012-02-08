@@ -25,21 +25,41 @@
   @{
  */
 
+/*!
+  A simple constructor. Initialises parent QObject and CcfError.
+  */
 CcfGlobal::CcfGlobal(QObject *parent) :
     QObject(parent), CcfError()
 {
 }
 
+/*!
+  Sends a status message.
+
+  Alias for statusMessage().
+
+  \sa statusMessage
+  */
 void CcfGlobal::statusMsg(const QString &message)
 {
     statusMessage(message);
 }
 
+/*!
+  Sends a status message.
+
+  \sa statusMsg
+  */
 void CcfGlobal::statusMessage(const QString &message)
 {
     emit newStatusMessage(message, this->sender());
 }
 
+/*!
+  Emits the signal that triggers disabling the use of qrc.
+
+  This will probably get optimised away in the future.
+  */
 void CcfGlobal::disableQrcUse(QObject *object)
 {
     emit disableQrc(object);

@@ -25,6 +25,9 @@
   @{
  */
 
+/*!
+  Initialises the config and important variables, used later in QML.
+  */
 CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath), global(globalObject)
 {
@@ -42,6 +45,9 @@ CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QOb
     }
 }
 
+/*!
+  A convenience method returning nicely formatted string with config brief.
+  */
 QString CcfConfig::configurationString()
 {
     QString result;
@@ -54,11 +60,21 @@ QString CcfConfig::configurationString()
     return result;
 }
 
+/*!
+  Getter for UI mode (desktop or mobile).
+
+  \sa toggleUiMode, setUiMode
+  */
 QString CcfConfig::uiMode()
 {
     return configuration->value("uimode").first.toUpper();
 }
 
+/*!
+  Toggles the UI mode (desktop => mobile and vice versa).
+
+  \sa uiMode, setUiMode
+  */
 void CcfConfig::toggleUiMode()
 {
     QString mode = configuration->value("uimode").first;
@@ -76,11 +92,26 @@ void CcfConfig::toggleUiMode()
     }
 }
 
+/*!
+  Returns the status of terrain information mode.
+
+  Information mode can be off (default) - in that case info on terrain can
+  be displayed by a long right mouse click on any place on map.
+  If it is on, then a long left click (or finger tap) triggers the information
+  to be shown.
+
+  \sa toggleTerrainInfoMode
+  */
 QString CcfConfig::terrainInfoMode()
 {
     return m_terrainInfoMode;
 }
 
+/*!
+  Toggles terrain info mode.
+
+  \sa terrainInfoMode
+  */
 void CcfConfig::toggleTerrainInfoMode()
 {
     if (m_terrainInfoMode == "ON") {
@@ -91,16 +122,25 @@ void CcfConfig::toggleTerrainInfoMode()
     emit terrainInfoModeChanged();
 }
 
+/*!
+  Returns game window's width.
+  */
 int CcfConfig::windowWidth()
 {
     return runtimeWidth;
 }
 
+/*!
+  Returns game window's height.
+  */
 int CcfConfig::windowHeight()
 {
     return runtimeHeight;
 }
 
+/*!
+  Triggers configuration save (to "config" and "config_old" files).
+  */
 bool CcfConfig::saveConfig()
 {
     // Put screen size checks here!
@@ -126,6 +166,9 @@ bool CcfConfig::saveConfig()
     return true;
 }
 
+/*!
+  Returns key number for a given \a functionName.
+  */
 int CcfConfig::keyForFunction(const QString &functionName)
 {
     int result = -1;
@@ -138,6 +181,9 @@ int CcfConfig::keyForFunction(const QString &functionName)
     return result;
 }
 
+/*!
+  Finds Qt key number for a given \a character.
+  */
 int CcfConfig::findQtKey(QChar character)
 {
     int result = -1;
@@ -148,6 +194,13 @@ int CcfConfig::findQtKey(QChar character)
     return result;
 }
 
+/*!
+  A simple converter from string to bool.
+
+  Converts "true" into boolean true (1), and "false" into boolean false (0).
+
+  \sa boolToString
+  */
 bool CcfConfig::stringToBool(const QString &stringToConvert)
 {
     if (stringToConvert == "true") {
@@ -158,6 +211,13 @@ bool CcfConfig::stringToBool(const QString &stringToConvert)
     return false;
 }
 
+/*!
+  A simple bool to QString converter.
+
+  Returns "true" for true, and "false" for false.
+
+  \sa stringToBool
+  */
 QString CcfConfig::boolToString(bool boolToConvert)
 {
     if (boolToConvert == true) {
@@ -168,12 +228,18 @@ QString CcfConfig::boolToString(bool boolToConvert)
     return QString();
 }
 
+/*!
+  Replaces an element in configuration QMap.
+  */
 void CcfConfig::replaceElement(const QString &elementToReplace, const QString &newValue)
 {
     configuration->remove(elementToReplace);
     configuration->insert(elementToReplace, QPair<QString, bool>(newValue, true));
 }
 
+/*!
+  A basic parser-validator for key sequences found in config file.
+  */
 void CcfConfig::parseValidKeyboardShortcuts()
 {
     foreach (QString key, configuration->keys()) {
@@ -187,6 +253,12 @@ void CcfConfig::parseValidKeyboardShortcuts()
     }
 }
 
+/*!
+  Updates runtime window dimensions, and emits relevant signals to propagate\
+  that information.
+
+  \sa setWindowHeight, setWindowWidth, forceSetWindowWidth, forceSetWindowHeight
+  */
 void CcfConfig::windowResized(QSize newSize)
 {
     if (windowWidth() != newSize.width()
@@ -199,6 +271,17 @@ void CcfConfig::windowResized(QSize newSize)
     }
 }
 
+/*!
+  Sets uiMode to a given value.
+
+  Possible options are:
+  \li desktop
+  \li mobile
+
+  If \a newMode is spelled incorrectly, nothing is changed.
+
+  \sa uiMode, toggleUiMode
+  */
 void CcfConfig::setUiMode(const QString &newMode)
 {
     if (newMode.toLower() != configuration->value("uimode").first) {
@@ -214,38 +297,69 @@ void CcfConfig::setUiMode(const QString &newMode)
     }
 }
 
+/*!
+  Sets window height to a new \a height.
+
+  \sa windowResized, setWindowWidth, forceSetWindowWidth, forceSetWindowHeight
+  */
 void CcfConfig::setWindowHeight(int height)
 {
     runtimeHeight = height;
     emit windowWidthChanged();
 }
 
+/*!
+  Sets window width to a new \a width.
+
+  \sa setWindowHeight, windowResized, forceSetWindowWidth, forceSetWindowHeight
+  */
 void CcfConfig::setWindowWidth(int width)
 {
     runtimeWidth = width;
     emit windowHeightChanged();
 }
 
+/*!
+  Forces width change in the configuration file.
+
+  \sa setWindowHeight, setWindowWidth, windowResized, forceSetWindowHeight
+  */
 void CcfConfig::forceSetWindowWidth(int width)
 {
     replaceElement("width", QString::number(width));
 }
 
+/*!
+  Forces height change in the configuration file.
+
+  \sa setWindowHeight, setWindowWidth, windowResized, forceSetWindowWidth
+  */
 void CcfConfig::forceSetWindowHeight(int height)
 {
     replaceElement("height", QString::number(height));
 }
 
+/*!
+  Returns true is configuration says that window should be maximised.
+
+  \sa setMaximised
+  */
 bool CcfConfig::maximised()
 {
     QString result = configuration->value("maximised").first;
     return stringToBool(result);
 }
 
+/*!
+  Sets maximised configuration value to \a newValue.
+
+  \sa maximised
+  */
 void CcfConfig::setMaximised(bool newValue)
 {
-    QString current = configuration->value("maximised").first;
-    bool currentBool = stringToBool(current);
+//    QString current = configuration->value("maximised").first;
+//    bool currentBool = stringToBool(current);
+    bool currentBool = maximised();
 
     if (currentBool != newValue) {
         replaceElement("maximised", boolToString(newValue));
@@ -257,12 +371,22 @@ void CcfConfig::setMaximised(bool newValue)
     }
 }
 
+/*!
+  Returns true if rememberDimensions value is checked in configuration.
+
+  \sa setRememberDimensions
+  */
 bool CcfConfig::rememberDimensions()
 {
     QString result = configuration->value("remember dimensions on exit").first;
     return stringToBool(result);
 }
 
+/*!
+  Sets rememberDimensions value in configuration to \a newValue.
+
+  \sa rememberDimensions
+  */
 void CcfConfig::setRememberDimensions(bool newValue)
 {
     QString current = configuration->value("remember dimensions on exit").first;
@@ -274,16 +398,29 @@ void CcfConfig::setRememberDimensions(bool newValue)
     }
 }
 
+/*!
+  Returns a list of human-readable names for shortcuts.
+
+  \sa shortcutValuesList
+  */
 QStringList CcfConfig::shortcutNamesList()
 {
     return keyboardShortcuts.keys();
 }
 
+/*!
+  Returns a list of shortcutsthemselves (in form of strings).
+
+  \sa shortcutNamesList
+  */
 QStringList CcfConfig::shortcutValuesList()
 {
     return keyboardShortcuts.values();
 }
 
+/*!
+  Sets a shortcut \a option to new \a value.
+  */
 void CcfConfig::setShortcut(const QString &option, const QString &value)
 {
     QString lowOption = option.toLower();

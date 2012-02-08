@@ -25,11 +25,26 @@
   @{
  */
 
+/*!
+  A simple constructor. Initialises parent QObject and CcfError.
+  */
 CcfTerrain::CcfTerrain(QObject *parent) :
     QObject(parent), CcfError()
 {
 }
 
+/*!
+  Sets the url of terrain image to use.
+
+  TODO:
+  WARNING: this method may be the cause of some of the memory leaks in game.
+  When you load multiple scenarios in a single game run, some memory stays
+  reserved, even though it should be cleaned. Maybe the fact that we are
+  not flushing QImage anywhere is the cause?
+
+  Also, we seem to be keeping images twice in memory - one copy in QML,
+  and another in C++. This HAS TO be changed.
+  */
 void CcfTerrain::setTerrainImageUrl(const QString &url, int width, int height)
 {
 //    qDebug() << url;
@@ -45,12 +60,23 @@ void CcfTerrain::setTerrainImageUrl(const QString &url, int width, int height)
     terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
 }
 
+/*!
+  Returns pixel (height) information.
+
+  For a given set of coordinates (\a x, \a y) returns a sum of pixel's
+  colour values.
+  */
 int CcfTerrain::pixelInfo(int x, int y)
 {
     QRgb result(terrainImage->pixel(QPoint(x, y)));
     return qRed(result) + qGreen(result) + qBlue(result);
 }
 
+/*!
+  Detects obstacles on the aimline.
+
+  Returns distance to the nearest obstacle.
+  */
 int CcfTerrain::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QObject *currentUnit)
 {
 //    int centerX = currentUnit->property("centerX").toInt();
@@ -90,6 +116,9 @@ int CcfTerrain::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QOb
     return result;
 }
 
+/*!
+  Determines the distance between two points.
+  */
 qreal CcfTerrain::targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY)
 {
     qreal result = 0;

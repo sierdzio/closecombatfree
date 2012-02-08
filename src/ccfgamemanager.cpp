@@ -25,6 +25,11 @@
   @{
  */
 
+/*!
+  Initialises the game manager. Pretty important code inside.
+
+  Sets length of tabulation to use, and the name of scenarios folder.
+  */
 CcfGameManager::CcfGameManager(QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -34,17 +39,30 @@ CcfGameManager::CcfGameManager(QObject *parent) :
     m_scenariosList = scenarioDir.entryList(QDir::Files);
 }
 
+/*!
+  Getter for scenarios' list.
+  */
 QStringList CcfGameManager::scenariosList()
 {
     return m_scenariosList;
 }
 
+/*!
+  Returns a path for a given scenario from the list.
+  */
 QString CcfGameManager::scenarioPath(int index)
 {
     return m_scenariosList.at(index);
 }
 
-void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList, const QString &mapFile, const QString &saveFileName)
+/*!
+  Saves game state to a file.
+
+  For now, it always uses file with name "saves/save1.qml".
+  */
+void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList,
+                              const QString &mapFile,
+                              const QString &saveFileName)
 {
     // As a first attempt, I will generate the whole file myself.
     // A better approach for the future might be to copy and modify
@@ -94,12 +112,18 @@ void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList, const 
     saveFile.close();
 }
 
+/*!
+  Returns a a list of saved games.
+  */
 QStringList CcfGameManager::savedGamesList()
 {
     QDir saveDir("saves");
     return saveDir.entryList(QDir::Files);
 }
 
+/*!
+  Returns a string representing a QML property - if it existas n \a object.
+  */
 QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
                                                 const QString &propertyName,
                                                 bool useQuotes)

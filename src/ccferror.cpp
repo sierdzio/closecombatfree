@@ -25,21 +25,38 @@
   @{
  */
 
+/*!
+  Constructor, sets error's state to "false".
+  */
 CcfError::CcfError()
 {
     m_errorState = false;
 }
 
+/*!
+  Returns true is object is in error state.
+  */
 bool CcfError::isErrorState()
 {
     return m_errorState;
 }
 
+/*!
+  Returns error message.
+  */
 QString CcfError::errorMessage()
 {
     return m_errorMessage;
 }
 
+/*!
+  Enters error state.
+
+  Error message can be read with errorMessage(), and current state
+  with isErrorState().
+
+  \sa errorMessage, isErrorState
+  */
 void CcfError::enterErrorState(const QString &errorMsg)
 {
     m_errorState = true;

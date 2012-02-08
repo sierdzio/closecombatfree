@@ -25,6 +25,9 @@
   @{
  */
 
+/*!
+  Pretty much default constructor.
+  */
 CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
                                QList<QString> *configIndexes,
                                const QString &configFilePath,
@@ -34,6 +37,9 @@ CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configurati
 {
 }
 
+/*!
+  Updates configuration file based on information about changes made by user.
+  */
 void CcfConfigSaver::updateConfigFile()
 {
     // Check, whether there was any change.
