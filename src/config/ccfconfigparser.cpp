@@ -21,11 +21,6 @@
 #include "ccfconfigparser.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   Constructor, automatically proceeds with parsing the data.
 
   Parsed config information can be extracted with configuration().
@@ -133,5 +128,3 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
 
     return true;
 }
-
-/*! @}*/

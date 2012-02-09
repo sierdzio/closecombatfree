@@ -36,7 +36,7 @@
 #include <QDebug>
 
 /*!
-  \defgroup Converter Converter (changes relative paths into QRC paths)
+  \defgroup Converter Relative2QrcConverter
   @{
  */
 
@@ -47,6 +47,7 @@
 class ConverterCore : public QObject, public CcfError
 {
     Q_OBJECT
+
 public:
     explicit ConverterCore(const QStringList &args, QObject *parent = 0);
     void convert();

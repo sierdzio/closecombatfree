@@ -21,10 +21,8 @@
 #include "converterfile.h"
 
 /*!
-  \ingroup Converter
-  @{
- */
-
+  A simple constructor. Not much going on inside.
+  */
 ConverterFile::ConverterFile(const QString &fileToConvert, const QString &resultingFile,
                              ConverterFlags *flgs, QObject *parent) :
     QObject(parent), CcfError(), flags(flgs), inputFile(fileToConvert), outputFile(resultingFile)
@@ -32,6 +30,13 @@ ConverterFile::ConverterFile(const QString &fileToConvert, const QString &result
 //    qDebug() << inputFile << "=>" << outputFile;
 }
 
+/*!
+  Converts a single file's paths into QRC paths.
+
+  A lot of things happening here. This method handles skipping of some files,
+  and has some hard-coded rules for certain files (like C++ ones, where
+  paths are a bit different).
+  */
 void ConverterFile::convertToQrc()
 {
     // Skip .pro.user files
@@ -146,11 +151,17 @@ void ConverterFile::convertToQrc()
     output.close();
 }
 
+/*!
+  Locates next path in data string.
+  */
 int ConverterFile::findPath(QString &fileText, int beginIndex)
 {
     return fileText.indexOf("\"../", beginIndex);
 }
 
+/*!
+  Replaces a relative path with QRC path.
+  */
 int ConverterFile::replacePath(QString &fileText, int beginIndex)
 {
     ++beginIndex; // To move past the opening quotation mark.
@@ -164,6 +175,10 @@ int ConverterFile::replacePath(QString &fileText, int beginIndex)
     return -1;
 }
 
+/*!
+  Counts directory jumps that need to be made to get to root dir
+  for a given path.
+  */
 int ConverterFile::countJumpsToRoot(const QString &text)
 {
     int result = 0;
@@ -182,6 +197,15 @@ int ConverterFile::countJumpsToRoot(const QString &text)
     return result;
 }
 
+/*!
+  Chooses which QRC prefix to use.
+
+  Options:
+   - gui
+   - skin
+   - core
+   - img
+  */
 QString ConverterFile::determineQrcPath(const QString &text)
 {
     QString result;
@@ -219,5 +243,3 @@ QString ConverterFile::determineQrcPath(const QString &text)
 
     return result;
 }
-
-/*! @}*/

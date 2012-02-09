@@ -9,6 +9,9 @@ Some more history can be devised from git sources (although even there, the thin
  - add more comments to project's source code
  - add text docs to generated documentation as pages. README_DEVELOPER is now the index page
    for the docs
+ - change some property getters in CcfConfig (doxygen was not generating docs appropriately
+   due to name clashes
+ - fix ingroup declarations
 
 04.02.2012:
  - add some doxygen-style documentation comments, mostly to converter

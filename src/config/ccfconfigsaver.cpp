@@ -21,11 +21,6 @@
 #include "ccfconfigsaver.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   Pretty much default constructor.
   */
 CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
@@ -107,5 +102,3 @@ void CcfConfigSaver::updateConfigFile()
     file.close();
     newFile.close();
 }
-
-/*! @}*/

@@ -48,12 +48,44 @@
 class CcfConfig : public QObject, public CcfError
 {
     Q_OBJECT
-    Q_PROPERTY(QString uiMode READ uiMode WRITE setUiMode NOTIFY uiModeChanged)
-    Q_PROPERTY(QString terrainInfoMode READ terrainInfoMode NOTIFY uiModeChanged)
-    Q_PROPERTY(int windowWidth READ windowWidth WRITE setWindowWidth NOTIFY windowWidthChanged)
-    Q_PROPERTY(int windowHeight READ windowHeight WRITE setWindowHeight NOTIFY windowHeightChanged)
-    Q_PROPERTY(bool maximised READ maximised WRITE setMaximised NOTIFY maximisedChanged)
-    Q_PROPERTY(bool rememberDimensions READ rememberDimensions WRITE setRememberDimensions NOTIFY rememberDimensionsChanged)
+
+    /*!
+      Represents the User Interface Mode to be used.
+
+      Choice is: desktop or mobile.
+      */
+    Q_PROPERTY(QString uiMode READ getUiMode WRITE setUiMode NOTIFY uiModeChanged)
+
+    /*!
+      Represents the state of terrain info mode.
+
+      Choice is: on or off.
+      */
+    Q_PROPERTY(QString terrainInfoMode READ getTerrainInfoMode NOTIFY uiModeChanged)
+
+    /*!
+      Represents game window width.
+      */
+    Q_PROPERTY(int windowWidth READ getWindowWidth WRITE setWindowWidth NOTIFY windowWidthChanged)
+
+    /*!
+      Represents game window height.
+      */
+    Q_PROPERTY(int windowHeight READ getWindowHeight WRITE setWindowHeight NOTIFY windowHeightChanged)
+
+    /*!
+      Holds whether window is maximised or not (configuration wise).
+      */
+    Q_PROPERTY(bool maximised READ isMaximised WRITE setMaximised NOTIFY maximisedChanged)
+
+    /*!
+      Boolean property used to determine whether window dimensions should be
+      remembered on exit.
+
+      Note: this applies only to game being closed from within the game, and not
+      by external means (window manager, process manager etc.).
+      */
+    Q_PROPERTY(bool rememberDimensions READ isRememberDimensionsSet WRITE setRememberDimensions NOTIFY rememberDimensionsChanged)
 
 public:
     explicit CcfConfig(const QString &configFilePath, CcfGlobal *globalObject,
@@ -66,37 +98,68 @@ public:
     Q_INVOKABLE void setUiMode(const QString &newMode);
     Q_INVOKABLE void setWindowWidth(int width);
     Q_INVOKABLE void setWindowHeight(int height);
-    // For use when not remembering dimensions on exit
     Q_INVOKABLE void forceSetWindowWidth(int width);
     Q_INVOKABLE void forceSetWindowHeight(int height);
-
-    Q_INVOKABLE bool maximised();
+    Q_INVOKABLE bool isMaximised();
     Q_INVOKABLE void setMaximised(bool newValue);
-    Q_INVOKABLE bool rememberDimensions();
+    Q_INVOKABLE bool isRememberDimensionsSet();
     Q_INVOKABLE void setRememberDimensions(bool newValue);
-    // Shortcuts list loading and saving (in-game preferences menu)
-    // This would work better if done with Qt MVC!
     Q_INVOKABLE QStringList shortcutNamesList();
     Q_INVOKABLE QStringList shortcutValuesList();
     Q_INVOKABLE void setShortcut(const QString &option, const QString &value);
-    QString uiMode();
-    QString terrainInfoMode();
-    int windowWidth();
-    int windowHeight();
+    QString getUiMode();
+    QString getTerrainInfoMode();
+    int getWindowWidth();
+    int getWindowHeight();
     bool saveConfig();
 
 public slots:
     void windowResized(QSize newSize);
 
 signals:
+    /*!
+      Emited when window's width changes.
+      */
     void windowWidthChanged();
+
+    /*!
+      Emited when window's height changes.
+      */
     void windowHeightChanged();
+
+    /*!
+      Emited on uiMode change.
+      */
     void uiModeChanged();
+
+    /*!
+      Emited when terrainInfoMode changes.
+      */
     void terrainInfoModeChanged();
+
+    /*!
+      Emited when state of maximisation changes.
+      */
     void maximisedChanged();
+
+    /*!
+      Emited to force app window to maximise.
+      */
     void maximise();
+
+    /*!
+      Emited to force app window to demaximise.
+      */
     void demaximise();
+
+    /*!
+      Emited when option to remember dimensions changes.
+      */
     void rememberDimensionsChanged();
+
+    /*!
+      Emited when game window size changes in-game.
+      */
     void sizeModifiedInGame(int width, int height);
 
 private:

@@ -46,6 +46,7 @@
 class ConverterFile : public QObject, public CcfError
 {
     Q_OBJECT
+
 public:
     explicit ConverterFile(const QString &fileToConvert,
                            const QString &resultingFile,

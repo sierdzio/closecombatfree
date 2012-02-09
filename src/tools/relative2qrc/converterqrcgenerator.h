@@ -46,6 +46,7 @@
 class ConverterQrcGenerator : public QObject, public CcfError
 {
     Q_OBJECT
+
 public:
     explicit ConverterQrcGenerator(ConverterFlags *flgs, QObject *parent = 0);
     void createQrcFiles();

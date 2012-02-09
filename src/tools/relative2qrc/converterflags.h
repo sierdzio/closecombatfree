@@ -62,6 +62,7 @@ public:
         NoImg            = 0x000100, //!< True if --no-img switch was set
         NoSkin           = 0x000200  //!< True if --no-skin switch was set
     };
+
     Q_DECLARE_FLAGS(Options, Option)
 
     explicit ConverterFlags(QObject *parent = 0);

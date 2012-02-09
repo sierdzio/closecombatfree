@@ -2,6 +2,7 @@
 Bugs & fixes:
  - there is some strange order mixing when performing group queues
  - look into memory consumption - scenarios are not fully cleared from memory on close
+ - add doxygen comments to Q_PROPERTYies and signals, try if JS comments work
 
 New features:
  - add game menu

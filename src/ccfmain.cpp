@@ -21,11 +21,6 @@
 #include "ccfmain.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   Main view's constructor, full of important stuff.
 
   Sets all global properties, sizing policy, connects important
@@ -67,7 +62,7 @@ CcfMain::CcfMain(QWidget *parent) :
   */
 bool CcfMain::isConfigMaximised()
 {
-    return configuration->maximised();
+    return configuration->isMaximised();
 }
 
 /*!
@@ -142,5 +137,3 @@ bool CcfMain::initConfiguration()
     }
     return true;
 }
-
-/*! @}*/

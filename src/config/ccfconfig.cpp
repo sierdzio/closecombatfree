@@ -21,11 +21,6 @@
 #include "ccfconfig.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   Initialises the config and important variables, used later in QML.
   */
 CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
@@ -65,7 +60,7 @@ QString CcfConfig::configurationString()
 
   \sa toggleUiMode, setUiMode
   */
-QString CcfConfig::uiMode()
+QString CcfConfig::getUiMode()
 {
     return configuration->value("uimode").first.toUpper();
 }
@@ -102,7 +97,7 @@ void CcfConfig::toggleUiMode()
 
   \sa toggleTerrainInfoMode
   */
-QString CcfConfig::terrainInfoMode()
+QString CcfConfig::getTerrainInfoMode()
 {
     return m_terrainInfoMode;
 }
@@ -125,7 +120,7 @@ void CcfConfig::toggleTerrainInfoMode()
 /*!
   Returns game window's width.
   */
-int CcfConfig::windowWidth()
+int CcfConfig::getWindowWidth()
 {
     return runtimeWidth;
 }
@@ -133,7 +128,7 @@ int CcfConfig::windowWidth()
 /*!
   Returns game window's height.
   */
-int CcfConfig::windowHeight()
+int CcfConfig::getWindowHeight()
 {
     return runtimeHeight;
 }
@@ -261,8 +256,8 @@ void CcfConfig::parseValidKeyboardShortcuts()
   */
 void CcfConfig::windowResized(QSize newSize)
 {
-    if (windowWidth() != newSize.width()
-            || windowHeight() != newSize.height()) {
+    if (getWindowWidth() != newSize.width()
+            || getWindowHeight() != newSize.height()) {
 
         runtimeHeight = newSize.height();
         runtimeWidth = newSize.width();
@@ -344,7 +339,7 @@ void CcfConfig::forceSetWindowHeight(int height)
 
   \sa setMaximised
   */
-bool CcfConfig::maximised()
+bool CcfConfig::isMaximised()
 {
     QString result = configuration->value("maximised").first;
     return stringToBool(result);
@@ -359,7 +354,7 @@ void CcfConfig::setMaximised(bool newValue)
 {
 //    QString current = configuration->value("maximised").first;
 //    bool currentBool = stringToBool(current);
-    bool currentBool = maximised();
+    bool currentBool = isMaximised();
 
     if (currentBool != newValue) {
         replaceElement("maximised", boolToString(newValue));
@@ -376,7 +371,7 @@ void CcfConfig::setMaximised(bool newValue)
 
   \sa setRememberDimensions
   */
-bool CcfConfig::rememberDimensions()
+bool CcfConfig::isRememberDimensionsSet()
 {
     QString result = configuration->value("remember dimensions on exit").first;
     return stringToBool(result);
@@ -430,5 +425,3 @@ void CcfConfig::setShortcut(const QString &option, const QString &value)
         replaceElement(lowOption, value);
     }
 }
-
-/*! @}*/

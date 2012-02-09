@@ -21,11 +21,6 @@
 #include "ccfglobal.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   A simple constructor. Initialises parent QObject and CcfError.
   */
 CcfGlobal::CcfGlobal(QObject *parent) :
@@ -64,5 +59,3 @@ void CcfGlobal::disableQrcUse(QObject *object)
 {
     emit disableQrc(object);
 }
-
-/*! @}*/

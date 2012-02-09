@@ -49,8 +49,15 @@ public slots:
     void statusMessage(const QString &message);
 
 signals:
+    /*!
+      Emited when a new status message is requested.
+      */
     void newStatusMessage(const QString &message,
                           QObject *sender);
+
+    /*!
+      Emited when disabling QRC is requested.
+      */
     void disableQrc(QObject *object);
 };
 

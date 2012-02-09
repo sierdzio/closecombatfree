@@ -21,11 +21,6 @@
 #include "ccfgamemanager.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   Initialises the game manager. Pretty important code inside.
 
   Sets length of tabulation to use, and the name of scenarios folder.
@@ -141,5 +136,3 @@ QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
     }
     return result;
 }
-
-/*! @}*/

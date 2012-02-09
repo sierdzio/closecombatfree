@@ -21,11 +21,6 @@
 #include "converterflags.h"
 
 /*!
-  \ingroup Converter
-  @{
- */
-
-/*!
   Pretty much the default constructor.
   */
 ConverterFlags::ConverterFlags(QObject *parent) :
@@ -139,16 +134,25 @@ QStringList ConverterFlags::skip() const
     return m_skip;
 }
 
+/*!
+  Checks whether a path is valid.
+
+  \bug Currently, it does not really check the path, this needs to be
+  addressed later.
+  */
 QString ConverterFlags::checkPath(const QString &pathToCheck)
 {
     // TODO: Need to add true checking here!
     return QDir::fromNativeSeparators(pathToCheck);
 }
 
+/*!
+  Parses file filters passed to "--skip" command.
+
+  \bug Currently, this does not check if given strings are valid.
+  */
 QStringList ConverterFlags::parseSkipCommand(const QString &commandText)
 {
     // TODO: check for wrong entries!
     return commandText.split(QChar(','));
 }
-
-/*! @}*/

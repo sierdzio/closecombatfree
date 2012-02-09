@@ -22,10 +22,13 @@
 #include "iostream"
 
 /*!
-  \ingroup Converter
-  @{
- */
+  Initialises converter.
 
+  If "-h" or "--help" was specified, this method displays help. Else, it sets
+  internal flags for later use.
+
+  \sa displayHelp, setFlags
+  */
 ConverterCore::ConverterCore(const QStringList &args, QObject *parent) :
     QObject(parent), CcfError()
 {
@@ -39,6 +42,9 @@ ConverterCore::ConverterCore(const QStringList &args, QObject *parent) :
     }
 }
 
+/*!
+  Sets internal flags (ConverterFlags).
+  */
 void ConverterCore::setFlags(const QStringList &args)
 {
     bool result = false;
@@ -56,6 +62,9 @@ void ConverterCore::setFlags(const QStringList &args)
     }
 }
 
+/*!
+  Main conversion routine.
+  */
 void ConverterCore::convert()
 {
     if (helpMode)
@@ -95,6 +104,9 @@ void ConverterCore::convert()
     }
 }
 
+/*!
+  Converts a directory recursively.
+  */
 void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
 {
     QDir tempInput = input;
@@ -140,6 +152,9 @@ void ConverterCore::convertDirectory(const QDir &input, const QDir &output)
     }
 }
 
+/*!
+  Displays help ocated in QRC file.
+  */
 void ConverterCore::displayHelp()
 {
 //    std::cout << "This help message is still a WIP." << std::endl;
@@ -153,5 +168,3 @@ void ConverterCore::displayHelp()
     QByteArray helpData = help.readAll();
     std::cout << helpData.data() << std::endl;
 }
-
-/*! @}*/

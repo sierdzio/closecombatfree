@@ -21,11 +21,6 @@
 #include "ccfterrain.h"
 
 /*!
-  \ingroup CloseCombatFree
-  @{
- */
-
-/*!
   A simple constructor. Initialises parent QObject and CcfError.
   */
 CcfTerrain::CcfTerrain(QObject *parent) :
@@ -135,5 +130,3 @@ qreal CcfTerrain::targetDistance(qreal originX, qreal originY, qreal targetX, qr
 
     return result;
 }
-
-/*! @}*/

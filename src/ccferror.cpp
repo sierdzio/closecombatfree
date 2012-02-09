@@ -21,11 +21,6 @@
 #include "ccferror.h"
 
 /*!
-  \ingroup CcfError
-  @{
- */
-
-/*!
   Constructor, sets error's state to "false".
   */
 CcfError::CcfError()
@@ -62,5 +57,3 @@ void CcfError::enterErrorState(const QString &errorMsg)
     m_errorState = true;
     m_errorMessage = errorMsg;
 }
-
-/*! @}*/

@@ -21,10 +21,8 @@
 #include "converterqrcgenerator.h"
 
 /*!
-  \ingroup Converter
-  @{
- */
-
+  Sets tab length, corrects input path.
+  */
 ConverterQrcGenerator::ConverterQrcGenerator(ConverterFlags *flgs, QObject *parent) :
     QObject(parent), CcfError(), flags(flgs)
 {
@@ -43,6 +41,9 @@ ConverterQrcGenerator::ConverterQrcGenerator(ConverterFlags *flgs, QObject *pare
     }
 }
 
+/*!
+  Main job dispatcher for QRC generation.
+  */
 void ConverterQrcGenerator::createQrcFiles()
 {
     if (flags->flags() & ConverterFlags::NoQrc) {
@@ -66,6 +67,9 @@ void ConverterQrcGenerator::createQrcFiles()
     }
 }
 
+/*!
+  Generates core resource.
+  */
 void ConverterQrcGenerator::createCoreResource()
 {
     QString body;
@@ -91,6 +95,9 @@ void ConverterQrcGenerator::createCoreResource()
     createResource("core", body);
 }
 
+/*!
+  Generates img resource.
+  */
 void ConverterQrcGenerator::createImgResource()
 {
     QString body;
@@ -106,6 +113,9 @@ void ConverterQrcGenerator::createImgResource()
     createResource("img", body);
 }
 
+/*!
+  Generates skin resource.
+  */
 void ConverterQrcGenerator::createSkinResource()
 {
     QString body;
@@ -121,6 +131,9 @@ void ConverterQrcGenerator::createSkinResource()
     createResource("skin", body);
 }
 
+/*!
+  Generates temp resource.
+  */
 void ConverterQrcGenerator::createTempResource()
 {
     QString body;
@@ -140,6 +153,9 @@ void ConverterQrcGenerator::createTempResource()
     createResource("temp", body);
 }
 
+/*!
+  General resource creation method. Used by all others to generate QRC files.
+  */
 void ConverterQrcGenerator::createResource(const QString &file, const QString &body)
 {
     QFile output(outputPath + "/src/" + file + "Resource.qrc");
@@ -162,6 +178,9 @@ void ConverterQrcGenerator::createResource(const QString &file, const QString &b
     output.close();
 }
 
+/*!
+  Adds all files from a given \a directory and returns them as QRC string.
+  */
 QString ConverterQrcGenerator::addAllFiles(const QString &directory, bool useAlias)
 {
     QString result;
@@ -192,6 +211,9 @@ QString ConverterQrcGenerator::addAllFiles(const QString &directory, bool useAli
     return result;
 }
 
+/*!
+  Adds a single file to QRC string.
+  */
 QString ConverterQrcGenerator::addSingleFile(const QString &alias, const QString &file, bool useAlias)
 {
     QString result(tab + tab);
@@ -207,6 +229,9 @@ QString ConverterQrcGenerator::addSingleFile(const QString &alias, const QString
     return result;
 }
 
+/*!
+  Recursively adds all files from dir structure.
+  */
 QString ConverterQrcGenerator::recursivelyAddAllFiles(const QString &directory)
 {
     QString result = addAllFiles(directory);
@@ -216,5 +241,3 @@ QString ConverterQrcGenerator::recursivelyAddAllFiles(const QString &directory)
     }
     return result;
 }
-
-/*! @}*/
