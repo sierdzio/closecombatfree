@@ -12,6 +12,7 @@ Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):
  - add tool for converting QML into QML 2.0
  - reshape the code so that it is easier to maintain and read
  - add comments to source files, add content to other readmes etc.
+ - add doxygen documentation, including .qch
  - numerous bug fixes
 
 2011.12.20 - v0.0.3.

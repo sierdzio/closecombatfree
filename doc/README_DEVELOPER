@@ -9,10 +9,9 @@ Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project'
 WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
 
   \subsection commands Example commands
-Example command for converter: ./convert2qrc -o ../../myTempDir -f
-Create code ready for mobile (Necessitas): ./convert2qrc -i ../ -o ../../closecombatfree_android -f -t
-Command to archive the project easily (to be executed from on dir
-above the project root): ./closecombatfree/tools/archiveProject closecombatfree
+  \li Example command for converter: ./convert2qrc -o ../../myTempDir -f
+  \li Create code ready for mobile (Necessitas): ./convert2qrc -i ../ -o ../../closecombatfree_android -f -t
+  \li Command to archive the project easily (to be executed from on dir above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).
   
