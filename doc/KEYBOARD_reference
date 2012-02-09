@@ -1,3 +1,5 @@
+/*! \page keyboardReference Keyboard reference
+
 Default keyboard settings are:
 
 LMB - select single unit
@@ -24,3 +26,4 @@ B - ambush
 Developer controls (not adjustable in config):
 ] - swap map background image with hipsometric image
 [ - toggle player's side
+*/

@@ -1,21 +1,27 @@
+/*! \mainpage Test index page for developers
+
+  \section intro Introduction
+
 This document is currently just a stub. It should be expanded later on (and, most probably, moved to doxygen documentation). It is intended to be a starting point for newcoming developers, as well as a good reference for those already familiar with the code.
 
 Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project's root, there is a file named "closecombatfree.docconf". It can be used to automatically generate HTML documentation in doc/html, using command "doxygen closecombatfree.docconf" in project's root. That file can be modified to generate other doc formats, too. HTML docs will probably be included in sources by default, too, but only after the API matures a bit.
 
 WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
 
+  \subsection commands Example commands
 Example command for converter: ./convert2qrc -o ../../myTempDir -f
 Create code ready for mobile (Necessitas): ./convert2qrc -i ../ -o ../../closecombatfree_android -f -t
 Command to archive the project easily (to be executed from on dir
 above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
 Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).
-
-Player sides:
+  
+  \section sides Player sides
 For now, player is considered to be on "neutral" side. All others are considered to be other players. In the future, side choosing will be implemented.
 
-Paths in QML.
+  \section paths Paths in QML
 All paths should return to root before progressing into source tree. For example, let's consider a file "qml/temp/MyFile.qml", that wants to access "img/newFolder/myFancyFile.png". Correct path to this file should be "../../img/newFolder/myFancyFile.png". This is pretty straight forward. But now, be also need to import "qml/temp/foo/Bar.qml". Correct path in CCF is "../../qml/temp/foo/", and NOT just "foo/".
 
 Why?
 This helps us maintain the code. It's easier to move files around this way. But, most importantly, that is what realtive2qrc script assumes and requires. So, by following that convention, we gain easy porting to mobile platforms, easier distribution on all platforms (by the means of QRC), and easy mod/ skin support.
+*/

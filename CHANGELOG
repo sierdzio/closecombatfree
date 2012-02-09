@@ -1,3 +1,4 @@
+/*! \page changelogUser Changelog (compact, for users)
 2012.xx.xx - v0.0.4 ()
 Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):
  - add game saving and loading
@@ -34,3 +35,4 @@ Changes since v0.0.2 (3ff08fe849905f067877b86a81d26502a39336ba):
  - add terrainInfoMode for mobile mode
  - UI adjustments for better use and looks
  - parametrized menus, so that they change size accordingly to local conditions
+ */
