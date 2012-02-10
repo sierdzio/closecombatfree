@@ -9,6 +9,7 @@ Some more history can be devised from git sources (although even there, the thin
  - separate developer and user documentation
  - add documentation for tools
  - change README_DEVELOPER into index
+ - mark as v0.0.4
 
 07-09.02.2012:
  - add more comments to project's source code
