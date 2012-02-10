@@ -1,0 +1,8 @@
+ /*! \page relative2qrcReadme README for relative2qrc converter
+
+ relative2qrc is a Qt-based tool that converts relative paths in QML and C++ code
+ into QRC paths. A lot of different customisations of the output can be made,
+ those are described in detail in converter's help message, included below.
+
+ \include helpMessage.txt
+*/

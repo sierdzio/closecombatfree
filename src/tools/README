@@ -1,0 +1,9 @@
+/*! \page toolsReadme README for CCF tools
+
+CloseCombatFree comes with a handy set of tools, that can aid you in development.
+
+Currently available tools are:
+ - \subpage relative2qrcReadme "relative2qrcReadme"
+ - \subpage updateQmlTo2Readme "updateQmlTo2Readme"
+ - \subpage archiveProjectReadme "archiveProjectReadme"
+*/

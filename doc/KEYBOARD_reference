@@ -1,29 +1,26 @@
 /*! \page keyboardReference Keyboard reference
 
 Default keyboard settings are:
-
-LMB - select single unit
-LMB (hold) - activate rubber band selection
-LMB (flick) - move around the map
-Ctrl + LMB - select multiple units
-Ctrl + [digit] - create a unit group
-[digit] - select a previously created unit group
-
-T - toggle top menu
-G - toggle bottom menu
-
-P - pause
-S - cancel order (stop)
-F - follow unit
-R - move fast (run)
-M - move
-N - sneak
-A - attack
-K - smoke
-D - defend
-B - ambush
+ - LMB - select single unit
+ - LMB (hold) - activate rubber band selection
+ - LMB (flick) - move around the map
+ - Ctrl + LMB - select multiple units
+ - Ctrl + [digit] - create a unit group
+ - [digit] - select a previously created unit group
+ - T - toggle top menu
+ - G - toggle bottom menu
+ - P - pause
+ - S - cancel order (stop)
+ - F - follow unit
+ - R - move fast (run)
+ - M - move
+ - N - sneak
+ - A - attack
+ - K - smoke
+ - D - defend
+ - B - ambush
 
 Developer controls (not adjustable in config):
-] - swap map background image with hipsometric image
-[ - toggle player's side
+ - ] - swap map background image with hipsometric image
+ - [ - toggle player's side
 */

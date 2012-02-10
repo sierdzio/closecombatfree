@@ -5,6 +5,11 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+10.02.2012:
+ - separate developer and user documentation
+ - add documentation for tools
+ - change README_DEVELOPER into index
+
 07-09.02.2012:
  - add more comments to project's source code
  - add text docs to generated documentation as pages. README_DEVELOPER is now the index page
@@ -119,7 +124,7 @@ Some more history can be devised from git sources (although even there, the thin
  - add loading screen
  - add CcfMain::disableQrc()
  - fix and update game saving
- - get effects to work in loaded save games 
+ - get effects to work in loaded save games
  - fix fire animation showing up on unit following
 
 21.12.2011:

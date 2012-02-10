@@ -1,37 +1,51 @@
+/*! \page mainReadme CloseCombatFree's README
+
 This is a global README file for Close Combat Free game. Everything described here can change at any time, as this is a VERY early stage of development.
 
 CCF is meant to be a free (as in freedom) alternative to the Close Combat RTW series. CC itself is now old, and there are serious problems in running it on modern systems, being it either Windows or Linux + Wine. CCF is meant to solve that by being based on a modern cross-platform framework, Qt5. This will enable the game to be available on Linux, Windows, Mac OS, Android, iOS, Symbian and others - without any compatibility or cross-platform problems.
 
-As a base for the UI, QtQuick 1, 2 and/or QtQuick 3D will be used. Game logic will be programmed in C++, while in-game scripting, maps and scenarios will be (probably) left to QML and JavaScript.
+As a base for the UI, QtQuick 1, 2 and/or QtQuick 3D will be used. Game logic will be programmed in C++, while in-game scripting, maps and scenarios will be left to QML and JavaScript.
 
-CCF will be distributed under license which is yet to be decided. Most probably under GNU GPL or LGPL. There is a possibility the artwork will be licenced on other license terms than the source code.
+CCF is distributed under GNU GPLv3 license. There is a possibility the artwork will be licenced on other license terms than the source code (currently it is not, apart from 2 map backgrounds, which are public domain).
 
 To show "framerate" (time in which repaint is done) set QML_SHOW_FRAMERATE env variable to true (1). If you don't know, what last sentence means, assume it's impossible and move on :)
 
----------------- NOTE ---------------
+  \section documentation About documentation
+
+CCF comes with 2 separate sets of documentation:
+ - user documentation, consisting mostly of manuals and tutorials on how to play the game
+ - developer documentation, aimed at people willing to contribute to the code, art etc. (very probably, a third one will be created in the future - modder documentation, for people who create new units, maps, scenarios, campaigns and mods)
+
+ In a release package, all docs will (probably) already be built, so all you have to do then is to head to "doc" folder and have a look around. By default, HTML, plain text and QCH (Qt Compressed Help) docs should be available.
+
+ If you, on the other hand, downloaded source code, it is likely that you should, or at least want to build docs yourself. This is pretty easy, but requires "doxygen" tool to be installed on your system. If you have it, all that you have to do is:
+  - run "doxygen user.docconf" in project's root directory to generate HTML and QCH  user docs
+  - run "doxygen developer.docconf" in project's root directory to generate HTML and QCH developer docs
+
+  \section note Note on external sources
+
 Some images used (at leas temporarily) were done by NASA. They are released into public domain, AFAIK. Here's a list:
-1. Filename: "test1.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
-2. Filename: "test2.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
-3. Filename: "test3.jpg". Source: http://lostock-school-camp.wikispaces.com/aerial+photo (Creative Commons license)
+ - Filename: "test1.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
+ - Filename: "test2.jpg". Source: Haiti Deforestation - http://en.wikipedia.org/wiki/File:Haiti_deforestation.jpg
+ - Filename: "test3.jpg". Source: http://lostock-school-camp.wikispaces.com/aerial+photo (Creative Commons license)
 
-Unit statuses (might be good to split them into two lists):
-1. READY
-2. MOVING
-3. MOVING FAST
-4. SNEAKING
-5. AMBUSHING
-6. DEFENDING
-7. KIA
-8. DAMAGED
-9. WOUNDED
-10. INCAPACITATED
-
-11. AIMING
-12. FIRING
-13. LOADING
-14. FIXING
-15. ROTATING
-
-16. COVERING
-17. BROKEN
-18. BERSERK
+  \section statuses Unit statuses
+ - READY
+ - MOVING
+ - MOVING FAST
+ - SNEAKING
+ - AMBUSHING
+ - DEFENDING
+ - KIA
+ - DAMAGED
+ - WOUNDED
+ - INCAPACITATED
+ - AIMING
+ - FIRING
+ - LOADING
+ - FIXING
+ - ROTATING
+ - COVERING
+ - BROKEN
+ - BERSERK
+*/

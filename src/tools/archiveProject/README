@@ -1,0 +1,11 @@
+/*! \page archiveProjectReadme README for archiveProject
+
+archiveProject is a small shell script, that automatically creates a tarball
+of the whole project, using a handy naming scheme:
+closecombatfree_yyyy.MM.dd_lastGitCommit.tar.bz2
+
+This is the script:
+
+\include archiveProject
+
+*/

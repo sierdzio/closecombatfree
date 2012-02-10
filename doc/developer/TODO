@@ -2,7 +2,6 @@
 Bugs & fixes:
  - there is some strange order mixing when performing group queues
  - look into memory consumption - scenarios are not fully cleared from memory on close
- - add doxygen comments to Q_PROPERTYies and signals, try if JS comments work
 
 New features:
  - add game menu
@@ -18,7 +17,7 @@ New features:
  - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
- - prevent firing when target is invisible/ obscured 
+ - prevent firing when target is invisible/ obscured
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles

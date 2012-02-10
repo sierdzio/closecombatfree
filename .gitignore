@@ -3,7 +3,8 @@
 build/
 lib/
 # Documentation should be included when code gets more mature
-doc/html/
+doc/developer/html/
+doc/user/html/
 *.autosave
 *.pro.user*
 *.kate-swp

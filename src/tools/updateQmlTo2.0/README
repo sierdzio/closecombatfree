@@ -1,0 +1,8 @@
+/*! \page updateQmlTo2Readme README for updateQmlTo2.0
+
+updateQmlTo2.0 is a shell script that changes all "import QtQuick 1.1"
+statements into "import QtQuick 2.0". This eases conversion of the code into
+Qt5 compatibile.
+
+  \include updateQmlTo2.0
+*/
