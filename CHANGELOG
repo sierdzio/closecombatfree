@@ -1,5 +1,9 @@
 /*! \page changelogUser Changelog (compact, for users)
-2012.xx.xx - v0.0.4 ()
+2012.xx.xx - v0.0.5
+Changes since v0.0.4 (f4712c5717695e1b2fe0ffe28067b25daa62a782):
+ - expanded documentation
+
+2012.02.10 - v0.0.4.
 Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):
  - add game saving and loading
  - add possibility to load non-qrc files
@@ -16,7 +20,7 @@ Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):
  - numerous bug fixes
 
 2011.12.20 - v0.0.3.
-Changes since v0.0.2 (3ff08fe849905f067877b86a81d26502a39336ba): 
+Changes since v0.0.2 (3ff08fe849905f067877b86a81d26502a39336ba):
  - add PreferencesMenu
  - add prototype damage system
  - make orders be cancelled ONLY on "Stop" oder
