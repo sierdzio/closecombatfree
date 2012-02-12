@@ -468,6 +468,7 @@ Rectangle {
             topMenu.closeScenario.connect(root.closeScenario);
             topMenu.preferences.connect(togglePreferences);
             topMenu.load.connect(loadGame.toggleVisibility);
+            topMenu.about.connect(aboutMenu.toggleVisibility);
         }
     }
 
@@ -485,10 +486,12 @@ Rectangle {
         id: loadGame
         anchors.fill: parent
         visible: false
+    }
 
-//        onGameEntryClicked: {
-//            parent.loadScenario(gamePath);
-//        }
+    AboutMenu {
+        id: aboutMenu
+        anchors.fill: parent
+        visible: false
     }
 
     Item {

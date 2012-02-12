@@ -34,6 +34,7 @@ Item {
     signal terrainInfoEntryClicked();
     signal closeScenario();
     signal preferences();
+    signal about();
     signal save();
     signal load();
 
@@ -59,6 +60,7 @@ Item {
         optionsMenu.closeEntryClicked.connect(closeScenario);
         optionsMenu.saveGameEntryClicked.connect(save);
         optionsMenu.loadGameEntryClicked.connect(load);
+        optionsMenu.aboutEntryClicked.connect(about);
         terrainInfoEntry.entryClicked.connect(terrainInfoEntryClicked);
         zoomBox.zoomIn.connect(zoomIn);
         zoomBox.zoomOut.connect(zoomOut);

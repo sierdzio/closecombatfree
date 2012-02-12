@@ -104,7 +104,8 @@ OTHER_FILES += \
     ../qml/gui/menuEntries/LoadGameEntries.qml \
     ../qml/maps/props/PropCluster.qml \
     ../scenarios/Scenario_tst4.qml \
-    ../editor/ScenarioEditor.qml
+    ../editor/ScenarioEditor.qml \
+    ../qml/gui/AboutMenu.qml
 
 RESOURCES += \
 #    skinResource.qrc \

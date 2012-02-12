@@ -59,3 +59,23 @@ void CcfGlobal::disableQrcUse(QObject *object)
 {
     emit disableQrc(object);
 }
+
+/*!
+  Returns contents of a file (specified in \a filePath) as a QString.
+
+  WARNING: Paths are always resolved from the directory where the BINARY
+  is located!
+  */
+QString CcfGlobal::getFileContents(const QString &filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        enterErrorState("Could not open file to read: " + file.fileName());
+        qDebug() << "Could not open file to read:" << file.fileName();
+        return QString();
+    }
+
+    QString result = file.readAll();
+    file.close();
+    return result;
+}

@@ -8,6 +8,9 @@ Some more history can be devised from git sources (although even there, the thin
 12.02.2012:
  - add some info on compilation to dev doc's index page
  - add index page for user docs
+ - add AboutMenu
+ - add getFileContents to CcfGlobal
+ - clean some parts of the code
 
 10.02.2012:
  - separate developer and user documentation

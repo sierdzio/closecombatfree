@@ -18,6 +18,9 @@ New features:
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
  - prevent firing when target is invisible/ obscured
+ - add a tool that would change licensing headers automatically
+
+ - use shorter signal-slot chains like ones used in AboutMenu where applicable
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles

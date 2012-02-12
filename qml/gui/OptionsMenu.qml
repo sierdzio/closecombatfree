@@ -37,21 +37,12 @@ Item {
         open = !open;
     }
 
-    signal preferencesEntryClicked()
-
-    signal saveGameEntryClicked()
-//    onSaveGameEntryClicked: {
-//        console.log("Save game.");
-//    }
-
-    signal loadGameEntryClicked()
-//    onLoadGameEntryClicked: {
-//        console.log("Load game.");
-//    }
-
-    signal closeEntryClicked()
-
-    signal quitEntryClicked()
+    signal preferencesEntryClicked();
+    signal saveGameEntryClicked();
+    signal loadGameEntryClicked();
+    signal aboutEntryClicked();
+    signal closeEntryClicked();
+    signal quitEntryClicked();
     onQuitEntryClicked: {
         Qt.quit();
     }
@@ -60,6 +51,7 @@ Item {
         preferencesEntry.entryClicked.connect(preferencesEntryClicked);
         saveGameEntry.entryClicked.connect(saveGameEntryClicked);
         loadGameEntry.entryClicked.connect(loadGameEntryClicked);
+        aboutEntry.entryClicked.connect(aboutEntryClicked);
         closeEntry.entryClicked.connect(closeEntryClicked);
         quitEntry.entryClicked.connect(quitEntryClicked);
     }
@@ -89,6 +81,13 @@ Item {
         MenuEntry {
             id: loadGameEntry
             text: "Load game"
+            width: root.size
+            height: getContentsHeight()
+        }
+
+        MenuEntry {
+            id: aboutEntry
+            text: "About"
             width: root.size
             height: getContentsHeight()
         }
