@@ -32,6 +32,8 @@ Unit {
     property int backArmour: 60 // mm
     property int turretArmour: 80 // mm - might evolve into {front, side, back} triplet, too
 
+    property int mainGunReloadingTime: 2000
+
     // Additional properties, not important for non-developers/ modders.
     property int turretRotation: 0
     property int turretSize: 60
@@ -60,6 +62,23 @@ Unit {
     signal smokeTo (real targetX, real targetY)
     onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
 
+    function performFiring() {
+        changeStatus("READY");
+        if (firing == true) {
+            // Warning! This order is important for order markers!
+            turret.firing = true;
+            firing = false;
+            actionFinished(unitIndex, __tempX, __tempY);
+            queueOrderFinished();
+        } else if (smoking == true) {
+            // Warning! This order is important for order markers!
+            turret.smoking = true;
+            smoking = false;
+            actionFinished(unitIndex, __tempX, __tempY);
+            queueOrderFinished();
+        }
+    }
+
     id: root
     unitFileName: "Tank"
     unitType: "Generic tank"
@@ -82,22 +101,25 @@ Unit {
         onRunningChanged: {
             if (!running) {
                 if (unitStatus != "STOPPED") {
-                    if (firing == true) {
-                        // Warning! This order is important for order markers!
-                        turret.firing = true;
-                        firing = false;
-                        changeStatus("READY");
-                        actionFinished(unitIndex, __tempX, __tempY);
-                        queueOrderFinished();
-                    } else if (smoking == true) {
-                        // Warning! This order is important for order markers!
-                        turret.smoking = true;
-                        smoking = false;
-                        changeStatus("READY");
-                        actionFinished(unitIndex, __tempX, __tempY);
-                        queueOrderFinished();
+                    if (reloadingTimer.running == false) {
+                        reloadingTimer.start();
+                        performFiring();
                     }
                 }
+            }
+        }
+    }
+
+    Timer {
+        id: reloadingTimer
+        running: false
+        interval: mainGunReloadingTime
+
+        onRunningChanged: {
+            if (running == true) {
+                changeStatus("RELOADING");
+            } else {
+                performFiring();
             }
         }
     }

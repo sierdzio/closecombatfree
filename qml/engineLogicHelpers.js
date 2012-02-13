@@ -166,6 +166,8 @@ function colorForStatus(statusMessage) {
         result = "#885511";
     } else if (statusMessage == "ROTATING") {
         result = "#11aa11";
+    } else if (statusMessage == "RELOADING") {
+        result = "#11aa11";
     } else if (statusMessage == "FIRING") {
         result = "#aa1111";
     }

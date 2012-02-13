@@ -2,6 +2,8 @@
 Bugs & fixes:
  - there is some strange order mixing when performing group queues
  - look into memory consumption - scenarios are not fully cleared from memory on close
+ - double shooting of close targets is still possible
+ - order markers vanish on left mouse click
 
 New features:
  - add game menu
