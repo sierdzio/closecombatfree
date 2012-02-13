@@ -114,6 +114,45 @@ Rectangle {
         ScenarioLogic.checkScenarioFinished();
     }
 
+
+
+    function updateWidth() {
+        if (Config.windowWidth < menu.contentWidth) {
+            menu.width = Config.windowWidth;
+        } else {
+            menu.width = menu.contentWidth;
+        }
+    }
+
+    function childAt(x, y) {
+        return unitsLoader.item.childAt(x, y);
+    }
+
+    function childIndexAt(x, y) {
+        return childIndex(childAt(x, y));
+    }
+
+    function childIndex(child) {
+        var result = 0;
+
+        for (var i = 0; i < unitsLoader.item.children.length; i++) {
+            if (child == unitsLoader.item.children[i]) {
+                result = i;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    function zoomIn() {
+        zoom += 0.1;
+    }
+
+    function zoomOut() {
+        zoom -= 0.1;
+    }
+
     Keys.onPressed: {
         ScenarioLogic.handleKeyPress(event);
     }
@@ -543,53 +582,6 @@ Rectangle {
         onTriggered: {
             ScenarioLogic.updateFollowingUnit();
         }
-    }
-
-    function updateWidth() {
-        if (Config.windowWidth < menu.contentWidth) {
-            menu.width = Config.windowWidth;
-        } else {
-            menu.width = menu.contentWidth;
-        }
-    }
-
-    function childAt(x, y) {
-        return unitsLoader.item.childAt(x, y);
-    }
-
-    function childIndexAt(x, y) {
-        var result = 0;
-        var child = unitsLoader.item.childAt(x, y);
-
-        for (var i = 0; i < unitsLoader.item.children.length; i++) {
-            if (child == unitsLoader.item.children[i]) {
-                result = i;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    function childIndex(child) {
-        var result = 0;
-
-        for (var i = 0; i < unitsLoader.item.children.length; i++) {
-            if (child == unitsLoader.item.children[i]) {
-                result = i;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    function zoomIn() {
-        zoom += 0.1;
-    }
-
-    function zoomOut() {
-        zoom -= 0.1;
     }
 
     // ------------------

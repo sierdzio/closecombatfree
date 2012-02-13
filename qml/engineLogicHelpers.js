@@ -204,11 +204,12 @@ function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
 
         for (var j = 0; j < items.length; ++j) {
             var item = items[j];
-            if (item == currentUnit) {
+            if ((item == currentUnit) || (item == undefined)) {
                 continue;
             }
 
-            if (((x <= item.x + item.width) && (x >= item.x)) && ((y <= item.y + item.height) && (y >= item.y))) {
+            if (((x <= item.x + item.width) && (x >= item.x))
+                    && ((y <= item.y + item.height) && (y >= item.y))) {
                 result = targetDistance(x1, y1, x, y);
                 return result;
             }

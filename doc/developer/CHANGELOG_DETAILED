@@ -6,7 +6,11 @@ Some more history can be devised from git sources (although even there, the thin
 === === === ===
 
 13.02.2012:
- - add gun reloading time
+ - add gun reloading time (there are still some issues to be fixed here)
+ - add some comments to JS files
+ - add better aimLine obstacle detection (target is now omitted when firing)
+ - prevent unit from shooting if target is not visible (there are obstacles
+   in it's path)
 
 12.02.2012:
  - add some info on compilation to dev doc's index page

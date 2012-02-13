@@ -23,6 +23,7 @@ New features:
  - add a tool that would change licensing headers automatically
 
  - use shorter signal-slot chains like ones used in AboutMenu where applicable
+ - consider unifying ScenarioLogic::placeWaypoint() and ScenarioLogic::performContextAction()
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles

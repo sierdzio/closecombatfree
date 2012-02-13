@@ -32,7 +32,7 @@ Unit {
     property int backArmour: 60 // mm
     property int turretArmour: 80 // mm - might evolve into {front, side, back} triplet, too
 
-    property int mainGunReloadingTime: 2000
+    property int mainGunReloadingTime: 5000
 
     // Additional properties, not important for non-developers/ modders.
     property int turretRotation: 0
@@ -91,7 +91,6 @@ Unit {
     unitHeight: 1
 
     RotationAnimation on turretRotation {
-
         id: turretRotationAnimation
         paused: running? root.paused : false
         duration: 3000
@@ -102,8 +101,8 @@ Unit {
             if (!running) {
                 if (unitStatus != "STOPPED") {
                     if (reloadingTimer.running == false) {
-                        reloadingTimer.start();
                         performFiring();
+                        reloadingTimer.start();
                     }
                 }
             }

@@ -22,6 +22,10 @@ var effectsContainer = new Array();
 var orderMarkersContainer = new Array();
 var unitGroups = new Array(10);
 
+/*!
+  Schedules action chosen in context menu (or through a keyboard shortcut).
+  It is then used to add that order to queue.
+  */
 function scheduleContextAction(index, operation) {
     var units;
     var unit;
@@ -80,6 +84,27 @@ function scheduleContextAction(index, operation) {
     }
 }
 
+/*!
+  Cancels order if there are obstacles in LOS.
+  */
+function checkIfUnitCanFire(scheduledOperation) {
+    // Take obstacles into account
+    if ((scheduledOperation == "Attack") || (scheduledOperation == "Smoke")) {
+//        console.log(aimLine.obscureBeginning + ", " + aimLine.invisibleBeginning
+//                    + ", " + aimLine.height);
+        if (aimLine.invisibleBeginning < aimLine.height) {
+            cleanContextAction();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/*!
+  Called when user "places order", that is, when they click left mouse button
+  or tap on the screen.
+  */
 function performContextAction(index, targetX, targetY) {
     var selectedGroup = selectedUnits();
     var unit = unitsLoader.item.children[index];
@@ -89,6 +114,10 @@ function performContextAction(index, targetX, targetY) {
             && (scheduledOperation != "Defend")
             && (scheduledOperation != "Stop")
             && (scheduledOperation != "Follow")) {
+        if (checkIfUnitCanFire(scheduledOperation) == false) {
+            return;
+        }
+
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
@@ -122,6 +151,10 @@ function placeWaypoint(index, targetX, targetY) {
             && (scheduledOperation != "Defend")
             && (scheduledOperation != "Stop")
             && (scheduledOperation != "Follow")) {
+        if (checkIfUnitCanFire(scheduledOperation) == false) {
+            return;
+        }
+
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
@@ -318,6 +351,33 @@ function cleanContextAction() {
     contextLoader.visible = true;
 }
 
+/*!
+  Returns Array of all units with exception of one, specified by unitIndex.
+
+  If unitIndex is -1, this function returns ALL units.
+  */
+function getAllUnitsButOne(unitIndex) {
+    var allUnits = unitsLoader.item.children;
+
+    if (unitIndex == -1)
+        return allUnits;
+
+    var result = new Array(allUnits.length - 1);
+
+    for (var i = 0; i < allUnits.length; ++i) {
+        if (allUnits[i].unitIndex != unitIndex) {
+            result.push(allUnits[i]);
+        }
+    }
+
+    return result;
+}
+
+/*!
+  Updates aimLine (rotation, length, anchor points, obscuring etc.).
+
+  This function is called by aimLineTimer on every update.
+  */
 function updateAimLine() {
     var unit = unitsLoader.item.children[__unitIndex];
 
@@ -339,8 +399,14 @@ function updateAimLine() {
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
             var terrainObscure = Terrain.checkForTerrainInLOS(x1, y1, x2, y2, unit);
-            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(), x1, y1, x2, y2, unit);
-            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(unitsLoader.item.children, x1, y1, x2, y2, unit);
+            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(),
+                                                                   x1, y1, x2, y2, unit);
+            var targetUnit = childAt(x2, y2);
+            if ((targetUnit == undefined)) // Operation should be checked here!
+                targetUnit = -1;
+
+            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit),
+                                                                   x1, y1, x2, y2, unit);
 
             // Conditions here should be redesigned to save time.
             // There is no need to update aimLine if a given Beginning
@@ -396,7 +462,7 @@ function handleLeftMouseClick(mouse) {
             placeWaypoint(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         } else {
             performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
-            return;
+//            return;
         }
     } else {
         cleanContextAction();
