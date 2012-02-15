@@ -35,7 +35,6 @@
   Checks whether array contains a given object.
 
   Returns -1 if it does not, otherwise index of first hit is returned.
-  \endverbatim
   */
 function arrayContains(array, objToCheck) {
     for (var i = 0; i < array.length; ++i) {

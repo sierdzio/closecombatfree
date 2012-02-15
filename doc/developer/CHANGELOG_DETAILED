@@ -7,6 +7,7 @@ Some more history can be devised from git sources (although even there, the thin
 
 15.02.2012:
  - add comments to JS files, test JS documentation
+ - attempt to comment QML with doxygen - largely failed, it's just too incompatible
 
 13.02.2012:
  - add gun reloading time (there are still some issues to be fixed here)

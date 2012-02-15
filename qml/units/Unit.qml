@@ -74,7 +74,6 @@ Item {
         movementStateChange(moving, unitIndex);
     }
 
-
     signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
     signal queueOrderFinished ()
