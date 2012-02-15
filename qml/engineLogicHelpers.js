@@ -20,9 +20,23 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-// Checks whether array contains a given object.
-// Returns -1 if it does not, otherwise index
-// of first hit is returned.
+/*!
+  \ingroup CloseCombatFree
+
+  \class engineLogicHelpers
+
+  JavaScript library containing several helper functions needed throughout
+  game code.
+  */
+
+/*!
+  \memberof engineLogicHelpers
+
+  Checks whether array contains a given object.
+
+  Returns -1 if it does not, otherwise index of first hit is returned.
+  \endverbatim
+  */
 function arrayContains(array, objToCheck) {
     for (var i = 0; i < array.length; ++i) {
         if (array[i] == objToCheck) {
@@ -32,6 +46,11 @@ function arrayContains(array, objToCheck) {
     return -1;
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Returns an angle between "up" and line drawn between 2 given points.
+  */
 function rotationAngle(oldX, oldY, newX, newY) {
     var result = 0;
 
@@ -64,6 +83,11 @@ function rotationAngle(oldX, oldY, newX, newY) {
     return result;
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Returns a distance between two given points.
+  */
 function targetDistance(originX, originY, targetX, targetY) {
     var result = 0;
 
@@ -80,6 +104,13 @@ function targetDistance(originX, originY, targetX, targetY) {
     return result;
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Converts any given angle (0 <=> 360) into one of 8 headings.
+
+  This is used to position defense and ambush spheres.
+  */
 function angleTo8Step(angle) {
     if ((angle <= 22) || (angle > 337)) {
         return 270;
@@ -100,6 +131,11 @@ function angleTo8Step(angle) {
     }
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Computes duration needed for rotation animation.
+  */
 function rotationDuration(oldRotation, newRotation, rotationSpeed) {
     var tempNewRotation = newRotation;
     var tempOldRotation = oldRotation;
@@ -121,6 +157,13 @@ function rotationDuration(oldRotation, newRotation, rotationSpeed) {
     return Math.round(dur);
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Returns HTML colour scheme for a given order.
+
+  This is used by aimLine in Scenario.qml.
+  */
 function colorForOrder(orderName) {
     var result = "ERROR";
 
@@ -139,6 +182,13 @@ function colorForOrder(orderName) {
     return result;
 }
 
+/*!
+  \memberof engineLogicHelpers
+
+  Returns HTML colour scheme for a given status message.
+
+  This is used to show unit's status in RosterMenu.
+  */
 function colorForStatus(statusMessage) {
     var result = "ERROR";
 
@@ -175,10 +225,15 @@ function colorForStatus(statusMessage) {
     return result;
 }
 
-//// Experimental
-// 0 - means no obstruction.
-// Positive values - mean invisible.
-// Negative values - mean obscured.
+/*!
+  \memberof engineLogicHelpers
+
+  Experimental:
+  \li 0 - means no obstruction.
+  \li Positive values - mean invisible.
+  \li Negative values - mean obscured.
+  */
+
 function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
     var result = 0;
     var distance = targetDistance(x1, y1, x2, y2);

@@ -18,4 +18,18 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+/*!
+  \ingroup CloseCombatFree
+
+  \class tempJS
+
+ This is just a temporary measure to hold the order queue of a unit.
+ Qt Quick 2 comes with new goodies that would render this obsolete.
+  */
+
+/*!
+  \memberof tempJS
+
+  JS array holding order queue of a single unit.
+  */
 var orderQueue = new Array();

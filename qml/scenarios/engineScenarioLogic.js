@@ -18,11 +18,39 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+/*!
+  \ingroup CloseCombatFree
+
+  \class engineScenarioLogic
+
+  JavaScript file containing logic responsible for helping Scenario.qml do it's
+  work. A lot of helper functions, as well as those crucial for game's operation.
+  */
+
+/*!
+  \memberof engineScenarioLogic
+
+  Holds graphical effects (muzzle flashes, hit animations etc.).
+  */
 var effectsContainer = new Array();
+
+/*!
+  \memberof engineScenarioLogic
+
+  Holds order markers.
+  */
 var orderMarkersContainer = new Array();
+
+/*!
+  \memberof engineScenarioLogic
+
+  Holds unit groups (ones created with CTRL+number).
+  */
 var unitGroups = new Array(10);
 
 /*!
+  \memberof engineScenarioLogic
+
   Schedules action chosen in context menu (or through a keyboard shortcut).
   It is then used to add that order to queue.
   */
@@ -85,6 +113,8 @@ function scheduleContextAction(index, operation) {
 }
 
 /*!
+  \memberof engineScenarioLogic
+
   Cancels order if there are obstacles in LOS.
   */
 function checkIfUnitCanFire(scheduledOperation) {
@@ -102,6 +132,8 @@ function checkIfUnitCanFire(scheduledOperation) {
 }
 
 /*!
+  \memberof engineScenarioLogic
+
   Called when user "places order", that is, when they click left mouse button
   or tap on the screen.
   */
@@ -142,6 +174,11 @@ function performContextAction(index, targetX, targetY) {
     cleanContextAction();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Puts a waypoint on the map, also adds order to unit's order queue.
+  */
 function placeWaypoint(index, targetX, targetY) {
     var selectedGroup = selectedUnits();
     var unit = unitsLoader.item.children[index];
@@ -180,6 +217,11 @@ function placeWaypoint(index, targetX, targetY) {
     //    cleanContextAction();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Issues a waypoint order (adds order to unit's queue).
+  */
 function issueWaypointOrder(unit, x, y) {
     var operation = unit.scheduledOperation;
 
@@ -195,6 +237,11 @@ function issueWaypointOrder(unit, x, y) {
     setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Issues an order (fires queue execution).
+  */
 function issueActionOrder(unit, x, y) {
     var operation = unit.scheduledOperation;
 
@@ -220,6 +267,11 @@ function issueActionOrder(unit, x, y) {
     setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Slot invoked when an unit finishes an action.
+  */
 function actionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
@@ -237,6 +289,12 @@ function actionFinished(index, targetX, targetY) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Checks whether scenario objectives are all met, and displays relevan info when
+  it's needed.
+  */
 function checkScenarioFinished() {
     //// Experimental - unit destruction detection
     // It's probable that this should be done elsewhere.
@@ -262,6 +320,13 @@ function checkScenarioFinished() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Invoked when a firing action is finished.
+
+  Turns hit effects on, checks whether someone was hit, etc.
+  */
 function firingActionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
@@ -303,7 +368,11 @@ function firingActionFinished(index, targetX, targetY) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
 
+  Triggered by effectsTimer, switches all effects' frames to the next one.
+  */
 function updateEffects() {
     var haveAllEffectsFinished = true;
     for (var i = 0; i < effectsContainer.length; i++) {
@@ -327,6 +396,11 @@ function updateEffects() {
     //                + ". Timer running: " + effectsTimer.running);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Switches frame of a single effect to next one.
+  */
 function switchEffectFrame(effectIndex) {
     var i = effectIndex;
     var imgNumber = effectsContainer[i].imageNumber;
@@ -342,6 +416,11 @@ function switchEffectFrame(effectIndex) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Cleans context action (hides context menu and aimLine, etc.).
+  */
 function cleanContextAction() {
     rotationTimer.stop();
     aimLine.visible = false;
@@ -352,6 +431,8 @@ function cleanContextAction() {
 }
 
 /*!
+  \memberof engineScenarioLogic
+
   Returns Array of all units with exception of one, specified by unitIndex.
 
   If unitIndex is -1, this function returns ALL units.
@@ -374,6 +455,8 @@ function getAllUnitsButOne(unitIndex) {
 }
 
 /*!
+  \memberof engineScenarioLogic
+
   Updates aimLine (rotation, length, anchor points, obscuring etc.).
 
   This function is called by aimLineTimer on every update.
@@ -449,6 +532,11 @@ function updateAimLine() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Cancels all orders for all selected units.
+  */
 function cancelAllSelectedOrders() {
     var selected = selectedUnits();
     for (var i = 0; i < selectedUnitsCount(); ++i) {
@@ -456,6 +544,11 @@ function cancelAllSelectedOrders() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles left mouse click.
+  */
 function handleLeftMouseClick(mouse) {
     if (contextLoader.visible == false) {
         if (mouse.modifiers == Qt.ShiftModifier) {
@@ -470,6 +563,11 @@ function handleLeftMouseClick(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles right mouse click.
+  */
 function handleRightMouseClick(mouse) {
     cleanContextAction();
     if (aimLine.visible == true)
@@ -504,6 +602,11 @@ function handleRightMouseClick(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles left mouse click on roster menu.
+  */
 function handleLeftMouseClickRoster(mouse) {
     if (contextLoader.visible == false) {
         //            performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
@@ -514,6 +617,11 @@ function handleLeftMouseClickRoster(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles right mouse click on roster menu.
+  */
 function handleRightMouseClickRoster(mouse) {
     cleanContextAction();
 
@@ -539,6 +647,11 @@ function handleRightMouseClickRoster(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles "press and hold" action of left mouse button.
+  */
 function handlePressAndHoldLeft(mouse) {
     rubberBand.x = mouse.x;
     rubberBand.y = mouse.y;
@@ -556,11 +669,21 @@ function handlePressAndHoldLeft(mouse) {
         rubberBandTimer.start();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles "press and hold" action of right mouse button.
+  */
 function handlePressAndHoldRight(mouse) {
     var infoString = map.item.terrainInfoString(mouse.x, mouse.y);
     terrainInfoText.text = infoString;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Invoked when mouse button is released.
+  */
 function handleMouseReleased() {
     if (rubberBandTimer.running == true) {
         rubberBandTimer.stop();
@@ -572,6 +695,13 @@ function handleMouseReleased() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles key press.
+
+  Uses C++ bindings heavily to check keyboard shortcuts in CcfConfig.
+  */
 function handleKeyPress(event) {
     if (event.modifiers == Qt.ControlModifier) {
         var digit = digitPressed(event);
@@ -655,16 +785,31 @@ function handleKeyPress(event) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Centers view on a given unit.
+  */
 function centerViewOnUnit(unit) {
     gameArea.contentX = (((unit.x + unit.centerX) * zoom) - gameArea.width/2);
     gameArea.contentY = (((unit.y + unit.centerY) * zoom) - gameArea.height/2);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Centers view on given coordinates.
+  */
 function centerViewOn(x, y) {
     gameArea.contentX = (x - gameArea.width/2);
     gameArea.contentY = (y - gameArea.height/2);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Starts following a unit specified by it's index.
+  */
 function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
@@ -676,6 +821,11 @@ function startFollowingUnit(index) {
         followingTimer.start();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Stops following a unit.
+  */
 function stopFollowingUnit() {
     followedUnit.index = -1;
     followedUnit.running = false;
@@ -684,10 +834,23 @@ function stopFollowingUnit() {
         followingTimer.stop();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Returns true is any unit is being followed.
+  */
 function isFollowingOn() {
     return followedUnit.running;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Invoked on every followTimer update.
+
+  Checks whether a unit is moving, centers view on the unit etc. If a unit is
+  stationary, timer is turned off.
+  */
 function updateFollowingUnit() {
     var unit = unitsLoader.item.children[followedUnit.index];
     if (unit.moving == true) {
@@ -697,6 +860,11 @@ function updateFollowingUnit() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Restarts followTimer when a unit is on the move.
+  */
 function handleUnitMovement(isMoving, unitIndex) {
     if (followedUnit.index != unitIndex) {
         return;
@@ -709,6 +877,11 @@ function handleUnitMovement(isMoving, unitIndex) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Updates the rubber band (dimensions).
+  */
 function updateRubberBand(x, y) {
     var rubberX, rubberY, rubberX2, rubberY2; // 2 edges of the rubber band,
     // in root's coordinates.
@@ -784,6 +957,11 @@ function updateRubberBand(x, y) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Selects a unit from gameArea (as opposed to roster).
+  */
 function selectUnitFromGameArea(mouse) {
     var unit = childAt(mouse.x, mouse.y);
 
@@ -799,6 +977,11 @@ function selectUnitFromGameArea(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Selects a unit from roster menu.
+  */
 function selectUnitFromRoster(mouse) {
     var unit = roster.getUnitAt(mouse.x, mouse.y);
 
@@ -807,6 +990,12 @@ function selectUnitFromRoster(mouse) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Selects a single unit, based on some rules (it cannot be destroyed or belong
+  to the enemy).
+  */
 function selectUnit(index, modifier) {
     if ((unitsLoader.item.children[index].unitSide != playerSide)
             || (unitsLoader.item.children[index].state != "healthy")) {
@@ -833,12 +1022,22 @@ function selectUnit(index, modifier) {
     calculateOrderMarkerVisibility(index);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Deselects a given unit.
+  */
 function deselectUnit(index) {
     unitsLoader.item.children[index].selected = false;
     calculateOrderMarkerVisibility(index);
     //    soldierMenu.clear();
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Deselects all units.
+  */
 function deselectAllUnits() {
     soldierMenu.clear();
     var units = unitsLoader.item.children;
@@ -847,6 +1046,11 @@ function deselectAllUnits() {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Returns number of units that are selected.
+  */
 function selectedUnitsCount() {
     var result = 0;
     var units = unitsLoader.item.children;
@@ -857,6 +1061,11 @@ function selectedUnitsCount() {
     return result;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Returns an array of all selected units.
+  */
 function selectedUnits() {
     var result = new Array();
     var units = unitsLoader.item.children;
@@ -867,6 +1076,11 @@ function selectedUnits() {
     return result;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Creates an unit group. Usually done with CTRL+number.
+  */
 function groupUnits(groupNumber) {
     if (selectedUnitsCount() == 0) {
         return;
@@ -890,6 +1104,13 @@ function groupUnits(groupNumber) {
     Global.statusMessage("Group " + groupNumber + " created.");
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Selects a whole unit group.
+
+  It has to be created first, of course.
+  */
 function selectGroup(groupNumber) {
     var group = unitGroups[groupNumber];
 
@@ -904,6 +1125,11 @@ function selectGroup(groupNumber) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Correctly positions the context menu (so that it does not go beyond the screen).
+  */
 function setContextMenuPosition(menu, x, y) {
     if ((x + menu.width) > root.width)
         menu.x = root.width - menu.width;
@@ -916,6 +1142,11 @@ function setContextMenuPosition(menu, x, y) {
         menu.y = y;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Handles digit presses, returns a number corresponding to digit that was pressed.
+  */
 function digitPressed(event) {
     var result = -1;
 
@@ -943,6 +1174,11 @@ function digitPressed(event) {
     return result;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Checks which order markers should be visible and clears those no longer needed.
+  */
 function calculateOrderMarkerVisibility(index) {
     var orderMarker = orderMarkersContainer[index];
     var unit = unitsLoader.item.children[index];
@@ -972,6 +1208,11 @@ function calculateOrderMarkerVisibility(index) {
     }
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Crreates an order marker and places it on game map.
+  */
 function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     // This component renders an order marker.
     var component = Qt.createComponent("../qml/gui/OrderMarker.qml");
@@ -992,6 +1233,11 @@ function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     marker.visible = true;
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  When user drags order marker about the game area, unit's orders are being updated.
+  */
 function modifyTargetFromMarker(unitIndex, orderNumber) {
     var marker = orderMarkersContainer[unitIndex][orderNumber];
     var newX = marker.x + marker.centerX;
@@ -1003,6 +1249,11 @@ function modifyTargetFromMarker(unitIndex, orderNumber) {
     unit.modifyOrder(orderNumber, newX, newY);
 }
 
+/*!
+  \memberof engineScenarioLogic
+
+  Initialises order markers' container.
+  */
 function initOrderMarkers() {
     for (var i = 0; i < unitsLoader.item.children.length; i++) {
         orderMarkersContainer[i] = new Array();

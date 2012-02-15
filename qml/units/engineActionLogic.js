@@ -18,21 +18,52 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+/*!
+  \ingroup CloseCombatFree
+
+  \class engineActionLogic
+
+  JavaScript file containing logic responsible for performing Unit actions (moving,
+  shooting, etc.).
+  */
+
+/*!
+  \memberof engineActionLogic
+
+  Queues the order to move at casual speed; starts processing of the queue.
+  */
 function moveTo (newX, newY) {
     queueOrder("Move", newX, newY);
     processQueue();
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Queues the order to move fast; starts processing of the queue.
+  */
 function moveFastTo (newX, newY) {
     queueOrder("Move fast", newX, newY);
     processQueue();
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Queues the order to move at slow speed; starts processing of the queue.
+  */
 function sneakTo (newX, newY) {
     queueOrder("Sneak", newX, newY);
     processQueue();
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Performs movement order by starting the rotation animation.
+
+  When rotation stops, code in Unit.qml picks up and starts movement.
+  */
 function performMovement (newX, newY, factor) {
     __tempX = newX - (centerX);
     __tempY = newY - (centerY);
@@ -53,16 +84,33 @@ function performMovement (newX, newY, factor) {
     yMoveAnimation.duration = moveDuration;
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Queues the order fire smoke with the turret; starts processing of the queue.
+  */
 function turretSmokeTo (targetX, targetY) {
     queueOrder("Smoke", targetX, targetY);
     processQueue();
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Queues the order attack with the turret; starts processing of the queue.
+  */
 function turretFireTo (targetX, targetY) {
     queueOrder("Attack", targetX, targetY);
     processQueue();
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Performs firing order by starting the turret rotation animation.
+
+  When rotation stops, code in Tank.qml picks up and starts movement.
+  */
 function performTurretShooting (targetX, targetY) {
     __tempX = targetX;
     __tempY = targetY;
@@ -78,6 +126,11 @@ function performTurretShooting (targetX, targetY) {
     changeStatus("ROTATING");
 }
 
+/*!
+  \memberof engineActionLogic
+
+  Cancels unit's orders, clears order queue.
+  */
 function cancelOrder () {
     changeStatus("STOPPED");
     clearOrderQueue();
@@ -98,9 +151,15 @@ function cancelOrder () {
     }
 }
 
-// Puts a new order at the end of a queue.
+/*!
+  \memberof engineActionLogic
+
+  Puts a new order at the end of a queue.
+  */
 function queueOrder (orderName, newX, newY) {
 //    var component = Qt.createComponent("../../qml/units/Order.qml");
+    // QRC is needed here, because files from different directories have acces
+    // to this method, and relative paths don't work for all of them.
     var component = Qt.createComponent("qrc:/core/units/Order.qml");
     var order;
 
@@ -112,15 +171,23 @@ function queueOrder (orderName, newX, newY) {
     orderQueue.push(order);
 }
 
-// Makes sure that queue in execution is not disturbed
-// by new calls.
+/*!
+  \memberof engineActionLogic
+
+  Makes sure that queue in execution is not disturbed
+  by new calls. Called to begin queue execution.
+  */
 function processQueue () {
     if (currentOrder == -1) {
         continueQueue();
     }
 }
 
-// Processes next element in the queue.
+/*!
+  \memberof engineActionLogic
+
+  Processes next element in the queue.
+  */
 function continueQueue () {
     var orderQueue = getOrderQueue();
     var noOrdersLeft = true;
@@ -161,7 +228,11 @@ function continueQueue () {
     }
 }
 
-// Calculates result of a hit
+/*!
+  \memberof engineActionLogic
+
+  Calculates result of a hit
+  */
 function hit(byWhat, xWhere, yWhere) {
     // For now, not much logic is in ... :)
     cancelOrder();

@@ -24,6 +24,7 @@ New features:
 
  - use shorter signal-slot chains like ones used in AboutMenu where applicable
  - consider unifying ScenarioLogic::placeWaypoint() and ScenarioLogic::performContextAction()
+ - add controls to make addin unit groups possible on mobile
 
 Big ideas for the future:
  - add advanced world map option (something like TripleA or Hearts of Iron, but with option to perform close combat battles
