@@ -5,6 +5,8 @@ lib/
 # Documentation should be included when code gets more mature
 doc/developer/html/
 doc/user/html/
+developer.qch
+user.qch
 *.autosave
 *.pro.user*
 *.kate-swp
