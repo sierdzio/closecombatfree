@@ -27,7 +27,6 @@ Rectangle {
 
     signal scenarioEntryClicked (string scenarioPath)
     onScenarioEntryClicked: {
-//        scenario.scenarioFile = "../../scenarios/" + scenarioPath;
         scenario.scenarioFile = "scenarios/" + scenarioPath;
         scenario.source = "../../qml/scenarios/Scenario.qml";
         root.state = "opened";

@@ -105,7 +105,10 @@ OTHER_FILES += \
     ../qml/maps/props/PropCluster.qml \
     ../scenarios/Scenario_tst4.qml \
     ../editor/ScenarioEditor.qml \
-    ../qml/gui/AboutMenu.qml
+    ../qml/gui/AboutMenu.qml \
+    ../qml/campaigns/CampaignMapList.qml \
+    ../qml/maps/MapCluster.qml \
+    ../campaigns/Campaign_tst1.qml
 
 RESOURCES += \
 #    skinResource.qrc \

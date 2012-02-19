@@ -1,8 +1,8 @@
 /*! \page todo TODO page
 Bugs & fixes:
  - there is some strange order mixing when performing group queues
- - look into memory consumption - scenarios are not fully cleared from memory on close
- - double shooting of close targets is still possible
+ - look into memory consumption - scenarios are not fully cleared from memory on close (some clues in http://developer.qt.nokia.com/forums/viewthread/14492)
+ - double shooting of close targets is still possible (+ other gun reloading problems)
  - order markers vanish on left mouse click
 
 New features:
@@ -13,8 +13,8 @@ New features:
  - add in-game chat
  - add deployment phase before the battle
  - add another hidden image to Map.qml - obstacle map. It would allow for easy
-   adding curiously-shaped obstacles, like water etc.
- - add AI (well, obviously)
+   adding of curiously-shaped obstacles, like water etc.
+ - add AI (well, obviously). Take a look at WarZone's, Wesnoth's AI and at http://eodev.sourceforge.net/
  - fragment resources
  - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
    positions in clusters)
