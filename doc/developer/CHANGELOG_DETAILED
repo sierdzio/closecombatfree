@@ -7,6 +7,8 @@ Some more history can be devised from git sources (although even there, the thin
 
 19.02.2012:
  - first attempt to get campaign functionality into the game
+ - add qmlFileList() to CcfGameManager, change scenariosList() and saveGameList()
+   to use this new method internally
 
 15.02.2012:
  - add comments to JS files, test JS documentation

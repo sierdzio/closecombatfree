@@ -30,16 +30,9 @@ CcfGameManager::CcfGameManager(QObject *parent) :
 {
     tab = "    ";
 
-    QDir scenarioDir("scenarios");
-    m_scenariosList = scenarioDir.entryList(QDir::Files);
-}
-
-/*!
-  Getter for scenarios' list.
-  */
-QStringList CcfGameManager::scenariosList()
-{
-    return m_scenariosList;
+//    QDir scenarioDir("scenarios");
+//    m_scenariosList = scenarioDir.entryList(QDir::Files);
+    m_scenariosList = qmlFileList("scenarios");
 }
 
 /*!
@@ -108,12 +101,32 @@ void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList,
 }
 
 /*!
+  Returns a list of files in a given directory.
+
+  Useful in getting list of saved games, scenarios, campaigns etc.
+  */
+QStringList CcfGameManager::qmlFileList(const QString &directoryToSearch)
+{
+    QDir saveDir(directoryToSearch);
+    return saveDir.entryList(QDir::Files);
+}
+
+/*!
+  Getter for scenarios' list.
+  */
+QStringList CcfGameManager::scenariosList()
+{
+    return m_scenariosList;
+}
+
+/*!
   Returns a a list of saved games.
   */
 QStringList CcfGameManager::savedGamesList()
 {
-    QDir saveDir("saves");
-    return saveDir.entryList(QDir::Files);
+//    QDir saveDir("saves");
+//    return saveDir.entryList(QDir::Files);
+    return qmlFileList("saves");
 }
 
 /*!

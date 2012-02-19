@@ -49,13 +49,14 @@ class CcfGameManager : public QObject, public CcfError
 {
     Q_OBJECT
 public:
-    explicit CcfGameManager(QObject *parent = 0);
-    Q_INVOKABLE QStringList scenariosList();
+    explicit CcfGameManager(QObject *parent = 0);    
     Q_INVOKABLE QString scenarioPath(int index);
     Q_INVOKABLE void saveGame(const QDeclarativeListReference &unitsList,
                               const QString &mapFile,
                               const QString &saveFileName = "saves/save1.qml");
+    Q_INVOKABLE QStringList qmlFileList(const QString &directoryToSearch);
     Q_INVOKABLE QStringList savedGamesList();
+    Q_INVOKABLE QStringList scenariosList();
     
 private:
     QString addSavePropertyIfExists(const QObject *object,

@@ -22,6 +22,11 @@ import QtQuick 1.1
 import "../../qml/gui"
 import "../../qml/gui/menuEntries"
 
+/*
+  This file is in a sort of temporary state - everything is thrown in, just to
+  test other functionality. For any real release, whe whole game menu, including
+  this ScenarioMenu, should be redesigned.
+  */
 Rectangle {
     property string __tempReloadPath: ""
 
@@ -66,6 +71,29 @@ Rectangle {
     }
 
     ListModel {
+        id: campaignModel
+    }
+
+    Component {
+        id: campaignDelegate
+
+        RosterMenuEntry {
+            entryText: camapignText
+            entryStatusText: campaignDescription
+            entryStatusColor: "#000000"
+            entryLogo: campaignLogo
+            backgroundColor: "#7e8c24"
+            mouseAreaEnabled: false
+            selected: false
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Component.onCompleted: {
+                entryClicked.connect(campaignEntryClicked);
+            }
+        }
+    }
+
+    ListModel {
         id: scenarioModel
     }
 
@@ -86,6 +114,16 @@ Rectangle {
         id: entryBox
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+
+        ListView {
+            id: campaigns
+            height: 300
+            width: 400
+            spacing: 2
+
+            model: scenarioModel
+            delegate: scenarioDelegate
+        }
 
         ListView {
             id: scenarios

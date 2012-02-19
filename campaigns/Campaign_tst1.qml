@@ -36,6 +36,5 @@ CampaignMapList {
                 Tank_tst2 { unitSide: "bad" }
             ]
         }
-
     ]
 }
