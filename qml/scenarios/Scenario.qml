@@ -30,6 +30,14 @@ Rectangle {
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
+    // Is this a single scenario, or a campaign? Convenience bool (same info can
+    // be taken from other sources
+    property bool __isCampaign: false
+    // Map path for campaigns
+    property bool mapFile: ""
+    // In Qt5 we will have to move units list, and other JS Arrays here from
+    // ScenarioLogic
+
     property real zoom: 1.0
     property variant zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
                                          gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
@@ -223,16 +231,23 @@ Rectangle {
 
                     onLoaded: {
                         if (scenarioFile != "") {
-                            map.source = unitsLoader.item.mapFile
+                            if (unitsLoader.item.objectName != "Campaign") {
+                                // This is a single scenario
+                                map.source = unitsLoader.item.mapFile
 
-                            for (var i = 0; i < unitsLoader.item.children.length; i++) {
-                                unitsLoader.item.children[i].unitIndex = i;
-                                togglePause.connect(unitsLoader.item.children[i].togglePause);
-                                unitsLoader.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
-                                unitsLoader.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                                for (var i = 0; i < unitsLoader.item.children.length; i++) {
+                                    unitsLoader.item.children[i].unitIndex = i;
+                                    togglePause.connect(unitsLoader.item.children[i].togglePause);
+                                    unitsLoader.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
+                                    unitsLoader.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                                }
+
+                                map.item.setUnits(unitsLoader.item.children);
+                            } else {
+                                // This is a campaign
+                                // TODO: add some clever code here ;)
                             }
 
-                            map.item.setUnits(unitsLoader.item.children);
                             // Creates base for order markers.
                             ScenarioLogic.initOrderMarkers();
 //                            roster.populateUnits(units.item.children);

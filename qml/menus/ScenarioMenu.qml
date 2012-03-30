@@ -36,6 +36,19 @@ Rectangle {
         scenario.source = "../../qml/scenarios/Scenario.qml";
         root.state = "opened";
     }
+
+    signal campaignEntryClicked (string campaignPath)
+    onCampaignEntryClicked: {
+        // Damn, what now?
+        // Most probably, a new QML thing has to go here:
+        // CampaignManager.qml, or something that would take over the control,
+        // and ensure that campaigns work as expected.
+        // For now, a dirty hack will probably be used.
+        scenario.scenarioFile = "campaigns/" + campaignPath;
+        scenario.source = "../../qml/scenarios/Scenario.qml";
+        root.state = "opened";
+    }
+
     signal quitEntryClicked (string ignoreThisString)
     onQuitEntryClicked: {
         Qt.quit();
@@ -47,10 +60,15 @@ Rectangle {
 
     Component.onCompleted: {
         var list = GameManager.scenariosList();
-
         for (var i = 0; i < list.length; i++) {
             var current = list[i];
             scenarioModel.append({"scenarioText": current});
+        }
+
+        var campaignList = GameManager.qmlFileList("campaigns");
+        for (var i = 0; i < campaignList.length; i++) {
+            var current = campaignList[i];
+            campaignModel.append({"campaignText": current});
         }
 
         scenarios.currentIndex = 0;
@@ -121,8 +139,8 @@ Rectangle {
             width: 400
             spacing: 2
 
-            model: scenarioModel
-            delegate: scenarioDelegate
+            model: campaignModel
+            delegate: campaignDelegate
         }
 
         ListView {
