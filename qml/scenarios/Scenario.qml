@@ -34,7 +34,7 @@ Rectangle {
     // be taken from other sources
     property bool __isCampaign: false
     // Map path for campaigns
-    property bool mapFile: ""
+    property string mapFile: ""
     // In Qt5 we will have to move units list, and other JS Arrays here from
     // ScenarioLogic
 
