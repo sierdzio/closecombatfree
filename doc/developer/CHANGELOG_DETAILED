@@ -6,7 +6,10 @@ Some more history can be devised from git sources (although even there, the thin
 === === === ===
 
 01.05.2012:
- -
+ - merge back into master
+ - finish explosion particle system rewrite (it's basic and ugly, but OK for now)
+ - add 'verbose' mode to VehicleExhaust
+ - fix units not being able to shoot other tanks
 
 29.04.2012:
  - continue porting CCF to Qt5

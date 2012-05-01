@@ -225,6 +225,7 @@ Rectangle {
                     source: {
                         if (scenarioFile == "") {
                             return "";
+                            // IF the first char is 'q', we assume that QRC is in operation.
                         } else if ((scenarioFile.charAt(0) != 'q') && (scenarioFile.charAt(0) != ':')) {
                             Global.disableQrcUse(unitsLoader);
                             return scenarioFile;
