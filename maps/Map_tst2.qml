@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../qml/maps"
 import "../qml/maps/props"
 import "../maps/props"

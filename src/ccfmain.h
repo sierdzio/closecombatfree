@@ -23,11 +23,12 @@
 
 #include <QObject>
 #include <QApplication>
-#include <QWidget>
+#include <QtGui/QGuiApplication>
+#include <QWindow>
 #include <QSize>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeEngine>
+#include <QtQuick/QQuickView>
+#include <QtQml/QQmlContext>
+#include <QtQml/QQmlEngine>
 
 #include "config/ccfconfig.h"
 #include "ccfglobal.h"
@@ -45,11 +46,11 @@
   Class responsible for displaying the game content on screen,
   connecting other C++ code to the game engine etc.
   */
-class CcfMain : public QDeclarativeView, public CcfError
+class CcfMain : public QQuickView, public CcfError
 {
     Q_OBJECT
 public:
-    explicit CcfMain(QWidget *parent = 0);
+    explicit CcfMain(QWindow *parent = 0);
     bool isConfigMaximised();
     void resizeView(QSize newSize);
 

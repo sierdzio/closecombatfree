@@ -18,10 +18,12 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
-import Qt.labs.particles 1.0
+import QtQuick 2.0
+import QtQuick.Particles 2.0
+
 import "../../../qml/units"
 import "../../../qml/gui"
+import "../../../qml/effects"
 import "../../../qml/engineLogicHelpers.js" as Logic
 import "../../../qml/units/engineActionLogic.js" as ActionLogic
 
@@ -39,10 +41,9 @@ Unit {
     property int turretSize: 60
     property color hullColor: "#7b8259"
 
-    onMoveTo: {
-        exhaust.burst(20);
-        exhaustLater.burst(40);
-    }
+    onMoveTo: exhaust.pulse(2000);
+    onMoveFastTo: exhaust.pulse(2000);
+    onSneakTo: exhaust.pulse(2000);
 
     onTurretRotationChanged: turret.turretRotation = turretRotation;
 
@@ -123,47 +124,19 @@ Unit {
         }
     }
 
-    Particles {
+    VehicleExhaust {
         id: exhaust
-
-        width: 1; height: 1
-        x: (2 * centerX) - 3
-        y: (2 * centerY) - 3
-
-        emissionRate: 0; emissionVariance: 6
-        lifeSpan: 600; lifeSpanDeviation: 800
-        angle: rotation + 90; angleDeviation: 60;
-        velocity: 5; velocityDeviation: 10
-        source: "../../../img/effects/vehicle_smoke.png"
+        z: root.z + 4
+        anchors.top: root.top
+        anchors.left: root.left
+        anchors.topMargin: (2 * centerY) - 3
+        anchors.leftMargin: (2 * centerX) - 3
     }
 
-    Particles {
-        id: exhaustLater
-
-        width: 1; height: 1
-        x: (2 * centerX) - 3
-        y: (2 * centerY) - 3
-
-        emissionRate: 0; emissionVariance: 3
-        lifeSpan: 1000; lifeSpanDeviation: 400
-        angle: rotation + 90; angleDeviation: 60;
-        velocity: 40; velocityDeviation: 60
-        source: "../../../img/effects/vehicle_smoke.png"
-    }
-
-    Particles {
-        id: destroyed
-
-        width: 1; height: 1
-        x: (centerX)
-        y: (centerY)
-        z: root.z + 3
-
-        emissionRate: 0; emissionVariance: 3
-        lifeSpan: 300; lifeSpanDeviation: 800
-        angle: 0; angleDeviation: 360;
-        velocity: 400; velocityDeviation: 120
-        source: "../../../img/effects/vehicle_smoke.png"
+    VehicleExplosion {
+        id: explode
+        z: root.z + 4
+        anchors.fill: parent
     }
 
     // Implement transitions in children
@@ -174,7 +147,7 @@ Unit {
         State { name: "destroyed_base"
             StateChangeScript {
                 name: "destroyed_baseScript"
-                script: { destroyed.burst(300) }
+                script: { explode.pulse(1000) }
             }
         },
         State { name: "long destroyed_base" }

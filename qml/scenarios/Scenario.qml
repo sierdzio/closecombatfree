@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/engineLogicHelpers.js" as LogicHelpers
 import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
@@ -35,11 +35,15 @@ Rectangle {
     property bool __isCampaign: false
     // Map path for campaigns
     property string mapFile: ""
-    // In Qt5 we will have to move units list, and other JS Arrays here from
-    // ScenarioLogic
+    // Holds graphical effects (muzzle flashes, hit animations etc.).
+    property var effectsContainer: new Array();
+    // Holds order markers.
+    property var orderMarkersContainer: new Array();
+    // Holds unit groups (ones created with CTRL + digit).
+    property var unitGroups: new Array(10);
 
     property real zoom: 1.0
-    property variant zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
+    property var zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
                                          gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
     property bool paused: false
     property color menuBackgroundColor: "#7e8c24"

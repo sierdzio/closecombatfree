@@ -14,7 +14,7 @@ uimode = desktop
 maximised = false
 remember dimensions on exit = true
 width = 1270
-height = 700
+height = 706
 
 ######
 # Keyboard layout:

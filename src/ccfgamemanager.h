@@ -24,7 +24,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
-#include <QDeclarativeListReference>
+#include <QtQml/QQmlListReference>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>

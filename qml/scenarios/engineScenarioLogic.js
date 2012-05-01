@@ -30,27 +30,6 @@
 /*!
   \memberof engineScenarioLogic
 
-  Holds graphical effects (muzzle flashes, hit animations etc.).
-  */
-var effectsContainer = new Array();
-
-/*!
-  \memberof engineScenarioLogic
-
-  Holds order markers.
-  */
-var orderMarkersContainer = new Array();
-
-/*!
-  \memberof engineScenarioLogic
-
-  Holds unit groups (ones created with CTRL+number).
-  */
-var unitGroups = new Array(10);
-
-/*!
-  \memberof engineScenarioLogic
-
   Schedules action chosen in context menu (or through a keyboard shortcut).
   It is then used to add that order to queue.
   */
@@ -234,7 +213,7 @@ function issueWaypointOrder(unit, x, y) {
 
     unit.queueOrder(operation, x, y);
 
-    setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
+    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
 }
 
 /*!
@@ -264,7 +243,7 @@ function issueActionOrder(unit, x, y) {
         unit.smokeTo(x, y);
     }
 
-    setOrderMarker(unit.unitIndex, unit.getOrderQueue().length - 1, operation, x, y);
+    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
 }
 
 /*!
@@ -276,7 +255,7 @@ function actionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
     if (unit.currentOrder != -1) {
-        var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
+        var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
         if ((scheduledOperation != "Move")
                 && (scheduledOperation != "Move fast")
                 && (scheduledOperation != "Sneak")
@@ -333,7 +312,7 @@ function firingActionFinished(index, targetX, targetY) {
     if (unit.currentOrder != -1) {
         // This component renders in-game effects (not all,
         // but for example muzzle flashes, explosions etc.)
-        var component = Qt.createComponent("../qml/scenarios/Effect.qml");
+        var component = Qt.createComponent("../../qml/effects/Effect.qml");
 
         // A good place to include terrain recognition
         // for landing shells
@@ -344,7 +323,7 @@ function firingActionFinished(index, targetX, targetY) {
         }
 
         effectsContainer.push(effect);
-        var scheduledOperation = unit.getOrderQueue()[unit.currentOrder].operation;
+        var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
 
         if (scheduledOperation == "Attack") {
             effect.animationString = "gun_fire";
@@ -407,7 +386,7 @@ function switchEffectFrame(effectIndex) {
 
     if (imgNumber != 5) {
         effectsContainer[i].imageNumber = imgNumber + 1;
-        effectsContainer[i].source = "../img/effects" + "/" + effectsContainer[i].animationString
+        effectsContainer[i].source = "../../img/effects" + "/" + effectsContainer[i].animationString
                 + (imgNumber + 1) + ".png";
     } else if (imgNumber == 5) {
         effectsContainer[i].imageNumber = 0;
@@ -488,7 +467,7 @@ function updateAimLine() {
             if ((targetUnit == undefined)) // Operation should be checked here!
                 targetUnit = -1;
 
-            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit),
+            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
                                                                    x1, y1, x2, y2, unit);
 
             // Conditions here should be redesigned to save time.
@@ -596,7 +575,7 @@ function handleRightMouseClick(mouse) {
 
         __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
-        contextLoader.source = "../qml/gui/ContextMenu.qml";
+        contextLoader.source = "../../qml/gui/ContextMenu.qml";
         contextLoader.item.unitIndex = __unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
@@ -641,7 +620,7 @@ function handleRightMouseClickRoster(mouse) {
 
         __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
-        contextLoader.source = "../qml/gui/ContextMenu.qml";
+        contextLoader.source = "../../qml/gui/ContextMenu.qml";
         contextLoader.item.unitIndex = __unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
@@ -719,6 +698,8 @@ function handleKeyPress(event) {
                 zoomIn();
             } else if (event.key == Config.keyForFunction("zoom out")) {
                 zoomOut();
+            } else if (event.key == Config.keyForFunction("quit")) {
+                Qt.quit();
             } else if (event.key == Config.keyForFunction("toggle top menu")) {
                 topMenu.toggleMenu();
             } else if (event.key == Config.keyForFunction("toggle bottom menu")) {
@@ -743,7 +724,7 @@ function handleKeyPress(event) {
                 } else {
                     console.log("No unit selected to follow.");
                 }
-            } else if (ScenarioLogic.selectedUnitsCount() > 0) {
+            } else if (selectedUnitsCount() > 0) {
                 var selectedOnes = selectedUnits();
                 if (event.key == Config.keyForFunction("Stop")) {
                     for (var i = 0; i < selectedOnes.length; i++) {
@@ -1184,17 +1165,23 @@ function calculateOrderMarkerVisibility(index) {
     var unit = unitsLoader.item.children[index];
 
     var anyOrdersLeft = false;
-    var orders = unit.getOrderQueue();
+    var orders = unit.orderQueue;
 
     if (orders.length == 0) {
         for (var i = 0; i < orderMarker.length; i++) {
-            orderMarker[i].destroy();
+            if (orderMarker[i] != 0) {
+                orderMarker[i].destroy();
+                orderMarker[i] = 0;
+            }
         }
     } else {
         for (var i = 0; i < orders.length; i++) {
             if (orders[i].performed == true) {
                 if (i < orderMarker.length) {
-                    orderMarker[i].destroy();
+                    if (orderMarker[i] != 0) {
+                        orderMarker[i].destroy();
+                        orderMarker[i] = 0;
+                    }
                 }
             } else {
                 anyOrdersLeft = true;
@@ -1215,7 +1202,7 @@ function calculateOrderMarkerVisibility(index) {
   */
 function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     // This component renders an order marker.
-    var component = Qt.createComponent("../qml/gui/OrderMarker.qml");
+    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
     var marker;
 
     if (component.status == Component.Ready) {

@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../../qml/gui/menuEntries"
 import "../../qml/units"
 
@@ -46,7 +46,7 @@ Rectangle {
                                  "unitLogo": currentUnit.unitLogo,
                                  "unitStatus": currentUnit.unitStatus,
                                  "unitSelected": currentUnit.selected});
-            currentUnit['unitStatusChanged(QString, int)'].connect(changeStatus);
+//            currentUnit['unitStatusChanged(QString, int)'].connect(changeStatus); // TODO: Refactor for Qt5
             currentUnit.selectionChanged.connect(selectionChanged);
         }
 

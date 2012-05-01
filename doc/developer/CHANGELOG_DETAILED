@@ -5,6 +5,20 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+01.05.2012:
+ -
+
+29.04.2012:
+ - continue porting CCF to Qt5
+ - regenerate docs
+ - move arrays (containers) from JS scripts into QML, taking advantage of
+   the new 'var' property available in Qt5
+ - attempt to replace the particle system with new, QtQuick 2.0 one:
+    - success for tank exhaust
+
+28.04.2012:
+ - make initial Qt5 port (particle system is temporarily turned off)
+
 19.02.2012:
  - first attempt to get campaign functionality into the game
  - add qmlFileList() to CcfGameManager, change scenariosList() and saveGameList()

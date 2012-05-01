@@ -18,12 +18,11 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/units"
 import "../../qml/engineLogicHelpers.js" as Logic
 import "../../qml/units/engineActionLogic.js" as ActionLogic
-import "../../qml/units/tempJs.js" as OrderQueue
 
 Item {
     // Sadly, this is needed for file saving:
@@ -59,6 +58,7 @@ Item {
     property string defenceSphereColor: ""
     property bool paused: false
     property bool moving: false
+    property var orderQueue: new Array();
 
     signal togglePause ()
     onTogglePause: {
@@ -142,25 +142,20 @@ Item {
         unitStatusChanged(newStatusMessage, unitIndex);
     }
 
-    function getOrderQueue() {
-        return OrderQueue.orderQueue;
-    }
-
     function modifyOrder(orderNumber, newX, newY) {
-        var order = OrderQueue.orderQueue[orderNumber];
+        var order = orderQueue[orderNumber];
         order.x = newX;
         order.y = newY;
         order.performed = false;
     }
 
     function clearOrderQueue() {
-        var orderQueue = OrderQueue.orderQueue;
         for (var i = 0; i < orderQueue.length; i++) {
             orderQueue[i].destroy();
         }
         currentOrder = -1;
 
-        return OrderQueue.orderQueue = new Array();
+        return orderQueue = new Array();
     }
 
     Text {

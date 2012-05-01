@@ -9,7 +9,7 @@
 
 include(globalImports.pri)
 
-QT       += declarative
+QT       += widgets declarative quick qml
 
 TARGET = closecombatfree
 
@@ -54,7 +54,7 @@ OTHER_FILES += \
     ../qml/maps/Map.qml \
     ../qml/scenarios/engineScenarioLogic.js \
     ../qml/scenarios/Scenario.qml \
-    ../qml/scenarios/Effect.qml \
+    ../qml/effects/Effect.qml \
     ../qml/units/engineActionLogic.js \
     ../qml/units/Unit.qml \
     ../qml/units/tanks/TurretImage.qml \
@@ -93,7 +93,6 @@ OTHER_FILES += \
     ../maps/Map_tst3.qml \
     ../scenarios/Scenario_tst3.qml \
     ../qml/units/Order.qml \
-    ../qml/units/tempJs.js \
     ../qml/gui/ScenarioMenuEntry.qml \
     ../qml/gui/PreferencesMenu.qml \
     ../qml/gui/menuEntries/PreferencesCheckboxEntry.qml \
@@ -108,7 +107,9 @@ OTHER_FILES += \
     ../qml/gui/AboutMenu.qml \
     ../qml/campaigns/CampaignMapList.qml \
     ../qml/maps/MapCluster.qml \
-    ../campaigns/Campaign_tst1.qml
+    ../campaigns/Campaign_tst1.qml \
+    ../qml/effects/VehicleExhaust.qml \
+    ../qml/effects/VehicleExplosion.qml
 
 RESOURCES += \
 #    skinResource.qrc \

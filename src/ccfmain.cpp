@@ -26,8 +26,8 @@
   Sets all global properties, sizing policy, connects important
   signals and slots, reads config file(s).
   */
-CcfMain::CcfMain(QWidget *parent) :
-    QDeclarativeView(parent), CcfError()
+CcfMain::CcfMain(QWindow *parent) :
+    QQuickView(parent), CcfError()
 {
     global = new CcfGlobal(this);
     gameManager = new CcfGameManager(this);
@@ -44,11 +44,11 @@ CcfMain::CcfMain(QWidget *parent) :
 //    engine()->addImportPath("saves/");
 //    qDebug() << engine()->importPathList();
 
-    setResizeMode(QDeclarativeView::SizeRootObjectToView);
-    setAttribute(Qt::WA_OpaquePaintEvent);
-    setAttribute(Qt::WA_NoSystemBackground);
-    viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-    viewport()->setAttribute(Qt::WA_NoSystemBackground);
+    setResizeMode(QQuickView::SizeRootObjectToView);
+//    setAttribute(Qt::WA_OpaquePaintEvent);
+//    setAttribute(Qt::WA_NoSystemBackground);
+//    viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+//    viewport()->setAttribute(Qt::WA_NoSystemBackground);
     connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
     connect(configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));

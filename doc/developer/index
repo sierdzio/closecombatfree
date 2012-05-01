@@ -4,9 +4,9 @@
 
 This document is currently just a stub. It should be expanded later on. It is intended to be a starting point for newcoming developers, as well as a good reference for those already familiar with the code.
 
-Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project's root, there is a file named "closecombatfree.docconf". It can be used to automatically generate HTML documentation in doc/html, using command "doxygen closecombatfree.docconf" in project's root. That file can be modified to generate other doc formats, too. HTML docs will probably be included in sources by default, too, but only after the API matures a bit.
+Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project's root, there is a file named "developer.docconf". It can be used to automatically generate HTML documentation in doc/html, using command "doxygen developer.docconf" in project's root. That file can be modified to generate other doc formats, too. HTML docs will probably be included in sources by default, too, but only after the API matures a bit. User docs can be created with "doxygen user.docconf".
 
-WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
+WARNING: QHG_LOCATION should be adjusted (in developer.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
 
   \subsection commands Example commands
   \li Example command for converter: ./convert2qrc -o ../../myTempDir -f
@@ -14,7 +14,7 @@ WARNING: QHG_LOCATION should be adjusted (in closecombatfree.docconf) on every m
   \li Command to archive the project easily (to be executed from on dir above the project root): ./closecombatfree/tools/archiveProject closecombatfree
 
   \subsection compiling Compiling from source
-  Prerequsites: Qt Framework (qt-project.org), version 4.7.3 or any newer (but not Qt 5 - some changes in code have to be made if Qt5 is to be used. CCF will probably migrate to Qt5 later) to build the executables; doxygen to build docs. That's it!
+  Prerequsites: Qt Framework (qt-project.org), version 5.0 or any newer to build the executables; doxygen to build docs. That's it!
 
   CCF's source code is prepared as a pretty standard qmake subdirs project. You don't have to specify any build directory (actually, I would warn against out of source builds - they're not tested at all), just load closecombatfree.pro into Qt Creator (I strongly suggest using Creator for development), turn shadow building off, and there you go!
 

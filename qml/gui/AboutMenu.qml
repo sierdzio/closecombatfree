@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../../qml/gui/menuEntries"
 
 Rectangle {
@@ -94,7 +94,7 @@ Rectangle {
 
             anchors.top: parent.top
             anchors.left: parent.left
-            width: parent.width - root.radius
+            width: parent.width // - root.radius
             height: paintedHeight
 
             color: "#adadad"

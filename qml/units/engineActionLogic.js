@@ -157,7 +157,6 @@ function cancelOrder () {
   Puts a new order at the end of a queue.
   */
 function queueOrder (orderName, newX, newY) {
-//    var component = Qt.createComponent("../../qml/units/Order.qml");
     // QRC is needed here, because files from different directories have acces
     // to this method, and relative paths don't work for all of them.
     var component = Qt.createComponent("qrc:/core/units/Order.qml");
@@ -167,7 +166,6 @@ function queueOrder (orderName, newX, newY) {
         order = component.createObject(root, {"x": newX, "y": newY, "operation": orderName});
     }
 
-    var orderQueue = getOrderQueue();
     orderQueue.push(order);
 }
 
@@ -189,7 +187,6 @@ function processQueue () {
   Processes next element in the queue.
   */
 function continueQueue () {
-    var orderQueue = getOrderQueue();
     var noOrdersLeft = true;
 
     for (var i = 0; i < orderQueue.length; i++) {

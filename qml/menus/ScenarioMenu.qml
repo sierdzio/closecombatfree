@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/gui/menuEntries"
 
@@ -91,7 +91,7 @@ Rectangle {
     ListModel {
         id: campaignModel
     }
-
+/*
     Component {
         id: campaignDelegate
 
@@ -110,7 +110,7 @@ Rectangle {
             }
         }
     }
-
+*/
     ListModel {
         id: scenarioModel
     }
@@ -132,7 +132,7 @@ Rectangle {
         id: entryBox
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-
+/*
         ListView {
             id: campaigns
             height: 300
@@ -142,7 +142,7 @@ Rectangle {
             model: campaignModel
             delegate: campaignDelegate
         }
-
+*/
         ListView {
             id: scenarios
             height: 50

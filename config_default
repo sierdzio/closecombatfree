@@ -21,6 +21,7 @@ height = 700
 pause = p
 zoom in = =
 zoom out = -
+quit = q
 # Orders:
 follow = f
 stop = s

@@ -18,8 +18,9 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 1.1
-import Qt.labs.particles 1.0
+import QtQuick 2.0
+import QtQuick.Particles 2.0
+
 import "../../../qml/units"
 import "../../../qml/units/tanks"
 
@@ -67,7 +68,7 @@ Tank {
             role: "MG gunner"
         }
     ]
-
+/*
     Particles {
         id: destroyedFire
 
@@ -82,15 +83,15 @@ Tank {
         velocity: 80; velocityDeviation: 50
         source: "../../../img/effects/vehicle_fire.png"
     }
-
+*/
     states: [
         State {
             name: "destroyed"
             extend: "damaged_base"
-            StateChangeScript {
-                name: "destroyed_script"
-                script: { destroyedFire.burst(300) }
-            }
+//            StateChangeScript {
+//                name: "destroyed_script"
+//                script: { destroyedFire.burst(300) }
+//            }
         }
     ]
 }
