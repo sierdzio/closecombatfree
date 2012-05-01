@@ -88,7 +88,8 @@ void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList,
                 + tab + tab + "x: " + unit->property("x").toString() + "\n"
                 + tab + tab + "y: " + unit->property("y").toString() + "\n"
                 + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
-                + tab + tab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n";
+                + tab + tab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n"
+                + tab + tab + "state: \"" + unit->property("state").toString() + "\"\n";
         units += addSavePropertyIfExists(unit, "turretRotation");
         units += addSavePropertyIfExists(unit, "hullColor", true);
         units += tab + "}\n";

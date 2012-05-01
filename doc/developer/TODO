@@ -15,16 +15,14 @@ New features:
  - add another hidden image to Map.qml - obstacle map. It would allow for easy
    adding of curiously-shaped obstacles, like water etc.
  - add AI (well, obviously). Take a look at WarZone's, Wesnoth's AI and at http://eodev.sourceforge.net/
- - fragment resources
  - add scenario (map) damages, that gets updated after battle (destroyed tanks, burnt buildings, props
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
- - prevent firing when target is invisible/ obscured
  - add a tool that would change licensing headers automatically
 
  - use shorter signal-slot chains like ones used in AboutMenu where applicable
  - consider unifying ScenarioLogic::placeWaypoint() and ScenarioLogic::performContextAction()
- - add controls to make addin unit groups possible on mobile
+ - add controls to make adding unit groups possible on mobile
  - add Ctrl + q as shortcut for Quit
 
 Big ideas for the future:

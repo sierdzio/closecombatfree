@@ -99,8 +99,6 @@ function scheduleContextAction(index, operation) {
 function checkIfUnitCanFire(scheduledOperation) {
     // Take obstacles into account
     if ((scheduledOperation == "Attack") || (scheduledOperation == "Smoke")) {
-//        console.log(aimLine.obscureBeginning + ", " + aimLine.invisibleBeginning
-//                    + ", " + aimLine.height);
         if (aimLine.invisibleBeginning < aimLine.height) {
             cleanContextAction();
             return false;
