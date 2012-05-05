@@ -15,9 +15,17 @@ Item {
     }
 
     function afterEffect() {
-        fireballEmitter.burst(100);
+        fireballImage.makeFireball();
         explodeEmitter.pulse(800);
         smoke.pulse(10000, true);
+    }
+
+    /*!
+      Starts a default explosion animation.
+      */
+    function run() {
+        fireEmitter.pulse(800);
+        afterEffect();
     }
 
     ParticleSystem {
@@ -78,45 +86,74 @@ Item {
         }
 
         ImageParticle {
-//            source: "../../img/effects/vehicle_smoke.png"
-            source: "../../img/effects/vehicle_smoke_light.png"
+            source: "../../img/effects/vehicle_smoke.png"
+//            source: "../../img/effects/vehicle_smoke_light.png"
             groups: ["smokeTrails"]
             entryEffect: ImageParticle.Scale
         }
     }
 
-    ParticleSystem {
-        id: fireballParticleSystem
-        anchors.fill: parent
+//    ParticleSystem {
+//        id: fireballParticleSystem
+//        anchors.fill: parent
 
-        Emitter {
-            id: fireballEmitter
-            enabled: false
+//        Emitter {
+//            id: fireballEmitter
+//            enabled: false
 
-            anchors.centerIn: parent
-            width: 80
-            height: 80
+//            anchors.centerIn: parent
+//            width: 80
+//            height: 80
 
-            emitRate: 500
-            lifeSpan: 400
-            lifeSpanVariation: 80
-            size: 11
-            speed: AngleDirection {
-                magnitude: 60
-                angleVariation: 360
-            }
+//            emitRate: 500
+//            lifeSpan: 400
+//            lifeSpanVariation: 80
+//            size: 11
+//            speed: AngleDirection {
+//                magnitude: 60
+//                angleVariation: 360
+//            }
 
-            Friction {
-                anchors.fill: parent
-                factor: 0.5
+//            Friction {
+//                anchors.fill: parent
+//                factor: 0.5
+//            }
+//        }
+
+//        ImageParticle {
+//            source: "../../img/effects/vehicle_fire.png"
+//            color: "#ffffffff"
+//            redVariation: 0.3
+//            entryEffect: ImageParticle.Scale
+//        }
+//    }
+
+    Image {
+        id: fireballImage
+        width: 2
+        height: 2
+        scale: 1
+        visible: false
+        anchors.centerIn: parent
+        source: "../../img/effects/vehicle_fire.png"
+
+        NumberAnimation {
+            id: fireballAnimation
+            from: 1
+            to: 60
+            target: fireballImage
+            properties: "scale"
+            duration: 300
+
+            onRunningChanged: {
+                if (running == false)
+                    fireballImage.visible = false;
             }
         }
 
-        ImageParticle {
-            source: "../../img/effects/vehicle_fire.png"
-            color: "#ffffffff"
-            redVariation: 0.3
-            entryEffect: ImageParticle.Scale
+        function makeFireball() {
+            fireballImage.visible = true;
+            fireballAnimation.start();
         }
     }
 

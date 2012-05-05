@@ -147,7 +147,7 @@ Unit {
         State { name: "destroyed_base"
             StateChangeScript {
                 name: "destroyed_baseScript"
-                script: { explode.pulse(1000) }
+                script: { explode.run(); /*pulse(1000)*/ }
             }
         },
         State { name: "long destroyed_base" }

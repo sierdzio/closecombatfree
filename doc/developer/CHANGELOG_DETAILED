@@ -5,6 +5,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+05.05.2012:
+ - add run() function to VehicleExplosion
+ - change fireball from particles into an animation of an expanding fireball - looks better, IMO
+
 01.05.2012:
  - merge back into master
  - finish explosion particle system rewrite (it's basic and ugly, but OK for now)
