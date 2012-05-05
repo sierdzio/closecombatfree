@@ -405,6 +405,7 @@ Rectangle {
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
                     opacity: (Config.uiMode == "MOBILE")? 1: 0;
+                    visible: (Config.uiMode == "MOBILE")? true: false;
 
                     Component.onCompleted: {
                         contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
@@ -445,6 +446,7 @@ Rectangle {
                     id: soldierMenu
                     height: roster.height
                     opacity: (empty)? 0 : 1;
+                    visible: (empty)? false : true;
                     backgroundColor: menuBackgroundColor
                     z: roster.z - 1
 
