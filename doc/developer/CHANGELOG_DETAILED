@@ -10,6 +10,9 @@ Some more history can be devised from git sources (although even there, the thin
  - change fireball from particles into an animation of an expanding fireball - looks better, IMO
  - fix BottomMenu not being displayed properly with Qt5 (invisible items were blocking other GUI
    movements)
+ - add Weather.qml
+ - add Shadow.qml
+ - add object type as property to relevant items
 
 01.05.2012:
  - merge back into master

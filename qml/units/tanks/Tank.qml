@@ -81,6 +81,7 @@ Unit {
     }
 
     id: root
+    objectType: "unit/tank"
     unitFileName: "Tank"
     unitType: "Generic tank"
     unitLogo: "../../../img/units/generic_unit_logo.png"

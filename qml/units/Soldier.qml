@@ -21,6 +21,7 @@
 import QtQuick 2.0
 
 Item {
+    property string objectType: "soldierInfo"
     property string name: "John Smith"
     property string role: "Infantryman"
     property string status: "READY"

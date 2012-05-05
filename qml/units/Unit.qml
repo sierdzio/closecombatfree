@@ -25,6 +25,7 @@ import "../../qml/engineLogicHelpers.js" as Logic
 import "../../qml/units/engineActionLogic.js" as ActionLogic
 
 Item {
+    property string objectType: "unit"
     // Sadly, this is needed for file saving:
     property string unitFileName: "Unit"
     property string unitType: "Generic unit"

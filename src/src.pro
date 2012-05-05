@@ -109,7 +109,9 @@ OTHER_FILES += \
     ../qml/maps/MapCluster.qml \
     ../campaigns/Campaign_tst1.qml \
     ../qml/effects/VehicleExhaust.qml \
-    ../qml/effects/VehicleExplosion.qml
+    ../qml/effects/VehicleExplosion.qml \
+    ../qml/weather/Weather.qml \
+    ../qml/effects/Shadow.qml
 
 RESOURCES += \
 #    skinResource.qrc \
