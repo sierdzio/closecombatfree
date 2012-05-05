@@ -48,7 +48,7 @@ Rectangle {
     property bool paused: false
     property color menuBackgroundColor: "#7e8c24"
 
-    signal closeScenario()
+    signal closeScenario() // TODO: clean containers to preserve memory
     signal loadScenario(string path)
 
     signal togglePause ()

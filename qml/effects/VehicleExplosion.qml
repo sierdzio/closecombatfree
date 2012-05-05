@@ -93,41 +93,6 @@ Item {
         }
     }
 
-//    ParticleSystem {
-//        id: fireballParticleSystem
-//        anchors.fill: parent
-
-//        Emitter {
-//            id: fireballEmitter
-//            enabled: false
-
-//            anchors.centerIn: parent
-//            width: 80
-//            height: 80
-
-//            emitRate: 500
-//            lifeSpan: 400
-//            lifeSpanVariation: 80
-//            size: 11
-//            speed: AngleDirection {
-//                magnitude: 60
-//                angleVariation: 360
-//            }
-
-//            Friction {
-//                anchors.fill: parent
-//                factor: 0.5
-//            }
-//        }
-
-//        ImageParticle {
-//            source: "../../img/effects/vehicle_fire.png"
-//            color: "#ffffffff"
-//            redVariation: 0.3
-//            entryEffect: ImageParticle.Scale
-//        }
-//    }
-
     Image {
         id: fireballImage
         width: 2
