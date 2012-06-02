@@ -309,9 +309,9 @@ Rectangle {
                         }
                     }
 
-//                    onWheel: {
-//                        ScenarioLogic.handleWheelEventMouseAreaMain(mouse);
-//                    }
+                    onWheel: {
+                            ScenarioLogic.handleWheelEventMouseAreaMain(wheel);
+                    }
                 }
 
                 Rectangle {

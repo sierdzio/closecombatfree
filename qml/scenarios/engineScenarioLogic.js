@@ -771,8 +771,14 @@ function handleKeyPress(event) {
 
   Uses C++ bindings heavily to check keyboard shortcuts in CcfConfig.
   */
-function handleWheelEventMouseAreaMain(mouse) {
-    console.log("Wheel event! " + mouse);
+function handleWheelEventMouseAreaMain(wheel) {
+    if (wheel.modifiers == Qt.ControlModifier) {
+        zoom += wheel.angleDelta.y/800;
+    } else if (wheel.modifiers == Qt.ShiftModifier) {
+        gameArea.flick(wheel.angleDelta.y * 6, 0.001);
+    } else {
+        wheel.accepted = false;
+    }
 }
 
 /*!
