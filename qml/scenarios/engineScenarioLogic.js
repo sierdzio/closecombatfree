@@ -767,6 +767,17 @@ function handleKeyPress(event) {
 /*!
   \memberof engineScenarioLogic
 
+  Handles key press.
+
+  Uses C++ bindings heavily to check keyboard shortcuts in CcfConfig.
+  */
+function handleWheelEventMouseAreaMain(mouse) {
+    console.log("Wheel event! " + mouse);
+}
+
+/*!
+  \memberof engineScenarioLogic
+
   Centers view on a given unit.
   */
 function centerViewOnUnit(unit) {

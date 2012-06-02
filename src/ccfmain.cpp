@@ -111,7 +111,7 @@ void CcfMain::forceViewportResize(int width, int height)
   */
 void CcfMain::disableQrc(QObject *object)
 {
-    QDeclarativeContext *context = engine()->contextForObject(object);
+    QQmlContext *context = engine()->contextForObject(object);
     context->setBaseUrl(QUrl::fromLocalFile(""));
 }
 

@@ -51,7 +51,7 @@ class CcfGameManager : public QObject, public CcfError
 public:
     explicit CcfGameManager(QObject *parent = 0);    
     Q_INVOKABLE QString scenarioPath(int index);
-    Q_INVOKABLE void saveGame(const QDeclarativeListReference &unitsList,
+    Q_INVOKABLE void saveGame(const QQmlListReference &unitsList,
                               const QString &mapFile,
                               const QString &saveFileName = "saves/save1.qml");
     Q_INVOKABLE QStringList qmlFileList(const QString &directoryToSearch);

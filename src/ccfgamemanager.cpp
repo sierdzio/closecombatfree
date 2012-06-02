@@ -48,7 +48,7 @@ QString CcfGameManager::scenarioPath(int index)
 
   For now, it always uses file with name "saves/save1.qml".
   */
-void CcfGameManager::saveGame(const QDeclarativeListReference &unitsList,
+void CcfGameManager::saveGame(const QQmlListReference &unitsList,
                               const QString &mapFile,
                               const QString &saveFileName)
 {

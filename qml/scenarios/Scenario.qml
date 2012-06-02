@@ -264,7 +264,7 @@ Rectangle {
                 MouseArea {
                     id: mouseAreaMain
                     anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.Wheel
                     hoverEnabled: true
                     z: -1
 
@@ -275,6 +275,7 @@ Rectangle {
                             ScenarioLogic.handleRightMouseClick(mouse);
                         }
                     }
+
                     onPressAndHold: {
                         if (Config.uiMode == "DESKTOP") {
                             gameArea.interactive = false;
@@ -291,12 +292,14 @@ Rectangle {
                             }
                         }
                     }
+
                     onReleased: {
                         if (Config.uiMode == "DESKTOP") {
                             ScenarioLogic.handleMouseReleased();
                             gameArea.interactive = true;
                         }
                     }
+
                     onDoubleClicked: {
                         if (followedUnit.index != -1) {
                             ScenarioLogic.stopFollowingUnit();
@@ -305,6 +308,10 @@ Rectangle {
                             ScenarioLogic.handleRightMouseClick(mouse);
                         }
                     }
+
+//                    onWheel: {
+//                        ScenarioLogic.handleWheelEventMouseAreaMain(mouse);
+//                    }
                 }
 
                 Rectangle {
