@@ -19,6 +19,13 @@ Default keyboard settings are:
  - K - smoke
  - D - defend
  - B - ambush
+ 
+ Mouse:
+  - LMB - select a unit
+  - RMB - open context menu
+  - wheel - vertical scroll
+  - wheel + shift - horizontal scroll
+  - wheel + ctrl - zoom
 
 Developer controls (not adjustable in config):
  - ] - swap map background image with hipsometric image

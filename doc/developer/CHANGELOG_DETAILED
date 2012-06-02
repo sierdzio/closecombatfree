@@ -5,6 +5,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+02.06.2012:
+ - more old C++ code fixes (into Qt5 compatible code)
+ - add modified wheel event support (wheel+shift, wheel+ctrl)
+
 05.05.2012:
  - add run() function to VehicleExplosion
  - change fireball from particles into an animation of an expanding fireball - looks better, IMO
