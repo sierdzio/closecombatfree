@@ -94,8 +94,10 @@ Item {
     signal cancelOrder ()
     onCancelOrder: ActionLogic.cancelOrder();
 
-    signal queueOrder (string orderName, real newX, real newY)
-    onQueueOrder: ActionLogic.queueOrder(orderName, newX, newY);
+    // TODO: investigate why signals don't work properly
+//    signal queueOrder (string orderName, real newX, real newY)
+//    onQueueOrder: ActionLogic.queueOrder(orderName, newX, newY);
+    function queueOrder(orderName, newX, newY) { ActionLogic.queueOrder(orderName, newX, newY); }
 
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
@@ -103,6 +105,7 @@ Item {
     signal continueQueue ()
     onContinueQueue: ActionLogic.continueQueue();
 
+    // TODO: investigate why signals don't work properly
 //    signal hit(string byWhat, real xWhere, real yWhere) // should be variant.
 //    onHit: ActionLogic.hit(byWhat, xWhere, yWhere);
     function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }

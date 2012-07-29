@@ -33,12 +33,12 @@ Item {
         y: 400
     }
 
-    Tank_tst2 {
-        objectName: "tank2"
-        x: 150
-        y: 900
-        unitSide: "bad"
-    }
+//    Tank_tst2 {
+//        objectName: "tank2"
+//        x: 150
+//        y: 900
+//        unitSide: "bad"
+//    }
 
     Tank_tst3 {
         objectName: "tank3"
@@ -47,25 +47,25 @@ Item {
         hullColor: "#ffeebb"
     }
 
-    Tank_tst3 {
-        objectName: "tank4"
-        x: 350
-        y: 900
-        rotation: 0
-        unitSide: "bad"
-    }
+//    Tank_tst3 {
+//        objectName: "tank4"
+//        x: 350
+//        y: 900
+//        rotation: 0
+//        unitSide: "bad"
+//    }
 
-    Tank_tst2 {
-        objectName: "tank5"
-        x: 1100
-        y: 900
-        rotation: 0
-        unitSide: "good"
-    }
+//    Tank_tst2 {
+//        objectName: "tank5"
+//        x: 1100
+//        y: 900
+//        rotation: 0
+//        unitSide: "good"
+//    }
 
-    Tank_tst2 {
-        objectName: "tank6"
-        x: 500
-        y: 400
-    }
+//    Tank_tst2 {
+//        objectName: "tank6"
+//        x: 500
+//        y: 400
+//    }
 }

@@ -5,6 +5,11 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+29.07.2012 (cumulative entry):
+ - try making CCF work with newest Qt source code (works only in debug currently)
+ - updates to most soure files
+ - various other fixes
+
 02.06.2012:
  - more old C++ code fixes (into Qt5 compatible code)
  - add modified wheel event support (wheel+shift, wheel+ctrl)
