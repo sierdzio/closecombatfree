@@ -9,7 +9,7 @@
 
 include(globalImports.pri)
 
-QT = core quick qml
+QT = core gui qml quick
 
 TARGET = closecombatfree
 

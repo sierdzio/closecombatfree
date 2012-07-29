@@ -34,7 +34,6 @@
   */
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
     QGuiApplication a(argc, argv);
     CcfMain *viewer = new CcfMain();
     if (!viewer->isErrorState()) {
