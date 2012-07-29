@@ -103,8 +103,9 @@ Item {
     signal continueQueue ()
     onContinueQueue: ActionLogic.continueQueue();
 
-    signal hit(string byWhat, real xWhere, real yWhere) // should be variant.
-    onHit: ActionLogic.hit(byWhat, xWhere, yWhere);
+//    signal hit(string byWhat, real xWhere, real yWhere) // should be variant.
+//    onHit: ActionLogic.hit(byWhat, xWhere, yWhere);
+    function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }
 
     id: root
     width: unitWidth

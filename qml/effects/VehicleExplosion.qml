@@ -69,7 +69,7 @@ Item {
             emitRate: 80
             lifeSpan: 300
             lifeSpanVariation: 300
-            speed: AngleDirection {
+            velocity: AngleDirection {
                 magnitude: 180
                 angleVariation: 360
             }

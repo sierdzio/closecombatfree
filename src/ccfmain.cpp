@@ -18,6 +18,10 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlContext>
+#include <QtQml/QQmlEngine>
+
 #include "ccfmain.h"
 
 /*!
@@ -49,7 +53,7 @@ CcfMain::CcfMain(QWindow *parent) :
 //    setAttribute(Qt::WA_NoSystemBackground);
 //    viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
 //    viewport()->setAttribute(Qt::WA_NoSystemBackground);
-    connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
+//    connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
     connect(configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
     connect(configuration, SIGNAL(maximise()), this, SLOT(showMaximized()));

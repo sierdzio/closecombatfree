@@ -18,8 +18,8 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QApplication>
 #include <QtGui/QGuiApplication>
+
 #include "ccfmain.h"
 
 /*!

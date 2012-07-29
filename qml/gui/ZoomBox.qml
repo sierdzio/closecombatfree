@@ -53,7 +53,7 @@ Rectangle {
         text: currentZoom + "%" //(currentZoom * 100) + "%"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pointSize: size/3
+        font.pointSize: size/3 + 1.0
         width: 40
         color: "#ffffff"
         anchors.verticalCenter: parent.verticalCenter

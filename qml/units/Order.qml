@@ -21,8 +21,8 @@
 import QtQuick 2.0
 
 QtObject {
-    property real x: 0
-    property real y: 0
+    property real x: 0.0
+    property real y: 0.0
     property string operation: ""
     property bool performed: false
 }

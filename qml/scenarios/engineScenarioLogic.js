@@ -328,7 +328,7 @@ function firingActionFinished(index, targetX, targetY) {
 
             // Check, whether a unit was hit.
             var hitee = childAt(targetX, targetY);
-            if ((hitee != null) && (hitee.unitIndex != undefined)) {
+            if ((hitee !== null) && (hitee.unitIndex !== undefined) && (hitee.unitType !== undefined)) {
                 hitee.hit(unit.unitType, targetX, targetY);
             }
         }

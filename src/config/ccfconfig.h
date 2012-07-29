@@ -33,8 +33,6 @@
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
 
-#include <QDebug>
-
 /*!
   \defgroup CloseCombatFree Game code
   @{

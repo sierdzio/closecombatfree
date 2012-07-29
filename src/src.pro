@@ -9,7 +9,7 @@
 
 include(globalImports.pri)
 
-QT       += widgets declarative quick qml
+QT = core quick qml
 
 TARGET = closecombatfree
 

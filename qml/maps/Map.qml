@@ -72,11 +72,10 @@ Item {
         background.z = z1;
     }
 
-    function setUnits(newList) {
-        units = newList;
+    function setUnits(units) {
         for (var i = 0; i < units.length; i++) {
-            var unit = units[i];
-            unit.positionChanged.connect(checkForHits);
+            if (units[i].objectType !== undefined && units[i].objectType == "unit")
+                units[i].positionChanged.connect(checkForHits);
         }
     }
 

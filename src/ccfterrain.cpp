@@ -116,7 +116,7 @@ int CcfTerrain::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QOb
   */
 qreal CcfTerrain::targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY)
 {
-    qreal result = 0;
+    qreal result = 0.0;
 
     if (targetX == originX) {
         result = qAbs(originY - targetY);

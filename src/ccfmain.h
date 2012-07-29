@@ -22,20 +22,14 @@
 #define CCFMAIN_H
 
 #include <QObject>
-#include <QApplication>
-#include <QtGui/QGuiApplication>
 #include <QWindow>
 #include <QSize>
 #include <QtQuick/QQuickView>
-#include <QtQml/QQmlContext>
-#include <QtQml/QQmlEngine>
 
 #include "config/ccfconfig.h"
 #include "ccfglobal.h"
 #include "ccfgamemanager.h"
 #include "ccfterrain.h"
-
-#include <QDebug>
 
 /*!
   \ingroup CloseCombatFree

@@ -21,13 +21,10 @@
 #ifndef CCFGLOBAL_H
 #define CCFGLOBAL_H
 
-#include <QObject>
-#include <QString>
-#include <QFile>
+#include <QtCore/QObject>
+#include <QtCore/QString>
 
 #include "ccferror.h"
-
-#include <QDebug>
 
 /*!
   \ingroup CloseCombatFree

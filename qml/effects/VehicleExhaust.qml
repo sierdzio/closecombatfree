@@ -29,7 +29,7 @@ Item {
 
             lifeSpan: 600
             lifeSpanVariation: 800
-            speed: AngleDirection {
+            velocity: AngleDirection {
                 id: angle
                 magnitude: 20
                 angle: 90
@@ -37,7 +37,7 @@ Item {
             }
 
             acceleration: PointDirection {xVariation: 10; yVariation: 10;}
-            speedFromMovement: 12
+            velocityFromMovement: 12
             size: 20
         }
 

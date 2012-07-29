@@ -18,6 +18,8 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtCore/QFile>
+
 #include "ccfglobal.h"
 
 /*!
@@ -71,7 +73,7 @@ QString CcfGlobal::getFileContents(const QString &filePath)
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         enterErrorState("Could not open file to read: " + file.fileName());
-        qDebug() << "Could not open file to read:" << file.fileName();
+        printf(QString("Could not open file to read: %1").arg(file.fileName()).toLocal8Bit().data());
         return QString();
     }
 
