@@ -61,14 +61,14 @@ Rectangle {
     Component.onCompleted: {
         var list = GameManager.scenariosList();
         for (var i = 0; i < list.length; i++) {
-            var current = list[i];
-            scenarioModel.append({"scenarioText": current});
+//            var current = list[i];
+            scenarioModel.append({"scenarioText": list[i]});
         }
 
         var campaignList = GameManager.qmlFileList("campaigns");
         for (var i = 0; i < campaignList.length; i++) {
-            var current = campaignList[i];
-            campaignModel.append({"campaignText": current});
+//            var current = campaignList[i];
+            campaignModel.append({"campaignText": campaignList[i]});
         }
 
         scenarios.currentIndex = 0;
