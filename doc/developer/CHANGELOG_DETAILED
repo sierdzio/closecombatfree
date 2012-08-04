@@ -5,6 +5,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+04.08.2012:
+ - refactor the code a bit (nothing fancy, just deletion of some ugly code)
+ - make roster menu stay glued to the bottom of the game area
+
 29.07.2012 (cumulative entry):
  - try making CCF work with newest Qt source code (works only in debug currently)
  - updates to most soure files
