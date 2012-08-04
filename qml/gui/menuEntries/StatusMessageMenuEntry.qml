@@ -31,8 +31,6 @@ Rectangle {
     color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
-//    width: entry.paintedWidth
-//    height: entry.paintedHeight
     width: {
         return logo.width + entry.paintedWidth;
     }
@@ -47,7 +45,6 @@ Rectangle {
 
     Text {
         id: entry
-        height: paintedHeight
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: logo.left

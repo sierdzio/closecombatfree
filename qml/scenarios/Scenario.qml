@@ -43,7 +43,7 @@ Rectangle {
     property var unitGroups: new Array(10);
 
     property real zoom: 1.0
-    property var zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
+    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
                                          gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
     property bool paused: false
     property color menuBackgroundColor: "#7e8c24"
@@ -255,7 +255,6 @@ Rectangle {
 
                             // Creates base for order markers.
                             ScenarioLogic.initOrderMarkers();
-//                            roster.populateUnits(units.item.children);
                             roster.populateUnits(playerUnits(playerSide));
                         }
                     }
@@ -367,6 +366,7 @@ Rectangle {
                     }
                 }
             }
+            // TODO:
             // Needed for effectsContainer in JS file.
             // Would be neat to rethink and optimise that.
             Item {

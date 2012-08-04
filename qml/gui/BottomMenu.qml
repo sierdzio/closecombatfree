@@ -68,7 +68,7 @@ Item {
                 NumberAnimation {
                     target: menu
                     properties: "y"
-                    to: -(menu.height + 5)
+                    to: -(menu.height)
                     duration: 300
                 }
             }
