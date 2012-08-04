@@ -111,7 +111,8 @@ OTHER_FILES += \
     ../qml/effects/VehicleExhaust.qml \
     ../qml/effects/VehicleExplosion.qml \
     ../qml/weather/Weather.qml \
-    ../qml/effects/Shadow.qml
+    ../qml/effects/Shadow.qml \
+    ../qml/menus/MainMenu.qml
 
 RESOURCES += \
 #    skinResource.qrc \
