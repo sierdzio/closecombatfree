@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         }
         return a.exec();
     } else {
-        qFatal(viewer->errorMessage().toLocal8Bit());
+        qFatal(qPrintable(viewer->errorMessage()), NULL);
         return 1;
     }
 }

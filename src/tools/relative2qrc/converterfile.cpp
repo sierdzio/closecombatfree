@@ -25,7 +25,7 @@
   */
 ConverterFile::ConverterFile(const QString &fileToConvert, const QString &resultingFile,
                              ConverterFlags *flgs, QObject *parent) :
-    QObject(parent), CcfError(), flags(flgs), inputFile(fileToConvert), outputFile(resultingFile)
+    QObject(parent), CcfError(), inputFile(fileToConvert), outputFile(resultingFile), flags(flgs)
 {
 //    qDebug() << inputFile << "=>" << outputFile;
 }

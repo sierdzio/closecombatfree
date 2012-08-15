@@ -73,7 +73,7 @@ QString CcfGlobal::getFileContents(const QString &filePath)
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         enterErrorState("Could not open file to read: " + file.fileName());
-        printf(QString("Could not open file to read: %1").arg(file.fileName()).toLocal8Bit().data());
+        qWarning(qPrintable(("Could not open file to read: %1")), qPrintable(file.fileName()));
         return QString();
     }
 

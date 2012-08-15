@@ -29,7 +29,8 @@ HEADERS += \
     ccfglobal.h \
     ccfterrain.h \
     ccfgamemanager.h \
-    config/ccfconfigdata.h
+    config/ccfconfigdata.h \
+    logic/ccfenginehelpers.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -40,7 +41,8 @@ SOURCES += main.cpp \
     ccfglobal.cpp \
     ccfterrain.cpp \
     ccfgamemanager.cpp \
-    config/ccfconfigdata.cpp
+    config/ccfconfigdata.cpp \
+    logic/ccfenginehelpers.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \

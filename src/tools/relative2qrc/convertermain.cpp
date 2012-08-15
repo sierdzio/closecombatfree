@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/qcoreapplication.h>
+#include <QtCore/QCoreApplication>
 #include "convertercore.h"
 
 /*!
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     }
 
     if (converter.isErrorState())
-        qFatal(converter.errorMessage().toLocal8Bit());
+        qFatal(qPrintable(converter.errorMessage()), NULL);
 
     return 0;//    a.exec();
 }

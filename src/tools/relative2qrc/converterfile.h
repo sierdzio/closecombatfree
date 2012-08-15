@@ -21,17 +21,18 @@
 #ifndef CONVERTERFILE_H
 #define CONVERTERFILE_H
 
-#include <QtCore/qobject.h>
-#include <QtCore/qchar.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qiodevice.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qtextstream.h>
+#include <QtCore/QObject>
+#include <QtCore/QChar>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QIODevice>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
+
 #include "../../ccferror.h"
 #include "converterflags.h"
 
-#include <qdebug.h>
+//#include <qdebug.h>
 
 /*!
   \ingroup Converter

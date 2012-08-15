@@ -36,12 +36,14 @@ CcfMain::CcfMain(QWindow *parent) :
     global = new CcfGlobal(this);
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
+    engineHelpers = new CcfEngineHelpers(this);
     initConfiguration();
 
     rootContext()->setContextProperty("Global", global);
     rootContext()->setContextProperty("Config", configuration);
     rootContext()->setContextProperty("GameManager", gameManager);
     rootContext()->setContextProperty("Terrain", terrain);
+    rootContext()->setContextProperty("EngineHelpers", engineHelpers);
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
@@ -87,7 +89,7 @@ void CcfMain::quit()
 {
     configuration->saveConfig();
     if (configuration->isErrorState()) {
-        qWarning(configuration->errorMessage().toLocal8Bit());
+        qWarning(qPrintable(configuration->errorMessage()), NULL);
     }
 
     delete configuration;
@@ -126,14 +128,14 @@ bool CcfMain::initConfiguration()
 {
     configuration = new CcfConfig("config", global, this);
     if (configuration->isErrorState()) {
-        printf("Error while reading configuration file! Message: "
-               + configuration->errorMessage().toLocal8Bit() + "\n");
+        printf("Error while reading configuration file! Message: %s\n",
+               qPrintable(configuration->errorMessage()));
         printf("Loading default configuration... ");
         delete configuration;
         configuration = new CcfConfig("config_default", global, this);
 
         if (configuration->isErrorState()) {
-            printf("ERROR: " + configuration->errorMessage().toLocal8Bit() + "\n");
+            printf("ERROR: %s\n", qPrintable(configuration->errorMessage()));
             return false;
         } else {
             printf("OK\n");

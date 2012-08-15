@@ -24,7 +24,6 @@ import QtQuick.Particles 2.0
 import "../../../qml/units"
 import "../../../qml/gui"
 import "../../../qml/effects"
-import "../../../qml/engineLogicHelpers.js" as Logic
 import "../../../qml/units/engineActionLogic.js" as ActionLogic
 
 Unit {

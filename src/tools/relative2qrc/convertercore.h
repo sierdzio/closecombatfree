@@ -21,19 +21,20 @@
 #ifndef CONVERTERMAIN_H
 #define CONVERTERMAIN_H
 
-#include <QtCore/qobject.h>
-#include <QtCore/qchar.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qiodevice.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qfile.h>
+#include <QtCore/QObject>
+#include <QtCore/QChar>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QIODevice>
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+
 #include "../../ccferror.h"
 #include "converterflags.h"
 #include "converterfile.h"
 #include "converterqrcgenerator.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 /*!
   \defgroup Converter Relative2QrcConverter

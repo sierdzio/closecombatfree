@@ -27,6 +27,7 @@
 #include <QtQuick/QQuickView>
 
 #include "config/ccfconfig.h"
+#include "logic/ccfenginehelpers.h"
 #include "ccfglobal.h"
 #include "ccfgamemanager.h"
 #include "ccfterrain.h"
@@ -60,6 +61,7 @@ private:
     CcfGlobal *global;
     CcfGameManager *gameManager;
     CcfTerrain *terrain;
+    CcfEngineHelpers *engineHelpers;
     QString pwd;
 };
 

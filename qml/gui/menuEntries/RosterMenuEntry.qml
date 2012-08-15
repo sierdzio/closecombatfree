@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import "../../../qml/engineLogicHelpers.js" as Logic
 
 Rectangle {
     property string entryText: ""
@@ -59,7 +58,7 @@ Rectangle {
             return;
         }
 
-        var newColor = Logic.colorForStatus(entryStatusText);
+        var newColor = EngineHelpers.colorForStatus(entryStatusText);
         if (newColor != "ERROR")
             entryStatusColor = newColor;
         else

@@ -68,14 +68,14 @@ function performMovement (newX, newY, factor) {
     __tempX = newX - (centerX);
     __tempY = newY - (centerY);
 
-    var newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
-    rotationAnimation.duration = Logic.rotationDuration(rotation,
+    var newRotation = EngineHelpers.rotationAngle(x, y, __tempX, __tempY);
+    rotationAnimation.duration = EngineHelpers.rotationDuration(rotation,
                                                         newRotation, rotationSpeed);
     rotationAnimation.to = newRotation;
     rotationAnimation.running = true;
     moving = true;
 
-    var moveDuration = Logic.targetDistance(x, y,
+    var moveDuration = EngineHelpers.targetDistance(x, y,
                                             __tempX,
                                             __tempY) * 800 / (maxSpeed * factor);
     xMoveAnimation.duration = moveDuration;
@@ -112,10 +112,10 @@ function turretFireTo (targetX, targetY) {
 function performTurretShooting (targetX, targetY) {
     __tempX = targetX;
     __tempY = targetY;
-    var newRotation = Logic.rotationAngle(x, y,
+    var newRotation = EngineHelpers.rotationAngle(x, y,
                                           targetX - centerX,
                                           targetY - centerY) - rotation;
-    turretRotationAnimation.duration = Logic.rotationDuration(turretRotation,
+    turretRotationAnimation.duration = EngineHelpers.rotationDuration(turretRotation,
                                                               newRotation,
                                                               turretRotationSpeed);
     turretRotationAnimation.to = newRotation;

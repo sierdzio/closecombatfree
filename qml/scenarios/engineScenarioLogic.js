@@ -69,7 +69,7 @@ function scheduleContextAction(index, operation) {
                 aimLine.x = unit.x + unit.centerX;
                 aimLine.y = unit.y + unit.centerY;
 
-                aimLine.color = LogicHelpers.colorForOrder(operation);
+                aimLine.color = EngineHelpers.colorForOrder(operation);
                 rotationTimer.start();
                 aimLine.visible = true;
 
@@ -450,16 +450,16 @@ function updateAimLine() {
         aimLine.x = x1;
         aimLine.y = y1;
 
-        var newRotation = LogicHelpers.rotationAngle(x2, y2, x1, y1);
+        var newRotation = EngineHelpers.rotationAngle(x2, y2, x1, y1);
 
         if (__aimLineRotation !== newRotation) {
             __aimLineRotation = newRotation;
-            aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
+            aimLine.height = EngineHelpers.targetDistance(x1, y1, x2, y2);
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
             var terrainObscure = Terrain.checkForTerrainInLOS(x1, y1, x2, y2, unit);
-            var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(),
+            var propsObscure = EngineHelpers.checkForObstaclesInLOS(map.item.getProps(),
                                                                    x1, y1, x2, y2, unit);
 
             var unitsObscure = 0;
@@ -467,7 +467,7 @@ function updateAimLine() {
             if ((targetUnit === undefined) || (targetUnit === null)) { // Operation should be checked here!
                 targetUnit = -1;
             } else {
-                unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
+                unitsObscure = EngineHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
                                                                    x1, y1, x2, y2, unit);
             }
 
@@ -503,12 +503,12 @@ function updateAimLine() {
         }
     } else {
         var tempRotation;
-        tempRotation = LogicHelpers.rotationAngle(unit.x + unit.centerX,
+        tempRotation = EngineHelpers.rotationAngle(unit.x + unit.centerX,
                                                   unit.y + unit.centerY,
                                                   mouseAreaMain.mouseX,
                                                   mouseAreaMain.mouseY);
         unit.defenceSphereRotation = unit.rotation
-                + LogicHelpers.angleTo8Step(tempRotation);
+                + EngineHelpers.angleTo8Step(tempRotation);
     }
 }
 
@@ -1235,7 +1235,7 @@ function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
 
     marker.x = (targetX - marker.centerX);
     marker.y = (targetY - marker.centerY);
-    marker.orderColor = LogicHelpers.colorForOrder(orderName);
+    marker.orderColor = EngineHelpers.colorForOrder(orderName);
     marker.visible = true;
 }
 

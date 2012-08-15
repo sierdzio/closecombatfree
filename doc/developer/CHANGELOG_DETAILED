@@ -14,6 +14,9 @@ Some more history can be devised from git sources (although even there, the thin
  - introduce a config transfer class (DTO) to simplify the code (and also make it more flexible)
  - fix some cases of bad signal propagation, and faulty LOS detection
  - due to strange errors (probably Qt5 bug), make handlers in Units hybrid (JS function + signal)
+ - introduce CcfEngineHelpers as a C++ version of engineLogicHelpers.js. For some time,
+   the JS version will be kept in the repo, but commented out - so that it can be used in an emergency
+ - fix compilation warnings (GCC 4.7, not tested on others)
 
 04.08.2012:
  - refactor the code a bit (nothing fancy, just deletion of some ugly code)

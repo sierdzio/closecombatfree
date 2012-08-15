@@ -20,7 +20,6 @@
 
 import QtQuick 2.0
 import "../../qml/gui"
-import "../../qml/engineLogicHelpers.js" as LogicHelpers
 import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 
 Rectangle {
@@ -103,7 +102,7 @@ Rectangle {
         var sides = new Array();
         // Find all available sides. TEMP!
         for (var i = 0; i < unitsLoader.item.children.length; ++i) {
-            if (LogicHelpers.arrayContains(sides, unitsLoader.item.children[i].unitSide) == -1) {
+            if (EngineHelpers.arrayContains(sides, unitsLoader.item.children[i].unitSide) === -1) {
                 sides.push(unitsLoader.item.children[i].unitSide);
             }
         }

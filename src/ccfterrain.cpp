@@ -18,6 +18,8 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtCore/qmath.h>
+
 #include "ccfterrain.h"
 
 /*!
@@ -74,6 +76,7 @@ int CcfTerrain::pixelInfo(int x, int y)
   */
 int CcfTerrain::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QObject *currentUnit)
 {
+    Q_UNUSED(currentUnit);
 //    int centerX = currentUnit->property("centerX").toInt();
 //    int centerY = currentUnit->property("centerY").toInt();
 

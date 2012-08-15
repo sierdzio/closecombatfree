@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import "../../../qml/engineLogicHelpers.js" as Logic
 
 Rectangle {
     property string entryText: ""

@@ -26,7 +26,6 @@
 #include <QtCore/QStringList>
 #include <QtCore/QSize>
 #include <QtCore/QPoint>
-#include <QtCore/qmath.h>
 
 #include <QtGui/QImage>
 #include <QtGui/QColor>
