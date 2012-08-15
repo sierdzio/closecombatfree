@@ -43,7 +43,7 @@ Unit {
 
     onMoveTo: exhaust.pulse(2000);
     onMoveFastTo: exhaust.pulse(2000);
-    onSneakTo: exhaust.pulse(2000);
+    onSneakToSignal: exhaust.pulse(2000);
 
     onTurretRotationChanged: turret.turretRotation = turretRotation;
 
@@ -60,8 +60,12 @@ Unit {
     signal fireTo (real targetX, real targetY)
     onFireTo: ActionLogic.turretFireTo(targetX, targetY);
 
-    signal smokeTo (real targetX, real targetY)
-    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
+    signal smokeToSignal (real targetX, real targetY)
+//    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
+    function smokeTo(targetX, targetY) {
+        smokeToSignal(targetX, targetY);
+        ActionLogic.turretSmokeTo(targetX, targetY);
+    }
 
     function performFiring() {
         changeStatus("READY");

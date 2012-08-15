@@ -13,6 +13,7 @@ Some more history can be devised from git sources (although even there, the thin
  - make further C++ compile-time optimisations (fix includes, add forward declarations, etc.)
  - introduce a config transfer class (DTO) to simplify the code (and also make it more flexible)
  - fix some cases of bad signal propagation, and faulty LOS detection
+ - due to strange errors (probably Qt5 bug), make handlers in Units hybrid (JS function + signal)
 
 04.08.2012:
  - refactor the code a bit (nothing fancy, just deletion of some ugly code)

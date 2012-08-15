@@ -85,9 +85,12 @@ Item {
     signal moveFastTo (real newX, real newY)
     onMoveFastTo: ActionLogic.moveFastTo(newX, newY);
 
-    signal sneakTo (real newX, real newY)
-    onSneakTo: ActionLogic.sneakTo(newX, newY);
-//    function sneakTo(newX, newY) { ActionLogic.sneakTo(newX, newY); }
+    signal sneakToSignal (real newX, real newY)
+//    onSneakTo: ActionLogic.sneakTo(newX, newY);
+    function sneakTo(newX, newY) {
+        sneakToSignal(newX, newY);
+        ActionLogic.sneakTo(newX, newY);
+    }
 
     signal selectionChanged (bool state, int index)
     onSelectedChanged: selectionChanged(selected, unitIndex);
