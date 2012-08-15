@@ -68,9 +68,7 @@ function performMovement (newX, newY, factor) {
     __tempX = newX - (centerX);
     __tempY = newY - (centerY);
 
-    var newRotation = Logic.rotationAngle(x, y,
-                                          __tempX,
-                                          __tempY);
+    var newRotation = Logic.rotationAngle(x, y, __tempX, __tempY);
     rotationAnimation.duration = Logic.rotationDuration(rotation,
                                                         newRotation, rotationSpeed);
     rotationAnimation.to = newRotation;
@@ -162,7 +160,7 @@ function queueOrder (orderName, newX, newY) {
     var component = Qt.createComponent("qrc:/core/units/Order.qml");
     var order;
 
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         order = component.createObject(root, {"x": newX, "y": newY, "operation": orderName});
     }
 
@@ -191,24 +189,24 @@ function continueQueue () {
 
     for (var i = 0; i < orderQueue.length; i++) {
         var order = orderQueue[i];
-        if (order.performed == true) {
+        if (order.performed === true) {
             continue;
         } else {
             currentOrder = i;
 
-            if (order.operation == "Move") {
+            if (order.operation === "Move") {
                 changeStatus("MOVING");
                 performMovement(order.x, order.y, 1);
-            } else if (order.operation == "Move fast") {
+            } else if (order.operation === "Move fast") {
                 changeStatus("MOVING FAST");
                 performMovement(order.x, order.y, moveFastFactor);
-            } else if (order.operation == "Sneak") {
+            } else if (order.operation === "Sneak") {
                 changeStatus("SNEAKING");
                 performMovement(order.x, order.y, sneakFactor);
-            } else if (order.operation == "Smoke") {
+            } else if (order.operation === "Smoke") {
                 performTurretShooting(order.x, order.y);
                 smoking = true;
-            } else if (order.operation == "Attack") {
+            } else if (order.operation === "Attack") {
                 performTurretShooting(order.x, order.y);
                 firing = true;
             }

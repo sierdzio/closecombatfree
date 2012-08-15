@@ -5,6 +5,12 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+15.08.2012:
+ - began experimental work on moving core functionality to C++ ("QML for modders, C++ for coders")
+ - update master branch to an actual working state
+ - fix roster context menu positioning
+ - use more strict JavaScript comparison methods
+
 04.08.2012:
  - refactor the code a bit (nothing fancy, just deletion of some ugly code)
  - make roster menu stay glued to the bottom of the game area

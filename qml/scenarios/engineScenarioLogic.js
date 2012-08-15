@@ -38,7 +38,7 @@ function scheduleContextAction(index, operation) {
     var unit;
 
     units = selectedUnits();
-    if (unitsLoader.item.children[index] != undefined) {
+    if (unitsLoader.item.children[index] !== undefined) {
         unit = unitsLoader.item.children[index];
     } else {
         unit = units[0];
@@ -50,22 +50,22 @@ function scheduleContextAction(index, operation) {
     contextLoader.visible = false;
 
     // Prevents some strange errors in certain situations.
-    if (unit.centerY != undefined) {
-        if (operation == "Stop") {
+    if (unit.centerY !== undefined) {
+        if (operation === "Stop") {
             // Iterate over every unit!
             for (var i = 0; i < units.length; i++) {
                 units[i].cancelOrder();
                 calculateOrderMarkerVisibility(units[i].unitIndex);
             }
             cleanContextAction();
-        } else if (operation == "Follow") {
-            if (isFollowingOn() == true)
+        } else if (operation === "Follow") {
+            if (isFollowingOn() === true)
                 stopFollowingUnit();
             else
                 startFollowingUnit(unit.unitIndex);
         } else
             // Draw aim line for all move/attack operations.
-            if ((operation != "Ambush") && (operation != "Defend")) {
+            if ((operation !== "Ambush") && (operation !== "Defend")) {
                 aimLine.x = unit.x + unit.centerX;
                 aimLine.y = unit.y + unit.centerY;
 
@@ -74,13 +74,13 @@ function scheduleContextAction(index, operation) {
                 aimLine.visible = true;
 
             } else { // Draw defense 'spheres'
-                if (operation == "Ambush") {
+                if (operation === "Ambush") {
                     for (var i = 0; i < units.length; i++) {
                         units[i].defenceSphereColor = "green";
                         units[i].changeStatus("AMBUSHING");
                     }
                 }
-                else if (operation == "Defend") {
+                else if (operation === "Defend") {
                     for (var i = 0; i < units.length; i++) {
                         units[i].defenceSphereColor = "blue";
                         units[i].changeStatus("DEFENDING");
@@ -98,7 +98,7 @@ function scheduleContextAction(index, operation) {
   */
 function checkIfUnitCanFire(scheduledOperation) {
     // Take obstacles into account
-    if ((scheduledOperation == "Attack") || (scheduledOperation == "Smoke")) {
+    if ((scheduledOperation === "Attack") || (scheduledOperation === "Smoke")) {
         if (aimLine.invisibleBeginning < aimLine.height) {
             cleanContextAction();
             return false;
@@ -119,11 +119,11 @@ function performContextAction(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
     var scheduledOperation = unit.scheduledOperation;
 
-    if ((scheduledOperation != "Ambush")
-            && (scheduledOperation != "Defend")
-            && (scheduledOperation != "Stop")
-            && (scheduledOperation != "Follow")) {
-        if (checkIfUnitCanFire(scheduledOperation) == false) {
+    if ((scheduledOperation !== "Ambush")
+            && (scheduledOperation !== "Defend")
+            && (scheduledOperation !== "Stop")
+            && (scheduledOperation !== "Follow")) {
+        if (checkIfUnitCanFire(scheduledOperation) === false) {
             return;
         }
 
@@ -136,7 +136,7 @@ function performContextAction(index, targetX, targetY) {
             unit = selectedGroup[i];
 
             // This unit's order is already issued.
-            if (unit.unitIndex == index)
+            if (unit.unitIndex === index)
                 continue;
 
             // Sets schedule for all units.
@@ -161,11 +161,11 @@ function placeWaypoint(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
     var scheduledOperation = unit.scheduledOperation;
 
-    if ((scheduledOperation != "Ambush")
-            && (scheduledOperation != "Defend")
-            && (scheduledOperation != "Stop")
-            && (scheduledOperation != "Follow")) {
-        if (checkIfUnitCanFire(scheduledOperation) == false) {
+    if ((scheduledOperation !== "Ambush")
+            && (scheduledOperation !== "Defend")
+            && (scheduledOperation !== "Stop")
+            && (scheduledOperation !== "Follow")) {
+        if (checkIfUnitCanFire(scheduledOperation) === false) {
             return;
         }
 
@@ -179,7 +179,7 @@ function placeWaypoint(index, targetX, targetY) {
             unit = selectedGroup[i];
 
             // This unit's order is already issued.
-            if (unit.unitIndex == index)
+            if (unit.unitIndex === index)
                 continue;
 
             // Sets schedule for all units.
@@ -229,15 +229,15 @@ function issueActionOrder(unit, x, y) {
     unit.defenceSphereColor = "";
     unit.changeStatus("READY");
 
-    if (operation == "Move") {
+    if (operation === "Move") {
         unit.moveTo(x, y);
-    } else if (operation == "Move fast") {
+    } else if (operation === "Move fast") {
         unit.moveFastTo(x, y);
-    } else if (operation == "Sneak") {
+    } else if (operation === "Sneak") {
         unit.sneakTo(x, y);
-    } else if (operation == "Attack") {
+    } else if (operation === "Attack") {
         unit.fireTo(x, y);
-    } else if (operation == "Smoke") {
+    } else if (operation === "Smoke") {
         unit.smokeTo(x, y);
     }
 
@@ -252,12 +252,12 @@ function issueActionOrder(unit, x, y) {
 function actionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
-    if (unit.currentOrder != -1) {
+    if (unit.currentOrder !== -1) {
         var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
-        if ((scheduledOperation != "Move")
-                && (scheduledOperation != "Move fast")
-                && (scheduledOperation != "Sneak")
-                && (scheduledOperation != "Follow")) {
+        if ((scheduledOperation !== "Move")
+                && (scheduledOperation !== "Move fast")
+                && (scheduledOperation !== "Sneak")
+                && (scheduledOperation !== "Follow")) {
             firingActionFinished(index, targetX, targetY);
             checkScenarioFinished();
         }
@@ -279,9 +279,9 @@ function checkScenarioFinished() {
     var areAllAlliesDestroyed = true;
     for (var i = 0; i < unitsLoader.item.children.length; ++i) {
         var currentUnit = unitsLoader.item.children[i];
-        if ((currentUnit.unitSide != playerSide) && (currentUnit.state == "healthy")) {
+        if ((currentUnit.unitSide !== playerSide) && (currentUnit.state === "healthy")) {
             areAllEnemiesDestroyed = false;
-        } else if ((currentUnit.unitSide == playerSide) && (currentUnit.state == "healthy")) {
+        } else if ((currentUnit.unitSide === playerSide) && (currentUnit.state === "healthy")) {
             areAllAlliesDestroyed = false;
         }
     }
@@ -307,7 +307,7 @@ function checkScenarioFinished() {
 function firingActionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
-    if (unit.currentOrder != -1) {
+    if (unit.currentOrder !== -1) {
         // This component renders in-game effects (not all,
         // but for example muzzle flashes, explosions etc.)
         var component = Qt.createComponent("../../qml/effects/Effect.qml");
@@ -316,14 +316,14 @@ function firingActionFinished(index, targetX, targetY) {
         // for landing shells
         var effect;
 
-        if (component.status == Component.Ready) {
+        if (component.status === Component.Ready) {
             effect = component.createObject(itemContainer);
         }
 
         effectsContainer.push(effect);
         var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
 
-        if (scheduledOperation == "Attack") {
+        if (scheduledOperation === "Attack") {
             effect.animationString = "gun_fire";
 
             // Check, whether a unit was hit.
@@ -332,7 +332,7 @@ function firingActionFinished(index, targetX, targetY) {
                 hitee.hit(unit.unitType, targetX, targetY);
             }
         }
-        else if(scheduledOperation == "Smoke") {
+        else if(scheduledOperation === "Smoke") {
             effect.animationString = "smoke_fire";
         }
 
@@ -353,7 +353,7 @@ function firingActionFinished(index, targetX, targetY) {
 function updateEffects() {
     var haveAllEffectsFinished = true;
     for (var i = 0; i < effectsContainer.length; i++) {
-        if (effectsContainer[i].running == true) {
+        if (effectsContainer[i].running === true) {
             switchEffectFrame(i);
             haveAllEffectsFinished = false;
         }
@@ -382,11 +382,11 @@ function switchEffectFrame(effectIndex) {
     var i = effectIndex;
     var imgNumber = effectsContainer[i].imageNumber;
 
-    if (imgNumber != 5) {
+    if (imgNumber !== 5) {
         effectsContainer[i].imageNumber = imgNumber + 1;
         effectsContainer[i].source = "../../img/effects" + "/" + effectsContainer[i].animationString
                 + (imgNumber + 1) + ".png";
-    } else if (imgNumber == 5) {
+    } else if (imgNumber === 5) {
         effectsContainer[i].imageNumber = 0;
         effectsContainer[i].source = "";
         effectsContainer[i].running = false;
@@ -417,13 +417,13 @@ function cleanContextAction() {
 function getAllUnitsButOne(unitIndex) {
     var allUnits = unitsLoader.item.children;
 
-    if (unitIndex == -1)
+    if (unitIndex === -1)
         return allUnits;
 
     var result = new Array(allUnits.length - 1);
 
     for (var i = 0; i < allUnits.length; ++i) {
-        if (allUnits[i].unitIndex != unitIndex) {
+        if (allUnits[i].unitIndex !== unitIndex) {
             result.push(allUnits[i]);
         }
     }
@@ -452,7 +452,7 @@ function updateAimLine() {
 
         var newRotation = LogicHelpers.rotationAngle(x2, y2, x1, y1);
 
-        if (__aimLineRotation != newRotation) {
+        if (__aimLineRotation !== newRotation) {
             __aimLineRotation = newRotation;
             aimLine.height = LogicHelpers.targetDistance(x1, y1, x2, y2);
 
@@ -462,7 +462,7 @@ function updateAimLine() {
             var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(),
                                                                    x1, y1, x2, y2, unit);
             var targetUnit = childAt(x2, y2);
-            if ((targetUnit == undefined)) // Operation should be checked here!
+            if ((targetUnit === undefined)) // Operation should be checked here!
                 targetUnit = -1;
 
             var unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
@@ -471,7 +471,7 @@ function updateAimLine() {
             // Conditions here should be redesigned to save time.
             // There is no need to update aimLine if a given Beginning
             // is further than current one.
-            if (terrainObscure != 0) {
+            if (terrainObscure !== 0) {
                 if (terrainObscure < 0) {
                     aimLine.obscureBeginning = -terrainObscure;
                 } else {
@@ -482,7 +482,7 @@ function updateAimLine() {
                 aimLine.invisibleBeginning = aimLine.height;
             }
 
-            if (propsObscure != 0) {
+            if (propsObscure !== 0) {
                 if (propsObscure < 0) {
                     aimLine.obscureBeginning = -propsObscure;
                 } else {
@@ -490,7 +490,7 @@ function updateAimLine() {
                 }
             }
 
-            if (unitsObscure != 0) {
+            if (unitsObscure !== 0) {
                 if (unitsObscure < 0) {
                     aimLine.obscureBeginning = -unitsObscure;
                 } else {
@@ -528,7 +528,7 @@ function cancelAllSelectedOrders() {
   */
 function handleLeftMouseClick(mouse) {
     if (contextLoader.visible == false) {
-        if (mouse.modifiers == Qt.ShiftModifier) {
+        if (mouse.modifiers === Qt.ShiftModifier) {
             placeWaypoint(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         } else {
             performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
@@ -553,13 +553,13 @@ function handleRightMouseClick(mouse) {
     var unit;
     unit = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-    if ((unit == mouseAreaMain) || (unit == null) || (unit.unitSide != playerSide)) {
+    if ((unit === mouseAreaMain) || (unit === null) || (unit.unitSide !== playerSide)) {
         deselectAllUnits();
         return;
     }
 
-    if (unit.centerX != undefined) {
-        if (unit.selected == false) {
+    if (unit.centerX !== undefined) {
+        if (unit.selected === false) {
             selectUnitFromGameArea(mouse);
         }
 
@@ -603,18 +603,19 @@ function handleRightMouseClickRoster(mouse) {
     cleanContextAction();
 
     var unit;
-    unit = roster.childCenterCoords(mouse.x, mouse.y);
-    var unit;
     unit = roster.getUnitAt(mouse.x, mouse.y);
 
-    if (unit.centerX != undefined) {
-        if (unit.selected == false) {
+    if (unit.centerX !== undefined) {
+        if (unit.selected === false) {
             selectUnitFromRoster(mouse);
         }
+
+        var rosterUnitCoords;
+        rosterUnitCoords = roster.childCenterCoords(mouse.x, mouse.y);
         // Fixes context menu at the centre of unit object.
         setContextMenuPosition(contextLoader,
-                               menu.x + unit.x,
-                               root.height + menu.y + unit.y);
+                               menu.x + rosterUnitCoords.x,
+                               root.height + menu.y + rosterUnitCoords.y);
 
         __unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
@@ -639,7 +640,7 @@ function handlePressAndHoldLeft(mouse) {
     // Saves the state of modifiers.
     //    rubberBandTimer.__modifiers = mouse.modifiers;
 
-    if (mouse.modifiers == Qt.NoModifier)
+    if (mouse.modifiers === Qt.NoModifier)
         deselectAllUnits();
 
     if (rubberBandTimer.running == false)
@@ -680,30 +681,31 @@ function handleMouseReleased() {
   Uses C++ bindings heavily to check keyboard shortcuts in CcfConfig.
   */
 function handleKeyPress(event) {
-    if (event.modifiers == Qt.ControlModifier) {
-        var digit = digitPressed(event);
-        if (digit != -1)
+    var digit = digitPressed(event);
+    if (event.modifiers === Qt.ControlModifier) {
+        if (digit !== -1)
             groupUnits(digit);
     } else {
+        var selectedOnes;
         // Development key bindings.
-        if (event.key == Qt.Key_BracketRight) {
+        if (event.key === Qt.Key_BracketRight) {
             map.item.hipsometricMapInFront = !map.item.hipsometricMapInFront;
-        } else if (event.key == Qt.Key_BracketLeft) {
+        } else if (event.key === Qt.Key_BracketLeft) {
             togglePlayer();
         } else
             // end of dev key bindings
-            if (event.key == Config.keyForFunction("zoom in")) {
+            if (event.key === Config.keyForFunction("zoom in")) {
                 zoomIn();
-            } else if (event.key == Config.keyForFunction("zoom out")) {
+            } else if (event.key === Config.keyForFunction("zoom out")) {
                 zoomOut();
-            } else if (event.key == Config.keyForFunction("quit")) {
+            } else if (event.key === Config.keyForFunction("quit")) {
                 Qt.quit();
-            } else if (event.key == Config.keyForFunction("toggle top menu")) {
+            } else if (event.key === Config.keyForFunction("toggle top menu")) {
                 topMenu.toggleMenu();
-            } else if (event.key == Config.keyForFunction("toggle bottom menu")) {
+            } else if (event.key === Config.keyForFunction("toggle bottom menu")) {
                 bottomMenu.toggleMenu();
-            } else if (event.key == Config.keyForFunction("follow")) {
-                var selectedOnes = selectedUnits();
+            } else if (event.key === Config.keyForFunction("follow")) {
+                selectedOnes = selectedUnits();
                 if ((followedUnit.running == false) && (selectedUnitsCount() > 0)) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     startFollowingUnit(__unitIndex);
@@ -723,43 +725,42 @@ function handleKeyPress(event) {
                     console.log("No unit selected to follow.");
                 }
             } else if (selectedUnitsCount() > 0) {
-                var selectedOnes = selectedUnits();
-                if (event.key == Config.keyForFunction("Stop")) {
+                selectedOnes = selectedUnits();
+                if (event.key === Config.keyForFunction("Stop")) {
                     for (var i = 0; i < selectedOnes.length; i++) {
                         selectedOnes[i].cancelOrder();
                         calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
                     }
-                } else if (event.key == Config.keyForFunction("Move fast")) {
+                } else if (event.key === Config.keyForFunction("Move fast")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Move fast");
-                } else if (event.key == Config.keyForFunction("Move")) {
+                } else if (event.key === Config.keyForFunction("Move")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Move");
-                } else if (event.key == Config.keyForFunction("Sneak")) {
+                } else if (event.key === Config.keyForFunction("Sneak")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Sneak");
-                } else if (event.key == Config.keyForFunction("Attack")) {
+                } else if (event.key === Config.keyForFunction("Attack")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Attack");
-                } else if (event.key == Config.keyForFunction("Smoke")) {
+                } else if (event.key === Config.keyForFunction("Smoke")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Smoke");
-                } else if (event.key == Config.keyForFunction("Defend")) {
+                } else if (event.key === Config.keyForFunction("Defend")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Defend");
-                } else if (event.key == Config.keyForFunction("Ambush")) {
+                } else if (event.key === Config.keyForFunction("Ambush")) {
                     __unitIndex = selectedOnes[0].unitIndex;
                     scheduleContextAction(__unitIndex, "Ambush");
                 }
             }
 
-        if (event.key == Config.keyForFunction("pause")) {
+        if (event.key === Config.keyForFunction("pause")) {
             togglePause();
         }
 
         // Digit reading.
-        var digit = digitPressed(event);
-        if (digit != -1)
+        if (digit !== -1)
             selectGroup(digit);
     }
 }
@@ -772,9 +773,9 @@ function handleKeyPress(event) {
   Uses C++ bindings heavily to check keyboard shortcuts in CcfConfig.
   */
 function handleWheelEventMouseAreaMain(wheel) {
-    if (wheel.modifiers == Qt.ControlModifier) {
+    if (wheel.modifiers === Qt.ControlModifier) {
         zoom += wheel.angleDelta.y/800;
-    } else if (wheel.modifiers == Qt.ShiftModifier) {
+    } else if (wheel.modifiers === Qt.ShiftModifier) {
         gameArea.flick(wheel.angleDelta.y * 6, 0.001);
     } else {
         wheel.accepted = false;
@@ -849,7 +850,7 @@ function isFollowingOn() {
   */
 function updateFollowingUnit() {
     var unit = unitsLoader.item.children[followedUnit.index];
-    if (unit.moving == true) {
+    if (unit.moving === true) {
         centerViewOnUnit(unit);
     } else {
         followingTimer.stop();
@@ -862,13 +863,13 @@ function updateFollowingUnit() {
   Restarts followTimer when a unit is on the move.
   */
 function handleUnitMovement(isMoving, unitIndex) {
-    if (followedUnit.index != unitIndex) {
+    if (followedUnit.index !== unitIndex) {
         return;
     }
 
-    if (isMoving == true) {
+    if (isMoving === true) {
         followingTimer.start();
-    } else if (isMoving == false) {
+    } else if (isMoving === false) {
         followingTimer.stop();
     }
 }
@@ -943,7 +944,7 @@ function updateRubberBand(x, y) {
     for (var i = 0; i < units.length; i++) {
         var unit = units[i];
 
-        if (unit.selected == true)
+        if (unit.selected === true)
             continue;
 
         if ((unit.x <= rubberX2) && (unit.x >= rubberX)
@@ -961,12 +962,12 @@ function updateRubberBand(x, y) {
 function selectUnitFromGameArea(mouse) {
     var unit = childAt(mouse.x, mouse.y);
 
-    if (unit == null) {
+    if (unit === null) {
         deselectAllUnits();
         return;
     }
 
-    if (unit.unitStatus != undefined) {
+    if (unit.unitStatus !== undefined) {
         selectUnit(unit.unitIndex, mouse.modifiers);
     } else {
         deselectAllUnits();
@@ -981,7 +982,7 @@ function selectUnitFromGameArea(mouse) {
 function selectUnitFromRoster(mouse) {
     var unit = roster.getUnitAt(mouse.x, mouse.y);
 
-    if (unit != 0) {
+    if (unit !== 0) {
         selectUnit(unit.unitIndex, mouse.modifiers);
     }
 }
@@ -993,24 +994,24 @@ function selectUnitFromRoster(mouse) {
   to the enemy).
   */
 function selectUnit(index, modifier) {
-    if ((unitsLoader.item.children[index].unitSide != playerSide)
-            || (unitsLoader.item.children[index].state != "healthy")) {
+    if ((unitsLoader.item.children[index].unitSide !== playerSide)
+            || (unitsLoader.item.children[index].state !== "healthy")) {
         return;
     }
 
-    if ((modifier == Qt.NoModifier) && (Config.uiMode == "DESKTOP")) {
+    if ((modifier === Qt.NoModifier) && (Config.uiMode == "DESKTOP")) {
         deselectAllUnits();
         unitsLoader.item.children[index].selected = true;
         soldierMenu.populateSoldiers(unitsLoader.item.children[index].soldiers);
-    } else if ((modifier == Qt.ControlModifier) || (Config.uiMode == "MOBILE")) {
-        if (unitsLoader.item.children[index].selected == true)
+    } else if ((modifier === Qt.ControlModifier) || (Config.uiMode == "MOBILE")) {
+        if (unitsLoader.item.children[index].selected === true)
             unitsLoader.item.children[index].selected = false;
-        else if (unitsLoader.item.children[index].selected == false)
+        else if (unitsLoader.item.children[index].selected === false)
             unitsLoader.item.children[index].selected = true;
 
         if (selectedUnitsCount() > 1) {
             soldierMenu.clear();
-        } else if (selectedUnitsCount() == 1) {
+        } else if (selectedUnitsCount() === 1) {
             soldierMenu.populateSoldiers(selectedUnits()[0].soldiers);
         }
     }
@@ -1051,7 +1052,7 @@ function selectedUnitsCount() {
     var result = 0;
     var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
-        if (units[i].selected == true)
+        if (units[i].selected === true)
             result ++;
     }
     return result;
@@ -1066,7 +1067,7 @@ function selectedUnits() {
     var result = new Array();
     var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
-        if (units[i].selected == true)
+        if (units[i].selected === true)
             result.push(units[i]);
     }
     return result;
@@ -1078,14 +1079,14 @@ function selectedUnits() {
   Creates an unit group. Usually done with CTRL+number.
   */
 function groupUnits(groupNumber) {
-    if (selectedUnitsCount() == 0) {
+    if (selectedUnitsCount() === 0) {
         return;
     }
 
     // Remove old members.
-    if (unitGroups[groupNumber] != undefined) {
+    if (unitGroups[groupNumber] !== undefined) {
         for (var i = 0; i < unitGroups[groupNumber].length; i++) {
-            if (unitGroups[groupNumber][i].selected == false)
+            if (unitGroups[groupNumber][i].selected === false)
                 unitGroups[groupNumber][i].groupNumber = 0;
         }
     }
@@ -1110,7 +1111,7 @@ function groupUnits(groupNumber) {
 function selectGroup(groupNumber) {
     var group = unitGroups[groupNumber];
 
-    if (group != undefined) {
+    if (group !== undefined) {
         deselectAllUnits();
     } else {
         return;
@@ -1146,25 +1147,25 @@ function setContextMenuPosition(menu, x, y) {
 function digitPressed(event) {
     var result = -1;
 
-    if (event.key == Qt.Key_1)
+    if (event.key === Qt.Key_1)
         result = 1;
-    else if (event.key == Qt.Key_2)
+    else if (event.key === Qt.Key_2)
         result = 2;
-    else if (event.key == Qt.Key_3)
+    else if (event.key === Qt.Key_3)
         result = 3;
-    else if (event.key == Qt.Key_4)
+    else if (event.key === Qt.Key_4)
         result = 4;
-    else if (event.key == Qt.Key_5)
+    else if (event.key === Qt.Key_5)
         result = 5;
-    else if (event.key == Qt.Key_6)
+    else if (event.key === Qt.Key_6)
         result = 6;
-    else if (event.key == Qt.Key_7)
+    else if (event.key === Qt.Key_7)
         result = 7;
-    else if (event.key == Qt.Key_8)
+    else if (event.key === Qt.Key_8)
         result = 8;
-    else if (event.key == Qt.Key_9)
+    else if (event.key === Qt.Key_9)
         result = 9;
-    else if (event.key == Qt.Key_0)
+    else if (event.key === Qt.Key_0)
         result = 10;
 
     return result;
@@ -1182,18 +1183,18 @@ function calculateOrderMarkerVisibility(index) {
     var anyOrdersLeft = false;
     var orders = unit.orderQueue;
 
-    if (orders.length == 0) {
+    if (orders.length === 0) {
         for (var i = 0; i < orderMarker.length; i++) {
-            if (orderMarker[i] != 0) {
+            if (orderMarker[i] !== 0) {
                 orderMarker[i].destroy();
                 orderMarker[i] = 0;
             }
         }
     } else {
         for (var i = 0; i < orders.length; i++) {
-            if (orders[i].performed == true) {
+            if (orders[i].performed === true) {
                 if (i < orderMarker.length) {
-                    if (orderMarker[i] != 0) {
+                    if (orderMarker[i] !== 0) {
                         orderMarker[i].destroy();
                         orderMarker[i] = 0;
                     }
@@ -1220,7 +1221,7 @@ function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
     var marker;
 
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         marker = component.createObject(itemContainer);
         marker.visible = true;
         marker.index = index;

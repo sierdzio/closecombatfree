@@ -38,7 +38,7 @@
   */
 function arrayContains(array, objToCheck) {
     for (var i = 0; i < array.length; ++i) {
-        if (array[i] == objToCheck) {
+        if (array[i] === objToCheck) {
             return i;
         }
     }
@@ -53,14 +53,14 @@ function arrayContains(array, objToCheck) {
 function rotationAngle(oldX, oldY, newX, newY) {
     var result = 0;
 
-    if (newX == oldX) {
+    if (newX === oldX) {
         if (newY > oldY)
             result = 0;
         else
             result = 180;
         return result;
     }
-    else if (newY == oldY) {
+    else if (newY === oldY) {
         if (newX > oldX)
             result = 90;
         else
@@ -90,10 +90,10 @@ function rotationAngle(oldX, oldY, newX, newY) {
 function targetDistance(originX, originY, targetX, targetY) {
     var result = 0;
 
-    if (targetX == originX) {
+    if (targetX === originX) {
         result = Math.abs(originY - targetY);
         return result;
-    } else if (targetY == originY) {
+    } else if (targetY === originY) {
         result = Math.abs(originX - targetX);
         return result;
     }
@@ -140,10 +140,10 @@ function rotationDuration(oldRotation, newRotation, rotationSpeed) {
     var tempOldRotation = oldRotation;
     var rotationChange = newRotation - oldRotation;
 
-    if (oldRotation == tempNewRotation)
+    if (oldRotation === tempNewRotation)
         return 0;
 
-    if (tempOldRotation == 0)
+    if (tempOldRotation === 0)
         tempOldRotation = 360;
 
     if ((newRotation > 180) && (oldRotation < 180)) {
@@ -166,15 +166,15 @@ function rotationDuration(oldRotation, newRotation, rotationSpeed) {
 function colorForOrder(orderName) {
     var result = "ERROR";
 
-    if (orderName == "Move") {
+    if (orderName === "Move") {
         result = "#22ff22";
-    } else if (orderName == "Move fast") {
+    } else if (orderName === "Move fast") {
         result = "#b75bd1";
-    } else if (orderName == "Sneak") {
+    } else if (orderName === "Sneak") {
         result = "#f0dd0c";
-    } else if (orderName == "Smoke") {
+    } else if (orderName === "Smoke") {
         result = "#ffa000";
-    } else if (orderName == "Attack") {
+    } else if (orderName === "Attack") {
         result = "#ff2222";
     }
 
@@ -191,33 +191,33 @@ function colorForOrder(orderName) {
 function colorForStatus(statusMessage) {
     var result = "ERROR";
 
-    if (statusMessage == "READY") {
+    if (statusMessage === "READY") {
         result = "#115511";
-    } else if (statusMessage == "STOPPED") {
+    } else if (statusMessage === "STOPPED") {
         result = "#ee5511";
-    } else if (statusMessage == "MOVING") {
+    } else if (statusMessage === "MOVING") {
         result = "#11aa11";
-    } else if (statusMessage == "MOVING FAST") {
+    } else if (statusMessage === "MOVING FAST") {
         result = "#11aa11";
-    } else if (statusMessage == "SNEAKING") {
+    } else if (statusMessage === "SNEAKING") {
         result = "#11aa11";
-    } else if (statusMessage == "AMBUSHING") {
+    } else if (statusMessage === "AMBUSHING") {
         result = "#aaaaaa";
-    } else if (statusMessage == "DEFENDING") {
+    } else if (statusMessage === "DEFENDING") {
         result = "#aaaaaa";
-    } else if (statusMessage == "KIA") {
+    } else if (statusMessage === "KIA") {
         result = "#000000";
-    } else if (statusMessage == "DAMAGED") {
+    } else if (statusMessage === "DAMAGED") {
         result = "#aa1111";
-    } else if (statusMessage == "WOUNDED") {
+    } else if (statusMessage === "WOUNDED") {
         result = "#555511";
-    } else if (statusMessage == "INCAPACITATED") {
+    } else if (statusMessage === "INCAPACITATED") {
         result = "#885511";
-    } else if (statusMessage == "ROTATING") {
+    } else if (statusMessage === "ROTATING") {
         result = "#11aa11";
-    } else if (statusMessage == "RELOADING") {
+    } else if (statusMessage === "RELOADING") {
         result = "#11aa11";
-    } else if (statusMessage == "FIRING") {
+    } else if (statusMessage === "FIRING") {
         result = "#aa1111";
     }
 
@@ -258,7 +258,7 @@ function checkForObstaclesInLOS(items, x1, y1, x2, y2, currentUnit) {
 
         for (var j = 0; j < items.length; ++j) {
             var item = items[j];
-            if ((item == currentUnit) || (item == undefined)) {
+            if ((item === currentUnit) || (item === undefined)) {
                 continue;
             }
 
