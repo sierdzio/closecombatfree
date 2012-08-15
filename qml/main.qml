@@ -37,8 +37,8 @@ Rectangle {
     height: Config.windowHeight
     color: "#7e8c24"
 
-//    ScenarioMenu {
-    MainMenu {
+    ScenarioMenu {
+//    MainMenu {
         id: mainMenu
         anchors.fill: parent
     }
