@@ -21,14 +21,15 @@
 #ifndef CCFTERRAIN_H
 #define CCFTERRAIN_H
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QSize>
-#include <QImage>
-#include <QPoint>
-#include <QColor>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QSize>
+#include <QtCore/QPoint>
 #include <QtCore/qmath.h>
+
+#include <QtGui/QImage>
+#include <QtGui/QColor>
 
 #include "ccferror.h"
 

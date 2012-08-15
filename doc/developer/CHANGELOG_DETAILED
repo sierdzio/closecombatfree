@@ -10,6 +10,9 @@ Some more history can be devised from git sources (although even there, the thin
  - update master branch to an actual working state
  - fix roster context menu positioning
  - use more strict JavaScript comparison methods
+ - make further C++ compile-time optimisations (fix includes, add forward declarations, etc.)
+ - introduce a config transfer class (DTO) to simplify the code (and also make it more flexible)
+ - fix some cases of bad signal propagation, and faulty LOS detection
 
 04.08.2012:
  - refactor the code a bit (nothing fancy, just deletion of some ugly code)

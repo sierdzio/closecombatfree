@@ -21,7 +21,7 @@
 #ifndef CCFERROR_H
 #define CCFERROR_H
 
-#include <QString>
+#include <QtCore/QString>
 
 /*!
   \defgroup CcfError Base error class for CCF

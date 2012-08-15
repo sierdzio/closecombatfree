@@ -18,12 +18,14 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtCore/QFile>
+
 #include "ccfconfigsaver.h"
 
 /*!
   Pretty much default constructor.
   */
-CcfConfigSaver::CcfConfigSaver(QMap<QString, QPair<QString, bool> > *configuration,
+CcfConfigSaver::CcfConfigSaver(CcfConfigData *configuration,
                                QList<QString> *configIndexes,
                                const QString &configFilePath,
                                QObject *parent) :
@@ -39,8 +41,8 @@ void CcfConfigSaver::updateConfigFile()
 {
     // Check, whether there was any change.
     bool wasChange = false;
-    foreach (QString key, m_configuration->keys()) {
-        if (m_configuration->value(key).second == true) {
+    for (int i = 0; i < m_configuration->size(); ++i) {
+        if (m_configuration->state(i) == true) {
             wasChange = true;
             break;
         }
@@ -82,11 +84,11 @@ void CcfConfigSaver::updateConfigFile()
         }
 
         if (m_configuration->contains(option)) {
-            if (m_configuration->value(option).second == true) {
+            if (m_configuration->state(option) == true) {
                 if (line.contains(" = ")) {
-                    replacement = option + " = " + m_configuration->value(option).first;
+                    replacement = option + " = " + m_configuration->value(option);
                 } else if (line.contains("=")) {
-                    replacement = option + "=" + m_configuration->value(option).first;
+                    replacement = option + "=" + m_configuration->value(option);
                 }
 
                 // Replace the needed fragment of code:

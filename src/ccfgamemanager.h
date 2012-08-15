@@ -21,14 +21,14 @@
 #ifndef CCFGAMEMANAGER_H
 #define CCFGAMEMANAGER_H
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QTextStream>
 #include <QtQml/QQmlListReference>
-#include <QDir>
-#include <QFile>
-#include <QFileInfo>
-#include <QTextStream>
 
 #include "ccferror.h"
 

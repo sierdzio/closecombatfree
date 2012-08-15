@@ -18,6 +18,11 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtCore/QByteArray>
+#include <QtCore/QIODevice>
+#include <QtCore/QFile>
+#include <QtCore/QStringList>
+
 #include "ccfconfigparser.h"
 
 /*!
@@ -30,7 +35,7 @@
 CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError()
 {
-    m_configuration = new QMap<QString, QPair<QString, bool> >();
+    m_configuration = new CcfConfigData();
     m_configIndexes = new QList<QString>();
     parse(configFilePath);
 }
@@ -45,7 +50,7 @@ CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent)
          (for example in preferences menu)
 
   */
-QMap<QString, QPair<QString, bool> > *CcfConfigParser::configuration()
+CcfConfigData *CcfConfigParser::configuration()
 {
     return m_configuration;
 }
@@ -123,7 +128,7 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
     QString value = lineData.at(1);
 
     // Add key and value checks here
-    m_configuration->insert(key, QPair<QString, bool>(value, false));
+    m_configuration->insert(key, value, false);
     m_configIndexes->insert(lineNumber, key);
 
     return true;

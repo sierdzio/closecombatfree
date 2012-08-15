@@ -6,6 +6,7 @@ Changes since v0.0.4 (f4712c5717695e1b2fe0ffe28067b25daa62a782):
  - ported the game to Qt5 (possible problems and new, hidden bugs here,
    as the change is big, and Qt5 sources keep changing...)
  - redesigned all uses of particles (much more robust system)
+ - huge behind the scenes changes to underlying logic
 
 2012.02.10 - v0.0.4.
 Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):

@@ -129,6 +129,7 @@ bool CcfMain::initConfiguration()
         printf("Error while reading configuration file! Message: "
                + configuration->errorMessage().toLocal8Bit() + "\n");
         printf("Loading default configuration... ");
+        delete configuration;
         configuration = new CcfConfig("config_default", global, this);
 
         if (configuration->isErrorState()) {

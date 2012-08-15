@@ -21,17 +21,17 @@
 #ifndef CCFCONFIG_H
 #define CCFCONFIG_H
 
-#include <QObject>
-#include <QString>
-#include <QMap>
-#include <QPair>
-#include <QStringList>
-#include <QKeySequence>
-#include <QSize>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QSize>
+#include <QtCore/QMap>
+
 #include "../ccferror.h"
 #include "../ccfglobal.h"
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
+#include "ccfconfigdata.h"
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -164,7 +164,6 @@ private:
     int findQtKey(QChar character);
     bool stringToBool(const QString &stringToConvert);
     QString boolToString(bool boolToConvert);
-    void replaceElement(const QString &elementToReplace, const QString &newValue);
     void parseValidKeyboardShortcuts();
 
     int runtimeWidth, runtimeHeight;
@@ -173,7 +172,7 @@ private:
     CcfGlobal *global;
     CcfConfigParser *parser;
     CcfConfigSaver *saver;
-    QMap<QString, QPair<QString, bool> > *configuration;
+    CcfConfigData *configuration;
     QMap<QString, QString> keyboardShortcuts;
 };
 

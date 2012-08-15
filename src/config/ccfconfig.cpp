@@ -18,6 +18,8 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
+#include <QtGui/QKeySequence>
+
 #include "ccfconfig.h"
 
 /*!
@@ -26,14 +28,14 @@
 CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath), global(globalObject)
 {
-    configuration = new QMap<QString, QPair<QString, bool> >();
+    configuration = new CcfConfigData();
     parser = new CcfConfigParser(filePath, this);
     m_terrainInfoMode = "OFF";
 
     if (!parser->isErrorState()) {
         configuration = parser->configuration();
-        runtimeWidth = configuration->value("width").first.toInt();
-        runtimeHeight = configuration->value("height").first.toInt();
+        runtimeWidth = configuration->value("width").toInt();
+        runtimeHeight = configuration->value("height").toInt();
         parseValidKeyboardShortcuts();
     } else {
         enterErrorState(parser->errorMessage());
@@ -47,10 +49,7 @@ QString CcfConfig::configurationString()
 {
     QString result;
     if (!isErrorState()) {
-        foreach (const QString &key, configuration->keys()) {
-            result.append(key + " " + configuration->value(key).first
-                          + ", " + configuration->value(key).second + "\n");
-        }
+        result = configuration->toString();
     }
     return result;
 }
@@ -62,7 +61,7 @@ QString CcfConfig::configurationString()
   */
 QString CcfConfig::getUiMode()
 {
-    return configuration->value("uimode").first.toUpper();
+    return configuration->value("uimode").toUpper();
 }
 
 /*!
@@ -72,16 +71,16 @@ QString CcfConfig::getUiMode()
   */
 void CcfConfig::toggleUiMode()
 {
-    QString mode = configuration->value("uimode").first;
+    QString mode = configuration->value("uimode");
 
     if (mode == "desktop") {
         mode = "mobile";
-        replaceElement("uimode", mode);
+        configuration->replace("uimode", mode);
         global->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
-        replaceElement("uimode", mode);
+        configuration->replace("uimode", mode);
         global->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
@@ -139,12 +138,12 @@ int CcfConfig::getWindowHeight()
 bool CcfConfig::saveConfig()
 {
     // Put screen size checks here!
-    if (configuration->value("remember dimensions on exit").first == "true") {
-        if (configuration->value("height").first.toInt() != runtimeHeight) {
-            replaceElement("height", QString::number(runtimeHeight));
+    if (configuration->value("remember dimensions on exit") == "true") {
+        if (configuration->value("height").toInt() != runtimeHeight) {
+            configuration->replace("height", QString::number(runtimeHeight));
         }
-        if (configuration->value("width").first.toInt() != runtimeWidth) {
-            replaceElement("width", QString::number(runtimeWidth));
+        if (configuration->value("width").toInt() != runtimeWidth) {
+            configuration->replace("width", QString::number(runtimeWidth));
         }
     }
 
@@ -169,7 +168,7 @@ int CcfConfig::keyForFunction(const QString &functionName)
     int result = -1;
 
     if (configuration->contains(functionName.toLower())) {
-        QChar key = configuration->value(functionName.toLower()).first.at(0);
+        QChar key = configuration->value(functionName.toLower()).at(0);
         result = findQtKey(key);
     }
 
@@ -224,26 +223,17 @@ QString CcfConfig::boolToString(bool boolToConvert)
 }
 
 /*!
-  Replaces an element in configuration QMap.
-  */
-void CcfConfig::replaceElement(const QString &elementToReplace, const QString &newValue)
-{
-    configuration->remove(elementToReplace);
-    configuration->insert(elementToReplace, QPair<QString, bool>(newValue, true));
-}
-
-/*!
   A basic parser-validator for key sequences found in config file.
   */
 void CcfConfig::parseValidKeyboardShortcuts()
 {
-    foreach (QString key, configuration->keys()) {
+    for (int i = 0; i < configuration->size(); ++i) {
         // This will probably not work well.
         // Some additional parsing is needed.
-        QKeySequence valueToCheck = configuration->value(key).first;
+        QKeySequence valueToCheck(configuration->value(i));
         QString value = valueToCheck.toString().toLower();
         if (value != "") {
-            keyboardShortcuts.insert(key, value);
+            keyboardShortcuts.insert(configuration->key(i), value);
         }
     }
 }
@@ -279,13 +269,13 @@ void CcfConfig::windowResized(QSize newSize)
   */
 void CcfConfig::setUiMode(const QString &newMode)
 {
-    if (newMode.toLower() != configuration->value("uimode").first) {
+    if (newMode.toLower() != configuration->value("uimode")) {
         if (newMode.toLower() == "desktop") {
-            replaceElement("uimode", "desktop");
+            configuration->replace("uimode", "desktop");
             global->statusMessage("Ui mode changed to: desktop");
             emit uiModeChanged();
         } else if (newMode.toLower() == "mobile") {
-            replaceElement("uimode", "mobile");
+            configuration->replace("uimode", "mobile");
             global->statusMessage("Ui mode changed to: mobile");
             emit uiModeChanged();
         }
@@ -321,7 +311,7 @@ void CcfConfig::setWindowWidth(int width)
   */
 void CcfConfig::forceSetWindowWidth(int width)
 {
-    replaceElement("width", QString::number(width));
+    configuration->replace("width", QString::number(width));
 }
 
 /*!
@@ -331,7 +321,7 @@ void CcfConfig::forceSetWindowWidth(int width)
   */
 void CcfConfig::forceSetWindowHeight(int height)
 {
-    replaceElement("height", QString::number(height));
+    configuration->replace("height", QString::number(height));
 }
 
 /*!
@@ -341,7 +331,7 @@ void CcfConfig::forceSetWindowHeight(int height)
   */
 bool CcfConfig::isMaximised()
 {
-    QString result = configuration->value("maximised").first;
+    QString result = configuration->value("maximised");
     return stringToBool(result);
 }
 
@@ -357,7 +347,7 @@ void CcfConfig::setMaximised(bool newValue)
     bool currentBool = isMaximised();
 
     if (currentBool != newValue) {
-        replaceElement("maximised", boolToString(newValue));
+        configuration->replace("maximised", boolToString(newValue));
         emit maximisedChanged();
         if (newValue)
             emit maximise();
@@ -373,7 +363,7 @@ void CcfConfig::setMaximised(bool newValue)
   */
 bool CcfConfig::isRememberDimensionsSet()
 {
-    QString result = configuration->value("remember dimensions on exit").first;
+    QString result = configuration->value("remember dimensions on exit");
     return stringToBool(result);
 }
 
@@ -384,11 +374,11 @@ bool CcfConfig::isRememberDimensionsSet()
   */
 void CcfConfig::setRememberDimensions(bool newValue)
 {
-    QString current = configuration->value("remember dimensions on exit").first;
+    QString current = configuration->value("remember dimensions on exit");
     bool currentBool = stringToBool(current);
 
     if (currentBool != newValue) {
-        replaceElement("remember dimensions on exit", boolToString(newValue));
+        configuration->replace("remember dimensions on exit", boolToString(newValue));
         emit rememberDimensionsChanged();
     }
 }
@@ -422,6 +412,6 @@ void CcfConfig::setShortcut(const QString &option, const QString &value)
     if (keyboardShortcuts.contains(lowOption)
             && (value != keyboardShortcuts.value(lowOption))
             && (QKeySequence(value).toString() != "")) {
-        replaceElement(lowOption, value);
+        configuration->replace(lowOption, value);
     }
 }

@@ -21,9 +21,9 @@
 #ifndef CCFMAIN_H
 #define CCFMAIN_H
 
-#include <QObject>
-#include <QWindow>
-#include <QSize>
+#include <QtCore/QObject>
+#include <QtCore/QSize>
+#include <QtGui/QWindow>
 #include <QtQuick/QQuickView>
 
 #include "config/ccfconfig.h"

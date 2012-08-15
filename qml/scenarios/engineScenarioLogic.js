@@ -461,12 +461,15 @@ function updateAimLine() {
             var terrainObscure = Terrain.checkForTerrainInLOS(x1, y1, x2, y2, unit);
             var propsObscure = LogicHelpers.checkForObstaclesInLOS(map.item.getProps(),
                                                                    x1, y1, x2, y2, unit);
-            var targetUnit = childAt(x2, y2);
-            if ((targetUnit === undefined)) // Operation should be checked here!
-                targetUnit = -1;
 
-            var unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
+            var unitsObscure = 0;
+            var targetUnit = childAt(x2, y2);
+            if ((targetUnit === undefined) || (targetUnit === null)) { // Operation should be checked here!
+                targetUnit = -1;
+            } else {
+                unitsObscure = LogicHelpers.checkForObstaclesInLOS(getAllUnitsButOne(targetUnit.unitIndex),
                                                                    x1, y1, x2, y2, unit);
+            }
 
             // Conditions here should be redesigned to save time.
             // There is no need to update aimLine if a given Beginning
