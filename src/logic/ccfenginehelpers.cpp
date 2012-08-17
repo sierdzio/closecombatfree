@@ -37,12 +37,12 @@ CcfEngineHelpers::CcfEngineHelpers(QObject *parent) :
   Returns -1 if it does not, otherwise index of first hit is returned.
   */
 int CcfEngineHelpers::arrayContains(QList<QObject *> array, QObject *objToCheck) {
-//    for (int i = 0; i < array.length; ++i) {
-//        if (array == objToCheck) {
-//            return i;
-//        }
-//    }
-//    return -1;
+    //    for (int i = 0; i < array.length; ++i) {
+    //        if (array == objToCheck) {
+    //            return i;
+    //        }
+    //    }
+    //    return -1;
     return array.contains(objToCheck);
 }
 
@@ -50,7 +50,7 @@ int CcfEngineHelpers::arrayContains(QList<QObject *> array, QObject *objToCheck)
   Returns an angle between "up" and line drawn between 2 given points.
   */
 qreal CcfEngineHelpers::rotationAngle(qreal oldX, qreal oldY,
-                             qreal newX, qreal newY)
+                                      qreal newX, qreal newY)
 {
     qreal result = 0;
 
@@ -87,7 +87,7 @@ qreal CcfEngineHelpers::rotationAngle(qreal oldX, qreal oldY,
   Returns a distance between two given points.
   */
 qreal CcfEngineHelpers::targetDistance(qreal originX, qreal originY,
-                              qreal targetX, qreal targetY)
+                                       qreal targetX, qreal targetY)
 {
     qreal result = 0;
 
@@ -135,7 +135,7 @@ qreal CcfEngineHelpers::angleTo8Step(qreal angle) {
   Computes duration needed for rotation animation.
   */
 int CcfEngineHelpers::rotationDuration(qreal oldRotation, qreal newRotation,
-                                qreal rotationSpeed)
+                                       qreal rotationSpeed)
 {
     qreal tempNewRotation = newRotation;
     qreal tempOldRotation = oldRotation;
@@ -228,7 +228,7 @@ QString CcfEngineHelpers::colorForStatus(const QString &statusMessage) {
   \li Negative values - mean obscured.
   */
 qreal CcfEngineHelpers::checkForObstaclesInLOS(QList<QObject *> items, qreal x1, qreal y1,
-                                      qreal x2, qreal y2, QObject *currentUnit) {
+                                               qreal x2, qreal y2, QObject *currentUnit) {
     qreal result = 0.0;
     qreal distance = targetDistance(x1, y1, x2, y2);
     qreal a = (y2 - y1) / (x2 - x1);

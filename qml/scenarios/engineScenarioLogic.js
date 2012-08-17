@@ -779,7 +779,13 @@ function handleWheelEventMouseAreaMain(wheel) {
     if (wheel.modifiers === Qt.ControlModifier) {
         zoom += wheel.angleDelta.y/800;
     } else if (wheel.modifiers === Qt.ShiftModifier) {
-        gameArea.flick(wheel.angleDelta.y * 6, 0.001);
+        var magnitude = 0;
+        if (wheel.angleDelta.x !== 0)
+            magnitude = wheel.angleDelta.x;
+        else
+            magnitude = wheel.angleDelta.y;
+
+        gameArea.flick(magnitude * 5, 1.0);
     } else {
         wheel.accepted = false;
     }

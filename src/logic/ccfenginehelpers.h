@@ -51,7 +51,7 @@ public:
     Q_INVOKABLE QString colorForOrder(const QString &orderName);
     Q_INVOKABLE QString colorForStatus(const QString &statusMessage);
     Q_INVOKABLE qreal checkForObstaclesInLOS(QList<QObject *> items, qreal x1, qreal y1,
-                           qreal x2, qreal y2, QObject *currentUnit);
+                                             qreal x2, qreal y2, QObject *currentUnit);
 };
 
 /*! @}*/
