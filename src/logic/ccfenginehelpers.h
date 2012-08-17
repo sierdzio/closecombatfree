@@ -26,6 +26,11 @@
 #include <QtCore/QList>
 
 /*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
+/*!
   \brief The CcfEngineHelpers class contains various helper functions frequently needed
          by the engine.
 
@@ -48,5 +53,7 @@ public:
     Q_INVOKABLE qreal checkForObstaclesInLOS(QList<QObject *> items, qreal x1, qreal y1,
                            qreal x2, qreal y2, QObject *currentUnit);
 };
+
+/*! @}*/
 
 #endif // CCFENGINEHELPERS_H
