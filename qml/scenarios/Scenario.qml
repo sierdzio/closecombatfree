@@ -35,9 +35,9 @@ Rectangle {
     // Map path for campaigns
     property string mapFile: ""
     // Holds graphical effects (muzzle flashes, hit animations etc.).
-    property var effectsContainer: new Array();
+    property var effectsContainer: new Array;
     // Holds order markers.
-    property var orderMarkersContainer: new Array();
+    property var orderMarkersContainer: new Array;
     // Holds unit groups (ones created with CTRL + digit).
     property var unitGroups: new Array(10);
 
@@ -84,14 +84,14 @@ Rectangle {
     }
 
     function playerUnits(player) {
-        if (player == "") {
+        if (player === "") {
             return unitsLoader.item.children;
         }
 
         var units = unitsLoader.item.children;
-        var unitsArray = new Array();
+        var unitsArray = new Array;
         for (var i = 0; i < units.length; ++i) {
-            if (units[i].unitSide == player) {
+            if (units[i].unitSide === player) {
                 unitsArray.push(units[i]);
             }
         }
@@ -109,7 +109,7 @@ Rectangle {
 
         // Switch to next one in line.
         for (var j = 0; j < sides.length; ++j) {
-            if (sides[j] == playerSide) {
+            if (sides[j] === playerSide) {
                 if (j != (sides.length - 1)) {
                     playerSide = sides[j + 1];
                 } else {
@@ -147,7 +147,7 @@ Rectangle {
         var result = 0;
 
         for (var i = 0; i < unitsLoader.item.children.length; i++) {
-            if (child == unitsLoader.item.children[i]) {
+            if (child === unitsLoader.item.children[i]) {
                 result = i;
                 break;
             }
