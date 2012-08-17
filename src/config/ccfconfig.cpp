@@ -24,6 +24,9 @@
 
 /*!
   Initialises the config and important variables, used later in QML.
+
+  Currently uses global object in UI mode changing. This is wrong, should and will
+  be fixed.
   */
 CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
     QObject(parent), CcfError(), filePath(configFilePath), global(globalObject)

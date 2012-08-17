@@ -1,4 +1,4 @@
-.pragma library
+//.pragma library
 
 /****************************************************************************
 ** Close Combat Free is a free, easily moddable CC-like game.
@@ -20,14 +20,14 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-/*!
-  \ingroup CloseCombatFree
+///*!
+//  \ingroup CloseCombatFree
 
-  \class engineLogicHelpers
+//  \class engineLogicHelpers
 
-  JavaScript library containing several helper functions needed throughout
-  game code.
-  */
+//  JavaScript library containing several helper functions needed throughout
+//  game code.
+//  */
 
 ///*!
 //  \memberof engineLogicHelpers

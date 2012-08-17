@@ -1,16 +1,37 @@
+/****************************************************************************
+** Close Combat Free is a free, easily moddable CC-like game.
+** Copyright (C) 2011 Tomasz Siekierda
+** Email: sierdzio@gmail.com, website: http://www.sierdzio.com
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program (in doc/ directory).
+** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+****************************************************************************/
+
 #include <QtCore/qmath.h>
 #include <QtCore/QVariant>
 
 #include "ccfenginehelpers.h"
 
+/*!
+   Standard constructor, takes in a \a parent, since it's a QObject.
+ */
 CcfEngineHelpers::CcfEngineHelpers(QObject *parent) :
     QObject(parent)
 {
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Checks whether array contains a given object.
 
   Returns -1 if it does not, otherwise index of first hit is returned.
@@ -26,8 +47,6 @@ int CcfEngineHelpers::arrayContains(QList<QObject *> array, QObject *objToCheck)
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Returns an angle between "up" and line drawn between 2 given points.
   */
 qreal CcfEngineHelpers::rotationAngle(qreal oldX, qreal oldY,
@@ -65,8 +84,6 @@ qreal CcfEngineHelpers::rotationAngle(qreal oldX, qreal oldY,
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Returns a distance between two given points.
   */
 qreal CcfEngineHelpers::targetDistance(qreal originX, qreal originY,
@@ -88,8 +105,6 @@ qreal CcfEngineHelpers::targetDistance(qreal originX, qreal originY,
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Converts any given angle (0 <=> 360) into one of 8 headings.
 
   This is used to position defense and ambush spheres.
@@ -117,8 +132,6 @@ qreal CcfEngineHelpers::angleTo8Step(qreal angle) {
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Computes duration needed for rotation animation.
   */
 int CcfEngineHelpers::rotationDuration(qreal oldRotation, qreal newRotation,
@@ -145,8 +158,6 @@ int CcfEngineHelpers::rotationDuration(qreal oldRotation, qreal newRotation,
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Returns HTML colour scheme for a given order.
 
   This is used by aimLine in Scenario.qml.
@@ -170,8 +181,6 @@ QString CcfEngineHelpers::colorForOrder(const QString &orderName) {
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Returns HTML colour scheme for a given status message.
 
   This is used to show unit's status in RosterMenu.
@@ -213,8 +222,6 @@ QString CcfEngineHelpers::colorForStatus(const QString &statusMessage) {
 }
 
 /*!
-  \memberof engineLogicHelpers
-
   Experimental:
   \li 0 - means no obstruction.
   \li Positive values - mean invisible.
