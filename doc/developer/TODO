@@ -5,6 +5,12 @@ Bugs & fixes:
  - double shooting of close targets is still possible (+ other gun reloading problems)
  - order markers vanish on left mouse click
 
+Code changes:
+ - make base Scenario C++ QML item, and the same for a Unit and maybe tank.
+   This would allow to easily transfer a lot of JS methods into C++. And those are
+   internal things anyway, they don't need to be exposed to users/ modders
+ - move digitPresses() to EngineHelpers
+
 New features:
  - add weather system
  - add unit shadows
