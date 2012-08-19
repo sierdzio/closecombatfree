@@ -1286,12 +1286,17 @@ function updateUnitVisibility() {
             if (enemyUnitsList[j].visible === true)
                 continue;
 
-            if (Terrain.isTargetVisible(friendlyUnitsList[i].x + friendlyUnitsList[i].centerX,
-                                        friendlyUnitsList[i].y + friendlyUnitsList[i].centerY,
-                                        enemyUnitsList[j].x + enemyUnitsList[j].centerX,
-                                        enemyUnitsList[j].y + enemyUnitsList[j].centerY) === true) {
-//                console.log("Now visible: " + enemyUnitsList[j].objectName
-//                            + ", by: " + friendlyUnitsList[i].objectName);
+            var x1 = friendlyUnitsList[i].x + friendlyUnitsList[i].centerX;
+            var y1 = friendlyUnitsList[i].y + friendlyUnitsList[i].centerY;
+            var x2 = enemyUnitsList[j].x + enemyUnitsList[j].centerX;
+            var y2 = enemyUnitsList[j].y + enemyUnitsList[j].centerY;
+
+            if (Terrain.isTargetVisible(x1, y1, x2, y2)
+                    && !EngineHelpers.isObstacleInLOS(map.item.getProps(),
+                                                      x1, y1, x2, y2,
+                                                      friendlyUnitsList[i])) {
+                console.log("Now visible: " + enemyUnitsList[j].objectName
+                            + ", spotted by: " + friendlyUnitsList[i].objectName);
                 enemyUnitsList[j].visible = true;
             }
         }

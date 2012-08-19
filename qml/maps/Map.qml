@@ -93,7 +93,7 @@ Item {
 
     function childExistsAt(x, y) {
         var child = childAt(x, y);
-        if ((child == null) || (child == background) || (child == hipsometricMap))
+        if ((child === null) || (child === background) || (child === hipsometricMap))
             return false;
         else
             return true;

@@ -45,14 +45,14 @@ Item {
     Tank_tst2 {
         objectName: "tank6"
         x: 50
-        y: 600
+        y: 700
         rotation: 90
     }
 
     Tank_tst2 {
         objectName: "tank5"
         x: 300
-        y: 750
+        y: 1050
         rotation: 90
         unitSide: "good"
     }

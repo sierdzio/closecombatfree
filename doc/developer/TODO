@@ -4,6 +4,8 @@ Bugs & fixes:
  - look into memory consumption - scenarios are not fully cleared from memory on close (some clues in http://developer.qt.nokia.com/forums/viewthread/14492)
  - double shooting of close targets is still possible (+ other gun reloading problems)
  - order markers vanish on left mouse click
+ - visibility detection fails for some props (See tst4)
+ - visibility detection does not take unit height into account
 
 Code changes:
  - make base Scenario C++ QML item, and the same for a Unit and maybe tank.

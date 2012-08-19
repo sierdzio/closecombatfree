@@ -36,7 +36,8 @@ CcfEngineHelpers::CcfEngineHelpers(QObject *parent) :
 
   Returns -1 if it does not, otherwise index of first hit is returned.
   */
-int CcfEngineHelpers::arrayContains(QList<QObject *> array, QObject *objToCheck) {
+int CcfEngineHelpers::arrayContains(QList<QObject *> array, QObject *objToCheck)
+{
     //    for (int i = 0; i < array.length; ++i) {
     //        if (array == objToCheck) {
     //            return i;
@@ -109,7 +110,8 @@ qreal CcfEngineHelpers::targetDistance(qreal originX, qreal originY,
 
   This is used to position defense and ambush spheres.
   */
-qreal CcfEngineHelpers::angleTo8Step(qreal angle) {
+qreal CcfEngineHelpers::angleTo8Step(qreal angle)
+{
     if ((angle <= 22) || (angle > 337)) {
         return 270;
     } else if (angle <= 67) {
@@ -162,7 +164,8 @@ int CcfEngineHelpers::rotationDuration(qreal oldRotation, qreal newRotation,
 
   This is used by aimLine in Scenario.qml.
   */
-QString CcfEngineHelpers::colorForOrder(const QString &orderName) {
+QString CcfEngineHelpers::colorForOrder(const QString &orderName)
+{
     QString result = "ERROR";
 
     if (orderName == "Move") {
@@ -185,7 +188,8 @@ QString CcfEngineHelpers::colorForOrder(const QString &orderName) {
 
   This is used to show unit's status in RosterMenu.
   */
-QString CcfEngineHelpers::colorForStatus(const QString &statusMessage) {
+QString CcfEngineHelpers::colorForStatus(const QString &statusMessage)
+{
     QString result = "ERROR";
 
     if (statusMessage == "READY") {
@@ -228,7 +232,8 @@ QString CcfEngineHelpers::colorForStatus(const QString &statusMessage) {
   \li Negative values - mean obscured.
   */
 qreal CcfEngineHelpers::checkForObstaclesInLOS(QList<QObject *> items, qreal x1, qreal y1,
-                                               qreal x2, qreal y2, QObject *currentUnit) {
+                                               qreal x2, qreal y2, QObject *currentUnit)
+{
     qreal result = 0.0;
     qreal distance = targetDistance(x1, y1, x2, y2);
     qreal a = (y2 - y1) / (x2 - x1);
@@ -267,4 +272,48 @@ qreal CcfEngineHelpers::checkForObstaclesInLOS(QList<QObject *> items, qreal x1,
         }
     }
     return result;
+}
+
+/*!
+  Returns true if there are any obstacles in LOS, and false if there aren't.
+ */
+bool CcfEngineHelpers::isObstacleInLOS(QList<QObject *> items, qreal x1, qreal y1,
+                                       qreal x2, qreal y2, QObject *currentUnit)
+{
+    qreal distance = targetDistance(x1, y1, x2, y2);
+    qreal a = (y2 - y1) / (x2 - x1);
+    qreal b = y1 - (a * x1);
+    qreal x = x2;
+    qreal y = y2;
+
+    for (int i = 0; i < distance; ++i) {
+        if (x2 >= x1) {
+            // Prevent overlenghtening
+            if (x > x2)
+                break;
+            x = x1 + i;
+        } else {
+            // Prevent overlenghtening
+            if (x < x2)
+                break;
+            x = x1 - i;
+        }
+
+        y = (a * x) + b;
+
+        for (int j = 0; j < items.length(); ++j) {
+            QObject *item = items.at(j);
+            if ((item == currentUnit) || (item == NULL)) {
+                continue;
+            }
+
+            if (((x <= item->property("x").toReal() + item->property("width").toReal())
+                 && (x >= item->property("x").toReal()))
+                    && ((y <= item->property("y").toReal() + item->property("height").toReal())
+                        && (y >= item->property("y").toReal()))) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

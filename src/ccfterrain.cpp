@@ -125,6 +125,7 @@ bool CcfTerrain::isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2)
         qreal x = x2;
         qreal y = y2;
 
+        qreal originHeight = pixelInfo(x1, y1);
         qreal targetHeight = pixelInfo(x2, y2);
 
         for (int i = 0; i < distance; ++i) {
@@ -143,7 +144,8 @@ bool CcfTerrain::isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2)
             y = (a * x) + b;
 
             // Detect height in this particular pixel.
-            if (pixelInfo(x, y) > targetHeight) {
+            qreal currentHeight = pixelInfo(x, y);
+            if ((currentHeight > originHeight) && (currentHeight > targetHeight)) {
                 return false;
             }
         }
