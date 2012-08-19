@@ -6,7 +6,7 @@ CcfScenarioState::CcfScenarioState(QObject *parent) :
     m_playerSide = "neutral";
 }
 
-QString CcfScenarioState::playerSide()
+QString CcfScenarioState::getPlayerSide()
 {
     return m_playerSide;
 }

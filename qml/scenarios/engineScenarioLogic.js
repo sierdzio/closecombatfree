@@ -1271,3 +1271,29 @@ function initOrderMarkers() {
         orderMarkersContainer[i] = new Array;
     }
 }
+
+/*!
+  \memberof engineScenarioLogic
+
+  Updates visibility of opposing units.
+  */
+function updateUnitVisibility() {
+    var friendlyUnitsList = playerUnits(ScenarioState.playerSide);
+    var enemyUnitsList = enemyUnits(ScenarioState.playerSide);
+
+    for (var i = 0; i < friendlyUnitsList.length; ++i) {
+        for (var j = 0; j < enemyUnitsList.length; ++j) {
+            if (enemyUnitsList[j].visible === true)
+                continue;
+
+            if (Terrain.isTargetVisible(friendlyUnitsList[i].x + friendlyUnitsList[i].centerX,
+                                        friendlyUnitsList[i].y + friendlyUnitsList[i].centerY,
+                                        enemyUnitsList[j].x + enemyUnitsList[j].centerX,
+                                        enemyUnitsList[j].y + enemyUnitsList[j].centerY) === true) {
+//                console.log("Now visible: " + enemyUnitsList[j].objectName
+//                            + ", by: " + friendlyUnitsList[i].objectName);
+                enemyUnitsList[j].visible = true;
+            }
+        }
+    }
+}

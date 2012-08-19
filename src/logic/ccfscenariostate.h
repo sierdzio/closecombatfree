@@ -11,12 +11,13 @@ class CcfScenarioState : public QObject
     /*!
       Stores the side our player is controlling.
       */
-    Q_PROPERTY(QString playerSide READ playerSide WRITE setPlayerSide NOTIFY playerSideChanged)
+    Q_PROPERTY(QString playerSide READ getPlayerSide WRITE setPlayerSide NOTIFY playerSideChanged)
 
 public:
     explicit CcfScenarioState(QObject *parent = 0);
 
-    Q_INVOKABLE QString playerSide();
+protected:
+    Q_INVOKABLE QString getPlayerSide();
     Q_INVOKABLE void setPlayerSide(const QString &playerSide);
 
 signals:

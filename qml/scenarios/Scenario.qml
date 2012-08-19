@@ -97,6 +97,21 @@ Rectangle {
         return unitsArray;
     }
 
+    function enemyUnits(player) {
+        if (player === "") {
+            return unitsLoader.item.children;
+        }
+
+        var units = unitsLoader.item.children;
+        var unitsArray = new Array;
+        for (var i = 0; i < units.length; ++i) {
+            if (units[i].unitSide !== player) {
+                unitsArray.push(units[i]);
+            }
+        }
+        return unitsArray;
+    }
+
     function togglePlayer() {
         var sides = new Array;
         // Find all available sides. TEMP!
@@ -572,6 +587,18 @@ Rectangle {
         property bool running: false
 
         id: followedUnit
+    }
+
+    // Timer for visibility updates
+    Timer {
+        id: sceneUpdateTimer
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+//            console.log("Am I running?");
+            ScenarioLogic.updateUnitVisibility();
+        }
     }
 
     // Timer for aimline rotation updates.

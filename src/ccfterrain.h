@@ -57,6 +57,7 @@ public:
     Q_INVOKABLE int checkForTerrainInLOS(qreal x1, qreal y1,
                                          qreal x2, qreal y2,
                                          QObject *currentUnit);
+    Q_INVOKABLE bool isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2);
 
 private:
     qreal targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY);

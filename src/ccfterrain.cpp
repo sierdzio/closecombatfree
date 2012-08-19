@@ -115,6 +115,42 @@ int CcfTerrain::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QOb
 }
 
 /*!
+  Returns true if target is visible.
+ */
+bool CcfTerrain::isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2)
+{
+        qreal distance = targetDistance(x1, y1, x2, y2);
+        qreal a = (y2 - y1) / (x2 - x1);
+        qreal b = y1 - (a * x1);
+        qreal x = x2;
+        qreal y = y2;
+
+        qreal targetHeight = pixelInfo(x2, y2);
+
+        for (int i = 0; i < distance; ++i) {
+            if (x2 >= x1) {
+                // Prevent overlenghtening
+                if (x > x2)
+                    break;
+                x = x1 + i;
+            } else {
+                // Prevent overlenghtening
+                if (x < x2)
+                    break;
+                x = x1 - i;
+            }
+
+            y = (a * x) + b;
+
+            // Detect height in this particular pixel.
+            if (pixelInfo(x, y) > targetHeight) {
+                return false;
+            }
+        }
+        return true;
+}
+
+/*!
   Determines the distance between two points.
   */
 qreal CcfTerrain::targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY)
