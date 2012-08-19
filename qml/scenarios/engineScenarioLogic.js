@@ -279,9 +279,9 @@ function checkScenarioFinished() {
     var areAllAlliesDestroyed = true;
     for (var i = 0; i < unitsLoader.item.children.length; ++i) {
         var currentUnit = unitsLoader.item.children[i];
-        if ((currentUnit.unitSide !== playerSide) && (currentUnit.state === "healthy")) {
+        if ((currentUnit.unitSide !== ScenarioState.playerSide) && (currentUnit.state === "healthy")) {
             areAllEnemiesDestroyed = false;
-        } else if ((currentUnit.unitSide === playerSide) && (currentUnit.state === "healthy")) {
+        } else if ((currentUnit.unitSide === ScenarioState.playerSide) && (currentUnit.state === "healthy")) {
             areAllAlliesDestroyed = false;
         }
     }
@@ -556,7 +556,7 @@ function handleRightMouseClick(mouse) {
     var unit;
     unit = childAt(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 
-    if ((unit === mouseAreaMain) || (unit === null) || (unit.unitSide !== playerSide)) {
+    if ((unit === mouseAreaMain) || (unit === null) || (unit.unitSide !== ScenarioState.playerSide)) {
         deselectAllUnits();
         return;
     }
@@ -1003,7 +1003,7 @@ function selectUnitFromRoster(mouse) {
   to the enemy).
   */
 function selectUnit(index, modifier) {
-    if ((unitsLoader.item.children[index].unitSide !== playerSide)
+    if ((unitsLoader.item.children[index].unitSide !== ScenarioState.playerSide)
             || (unitsLoader.item.children[index].state !== "healthy")) {
         return;
     }

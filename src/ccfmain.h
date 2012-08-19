@@ -28,6 +28,7 @@
 
 #include "config/ccfconfig.h"
 #include "logic/ccfenginehelpers.h"
+#include "logic/ccfscenariostate.h"
 #include "ccfglobal.h"
 #include "ccfgamemanager.h"
 #include "ccfterrain.h"
@@ -62,6 +63,7 @@ private:
     CcfGameManager *gameManager;
     CcfTerrain *terrain;
     CcfEngineHelpers *engineHelpers;
+    CcfScenarioState *scenarioState;
     QString pwd;
 };
 

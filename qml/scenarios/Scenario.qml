@@ -25,7 +25,6 @@ import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 Rectangle {
     property string scenarioFile: ""
     property string scenarioWinStatus: "no" // won, lost, ...
-    property string playerSide: "neutral" // Experimental!
     property int __aimLineRotation: 0
     property int __rubberBandRotation: 0
     property int __unitIndex: -1
@@ -109,23 +108,29 @@ Rectangle {
 
         // Switch to next one in line.
         for (var j = 0; j < sides.length; ++j) {
-            if (sides[j] === playerSide) {
+            if (sides[j] === ScenarioState.playerSide) {
                 if (j != (sides.length - 1)) {
-                    playerSide = sides[j + 1];
+                    ScenarioState.playerSide = sides[j + 1];
                 } else {
-                    playerSide = sides[0];
+                    ScenarioState.playerSide = sides[0];
                 }
 
-                Global.statusMessage("Player side changed to: " + playerSide);
+                Global.statusMessage("Player side changed to: " + ScenarioState.playerSide);
                 break;
             }
         }
 
+        hideNonPlayerUnits();
         scenarioWinStatus = "no";
         ScenarioLogic.checkScenarioFinished();
     }
 
-
+    function hideNonPlayerUnits() {
+        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
+            if (unitsLoader.item.children[i].unitSide !== ScenarioState.playerSide)
+                unitsLoader.item.children[i].visible = false;
+        }
+    }
 
     function updateWidth() {
         if (Config.windowWidth < menu.contentWidth) {
@@ -254,7 +259,8 @@ Rectangle {
 
                             // Creates base for order markers.
                             ScenarioLogic.initOrderMarkers();
-                            roster.populateUnits(playerUnits(playerSide));
+                            roster.populateUnits(playerUnits(ScenarioState.playerSide));
+                            hideNonPlayerUnits();
                         }
                     }
                 }

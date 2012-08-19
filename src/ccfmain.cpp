@@ -37,6 +37,7 @@ CcfMain::CcfMain(QWindow *parent) :
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
     engineHelpers = new CcfEngineHelpers(this);
+    scenarioState = new CcfScenarioState(this);
     initConfiguration();
 
     rootContext()->setContextProperty("Global", global);
@@ -44,6 +45,7 @@ CcfMain::CcfMain(QWindow *parent) :
     rootContext()->setContextProperty("GameManager", gameManager);
     rootContext()->setContextProperty("Terrain", terrain);
     rootContext()->setContextProperty("EngineHelpers", engineHelpers);
+    rootContext()->setContextProperty("ScenarioState", scenarioState);
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
