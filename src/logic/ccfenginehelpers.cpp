@@ -317,3 +317,7 @@ bool CcfEngineHelpers::isObstacleInLOS(QList<QObject *> items, qreal x1, qreal y
     }
     return false;
 }
+
+QString CcfEngineHelpers::sideMarkSource(const QStringList &allSides, const QString &currentUnitSide)
+{
+}

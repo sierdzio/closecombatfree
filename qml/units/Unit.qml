@@ -33,6 +33,8 @@ Item {
     property string unitSide: "neutral"
     property int groupNumber: 0 // For now, a unit can be only in one group
     property int unitIndex: -1
+    property bool sideMarkVisible: true
+    property string sideMarkSource: "../../img/units/sideMarks/sideMark_side1.png"
 
     property int rotationSpeed: 1 // seconds needed for half rotation (180 deg)
     property int turretRotationSpeed: 1 // seconds needed for half rotation (180 deg)
@@ -172,7 +174,7 @@ Item {
         anchors.rightMargin: 5
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
-        z: 50
+        z: 5
 
         height: 10
         width: 10
@@ -225,6 +227,17 @@ Item {
             origin.y: defenceSphere.height/2
             angle: defenceSphereRotation
         }
+    }
+
+    Image {
+        id: sideMarkImage
+        x: 0
+        y: 0
+        z: 5
+        width: 10
+        height: 10
+        source: sideMarkSource
+        visible: sideMarkVisible
     }
 
     RotationAnimation on rotation {

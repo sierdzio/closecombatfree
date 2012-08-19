@@ -5,7 +5,6 @@ Bugs & fixes:
  - double shooting of close targets is still possible (+ other gun reloading problems)
  - order markers vanish on left mouse click
  - visibility detection fails for some props (See tst4)
- - visibility detection does not take unit height into account
 
 Code changes:
  - make base Scenario C++ QML item, and the same for a Unit and maybe tank.
@@ -30,6 +29,8 @@ New features:
    positions in clusters)
  - make use of Local Storage (essential for NaCl and mobile devices)
  - add a tool that would change licensing headers automatically
+ - add a "packaging tool" that would clean the repo, and copy it to a separate dir,
+   ready for packaging
 
  - use shorter signal-slot chains like ones used in AboutMenu where applicable
  - consider unifying ScenarioLogic::placeWaypoint() and ScenarioLogic::performContextAction()

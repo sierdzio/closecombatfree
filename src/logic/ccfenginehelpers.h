@@ -23,6 +23,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QList>
 
 /*!
@@ -54,6 +55,7 @@ public:
                                              qreal x2, qreal y2, QObject *currentUnit);
     Q_INVOKABLE bool isObstacleInLOS(QList<QObject *> items, qreal x1, qreal y1,
                                      qreal x2, qreal y2, QObject *currentUnit);
+    Q_INVOKABLE QString sideMarkSource(const QStringList &allSides, const QString &currentUnitSide);
 };
 
 /*! @}*/
