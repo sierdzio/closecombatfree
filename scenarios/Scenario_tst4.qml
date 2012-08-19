@@ -23,49 +23,53 @@ import "../units/tanks/tests"
 import "../qml/units"
 
 Item {
-    property string mapFile: "../maps/Map_tst1.qml"
+    property string mapFile: "../maps/Map_tst4.qml"
 
     id: root
 
     Tank_tst1 {
         objectName: "tank1"
-        x: 150
-        y: 400
+        x: 50
+        y: 50
+        rotation: 90
     }
-
-//    Tank_tst2 {
-//        objectName: "tank2"
-//        x: 150
-//        y: 900
-//        unitSide: "bad"
-//    }
 
     Tank_tst3 {
         objectName: "tank3"
-        x: 350
+        x: 50
         y: 400
+        rotation: 90
         hullColor: "#ffeebb"
     }
 
-//    Tank_tst3 {
-//        objectName: "tank4"
-//        x: 350
-//        y: 900
-//        rotation: 0
-//        unitSide: "bad"
-//    }
+    Tank_tst2 {
+        objectName: "tank6"
+        x: 50
+        y: 600
+        rotation: 90
+    }
 
-//    Tank_tst2 {
-//        objectName: "tank5"
-//        x: 1100
-//        y: 900
-//        rotation: 0
-//        unitSide: "good"
-//    }
+    Tank_tst2 {
+        objectName: "tank5"
+        x: 300
+        y: 750
+        rotation: 90
+        unitSide: "good"
+    }
 
-//    Tank_tst2 {
-//        objectName: "tank6"
-//        x: 500
-//        y: 400
-//    }
+    Tank_tst2 {
+        objectName: "tank2"
+        x: 900
+        y: 50
+        rotation: 90
+        unitSide: "bad"
+    }
+
+    Tank_tst3 {
+        objectName: "tank4"
+        x: 900
+        y: 600
+        rotation: 90
+        unitSide: "bad"
+    }
 }

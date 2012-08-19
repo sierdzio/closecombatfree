@@ -1073,7 +1073,7 @@ function selectedUnitsCount() {
   Returns an array of all selected units.
   */
 function selectedUnits() {
-    var result = new Array();
+    var result = new Array;
     var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
         if (units[i].selected === true)
@@ -1216,7 +1216,7 @@ function calculateOrderMarkerVisibility(index) {
 
     // Clean markers on queue finish
     if (anyOrdersLeft == false) {
-        orderMarker = new Array();
+        orderMarker = new Array;
     }
 }
 
@@ -1268,6 +1268,6 @@ function modifyTargetFromMarker(unitIndex, orderNumber) {
   */
 function initOrderMarkers() {
     for (var i = 0; i < unitsLoader.item.children.length; i++) {
-        orderMarkersContainer[i] = new Array();
+        orderMarkersContainer[i] = new Array;
     }
 }

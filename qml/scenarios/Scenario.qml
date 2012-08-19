@@ -99,7 +99,7 @@ Rectangle {
     }
 
     function togglePlayer() {
-        var sides = new Array();
+        var sides = new Array;
         // Find all available sides. TEMP!
         for (var i = 0; i < unitsLoader.item.children.length; ++i) {
             if (EngineHelpers.arrayContains(sides, unitsLoader.item.children[i].unitSide) === -1) {

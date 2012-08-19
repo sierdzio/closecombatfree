@@ -58,7 +58,7 @@ Item {
     property string defenceSphereColor: ""
     property bool paused: false
     property bool moving: false
-    property var orderQueue: new Array();
+    property var orderQueue: new Array;
 
     signal togglePause ()
     onTogglePause: {
@@ -163,7 +163,7 @@ Item {
         }
         currentOrder = -1;
 
-        return orderQueue = new Array();
+        return orderQueue = new Array;
     }
 
     Text {

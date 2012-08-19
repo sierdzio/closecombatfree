@@ -19,43 +19,26 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import "../qml/maps"
+import "../maps/props"
+import "../maps"
 
-Item {
-    property int numberOfObjects: 0
-    property string baseElement: ""
-//    property bool allowVariation: false // this could be good to create
-    // mixed clusters (e.g. a forest with many kinds of trees)
+Map {
+    backgroundImage: "../../img/maps/test1.png"
+    hipsometricImage: "../../img/maps/hipsometric_2sides.png"
 
-    id: root
-    width: 300
-    height: 262
+    height: 1200
+    width: 1200
 
-    function getProps() {
-        var result = new Array;
-
-        for (var i = 0; i < repeater.count; ++i) {
-            result.push(repeater.itemAt(i));
-//            console.log(result[i].item.objectName + ", " + result[i].x + ", " + result[i].y);
-        }
-
-        return result;
-    }
-
-    Repeater {
-        id: repeater
-        anchors.fill: parent
-        model: numberOfObjects
-
-        Loader {
-            x: {
-                return Math.random(0) * root.width;
-            }
-
-            y: {
-                return Math.random(0) * root.height;
-            }
-
-            source: baseElement
-        }
+    Rectangle {
+        objectName: "Shallow water"
+        id: rect3
+        x: 200
+        y: 700
+        width: 50
+        height: 350
+        radius: 50
+        color: "#ee1188ee"
+        opacity: propOpacity
     }
 }

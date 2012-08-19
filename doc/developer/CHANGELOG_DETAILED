@@ -5,8 +5,15 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+19.08.2012:
+ - further code cleaning
+ - introduce unit side markers (experimental)
+ - add new hipsometric and real maps to test visibility functionality
+
 17.08.2012:
  - add doxygen comments to new and old code (esp. the new CcfConfigData)
+ - clean some of JS warnings in code
+ - fix shift-scrolling
 
 15.08.2012:
  - began experimental work on moving core functionality to C++ ("QML for modders, C++ for coders")
