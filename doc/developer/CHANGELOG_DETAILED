@@ -11,6 +11,7 @@ Some more history can be devised from git sources (although even there, the thin
  - add new hipsometric and real maps to test visibility functionality
  - add CcfScenarioState helper class
  - hide non-player units at startup and player side change
+ - make enemy units visible when a friendly unit is able to see them
 
 17.08.2012:
  - add doxygen comments to new and old code (esp. the new CcfConfigData)
