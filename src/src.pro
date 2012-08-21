@@ -31,7 +31,9 @@ HEADERS += \
     ccfgamemanager.h \
     config/ccfconfigdata.h \
     logic/ccfenginehelpers.h \
-    logic/ccfscenariostate.h
+    logic/ccfscenariostate.h \
+    config/ccflogger.h \
+    config/ccfcommandlineparser.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -44,7 +46,9 @@ SOURCES += main.cpp \
     ccfgamemanager.cpp \
     config/ccfconfigdata.cpp \
     logic/ccfenginehelpers.cpp \
-    logic/ccfscenariostate.cpp
+    logic/ccfscenariostate.cpp \
+    config/ccflogger.cpp \
+    config/ccfcommandlineparser.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \

@@ -39,20 +39,23 @@ void CcfScenarioState::setPlayerSide(const QString &playerSide)
         emit playerSideChanged();
 }
 
+/*!
+  Returns a list of player sides available in this scenario.
+
+  \sa setAvailableScenarios
+ */
 QStringList CcfScenarioState::getAvailableSides()
 {
     return m_availableSides;
 }
 
+/*!
+  Sets a list of player sides using \a availableSides, cleans any duplicated
+  entries found inside, and stores it as current state.
+ */
 void CcfScenarioState::setAvailableSides(QStringList availableSides)
 {
-//    int dups =
     availableSides.removeDuplicates();
-//    qDebug(qPrintable("Dups count: %s"), qPrintable(QString::number(dups)));
-//    foreach (const QString &s, availableSides) {
-//        qDebug(qPrintable("Side name: %s"), qPrintable(s));
-//    }
-
     m_availableSides = availableSides;
 }
 

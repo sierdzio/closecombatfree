@@ -27,6 +27,8 @@
 #include <QtQuick/QQuickView>
 
 #include "config/ccfconfig.h"
+#include "config/ccflogger.h"
+#include "config/ccfcommandlineparser.h"
 #include "logic/ccfenginehelpers.h"
 #include "logic/ccfscenariostate.h"
 #include "ccfglobal.h"
@@ -46,7 +48,7 @@ class CcfMain : public QQuickView, public CcfError
 {
     Q_OBJECT
 public:
-    explicit CcfMain(QWindow *parent = 0);
+    explicit CcfMain(CcfCommandLineParser *cmd, QWindow *parent = 0);
     bool isConfigMaximised();
     void resizeView(QSize newSize);
 
@@ -64,6 +66,8 @@ private:
     CcfTerrain *terrain;
     CcfEngineHelpers *engineHelpers;
     CcfScenarioState *scenarioState;
+    CcfLogger *logger;
+    CcfCommandLineParser *cmdLnParser;
     QString pwd;
 };
 

@@ -21,6 +21,7 @@
 #include <QtGui/QGuiApplication>
 
 #include "ccfmain.h"
+#include "config/ccfcommandlineparser.h"
 
 /*!
   \ingroup CloseCombatFree
@@ -30,12 +31,22 @@
 /*!
   CloseCombatFree's main routine.
 
-  Responsible for preparing and running the application.
+  Responsible for preparing and running the application. Main QML file is
+  specified here, as well as some general things (whether to show maximised or
+  not, etc.).
   */
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
-    CcfMain *viewer = new CcfMain();
+    CcfCommandLineParser cmd(a.arguments());
+
+    // Check if --help was specified. If yes, print help and exit.
+    if (cmd.wasHelpRequested()) {
+        qFatal(qPrintable(cmd.helpMessage()), NULL);
+        return 1;
+    }
+
+    CcfMain *viewer = new CcfMain(&cmd);
     if (!viewer->isErrorState()) {
         QUrl source = QUrl::fromLocalFile("qml/main.qml");
         viewer->setSource(source);

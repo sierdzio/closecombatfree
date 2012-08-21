@@ -30,14 +30,15 @@
   Sets all global properties, sizing policy, connects important
   signals and slots, reads config file(s).
   */
-CcfMain::CcfMain(QWindow *parent) :
-    QQuickView(parent), CcfError()
+CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
+    QQuickView(parent), CcfError(), cmdLnParser(cmd)
 {
     global = new CcfGlobal(this);
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
     engineHelpers = new CcfEngineHelpers(this);
     scenarioState = new CcfScenarioState(this);
+    logger = new CcfLogger(this, cmdLnParser->isDebug());
     initConfiguration();
 
     rootContext()->setContextProperty("Global", global);
@@ -46,6 +47,7 @@ CcfMain::CcfMain(QWindow *parent) :
     rootContext()->setContextProperty("Terrain", terrain);
     rootContext()->setContextProperty("EngineHelpers", engineHelpers);
     rootContext()->setContextProperty("ScenarioState", scenarioState);
+    rootContext()->setContextProperty("Logger", logger);
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);

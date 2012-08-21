@@ -5,6 +5,12 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+21.08.2012:
+ - side markers are now working correctly
+ - add CcfLogger for unified logging
+ - add CcfCommandLineParser to make CCF cmd-aware
+ - add support for --debug and --help
+
 19.08.2012:
  - further code cleaning
  - introduce unit side markers (experimental)
