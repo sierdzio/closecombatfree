@@ -34,8 +34,9 @@ protected:
     Q_INVOKABLE QString getPlayerSide();
     Q_INVOKABLE void setPlayerSide(const QString &playerSide);
     Q_INVOKABLE QStringList getAvailableSides();
-    Q_INVOKABLE void setAvailableSides(const QStringList &availableSides);
+    Q_INVOKABLE void setAvailableSides(QStringList availableSides);
 //    Q_INVOKABLE void setAvailableSides(const QList<QObject *> &items);
+    Q_INVOKABLE QString getSidePath(const QString &side);
 
 signals:
     Q_INVOKABLE void playerSideChanged();
@@ -44,6 +45,7 @@ signals:
 private:
     QString m_playerSide;
     QStringList m_availableSides;
+    QStringList m_availableSideMarkFiles;
 };
 
 /*! @}*/

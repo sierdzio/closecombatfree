@@ -147,6 +147,12 @@ Rectangle {
         }
     }
 
+    function setSideMarks() {
+        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
+            unitsLoader.item.children[i].sideMarkSource = ScenarioState.getSidePath(unitsLoader.item.children[i].unitSide);
+        }
+    }
+
     function updateWidth() {
         if (Config.windowWidth < menu.contentWidth) {
             menu.width = Config.windowWidth;
@@ -255,6 +261,8 @@ Rectangle {
 
                     onLoaded: {
                         if (scenarioFile != "") {
+                            var unitSideList = new Array;
+
                             if (unitsLoader.item.objectName != "Campaign") {
                                 // This is a single scenario
                                 map.source = unitsLoader.item.mapFile
@@ -264,6 +272,7 @@ Rectangle {
                                     togglePause.connect(unitsLoader.item.children[i].togglePause);
                                     unitsLoader.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
                                     unitsLoader.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                                    unitSideList.push(unitsLoader.item.children[i].unitSide);
                                 }
 
                                 map.item.setUnits(unitsLoader.item.children);
@@ -276,6 +285,8 @@ Rectangle {
                             ScenarioLogic.initOrderMarkers();
                             roster.populateUnits(playerUnits(ScenarioState.playerSide));
                             hideNonPlayerUnits();
+                            ScenarioState.setAvailableSides(unitSideList);
+                            setSideMarks();
                         }
                     }
                 }
