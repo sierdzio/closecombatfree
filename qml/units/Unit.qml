@@ -236,6 +236,7 @@ Item {
         z: 5
         width: 10
         height: 10
+        rotation: -root.rotation
         source: sideMarkSource
         visible: sideMarkVisible
     }
