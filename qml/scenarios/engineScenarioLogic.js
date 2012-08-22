@@ -42,7 +42,7 @@ function scheduleContextAction(index, operation) {
         unit = unitsLoader.item.children[index];
     } else {
         unit = units[0];
-        __unitIndex = unit.unitIndex;
+        unitIndex = unit.unitIndex;
     }
 
     unit.scheduledOperation = operation;
@@ -402,7 +402,7 @@ function cleanContextAction() {
     rotationTimer.stop();
     aimLine.visible = false;
     aimLine.height = 5;
-    __unitIndex = -1;
+    unitIndex = -1;
     contextLoader.source = "";
     contextLoader.visible = true;
 }
@@ -439,7 +439,7 @@ function getAllUnitsButOne(unitIndex) {
   This function is called by aimLineTimer on every update.
   */
 function updateAimLine() {
-    var unit = unitsLoader.item.children[__unitIndex];
+    var unit = unitsLoader.item.children[unitIndex];
 
     if (aimLine.visible == true) {
         var x1 = unit.x + unit.centerX;
@@ -452,8 +452,8 @@ function updateAimLine() {
 
         var newRotation = EngineHelpers.rotationAngle(x2, y2, x1, y1);
 
-        if (__aimLineRotation !== newRotation) {
-            __aimLineRotation = newRotation;
+        if (aimLineRotation !== newRotation) {
+            aimLineRotation = newRotation;
             aimLine.height = EngineHelpers.targetDistance(x1, y1, x2, y2);
 
             // If obscuring should be turned off for some actions (movement)
@@ -532,9 +532,9 @@ function cancelAllSelectedOrders() {
 function handleLeftMouseClick(mouse) {
     if (contextLoader.visible == false) {
         if (mouse.modifiers === Qt.ShiftModifier) {
-            placeWaypoint(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+            placeWaypoint(unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         } else {
-            performContextAction(__unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+            performContextAction(unitIndex, mouseAreaMain.mouseX, mouseAreaMain.mouseY);
 //            return;
         }
     } else {
@@ -574,10 +574,10 @@ function handleRightMouseClick(mouse) {
                                mappedCoords.x - (gameArea.contentX),
                                mappedCoords.y - (gameArea.contentY));
 
-        __unitIndex = childIndex(unit);
+        unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
         contextLoader.source = "../../qml/gui/ContextMenu.qml";
-        contextLoader.item.unitIndex = __unitIndex;
+        contextLoader.item.unitIndex = unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
 }
@@ -620,10 +620,10 @@ function handleRightMouseClickRoster(mouse) {
                                menu.x + rosterUnitCoords.x,
                                root.height + menu.y + rosterUnitCoords.y);
 
-        __unitIndex = childIndex(unit);
+        unitIndex = childIndex(unit);
         // Displays the context menu. This is suboptimal.
         contextLoader.source = "../../qml/gui/ContextMenu.qml";
-        contextLoader.item.unitIndex = __unitIndex;
+        contextLoader.item.unitIndex = unitIndex;
         contextLoader.item.menuEntryClicked.connect(scheduleContextAction);
     }
 }
@@ -710,16 +710,16 @@ function handleKeyPress(event) {
             } else if (event.key === Config.keyForFunction("follow")) {
                 selectedOnes = selectedUnits();
                 if ((followedUnit.running == false) && (selectedUnitsCount() > 0)) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    startFollowingUnit(__unitIndex);
+                    unitIndex = selectedOnes[0].unitIndex;
+                    startFollowingUnit(unitIndex);
                 } else if (followedUnit.running == true) {
                     if (selectedUnitsCount() > 0) {
-                        __unitIndex = selectedOnes[0].unitIndex;
+                        unitIndex = selectedOnes[0].unitIndex;
 
-                        if (followedUnit.index == __unitIndex) {
+                        if (followedUnit.index == unitIndex) {
                             stopFollowingUnit();
                         } else {
-                            startFollowingUnit(__unitIndex);
+                            startFollowingUnit(unitIndex);
                         }
                     } else {
                         stopFollowingUnit();
@@ -735,26 +735,26 @@ function handleKeyPress(event) {
                         calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
                     }
                 } else if (event.key === Config.keyForFunction("Move fast")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Move fast");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Move fast");
                 } else if (event.key === Config.keyForFunction("Move")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Move");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Move");
                 } else if (event.key === Config.keyForFunction("Sneak")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Sneak");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Sneak");
                 } else if (event.key === Config.keyForFunction("Attack")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Attack");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Attack");
                 } else if (event.key === Config.keyForFunction("Smoke")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Smoke");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Smoke");
                 } else if (event.key === Config.keyForFunction("Defend")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Defend");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Defend");
                 } else if (event.key === Config.keyForFunction("Ambush")) {
-                    __unitIndex = selectedOnes[0].unitIndex;
-                    scheduleContextAction(__unitIndex, "Ambush");
+                    unitIndex = selectedOnes[0].unitIndex;
+                    scheduleContextAction(unitIndex, "Ambush");
                 }
             }
 
@@ -895,7 +895,7 @@ function updateRubberBand(x, y) {
     // Adjusting rubber band's shape:
     if ((x > rubberBand.x) && (y > rubberBand.y)) {
         // Bottom-right quarter
-        __rubberBandRotation = 0;
+        rubberBandRotation = 0;
         rubberBand.width = x - rubberBand.x;
         rubberBand.height = y - rubberBand.y;
 
@@ -905,7 +905,7 @@ function updateRubberBand(x, y) {
         rubberY2 = rubberBand.y + rubberBand.height;
     } else if ((x > rubberBand.x) && (y < rubberBand.y)) {
         // Top-right quarter
-        __rubberBandRotation = 270;
+        rubberBandRotation = 270;
         rubberBand.width = rubberBand.y - y;
         rubberBand.height = x - rubberBand.x;
 
@@ -915,7 +915,7 @@ function updateRubberBand(x, y) {
         rubberY2 = rubberBand.y;
     } else if ((x < rubberBand.x) && (y > rubberBand.y)) {
         // Bottom-left quarter
-        __rubberBandRotation = 90;
+        rubberBandRotation = 90;
         rubberBand.width = y - rubberBand.y;
         rubberBand.height = rubberBand.x - x;
 
@@ -925,7 +925,7 @@ function updateRubberBand(x, y) {
         rubberY2 = rubberBand.y + rubberBand.width;
     } else if ((x < rubberBand.x) && (y < rubberBand.y)) {
         // Top-left quarter
-        __rubberBandRotation = 180;
+        rubberBandRotation = 180;
         rubberBand.width = rubberBand.x - x;
         rubberBand.height = rubberBand.y - y;
 

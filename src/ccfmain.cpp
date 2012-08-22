@@ -23,6 +23,7 @@
 #include <QtQml/QQmlEngine>
 
 #include "ccfmain.h"
+#include "qmlBase/ccfqmlbasescenario.h"
 
 /*!
   Main view's constructor, full of important stuff.
@@ -33,6 +34,8 @@
 CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
     QQuickView(parent), CcfError(), cmdLnParser(cmd)
 {
+    qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
+
     global = new CcfGlobal(this);
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
@@ -51,14 +54,8 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
-//    engine()->addImportPath("saves/");
-//    qDebug() << engine()->importPathList();
 
     setResizeMode(QQuickView::SizeRootObjectToView);
-//    setAttribute(Qt::WA_OpaquePaintEvent);
-//    setAttribute(Qt::WA_NoSystemBackground);
-//    viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-//    viewport()->setAttribute(Qt::WA_NoSystemBackground);
 //    connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
     connect(configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));

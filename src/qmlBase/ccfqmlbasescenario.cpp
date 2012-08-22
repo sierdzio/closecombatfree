@@ -3,6 +3,8 @@
 CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
     QQuickItem(parent)
 {
+    m_zoom = 1.0;
+    m_paused = false;
 }
 
 QString CcfQmlBaseScenario::getScenarioFile()

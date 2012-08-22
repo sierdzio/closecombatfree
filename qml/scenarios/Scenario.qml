@@ -21,30 +21,32 @@
 import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
+import QmlBase 0.1
 
-Rectangle {
-    property string scenarioFile: ""
-    property string scenarioWinStatus: "no" // won, lost, ...
-    property int __aimLineRotation: 0
-    property int __rubberBandRotation: 0
-    property int __unitIndex: -1
-    // Is this a single scenario, or a campaign? Convenience bool (same info can
-    // be taken from other sources
-    property bool __isCampaign: false
-    // Map path for campaigns
-    property string mapFile: ""
-    // Holds graphical effects (muzzle flashes, hit animations etc.).
-    property var effectsContainer: new Array;
-    // Holds order markers.
-    property var orderMarkersContainer: new Array;
-    // Holds unit groups (ones created with CTRL + digit).
-    property var unitGroups: new Array(10);
+BaseScenario {
+//Rectangle {
+//    property string scenarioFile: ""
+//    property string scenarioWinStatus: "no" // won, lost, ...
+//    property int __aimLineRotation: 0
+//    property int __rubberBandRotation: 0
+//    property int __unitIndex: -1
+//    // Is this a single scenario, or a campaign? Convenience bool (same info can
+//    // be taken from other sources
+//    property bool __isCampaign: false
+//    // Map path for campaigns
+//    property string mapFile: ""
+//    // Holds graphical effects (muzzle flashes, hit animations etc.).
+//    property var effectsContainer: new Array;
+//    // Holds order markers.
+//    property var orderMarkersContainer: new Array;
+//    // Holds unit groups (ones created with CTRL + digit).
+//    property var unitGroups: new Array(10);
 
-    property real zoom: 1.0
-    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
-                                       gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
-    property bool paused: false
-    property color menuBackgroundColor: "#7e8c24"
+//    property real zoom: 1.0
+//    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
+//                                       gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
+//    property bool paused: false
+//    property color menuBackgroundColor: "#7e8c24"
 
     signal closeScenario() // TODO: clean containers to preserve memory
     signal loadScenario(string path)
@@ -60,7 +62,10 @@ Rectangle {
 
     id: root
     focus: true;
-    color: menuBackgroundColor
+//    color: menuBackgroundColor
+
+    anchors.left: parent.left
+    anchors.top: parent.top
 
     onScenarioFileChanged: {
         if (scenarioFile != "") {
@@ -216,9 +221,9 @@ Rectangle {
         boundsBehavior: Flickable.StopAtBounds
         clip: true
 
-        anchors.top: root.top
-        anchors.left: root.left
-        anchors.right: root.right
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         PinchArea {
             id: pinchArea
@@ -307,7 +312,7 @@ Rectangle {
                     }
 
                     onPressAndHold: {
-                        if (Config.uiMode == "DESKTOP") {
+                        if (Config.uiMode == "DESKTOP") {QQuickItem
                             gameArea.interactive = false;
                             if (mouse.button == Qt.LeftButton) {
                                 ScenarioLogic.handlePressAndHoldLeft(mouse);
@@ -381,7 +386,7 @@ Rectangle {
                     transform: Rotation {
                         origin.x: 1
                         origin.y: 0
-                        angle: __aimLineRotation
+                        angle: aimLineRotation
                     }
                 }
 
@@ -393,7 +398,7 @@ Rectangle {
                     transform: Rotation {
                         origin.x: 0
                         origin.y: 0
-                        angle: __rubberBandRotation
+                        angle: rubberBandRotation
                     }
                 }
             }
@@ -410,9 +415,9 @@ Rectangle {
 
     BottomMenu {
         id: bottomMenu
-        anchors.bottom: root.bottom
-        anchors.right: root.right
-        anchors.left: root.left
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.left: parent.left
         visibleHeight: -menu.y
 
         Flickable {
