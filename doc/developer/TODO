@@ -11,6 +11,7 @@ Code changes:
    This would allow to easily transfer a lot of JS methods into C++. And those are
    internal things anyway, they don't need to be exposed to users/ modders
  - move digitPresses() to EngineHelpers
+ - add necessary enums to CcfGlobal
 
 New features:
  - add weather system

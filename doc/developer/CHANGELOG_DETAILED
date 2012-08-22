@@ -9,6 +9,8 @@ Some more history can be devised from git sources (although even there, the thin
  - make the side Marker always face upwards
  - fix -h resulting in a "unpectedly finished" program, even though it's all OK
  - add side marker sets functionality
+ - begin experiments with moving Scenario.qml and Unit.qml into C++
+ - Scenario.qml is the first to fight. So far, it compiles, but not much more
 
 21.08.2012:
  - side markers are now working correctly
