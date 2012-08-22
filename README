@@ -11,9 +11,9 @@ CCF is distributed under GNU GPLv3 license. There is a possibility the artwork w
 To show "framerate" (time in which repaint is done) set QML_SHOW_FRAMERATE env variable to true (1). If you don't know, what last sentence means, assume it's impossible and move on :)
 
   \section formodders For modders
-  
+
   One of the goals of CCF is for it to be easy to modify, update and expand by third party. Developement is in very early stages currently, but the plan is to prepare an alpha-quality modding API by version 0.1.0. If that goes well, and the proposed API turns out to be good, from version 0.2.0 the API will be considered beta-quality. Total API stability cannot be guaranteed until 1.0.0 is out, of course, but I will try to limit source-incompatible changes as much as possible. If big changes turn out to be necessary, some sort of conversion tool and/ or guide will be provided.
-  
+
   As for current state of affairs - you can try making maps, map clusters and units (currently only tanks are supported, but hte list will grow, of course) already. So far API there was pretty stable, and I'm mostly working on other things, so it's not likely to change much in the forseeable future.
 
   \section documentation About documentation

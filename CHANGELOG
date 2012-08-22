@@ -9,6 +9,8 @@ Changes since v0.0.4 (f4712c5717695e1b2fe0ffe28067b25daa62a782):
  - huge behind the scenes changes to underlying logic and code
  - make enemy units hidden by default, and show them when a friendly unit
    is able to see them
+ - add side marker sets. Units can now choose from different sets of sidemarks.
+   Mixing is allowed, too
 
 2012.02.10 - v0.0.4.
 Changes since v0.0.3 (2e43d28118a0b1ffd9a24b3fb990a824b7597336):
