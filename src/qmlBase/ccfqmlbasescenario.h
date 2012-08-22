@@ -29,7 +29,7 @@ class CcfQmlBaseScenario : public QQuickItem
     // Holds graphical effects (muzzle flashes, hit animations etc.).
     Q_PROPERTY(QList<QObject *> effectsContainer READ getEffectsContainer WRITE setEffectsContainer NOTIFY effectsContainerChanged)
     // Holds order markers.
-    Q_PROPERTY(QList<QObject *> orderMarkersContainer READ getOrderMarkersContainer WRITE setOrderMarkersContainer NOTIFY orderMarkersContainerChanged)
+//    Q_PROPERTY(QList<QObject *> orderMarkersContainer READ getOrderMarkersContainer WRITE setOrderMarkersContainer NOTIFY orderMarkersContainerChanged)
     // Holds unit groups (ones created with CTRL + digit).
     Q_PROPERTY(QList<QObject *> unitGroups READ getUnitGroups WRITE setUnitGroups NOTIFY unitGroupsChanged)
     Q_PROPERTY(qreal zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
@@ -52,7 +52,7 @@ public:
     bool getIsCampaign();
     QString getMapFile();
     QList<QObject *> getEffectsContainer();
-    QList<QObject *> getOrderMarkersContainer();
+//    QList<QObject *> getOrderMarkersContainer();
     QList<QObject *> getUnitGroups();
     qreal getZoom();
     QPoint getZoomPoint();
@@ -68,7 +68,7 @@ public:
     void setIsCampaign(bool isCampaign);
     void setMapFile(const QString &mapFile);
     void setEffectsContainer(const QList<QObject *> &effectsContainer);
-    void setOrderMarkersContainer(const QList<QObject *> &orderMarkersContainer);
+//    void setOrderMarkersContainer(const QList<QObject *> &orderMarkersContainer);
     void setUnitGroups(const QList<QObject *> &unitGroups);
     void setZoom(qreal zoom);
     void setZoomPoint(const QPoint &zoomPoint);

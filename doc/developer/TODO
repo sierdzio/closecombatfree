@@ -7,11 +7,9 @@ Bugs & fixes:
  - visibility detection fails for some props (See tst4)
 
 Code changes:
- - make base Scenario C++ QML item, and the same for a Unit and maybe tank.
-   This would allow to easily transfer a lot of JS methods into C++. And those are
-   internal things anyway, they don't need to be exposed to users/ modders
  - move digitPresses() to EngineHelpers
  - add necessary enums to CcfGlobal
+ - try to make orderMarkersContainer fully internal (c++). Current implementation is obsolete
 
 New features:
  - add weather system
