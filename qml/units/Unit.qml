@@ -34,7 +34,11 @@ Item {
     property int groupNumber: 0 // For now, a unit can be only in one group
     property int unitIndex: -1
     property bool sideMarkVisible: true
-    property string sideMarkSource: "../../img/units/sideMarks/sideMark_side1.png"
+    property string sideMarkSource: "../../img/units/sideMarks/sideMark_side_1.png"
+    // Defines a set of side marks to be used to decorate this unit.
+    // Side mark filenames should be made according to this template:
+    // <root>/img/units/sideMarks/sideMark_<sideMarkSet>_<sideNumber>.png
+    property string sideMarkSet: "side"
 
     property int rotationSpeed: 1 // seconds needed for half rotation (180 deg)
     property int turretRotationSpeed: 1 // seconds needed for half rotation (180 deg)

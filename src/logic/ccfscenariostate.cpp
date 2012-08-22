@@ -1,4 +1,4 @@
-#include <QtCore/QDir>
+#include <QtCore/QFile>
 
 #include "ccfscenariostate.h"
 
@@ -10,10 +10,6 @@ CcfScenarioState::CcfScenarioState(QObject *parent) :
 {
     m_playerSide = "neutral";
     m_availableSides.append("neutral");
-
-    // Get side mark files that are available
-    QDir sideMarkDir("./img/units/sideMarks", "sideMark_");
-    m_availableSideMarkFiles = sideMarkDir.entryList();
 }
 
 /*!
@@ -59,16 +55,29 @@ void CcfScenarioState::setAvailableSides(QStringList availableSides)
     m_availableSides = availableSides;
 }
 
-QString CcfScenarioState::getSidePath(const QString &side)
+/*!
+  Returns an image path for a given \a side and optionally \a sideMarkSet.
+
+  Checks for path's validity, too, and tries to fix it if wrong data is given.
+ */
+QString CcfScenarioState::getSidePath(const QString &side, const QString &sideMarkSet)
 {
     QString pathBeginning("../../img/units/sideMarks/sideMark_");
     int sideIndex = m_availableSides.indexOf(side);
 
     if (sideIndex == -1)
-        return (pathBeginning + "side1.png");
+        return (pathBeginning + "side_1.png");
 
-    // TODO: add support for sideMark set choosing (additional property in unit,
-    // that would name the set to use. Then filename is: <sideSet><index>.png).
-    QString result(pathBeginning + "side" + QString::number(sideIndex + 1) + ".png");
-    return result;
+    QString result(sideMarkSet + "_" + QString::number(sideIndex + 1) + ".png");
+
+    QString execPathBeginning("img/units/sideMarks/sideMark_");
+    if (!QFile::exists(execPathBeginning + result)) {
+        result = QStringLiteral("side_") + QString::number(sideIndex + 1) + ".png";
+
+        if (!QFile::exists(execPathBeginning + result)) {
+            result = "side_1.png";
+        }
+    }
+
+    return (pathBeginning + result);
 }
