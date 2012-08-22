@@ -33,7 +33,9 @@ HEADERS += \
     logic/ccfenginehelpers.h \
     logic/ccfscenariostate.h \
     config/ccflogger.h \
-    config/ccfcommandlineparser.h
+    config/ccfcommandlineparser.h \
+    qmlBase/ccfqmlbasescenario.h \
+    qmlBase/ccfqmlbaseunit.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -48,7 +50,9 @@ SOURCES += main.cpp \
     logic/ccfenginehelpers.cpp \
     logic/ccfscenariostate.cpp \
     config/ccflogger.cpp \
-    config/ccfcommandlineparser.cpp
+    config/ccfcommandlineparser.cpp \
+    qmlBase/ccfqmlbasescenario.cpp \
+    qmlBase/ccfqmlbaseunit.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \
