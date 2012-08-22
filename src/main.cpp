@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     // Check if --help was specified. If yes, print help and exit.
     if (cmd.wasHelpRequested()) {
-        qFatal(qPrintable(cmd.helpMessage()), NULL);
+        qDebug(qPrintable(cmd.helpMessage()), NULL);
         return 1;
     }
 
