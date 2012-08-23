@@ -11,6 +11,7 @@ Code changes:
  - add necessary enums to CcfGlobal
  - try to make orderMarkersContainer fully internal (c++). Current implementation is obsolete
  - make CcfMain into a Singleton
+ - move logging into CcfGlobal
 
 New features:
  - add weather system

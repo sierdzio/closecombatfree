@@ -82,27 +82,27 @@ BaseScenario {
         }
     }
 
-    function createOrderMarkerComponent() {
-        // This component renders an order marker.
-        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-        var marker;
+//    function createOrderMarkerComponent() {
+//        // This component renders an order marker.
+//        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
+//        var marker;
 
-        if (component.status == Component.Ready) {
-            marker = component.createObject(itemContainer);
-            marker.visible = true;
-            marker.index = index;
-            marker.number = orderNumber;
-            marker.dragComplete.connect(modifyTargetFromMarker);
-            orderMarkersContainer[index][orderNumber] = marker;
+//        if (component.status == Component.Ready) {
+//            marker = component.createObject(itemContainer);
+//            marker.visible = true;
+//            marker.index = index;
+//            marker.number = orderNumber;
+//            marker.dragComplete.connect(modifyTargetFromMarker);
+//            orderMarkersContainer[index][orderNumber] = marker;
 
-            marker.x = (targetX - marker.centerX);
-            marker.y = (targetY - marker.centerY);
-            marker.orderColor = EngineHelpers.colorForOrder(orderName);
-            marker.visible = true;
-        }
+//            marker.x = (targetX - marker.centerX);
+//            marker.y = (targetY - marker.centerY);
+//            marker.orderColor = EngineHelpers.colorForOrder(orderName);
+//            marker.visible = true;
+//        }
 
-        return marker;
-    }
+//        return marker;
+//    }
 
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
