@@ -36,11 +36,11 @@ BaseScenario {
 //    // Map path for campaigns
 //    property string mapFile: ""
 //    // Holds graphical effects (muzzle flashes, hit animations etc.).
-//    property var effectsContainer: new Array;
+    property var effectsContainer: new Array;
 //    // Holds order markers.
     property var orderMarkersContainer: new Array;
 //    // Holds unit groups (ones created with CTRL + digit).
-//    property var unitGroups: new Array(10);
+    property var unitGroups: new Array(10);
 
 //    property real zoom: 1.0
 //    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,

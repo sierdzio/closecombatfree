@@ -27,11 +27,11 @@ class CcfQmlBaseScenario : public QQuickItem
     // Map path for campaigns
     Q_PROPERTY(QString mapFile READ getMapFile WRITE setMapFile NOTIFY mapFileChanged)
     // Holds graphical effects (muzzle flashes, hit animations etc.).
-    Q_PROPERTY(QList<QObject *> effectsContainer READ getEffectsContainer WRITE setEffectsContainer NOTIFY effectsContainerChanged)
+//    Q_PROPERTY(QList<QObject *> effectsContainer READ getEffectsContainer WRITE setEffectsContainer NOTIFY effectsContainerChanged)
     // Holds order markers.
 //    Q_PROPERTY(QList<QObject *> orderMarkersContainer READ getOrderMarkersContainer WRITE setOrderMarkersContainer NOTIFY orderMarkersContainerChanged)
     // Holds unit groups (ones created with CTRL + digit).
-    Q_PROPERTY(QList<QObject *> unitGroups READ getUnitGroups WRITE setUnitGroups NOTIFY unitGroupsChanged)
+//    Q_PROPERTY(QList<QObject *> unitGroups READ getUnitGroups WRITE setUnitGroups NOTIFY unitGroupsChanged)
     Q_PROPERTY(qreal zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
     Q_PROPERTY(QPoint zoomPoint READ getZoomPoint WRITE setZoomPoint NOTIFY zoomPointChanged)
     Q_PROPERTY(bool paused READ getPaused WRITE setPaused NOTIFY pausedChanged)
@@ -56,9 +56,9 @@ public:
     int getUnitIndex();
     bool getIsCampaign();
     QString getMapFile();
-    QList<QObject *> getEffectsContainer();
+//    QList<QObject *> getEffectsContainer();
 //    QList<QObject *> getOrderMarkersContainer();
-    QList<QObject *> getUnitGroups();
+//    QList<QObject *> getUnitGroups();
     qreal getZoom();
     QPoint getZoomPoint();
     bool getPaused();
@@ -72,9 +72,9 @@ public:
     void setUnitIndex(int unitIndex);
     void setIsCampaign(bool isCampaign);
     void setMapFile(const QString &mapFile);
-    void setEffectsContainer(const QList<QObject *> &effectsContainer);
+//    void setEffectsContainer(const QList<QObject *> &effectsContainer);
 //    void setOrderMarkersContainer(const QList<QObject *> &orderMarkersContainer);
-    void setUnitGroups(const QList<QObject *> &unitGroups);
+//    void setUnitGroups(const QList<QObject *> &unitGroups);
     void setZoom(qreal zoom);
     void setZoomPoint(const QPoint &zoomPoint);
     void setPaused(bool paused);
@@ -88,9 +88,9 @@ signals:
     void unitIndexChanged();
     void isCampaignChanged();
     void mapFileChanged();
-    void effectsContainerChanged();
-    void orderMarkersContainerChanged();
-    void unitGroupsChanged();
+//    void effectsContainerChanged();
+//    void orderMarkersContainerChanged();
+//    void unitGroupsChanged();
     void zoomChanged();
     void zoomPointChanged();
     void pausedChanged();
@@ -104,9 +104,9 @@ private:
     int m_unitIndex;
     bool m_isCampaign;
     QString m_mapFile;
-    QList<QObject *> m_effectsContainer;
-    QList<QObject *> m_orderMarkersContainer;
-    QList<QObject *> m_unitGroups;
+//    QList<QObject *> m_effectsContainer;
+//    QList<QObject *> m_orderMarkersContainer;
+//    QList<QObject *> m_unitGroups;
     qreal m_zoom;
     QPoint m_zoomPoint;
     bool m_paused;

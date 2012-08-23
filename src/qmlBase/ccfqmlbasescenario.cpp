@@ -131,20 +131,20 @@ QString CcfQmlBaseScenario::getMapFile()
     return m_mapFile;
 }
 
-QList<QObject *> CcfQmlBaseScenario::getEffectsContainer()
-{
-    return m_effectsContainer;
-}
+//QList<QObject *> CcfQmlBaseScenario::getEffectsContainer()
+//{
+//    return m_effectsContainer;
+//}
 
 //QList<QObject *> CcfQmlBaseScenario::getOrderMarkersContainer()
 //{
 //    return m_orderMarkersContainer;
 //}
 
-QList<QObject *> CcfQmlBaseScenario::getUnitGroups()
-{
-    return m_unitGroups;
-}
+//QList<QObject *> CcfQmlBaseScenario::getUnitGroups()
+//{
+//    return m_unitGroups;
+//}
 
 qreal CcfQmlBaseScenario::getZoom()
 {
@@ -252,17 +252,17 @@ void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
         emit mapFileChanged();
 }
 
-void CcfQmlBaseScenario::setEffectsContainer(const QList<QObject *> &effectsContainer)
-{
-    bool wasChaged = false;
-    if (effectsContainer != m_effectsContainer)
-        wasChaged = true;
+//void CcfQmlBaseScenario::setEffectsContainer(const QList<QObject *> &effectsContainer)
+//{
+//    bool wasChaged = false;
+//    if (effectsContainer != m_effectsContainer)
+//        wasChaged = true;
 
-    m_effectsContainer = effectsContainer;
+//    m_effectsContainer = effectsContainer;
 
-    if (wasChaged)
-        emit effectsContainerChanged();
-}
+//    if (wasChaged)
+//        emit effectsContainerChanged();
+//}
 
 //void CcfQmlBaseScenario::setOrderMarkersContainer(const QList<QObject *> &orderMarkersContainer)
 //{
@@ -277,17 +277,17 @@ void CcfQmlBaseScenario::setEffectsContainer(const QList<QObject *> &effectsCont
 //        emit orderMarkersContainerChanged();
 //}
 
-void CcfQmlBaseScenario::setUnitGroups(const QList<QObject *> &unitGroups)
-{
-    bool wasChaged = false;
-    if (unitGroups != m_unitGroups)
-        wasChaged = true;
+//void CcfQmlBaseScenario::setUnitGroups(const QList<QObject *> &unitGroups)
+//{
+//    bool wasChaged = false;
+//    if (unitGroups != m_unitGroups)
+//        wasChaged = true;
 
-    m_unitGroups = unitGroups;
+//    m_unitGroups = unitGroups;
 
-    if (wasChaged)
-        emit unitGroupsChanged();
-}
+//    if (wasChaged)
+//        emit unitGroupsChanged();
+//}
 
 void CcfQmlBaseScenario::setZoom(qreal zoom)
 {
