@@ -5,6 +5,9 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+23.08.2012:
+ - battles with new ScenarioBase continue
+
 22.08.2012:
  - make the side Marker always face upwards
  - fix -h resulting in a "unpectedly finished" program, even though it's all OK

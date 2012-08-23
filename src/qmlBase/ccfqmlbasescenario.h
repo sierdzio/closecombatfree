@@ -43,6 +43,11 @@ class CcfQmlBaseScenario : public QQuickItem
 public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
+//    Q_INVOKABLE void calculateOrderMarkerVisibility(int index);
+//    Q_INVOKABLE void setOrderMarker(int index, int orderNumber, const QString &orderName, qreal targetX, qreal targetY);
+//    Q_INVOKABLE void modifyTargetFromMarker(int unitIndex, int orderNumber);
+//    Q_INVOKABLE void initOrderMarkers();
+
     // Property getters:
     QString getScenarioFile();
     QString getScenarioWinStatus();

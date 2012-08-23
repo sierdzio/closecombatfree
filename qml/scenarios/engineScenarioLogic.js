@@ -364,7 +364,8 @@ function updateEffects() {
     if (haveAllEffectsFinished == true) {
         for (var i = 0; i <= effectsContainer.length; i++) {
             var effect = effectsContainer.pop();
-            effect.destroy();
+            if (effect !== undefined)
+                effect.destroy();
         }
         effectsTimer.stop();
     }
@@ -1180,97 +1181,97 @@ function digitPressed(event) {
     return result;
 }
 
-///*!
-//  \memberof engineScenarioLogic
+/*!
+  \memberof engineScenarioLogic
 
-//  Checks which order markers should be visible and clears those no longer needed.
-//  */
-//function calculateOrderMarkerVisibility(index) {
-//    var orderMarker = orderMarkersContainer[index];
-//    var unit = unitsLoader.item.children[index];
+  Checks which order markers should be visible and clears those no longer needed.
+  */
+function calculateOrderMarkerVisibility(index) {
+    var orderMarker = orderMarkersContainer[index];
+    var unit = unitsLoader.item.children[index];
 
-//    var anyOrdersLeft = false;
-//    var orders = unit.orderQueue;
+    var anyOrdersLeft = false;
+    var orders = unit.orderQueue;
 
-//    if (orders.length === 0) {
-//        for (var i = 0; i < orderMarker.length; i++) {
-//            if (orderMarker[i] !== 0) {
-//                orderMarker[i].destroy();
-//                orderMarker[i] = 0;
-//            }
-//        }
-//    } else {
-//        for (var i = 0; i < orders.length; i++) {
-//            if (orders[i].performed === true) {
-//                if (i < orderMarker.length) {
-//                    if (orderMarker[i] !== 0) {
-//                        orderMarker[i].destroy();
-//                        orderMarker[i] = 0;
-//                    }
-//                }
-//            } else {
-//                anyOrdersLeft = true;
-//            }
-//        }
-//    }
+    if (orders.length === 0) {
+        for (var i = 0; i < orderMarker.length; i++) {
+            if (orderMarker[i] !== 0) {
+                orderMarker[i].destroy();
+                orderMarker[i] = 0;
+            }
+        }
+    } else {
+        for (var i = 0; i < orders.length; i++) {
+            if (orders[i].performed === true) {
+                if (i < orderMarker.length) {
+                    if (orderMarker[i] !== 0) {
+                        orderMarker[i].destroy();
+                        orderMarker[i] = 0;
+                    }
+                }
+            } else {
+                anyOrdersLeft = true;
+            }
+        }
+    }
 
-//    // Clean markers on queue finish
-//    if (anyOrdersLeft == false) {
-//        orderMarker = new Array;
-//    }
-//}
+    // Clean markers on queue finish
+    if (anyOrdersLeft == false) {
+        orderMarker = new Array;
+    }
+}
 
-///*!
-//  \memberof engineScenarioLogic
+/*!
+  \memberof engineScenarioLogic
 
-//  Crreates an order marker and places it on game map.
-//  */
-//function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
-//    // This component renders an order marker.
-//    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-//    var marker;
+  Crreates an order marker and places it on game map.
+  */
+function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
+    // This component renders an order marker.
+    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
+    var marker;
 
-//    if (component.status === Component.Ready) {
-//        marker = component.createObject(itemContainer);
-//        marker.visible = true;
-//        marker.index = index;
-//        marker.number = orderNumber;
-//        marker.dragComplete.connect(modifyTargetFromMarker);
-//        orderMarkersContainer[index][orderNumber] = marker;
-//    }
+    if (component.status === Component.Ready) {
+        marker = component.createObject(itemContainer);
+        marker.visible = true;
+        marker.index = index;
+        marker.number = orderNumber;
+        marker.dragComplete.connect(modifyTargetFromMarker);
+        orderMarkersContainer[index][orderNumber] = marker;
+    }
 
-//    marker.x = (targetX - marker.centerX);
-//    marker.y = (targetY - marker.centerY);
-//    marker.orderColor = EngineHelpers.colorForOrder(orderName);
-//    marker.visible = true;
-//}
+    marker.x = (targetX - marker.centerX);
+    marker.y = (targetY - marker.centerY);
+    marker.orderColor = EngineHelpers.colorForOrder(orderName);
+    marker.visible = true;
+}
 
-///*!
-//  \memberof engineScenarioLogic
+/*!
+  \memberof engineScenarioLogic
 
-//  When user drags order marker about the game area, unit's orders are being updated.
-//  */
-//function modifyTargetFromMarker(unitIndex, orderNumber) {
-//    var marker = orderMarkersContainer[unitIndex][orderNumber];
-//    var newX = marker.x + marker.centerX;
-//    var newY = marker.y + marker.centerY;
-//    var unit = unitsLoader.item.children[unitIndex];
+  When user drags order marker about the game area, unit's orders are being updated.
+  */
+function modifyTargetFromMarker(unitIndex, orderNumber) {
+    var marker = orderMarkersContainer[unitIndex][orderNumber];
+    var newX = marker.x + marker.centerX;
+    var newY = marker.y + marker.centerY;
+    var unit = unitsLoader.item.children[unitIndex];
 
-//    // Not sure whether this should stay!
-//    //    unit.cancelOrder();
-//    unit.modifyOrder(orderNumber, newX, newY);
-//}
+    // Not sure whether this should stay!
+    //    unit.cancelOrder();
+    unit.modifyOrder(orderNumber, newX, newY);
+}
 
-///*!
-//  \memberof engineScenarioLogic
+/*!
+  \memberof engineScenarioLogic
 
-//  Initialises order markers' container.
-//  */
-//function initOrderMarkers() {
-//    for (var i = 0; i < unitsLoader.item.children.length; i++) {
-//        orderMarkersContainer[i] = new Array;
-//    }
-//}
+  Initialises order markers' container.
+  */
+function initOrderMarkers() {
+    for (var i = 0; i < unitsLoader.item.children.length; i++) {
+        orderMarkersContainer[i] = new Array;
+    }
+}
 
 /*!
   \memberof engineScenarioLogic
