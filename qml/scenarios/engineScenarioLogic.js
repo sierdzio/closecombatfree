@@ -1187,8 +1187,9 @@ function digitPressed(event) {
   Checks which order markers should be visible and clears those no longer needed.
   */
 function calculateOrderMarkerVisibility(index) {
-    var orderMarker = orderMarkersContainer[index];
+    Logger.log("Calculating order markers' visibility...");
     var unit = unitsLoader.item.children[index];
+    var orderMarker = unit.orderMarkers;
 
     var anyOrdersLeft = false;
     var orders = unit.orderQueue;
@@ -1227,23 +1228,27 @@ function calculateOrderMarkerVisibility(index) {
   Crreates an order marker and places it on game map.
   */
 function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
+    Logger.log("Setting an order marker.");
     // This component renders an order marker.
-    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-    var marker;
+//    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
+//    var marker;
 
-    if (component.status === Component.Ready) {
-        marker = component.createObject(itemContainer);
-        marker.visible = true;
-        marker.index = index;
-        marker.number = orderNumber;
-        marker.dragComplete.connect(modifyTargetFromMarker);
-        orderMarkersContainer[index][orderNumber] = marker;
-    }
+//    if (component.status === Component.Ready) {
+//        marker = component.createObject(itemContainer);
+//        marker.visible = true;
+//        marker.index = index;
+//        marker.number = orderNumber;
+//        marker.dragComplete.connect(modifyTargetFromMarker);
+//        orderMarkersContainer[index][orderNumber] = marker;
+//        marker.orderColor = EngineHelpers.colorForOrder(orderName);
+//    }
 
+    var marker = unitsLoader.item.children[index].setOrderMarker(index, orderNumber, orderName);
+    marker.parent = itemContainer;
+    marker.x = 0;
+    marker.y = 0;
     marker.x = (targetX - marker.centerX);
     marker.y = (targetY - marker.centerY);
-    marker.orderColor = EngineHelpers.colorForOrder(orderName);
-    marker.visible = true;
 }
 
 /*!
@@ -1252,14 +1257,10 @@ function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
   When user drags order marker about the game area, unit's orders are being updated.
   */
 function modifyTargetFromMarker(unitIndex, orderNumber) {
-    var marker = orderMarkersContainer[unitIndex][orderNumber];
+    var marker = unitsLoader.item.children[unitIndex].orderMarkers[orderNumber];
     var newX = marker.x + marker.centerX;
     var newY = marker.y + marker.centerY;
-    var unit = unitsLoader.item.children[unitIndex];
-
-    // Not sure whether this should stay!
-    //    unit.cancelOrder();
-    unit.modifyOrder(orderNumber, newX, newY);
+    unitsLoader.item.children[unitIndex].modifyOrder(orderNumber, newX, newY);
 }
 
 /*!
@@ -1267,11 +1268,11 @@ function modifyTargetFromMarker(unitIndex, orderNumber) {
 
   Initialises order markers' container.
   */
-function initOrderMarkers() {
-    for (var i = 0; i < unitsLoader.item.children.length; i++) {
-        orderMarkersContainer[i] = new Array;
-    }
-}
+//function initOrderMarkers() {
+//    for (var i = 0; i < unitsLoader.item.children.length; i++) {
+//        orderMarkersContainer[i] = new Array;
+//    }
+//}
 
 /*!
   \memberof engineScenarioLogic

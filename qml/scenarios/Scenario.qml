@@ -38,7 +38,7 @@ BaseScenario {
 //    // Holds graphical effects (muzzle flashes, hit animations etc.).
     property var effectsContainer: new Array;
 //    // Holds order markers.
-    property var orderMarkersContainer: new Array;
+//    property var orderMarkersContainer: new Array;
 //    // Holds unit groups (ones created with CTRL + digit).
     property var unitGroups: new Array(10);
 
@@ -81,28 +81,6 @@ BaseScenario {
             loadGame.gameEntryClicked.connect(loadScenario);
         }
     }
-
-//    function createOrderMarkerComponent() {
-//        // This component renders an order marker.
-//        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-//        var marker;
-
-//        if (component.status == Component.Ready) {
-//            marker = component.createObject(itemContainer);
-//            marker.visible = true;
-//            marker.index = index;
-//            marker.number = orderNumber;
-//            marker.dragComplete.connect(modifyTargetFromMarker);
-//            orderMarkersContainer[index][orderNumber] = marker;
-
-//            marker.x = (targetX - marker.centerX);
-//            marker.y = (targetY - marker.centerY);
-//            marker.orderColor = EngineHelpers.colorForOrder(orderName);
-//            marker.visible = true;
-//        }
-
-//        return marker;
-//    }
 
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
@@ -309,7 +287,7 @@ BaseScenario {
                             }
 
                             // Creates base for order markers.
-                            ScenarioLogic.initOrderMarkers();
+//                            ScenarioLogic.initOrderMarkers();
                             roster.populateUnits(playerUnits(ScenarioState.playerSide));
                             hideNonPlayerUnits();
                             ScenarioState.setAvailableSides(unitSideList);
@@ -469,8 +447,8 @@ BaseScenario {
                     height: roster.height
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
-                    opacity: (Config.uiMode == "MOBILE")? 1: 0;
-                    visible: (Config.uiMode == "MOBILE")? true: false;
+                    opacity: (Config.uiMode === "MOBILE")? 1: 0;
+                    visible: (Config.uiMode === "MOBILE")? true: false;
 
                     Component.onCompleted: {
                         contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
