@@ -54,7 +54,7 @@ Item {
         var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
 
         if (component.status === Component.Ready) {
-            var marker = component.createObject(itemContainer);
+            var marker = component.createObject(root);
             marker.visible = true;
             marker.index = index;
             marker.number = orderNumber;

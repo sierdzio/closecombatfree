@@ -402,14 +402,6 @@ BaseScenario {
                     }
                 }
             }
-            // TODO:
-            // Needed for effectsContainer in JS file.
-            // Would be neat to rethink and optimise that.
-            Item {
-                id: itemContainer
-                visible: true
-                anchors.fill: parent
-            }
         }
     }
 

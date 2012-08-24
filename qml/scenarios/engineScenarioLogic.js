@@ -317,7 +317,7 @@ function firingActionFinished(index, targetX, targetY) {
         var effect;
 
         if (component.status === Component.Ready) {
-            effect = component.createObject(itemContainer);
+            effect = component.createObject(zoomArea);
         }
 
         effectsContainer.push(effect);
@@ -1229,24 +1229,9 @@ function calculateOrderMarkerVisibility(index) {
   */
 function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
     Logger.log("Setting an order marker.");
-    // This component renders an order marker.
-//    var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-//    var marker;
-
-//    if (component.status === Component.Ready) {
-//        marker = component.createObject(itemContainer);
-//        marker.visible = true;
-//        marker.index = index;
-//        marker.number = orderNumber;
-//        marker.dragComplete.connect(modifyTargetFromMarker);
-//        orderMarkersContainer[index][orderNumber] = marker;
-//        marker.orderColor = EngineHelpers.colorForOrder(orderName);
-//    }
-
     var marker = unitsLoader.item.children[index].setOrderMarker(index, orderNumber, orderName);
-    marker.parent = itemContainer;
-    marker.x = 0;
-    marker.y = 0;
+    marker.parent = zoomArea;
+    marker.dragComplete.connect(modifyTargetFromMarker);
     marker.x = (targetX - marker.centerX);
     marker.y = (targetY - marker.centerY);
 }
