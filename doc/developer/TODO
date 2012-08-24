@@ -3,15 +3,15 @@ Bugs & fixes:
  - there is some strange order mixing when performing group queues
  - look into memory consumption - scenarios are not fully cleared from memory on close (some clues in http://developer.qt.nokia.com/forums/viewthread/14492)
  - double shooting of close targets is still possible (+ other gun reloading problems)
- - order markers vanish on left mouse click
  - visibility detection fails for some props (See tst4)
 
 Code changes:
  - move digitPresses() to EngineHelpers
  - add necessary enums to CcfGlobal
- - try to make orderMarkersContainer fully internal (c++). Current implementation is obsolete
  - make CcfMain into a Singleton
- - move logging into CcfGlobal
+ - go through props in Scenario and decide what can be transferred to C++
+ - add units property to Scenario c++, for easy use in code (JS and C++)
+ - continue moving Unit to C++
 
 New features:
  - add weather system

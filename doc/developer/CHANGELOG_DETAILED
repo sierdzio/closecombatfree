@@ -9,6 +9,9 @@ Some more history can be devised from git sources (although even there, the thin
  - battles with new ScenarioBase continue
  - remove orderMarkersContainer from Scenario, move it to Unit
  - merge orderMarkers and orderQueue into "orders" array
+ - clean the code
+ - fix other smaller bugs
+ - update TODO and other files
 
 22.08.2012:
  - make the side Marker always face upwards

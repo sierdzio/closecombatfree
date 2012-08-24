@@ -29,12 +29,6 @@ BaseScenario {
 //    // Holds unit groups (ones created with CTRL + digit).
     property var unitGroups: new Array(10);
 
-//    property real zoom: 1.0
-//    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
-//                                       gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
-//    property bool paused: false
-//    property color menuBackgroundColor: "#7e8c24"
-
     signal closeScenario() // TODO: clean containers to preserve memory
     signal loadScenario(string path)
 
@@ -269,6 +263,7 @@ BaseScenario {
                                     unitSideList.push(unit.unitSide);
                                 }
 
+                                units = unitsLoader.item.children;
                                 map.item.setUnits(unitsLoader.item.children);
                             } else {
                                 // This is a campaign

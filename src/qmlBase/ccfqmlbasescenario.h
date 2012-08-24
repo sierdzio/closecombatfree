@@ -5,6 +5,7 @@
 #include <QtCore/QList>
 #include <QtCore/QPoint>
 #include <QtQuick/QQuickItem>
+#include <QtQml/QQmlListReference>
 
 /*!
  * \brief The CcfQmlBaseScenario class is an experiment to see if moving most functionality
@@ -35,8 +36,7 @@ class CcfQmlBaseScenario : public QQuickItem
     Q_PROPERTY(bool paused READ getPaused WRITE setPaused NOTIFY pausedChanged)
     Q_PROPERTY(QColor menuBackgroundColor READ getMenuBackgroundColor WRITE setMenuBackgroundColor NOTIFY menuBackgroundColorChanged)
 
-//    property point zoomPoint: Qt.point(gameArea.width/2 + gameArea.contentX,
-//                                       gameArea.height/2 + gameArea.contentY); //Qt.point(0, 0)
+    Q_PROPERTY(QQmlListReference units READ getUnits WRITE setUnits NOTIFY unitsChanged)
 
 public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
@@ -56,6 +56,8 @@ public:
     bool getPaused();
     QColor getMenuBackgroundColor();
 
+    QQmlListReference getUnits();
+
     //Property setters:
     void setScenarioFile(const QString &scenarioFile);
     void setScenarioWinStatus(const QString &scenarioWinStatus);
@@ -70,6 +72,8 @@ public:
     void setZoomPoint(const QPoint &zoomPoint);
     void setPaused(bool paused);
     void setMenuBackgroundColor(const QColor &menuBackgroundColor);
+
+    void setUnits(QQmlListReference units);
 
 signals:
     void scenarioFileChanged();
@@ -86,6 +90,8 @@ signals:
     void pausedChanged();
     void menuBackgroundColorChanged();
 
+    void unitsChanged();
+
 private:
     QString m_scenarioFile;
     QString m_scenarioWinStatus;
@@ -100,6 +106,8 @@ private:
     QPoint m_zoomPoint;
     bool m_paused;
     QColor m_menuBackgroundColor;
+
+    QQmlListReference m_units;
 };
 
 #endif // CCFQMLBASESCENARIO_H

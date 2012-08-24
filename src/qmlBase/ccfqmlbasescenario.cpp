@@ -6,6 +6,7 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
     m_zoom = 1.0;
     m_paused = false;
     m_menuBackgroundColor = QColor("#7e8c24");
+//    m_units = NULL;
 }
 
 // Non-properties:
@@ -75,6 +76,11 @@ bool CcfQmlBaseScenario::getPaused()
 QColor CcfQmlBaseScenario::getMenuBackgroundColor()
 {
     return m_menuBackgroundColor;
+}
+
+QQmlListReference CcfQmlBaseScenario::getUnits()
+{
+    return m_units;
 }
 
 // Property setters:
@@ -233,4 +239,10 @@ void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColo
 
     if (wasChaged)
         emit menuBackgroundColorChanged();
+}
+
+void CcfQmlBaseScenario::setUnits(QQmlListReference units)
+{
+    m_units = units;
+    emit unitsChanged();
 }
