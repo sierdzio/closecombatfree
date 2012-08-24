@@ -72,7 +72,6 @@ public:
     void setZoomPoint(const QPoint &zoomPoint);
     void setPaused(bool paused);
     void setMenuBackgroundColor(const QColor &menuBackgroundColor);
-
     void setUnits(QQmlListReference units);
 
 signals:
@@ -89,7 +88,6 @@ signals:
     void zoomPointChanged();
     void pausedChanged();
     void menuBackgroundColorChanged();
-
     void unitsChanged();
 
 private:
@@ -106,7 +104,6 @@ private:
     QPoint m_zoomPoint;
     bool m_paused;
     QColor m_menuBackgroundColor;
-
     QQmlListReference m_units;
 };
 

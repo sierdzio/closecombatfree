@@ -38,8 +38,8 @@ function scheduleContextAction(index, operation) {
     var unit;
 
     units = selectedUnits();
-    if (unitsLoader.item.children[index] !== undefined) {
-        unit = unitsLoader.item.children[index];
+    if (units[index] !== undefined) {
+        unit = units[index];
     } else {
         unit = units[0];
         unitIndex = unit.unitIndex;
@@ -116,7 +116,7 @@ function checkIfUnitCanFire(scheduledOperation) {
   */
 function performContextAction(index, targetX, targetY) {
     var selectedGroup = selectedUnits();
-    var unit = unitsLoader.item.children[index];
+    var unit = units[index];
     var scheduledOperation = unit.scheduledOperation;
 
     if ((scheduledOperation !== "Ambush")
@@ -142,8 +142,8 @@ function performContextAction(index, targetX, targetY) {
             // Sets schedule for all units.
             unit.scheduledOperation = scheduledOperation;
 
-            var tempX = targetX + (unit.x - unitsLoader.item.children[index].x);
-            var tempY = targetY + (unit.y - unitsLoader.item.children[index].y);
+            var tempX = targetX + (unit.x - units[index].x);
+            var tempY = targetY + (unit.y - units[index].y);
 
             issueActionOrder(unit, tempX, tempY);
         }
@@ -158,7 +158,7 @@ function performContextAction(index, targetX, targetY) {
   */
 function placeWaypoint(index, targetX, targetY) {
     var selectedGroup = selectedUnits();
-    var unit = unitsLoader.item.children[index];
+    var unit = units[index];
     var scheduledOperation = unit.scheduledOperation;
 
     if ((scheduledOperation !== "Ambush")
@@ -185,8 +185,8 @@ function placeWaypoint(index, targetX, targetY) {
             // Sets schedule for all units.
             unit.scheduledOperation = scheduledOperation;
 
-            var tempX = targetX + (unit.x - unitsLoader.item.children[index].x);
-            var tempY = targetY + (unit.y - unitsLoader.item.children[index].y);
+            var tempX = targetX + (unit.x - units[index].x);
+            var tempY = targetY + (unit.y - units[index].y);
 
             issueWaypointOrder(unit, tempX, tempY);
         }
@@ -250,7 +250,7 @@ function issueActionOrder(unit, x, y) {
   Slot invoked when an unit finishes an action.
   */
 function actionFinished(index, targetX, targetY) {
-    var unit = unitsLoader.item.children[index];
+    var unit = units[index];
 
     if (unit.currentOrder !== -1) {
         var scheduledOperation = unit.orders[unit.currentOrder].operation;
@@ -277,8 +277,8 @@ function checkScenarioFinished() {
     // It's probable that this should be done elsewhere.
     var areAllEnemiesDestroyed = true;
     var areAllAlliesDestroyed = true;
-    for (var i = 0; i < unitsLoader.item.children.length; ++i) {
-        var currentUnit = unitsLoader.item.children[i];
+    for (var i = 0; i < units.length; ++i) {
+        var currentUnit = units[i];
         if ((currentUnit.unitSide !== ScenarioState.playerSide) && (currentUnit.state === "healthy")) {
             areAllEnemiesDestroyed = false;
         } else if ((currentUnit.unitSide === ScenarioState.playerSide) && (currentUnit.state === "healthy")) {
@@ -305,7 +305,7 @@ function checkScenarioFinished() {
   Turns hit effects on, checks whether someone was hit, etc.
   */
 function firingActionFinished(index, targetX, targetY) {
-    var unit = unitsLoader.item.children[index];
+    var unit = units[index];
 
     if (unit.currentOrder !== -1) {
         // This component renders in-game effects (not all,
@@ -416,7 +416,7 @@ function cleanContextAction() {
   If unitIndex is -1, this function returns ALL units.
   */
 function getAllUnitsButOne(unitIndex) {
-    var allUnits = unitsLoader.item.children;
+    var allUnits = units;
 
     if (unitIndex === -1)
         return allUnits;
@@ -440,7 +440,7 @@ function getAllUnitsButOne(unitIndex) {
   This function is called by aimLineTimer on every update.
   */
 function updateAimLine() {
-    var unit = unitsLoader.item.children[unitIndex];
+    var unit = units[unitIndex];
 
     if (aimLine.visible == true) {
         var x1 = unit.x + unit.centerX;
@@ -821,7 +821,7 @@ function startFollowingUnit(index) {
     followedUnit.index = index;
     followedUnit.running = true;
     centerViewOnUnit(index);
-    followingInfoBox.bodyText = "Unit name: " + unitsLoader.item.children[index].unitType
+    followingInfoBox.bodyText = "Unit name: " + units[index].unitType
             + "\nDouble click to stop.";
 
     if (followingTimer.running == false)
@@ -859,7 +859,7 @@ function isFollowingOn() {
   stationary, timer is turned off.
   */
 function updateFollowingUnit() {
-    var unit = unitsLoader.item.children[followedUnit.index];
+    var unit = units[followedUnit.index];
     if (unit.moving === true) {
         centerViewOnUnit(unit);
     } else {
@@ -950,7 +950,6 @@ function updateRubberBand(x, y) {
     //    test2.y = rubberY2;
 
     // Selecting units:
-    var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
         var unit = units[i];
 
@@ -1004,20 +1003,20 @@ function selectUnitFromRoster(mouse) {
   to the enemy).
   */
 function selectUnit(index, modifier) {
-    if ((unitsLoader.item.children[index].unitSide !== ScenarioState.playerSide)
-            || (unitsLoader.item.children[index].state !== "healthy")) {
+    if ((units[index].unitSide !== ScenarioState.playerSide)
+            || (units[index].state !== "healthy")) {
         return;
     }
 
     if ((modifier === Qt.NoModifier) && (Config.uiMode == "DESKTOP")) {
         deselectAllUnits();
-        unitsLoader.item.children[index].selected = true;
-        soldierMenu.populateSoldiers(unitsLoader.item.children[index].soldiers);
+        units[index].selected = true;
+        soldierMenu.populateSoldiers(units[index].soldiers);
     } else if ((modifier === Qt.ControlModifier) || (Config.uiMode == "MOBILE")) {
-        if (unitsLoader.item.children[index].selected === true)
-            unitsLoader.item.children[index].selected = false;
-        else if (unitsLoader.item.children[index].selected === false)
-            unitsLoader.item.children[index].selected = true;
+        if (units[index].selected === true)
+            units[index].selected = false;
+        else if (units[index].selected === false)
+            units[index].selected = true;
 
         if (selectedUnitsCount() > 1) {
             soldierMenu.clear();
@@ -1035,7 +1034,7 @@ function selectUnit(index, modifier) {
   Deselects a given unit.
   */
 function deselectUnit(index) {
-    unitsLoader.item.children[index].selected = false;
+    units[index].selected = false;
 //    calculateOrderMarkerVisibility(index);
     //    soldierMenu.clear();
 }
@@ -1047,7 +1046,6 @@ function deselectUnit(index) {
   */
 function deselectAllUnits() {
     soldierMenu.clear();
-    var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
         deselectUnit(i);
     }
@@ -1060,7 +1058,6 @@ function deselectAllUnits() {
   */
 function selectedUnitsCount() {
     var result = 0;
-    var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
         if (units[i].selected === true)
             result ++;
@@ -1075,7 +1072,6 @@ function selectedUnitsCount() {
   */
 function selectedUnits() {
     var result = new Array;
-    var units = unitsLoader.item.children;
     for (var i = 0; i < units.length; i++) {
         if (units[i].selected === true)
             result.push(units[i]);

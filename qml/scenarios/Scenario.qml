@@ -65,15 +65,14 @@ BaseScenario {
 
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
-        GameManager.saveGame(unitsLoader.item.children, unitsLoader.item.mapFile);
+        GameManager.saveGame(units, unitsLoader.item.mapFile);
     }
 
     function playerUnits(player) {
         if (player === "") {
-            return unitsLoader.item.children;
+            return units;
         }
 
-        var units = unitsLoader.item.children;
         var unitsArray = new Array;
         for (var i = 0; i < units.length; ++i) {
             if (units[i].unitSide === player) {
@@ -86,10 +85,9 @@ BaseScenario {
     // TODO: make this a property! This method is invoked far too often!
     function enemyUnits(player) {
         if (player === "") {
-            return unitsLoader.item.children;
+            return units;
         }
 
-        var units = unitsLoader.item.children;
         var unitsArray = new Array;
         for (var i = 0; i < units.length; ++i) {
             if (units[i].unitSide !== player) {
@@ -102,9 +100,9 @@ BaseScenario {
     function togglePlayer() {
         var sides = new Array;
         // Find all available sides. TEMP!
-        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
-            if (EngineHelpers.arrayContains(sides, unitsLoader.item.children[i].unitSide) === -1) {
-                sides.push(unitsLoader.item.children[i].unitSide);
+        for (var i = 0; i < units.length; ++i) {
+            if (EngineHelpers.arrayContains(sides, units[i].unitSide) === -1) {
+                sides.push(units[i].unitSide);
             }
         }
 
@@ -128,15 +126,15 @@ BaseScenario {
     }
 
     function hideNonPlayerUnits() {
-        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
-            if (unitsLoader.item.children[i].unitSide !== ScenarioState.playerSide)
-                unitsLoader.item.children[i].visible = false;
+        for (var i = 0; i < units.length; ++i) {
+            if (units[i].unitSide !== ScenarioState.playerSide)
+                units[i].visible = false;
         }
     }
 
     function setSideMarks() {
-        for (var i = 0; i < unitsLoader.item.children.length; ++i) {
-            unitsLoader.item.children[i].sideMarkSource = ScenarioState.getSidePath(unitsLoader.item.children[i].unitSide);
+        for (var i = 0; i < units.length; ++i) {
+            units[i].sideMarkSource = ScenarioState.getSidePath(units[i].unitSide);
         }
     }
 
@@ -159,8 +157,8 @@ BaseScenario {
     function childIndex(child) {
         var result = 0;
 
-        for (var i = 0; i < unitsLoader.item.children.length; i++) {
-            if (child === unitsLoader.item.children[i]) {
+        for (var i = 0; i < units.length; i++) {
+            if (child === units[i]) {
                 result = i;
                 break;
             }
@@ -252,10 +250,11 @@ BaseScenario {
 
                             if (unitsLoader.item.objectName != "Campaign") {
                                 // This is a single scenario
-                                map.source = unitsLoader.item.mapFile
+                                map.source = unitsLoader.item.mapFile;
+                                units = unitsLoader.item.children;
 
-                                for (var i = 0; i < unitsLoader.item.children.length; i++) {
-                                    var unit = unitsLoader.item.children[i];
+                                for (var i = 0; i < units.length; i++) {
+                                    var unit = units[i];
                                     unit.unitIndex = i;
                                     togglePause.connect(unit.togglePause);
                                     unit.actionFinished.connect(ScenarioLogic.actionFinished);
@@ -263,8 +262,7 @@ BaseScenario {
                                     unitSideList.push(unit.unitSide);
                                 }
 
-                                units = unitsLoader.item.children;
-                                map.item.setUnits(unitsLoader.item.children);
+                                map.item.setUnits(units);
                             } else {
                                 // This is a campaign
                                 // TODO: add some clever code here ;)
