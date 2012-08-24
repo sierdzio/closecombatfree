@@ -23,11 +23,14 @@ import QtQuick 2.0
 Rectangle {
     property int centerX: width/2
     property int centerY: height/2
-    property color orderColor: "#bb3333"
+    property color orderColor: "#bb3333" // This can probably be removed. Color
+                                         // can be deduced from operation property.
     property int index: -1
     property int number: -1
+    property string operation: ""
+    property bool performed: false
 
-    signal dragComplete(int index, int number)
+//    signal dragComplete(int index, int number)
 
     id: root
     width: 21
@@ -68,11 +71,11 @@ Rectangle {
             minimumX: 5
             minimumY: 5
 
-            onActiveChanged: {
-                if(drag.active == false) {
-                    dragComplete(index, number);
-                }
-            }
+//            onActiveChanged: {
+//                if(drag.active == false) {
+//                    dragComplete(index, number);
+//                }
+//            }
         }
     }
 }

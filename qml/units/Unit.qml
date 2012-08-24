@@ -47,30 +47,31 @@ Item {
     property int unitWidth: 1 // mm - should be properly recalculated later on
     property int unitHeight: 1 // mm - should be properly recalculated later on
     property list<Soldier> soldiers //Soldiers.soldiers
-    property var orderMarkers: new Array
+//    property var orderMarkers: new Array
+    property var orders: new Array;
 
-    function setOrderMarker(index, orderNumber, orderName) {
-        // This component renders an order marker.
-        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
+//    function setOrderMarker(index, orderNumber, orderName) {
+//        // This component renders an order marker.
+//        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
 
-        if (component.status === Component.Ready) {
-            var marker = component.createObject(root);
-            marker.visible = true;
-            marker.index = index;
-            marker.number = orderNumber;
-//            marker.dragComplete.connect(modifyTargetFromMarker);
-            marker.orderColor = EngineHelpers.colorForOrder(orderName);
+//        if (component.status === Component.Ready) {
+//            var marker = component.createObject(root);
+//            marker.visible = true;
+//            marker.index = index;
+//            marker.number = orderNumber;
+////            marker.dragComplete.connect(modifyTargetFromMarker);
+//            marker.orderColor = EngineHelpers.colorForOrder(orderName);
 
-            orderMarkers.push(marker);
-            return marker;
-        } else {
-            return 0;
-        }
+//            orders.push(marker);
+//            return marker;
+//        } else {
+//            return 0;
+//        }
 
-//        marker.x = (targetX - marker.centerX);
-//        marker.y = (targetY - marker.centerY);
-//        marker.visible = true;
-    }
+////        marker.x = (targetX - marker.centerX);
+////        marker.y = (targetY - marker.centerY);
+////        marker.visible = true;
+//    }
 
     property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
     property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
@@ -88,7 +89,7 @@ Item {
     property string defenceSphereColor: ""
     property bool paused: false
     property bool moving: false
-    property var orderQueue: new Array;
+//    property var orderQueue: new Array;
 
     signal togglePause ()
     onTogglePause: {
@@ -108,17 +109,17 @@ Item {
     signal actionFinished (int index, real targetX, real targetY)
     signal queueOrderFinished ()
 
-    signal moveTo (real newX, real newY)
-    onMoveTo: ActionLogic.moveTo(newX, newY);
+    signal moveTo (real newX, real newY, var parent)
+    onMoveTo: ActionLogic.moveTo(newX, newY, parent);
 
-    signal moveFastTo (real newX, real newY)
-    onMoveFastTo: ActionLogic.moveFastTo(newX, newY);
+    signal moveFastTo (real newX, real newY, var parent)
+    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, parent);
 
-    signal sneakToSignal (real newX, real newY)
+    signal sneakToSignal (real newX, real newY, var parent)
 //    onSneakTo: ActionLogic.sneakTo(newX, newY);
-    function sneakTo(newX, newY) {
-        sneakToSignal(newX, newY);
-        ActionLogic.sneakTo(newX, newY);
+    function sneakTo(newX, newY, parent) {
+        sneakToSignal(newX, newY, parent);
+        ActionLogic.sneakTo(newX, newY, parent);
     }
 
     signal selectionChanged (bool state, int index)
@@ -130,7 +131,7 @@ Item {
     // TODO: investigate why signals don't work properly
 //    signal queueOrder (string orderName, real newX, real newY)
 //    onQueueOrder: ActionLogic.queueOrder(orderName, newX, newY);
-    function queueOrder(orderName, newX, newY) { ActionLogic.queueOrder(orderName, newX, newY); }
+    function queueOrder(orderName, newX, newY, parent) { ActionLogic.queueOrder(orderName, newX, newY, parent); }
 
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
@@ -180,20 +181,20 @@ Item {
         unitStatusChanged(newStatusMessage, unitIndex);
     }
 
-    function modifyOrder(orderNumber, newX, newY) {
-        var order = orderQueue[orderNumber];
-        order.x = newX;
-        order.y = newY;
-        order.performed = false;
-    }
+//    function modifyOrder(orderNumber, newX, newY) {
+//        var order = orderQueue[orderNumber];
+//        order.x = newX + marker.centerX;
+//        order.y = newY + marker.centerY;
+//        order.performed = false;
+//    }
 
     function clearOrderQueue() {
-        for (var i = 0; i < orderQueue.length; i++) {
-            orderQueue[i].destroy();
+        for (var i = 0; i < orders.length; i++) {
+            orders[i].destroy();
         }
         currentOrder = -1;
 
-        return orderQueue = new Array;
+        return orders = new Array;
     }
 
     Text {
@@ -318,7 +319,7 @@ Item {
     //// Temp debug
     Rectangle {
         id: destroyedState
-        visible: (parent.state == "healthy")? false : true;
+        visible: (parent.state === "healthy")? false : true;
         width: 10
         height: width
         radius: 10

@@ -55,7 +55,7 @@ function scheduleContextAction(index, operation) {
             // Iterate over every unit!
             for (var i = 0; i < units.length; i++) {
                 units[i].cancelOrder();
-                calculateOrderMarkerVisibility(units[i].unitIndex);
+//                calculateOrderMarkerVisibility(units[i].unitIndex);
             }
             cleanContextAction();
         } else if (operation === "Follow") {
@@ -209,9 +209,9 @@ function issueWaypointOrder(unit, x, y) {
     unit.defenceSphereColor = "";
     unit.changeStatus("READY");
 
-    unit.queueOrder(operation, x, y);
+    unit.queueOrder(operation, x, y, zoomArea);
 
-    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
+//    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
 }
 
 /*!
@@ -230,18 +230,18 @@ function issueActionOrder(unit, x, y) {
     unit.changeStatus("READY");
 
     if (operation === "Move") {
-        unit.moveTo(x, y);
+        unit.moveTo(x, y, zoomArea);
     } else if (operation === "Move fast") {
-        unit.moveFastTo(x, y);
+        unit.moveFastTo(x, y, zoomArea);
     } else if (operation === "Sneak") {
-        unit.sneakTo(x, y);
+        unit.sneakTo(x, y, zoomArea);
     } else if (operation === "Attack") {
-        unit.fireTo(x, y);
+        unit.fireTo(x, y, zoomArea);
     } else if (operation === "Smoke") {
-        unit.smokeTo(x, y);
+        unit.smokeTo(x, y, zoomArea);
     }
 
-    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
+//    setOrderMarker(unit.unitIndex, unit.orderQueue.length - 1, operation, x, y);
 }
 
 /*!
@@ -253,7 +253,7 @@ function actionFinished(index, targetX, targetY) {
     var unit = unitsLoader.item.children[index];
 
     if (unit.currentOrder !== -1) {
-        var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
+        var scheduledOperation = unit.orders[unit.currentOrder].operation;
         if ((scheduledOperation !== "Move")
                 && (scheduledOperation !== "Move fast")
                 && (scheduledOperation !== "Sneak")
@@ -262,7 +262,7 @@ function actionFinished(index, targetX, targetY) {
             checkScenarioFinished();
         }
 
-        calculateOrderMarkerVisibility(index);
+//        calculateOrderMarkerVisibility(index);
     }
 }
 
@@ -321,7 +321,7 @@ function firingActionFinished(index, targetX, targetY) {
         }
 
         effectsContainer.push(effect);
-        var scheduledOperation = unit.orderQueue[unit.currentOrder].operation;
+        var scheduledOperation = unit.orders[unit.currentOrder].operation;
 
         if (scheduledOperation === "Attack") {
             effect.animationString = "gun_fire";
@@ -733,7 +733,7 @@ function handleKeyPress(event) {
                 if (event.key === Config.keyForFunction("Stop")) {
                     for (var i = 0; i < selectedOnes.length; i++) {
                         selectedOnes[i].cancelOrder();
-                        calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
+//                        calculateOrderMarkerVisibility(selectedOnes[i].unitIndex);
                     }
                 } else if (event.key === Config.keyForFunction("Move fast")) {
                     unitIndex = selectedOnes[0].unitIndex;
@@ -1026,7 +1026,7 @@ function selectUnit(index, modifier) {
         }
     }
 
-    calculateOrderMarkerVisibility(index);
+//    calculateOrderMarkerVisibility(index);
 }
 
 /*!
@@ -1036,7 +1036,7 @@ function selectUnit(index, modifier) {
   */
 function deselectUnit(index) {
     unitsLoader.item.children[index].selected = false;
-    calculateOrderMarkerVisibility(index);
+//    calculateOrderMarkerVisibility(index);
     //    soldierMenu.clear();
 }
 
@@ -1186,67 +1186,69 @@ function digitPressed(event) {
 
   Checks which order markers should be visible and clears those no longer needed.
   */
-function calculateOrderMarkerVisibility(index) {
-    Logger.log("Calculating order markers' visibility...");
-    var unit = unitsLoader.item.children[index];
-    var orderMarker = unit.orderMarkers;
+//function calculateOrderMarkerVisibility(index) {
+//    Logger.log("Order markers' visibility needs a rewrite.");
 
-    var anyOrdersLeft = false;
-    var orders = unit.orderQueue;
 
-    if (orders.length === 0) {
-        for (var i = 0; i < orderMarker.length; i++) {
-            if (orderMarker[i] !== 0) {
-                orderMarker[i].destroy();
-                orderMarker[i] = 0;
-            }
-        }
-    } else {
-        for (var i = 0; i < orders.length; i++) {
-            if (orders[i].performed === true) {
-                if (i < orderMarker.length) {
-                    if (orderMarker[i] !== 0) {
-                        orderMarker[i].destroy();
-                        orderMarker[i] = 0;
-                    }
-                }
-            } else {
-                anyOrdersLeft = true;
-            }
-        }
-    }
+//    var unit = unitsLoader.item.children[index];
+//    var orderMarker = unit.orderMarkers;
 
-    // Clean markers on queue finish
-    if (anyOrdersLeft == false) {
-        orderMarker = new Array;
-    }
-}
+//    var anyOrdersLeft = false;
+//    var orders = unit.orderQueue;
+
+//    if (orders.length === 0) {
+//        for (var i = 0; i < orderMarker.length; i++) {
+//            if (orderMarker[i] !== 0) {
+//                orderMarker[i].destroy();
+//                orderMarker[i] = 0;
+//            }
+//        }
+//    } else {
+//        for (var i = 0; i < orders.length; i++) {
+//            if (orders[i].performed === true) {
+//                if (i < orderMarker.length) {
+//                    if (orderMarker[i] !== 0) {
+//                        orderMarker[i].destroy();
+//                        orderMarker[i] = 0;
+//                    }
+//                }
+//            } else {
+//                anyOrdersLeft = true;
+//            }
+//        }
+//    }
+
+//    // Clean markers on queue finish
+//    if (anyOrdersLeft == false) {
+//        orderMarker = new Array;
+//    }
+//}
 
 /*!
   \memberof engineScenarioLogic
 
   Crreates an order marker and places it on game map.
   */
-function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
-    Logger.log("Setting an order marker.");
-    var marker = unitsLoader.item.children[index].setOrderMarker(index, orderNumber, orderName);
-    marker.parent = zoomArea;
-    marker.dragComplete.connect(modifyTargetFromMarker);
-    marker.x = (targetX - marker.centerX);
-    marker.y = (targetY - marker.centerY);
-}
+//function setOrderMarker(index, orderNumber, orderName, targetX, targetY) {
+//    Logger.log("Setting an order marker.");
+//    var marker = unitsLoader.item.children[index].setOrderMarker(index, orderNumber, orderName);
+//    marker.parent = zoomArea;
+//    marker.dragComplete.connect(modifyTargetFromMarker);
+//    marker.x = (targetX - marker.centerX);
+//    marker.y = (targetY - marker.centerY);
+//}
 
 /*!
   \memberof engineScenarioLogic
 
   When user drags order marker about the game area, unit's orders are being updated.
   */
-function modifyTargetFromMarker(unitIndex, orderNumber) {
-    var marker = unitsLoader.item.children[unitIndex].orderMarkers[orderNumber];
-    var newX = marker.x + marker.centerX;
-    var newY = marker.y + marker.centerY;
-    unitsLoader.item.children[unitIndex].modifyOrder(orderNumber, newX, newY);
-}
+//function modifyTargetFromMarker(unitIndex, orderNumber) {
+//    var marker = unitsLoader.item.children[unitIndex].orderMarkers[orderNumber];
+//    var newX = marker.x + marker.centerX;
+//    var newY = marker.y + marker.centerY;
+//    unitsLoader.item.children[unitIndex].modifyOrder(orderNumber, newX, newY);
+//}
 
 /*!
   \memberof engineScenarioLogic

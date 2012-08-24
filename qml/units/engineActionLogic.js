@@ -32,8 +32,8 @@
 
   Queues the order to move at casual speed; starts processing of the queue.
   */
-function moveTo (newX, newY) {
-    queueOrder("Move", newX, newY);
+function moveTo (newX, newY, reparent) {
+    queueOrder("Move", newX, newY, reparent);
     processQueue();
 }
 
@@ -42,8 +42,8 @@ function moveTo (newX, newY) {
 
   Queues the order to move fast; starts processing of the queue.
   */
-function moveFastTo (newX, newY) {
-    queueOrder("Move fast", newX, newY);
+function moveFastTo (newX, newY, reparent) {
+    queueOrder("Move fast", newX, newY, reparent);
     processQueue();
 }
 
@@ -52,8 +52,8 @@ function moveFastTo (newX, newY) {
 
   Queues the order to move at slow speed; starts processing of the queue.
   */
-function sneakTo (newX, newY) {
-    queueOrder("Sneak", newX, newY);
+function sneakTo (newX, newY, reparent) {
+    queueOrder("Sneak", newX, newY, reparent);
     processQueue();
 }
 
@@ -87,8 +87,8 @@ function performMovement (newX, newY, factor) {
 
   Queues the order fire smoke with the turret; starts processing of the queue.
   */
-function turretSmokeTo (targetX, targetY) {
-    queueOrder("Smoke", targetX, targetY);
+function turretSmokeTo (targetX, targetY, reparent) {
+    queueOrder("Smoke", targetX, targetY, reparent);
     processQueue();
 }
 
@@ -97,8 +97,8 @@ function turretSmokeTo (targetX, targetY) {
 
   Queues the order attack with the turret; starts processing of the queue.
   */
-function turretFireTo (targetX, targetY) {
-    queueOrder("Attack", targetX, targetY);
+function turretFireTo (targetX, targetY, reparent) {
+    queueOrder("Attack", targetX, targetY, reparent);
     processQueue();
 }
 
@@ -154,17 +154,29 @@ function cancelOrder () {
 
   Puts a new order at the end of a queue.
   */
-function queueOrder (orderName, newX, newY) {
+function queueOrder (orderName, newX, newY, parent) {
     // QRC is needed here, because files from different directories have acces
     // to this method, and relative paths don't work for all of them.
-    var component = Qt.createComponent("qrc:/core/units/Order.qml");
-    var order;
+    Logger.log("Are we here?");
+    var component = Qt.createComponent("qrc:/gui/OrderMarker.qml");
 
+    Logger.log("Component completed.");
     if (component.status === Component.Ready) {
-        order = component.createObject(root, {"x": newX, "y": newY, "operation": orderName});
-    }
+        Logger.log("Component ready.");
+        var order = component.createObject(root);
+        order.visible = true;
+        order.index = orders.length;
+        order.number = orders.length;
+        order.operation = orderName;
+        order.parent = parent;
+//        order.dragComplete.connect(modifyOrder);
+        order.orderColor = EngineHelpers.colorForOrder(orderName);
 
-    orderQueue.push(order);
+        order.x = (newX - order.centerX);
+        order.y = (newY - order.centerY);
+        order.visible = true;
+        orders.push(order);
+    }
 }
 
 /*!
@@ -187,8 +199,8 @@ function processQueue () {
 function continueQueue () {
     var noOrdersLeft = true;
 
-    for (var i = 0; i < orderQueue.length; i++) {
-        var order = orderQueue[i];
+    for (var i = 0; i < orders.length; i++) {
+        var order = orders[i];
         if (order.performed === true) {
             continue;
         } else {
@@ -237,5 +249,5 @@ function hit(byWhat, xWhere, yWhere) {
 //    else
         state = "destroyed_base";
 
-    console.log("Hit! By: " + byWhat + ", where: (" + xWhere + ", " + yWhere + ")");
+    Logger.log("Hit! By: " + byWhat + ", where: (" + xWhere + ", " + yWhere + ")");
 }

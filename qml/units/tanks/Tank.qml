@@ -56,14 +56,14 @@ Unit {
         turret.y = centerY - turret.centerY;
     }
 
-    signal fireTo (real targetX, real targetY)
-    onFireTo: ActionLogic.turretFireTo(targetX, targetY);
+    signal fireTo (real targetX, real targetY, var parent)
+    onFireTo: ActionLogic.turretFireTo(targetX, targetY, parent);
 
-    signal smokeToSignal (real targetX, real targetY)
+    signal smokeToSignal (real targetX, real targetY, var parent)
 //    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
-    function smokeTo(targetX, targetY) {
-        smokeToSignal(targetX, targetY);
-        ActionLogic.turretSmokeTo(targetX, targetY);
+    function smokeTo(targetX, targetY, parent) {
+        smokeToSignal(targetX, targetY, parent);
+        ActionLogic.turretSmokeTo(targetX, target, parentY);
     }
 
     function performFiring() {
