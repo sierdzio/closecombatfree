@@ -157,18 +157,14 @@ function cancelOrder () {
 function queueOrder (orderName, newX, newY, parent) {
     // QRC is needed here, because files from different directories have acces
     // to this method, and relative paths don't work for all of them.
-    Logger.log("Are we here?");
     var component = Qt.createComponent("qrc:/gui/OrderMarker.qml");
 
-    Logger.log("Component completed.");
     if (component.status === Component.Ready) {
-        Logger.log("Component ready.");
-        var order = component.createObject(root);
+        var order = component.createObject(parent);
         order.visible = true;
         order.index = orders.length;
         order.number = orders.length;
         order.operation = orderName;
-        order.parent = parent;
 //        order.dragComplete.connect(modifyOrder);
         order.orderColor = EngineHelpers.colorForOrder(orderName);
 

@@ -181,15 +181,8 @@ Item {
         unitStatusChanged(newStatusMessage, unitIndex);
     }
 
-//    function modifyOrder(orderNumber, newX, newY) {
-//        var order = orderQueue[orderNumber];
-//        order.x = newX + marker.centerX;
-//        order.y = newY + marker.centerY;
-//        order.performed = false;
-//    }
-
     function clearOrderQueue() {
-        for (var i = 0; i < orders.length; i++) {
+        for (var i = 0; i < orders.length; ++i) {
             orders[i].destroy();
         }
         currentOrder = -1;

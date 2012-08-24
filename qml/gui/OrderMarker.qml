@@ -30,8 +30,6 @@ Rectangle {
     property string operation: ""
     property bool performed: false
 
-//    signal dragComplete(int index, int number)
-
     id: root
     width: 21
     height: width
@@ -70,12 +68,6 @@ Rectangle {
             axis: Drag.XandYAxis
             minimumX: 5
             minimumY: 5
-
-//            onActiveChanged: {
-//                if(drag.active == false) {
-//                    dragComplete(index, number);
-//                }
-//            }
         }
     }
 }
