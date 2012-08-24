@@ -23,6 +23,8 @@ import QtQuick 2.0
 Rectangle {
     property int centerX: width/2
     property int centerY: height/2
+    property real targetX: x + centerX
+    property real targetY: y + centerY
     property color orderColor: "#bb3333" // This can probably be removed. Color
                                          // can be deduced from operation property.
     property int index: -1

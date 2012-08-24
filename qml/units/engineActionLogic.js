@@ -203,18 +203,18 @@ function continueQueue () {
 
             if (order.operation === "Move") {
                 changeStatus("MOVING");
-                performMovement(order.x, order.y, 1);
+                performMovement(order.targetX, order.targetY, 1);
             } else if (order.operation === "Move fast") {
                 changeStatus("MOVING FAST");
-                performMovement(order.x, order.y, moveFastFactor);
+                performMovement(order.targetX, order.targetY, moveFastFactor);
             } else if (order.operation === "Sneak") {
                 changeStatus("SNEAKING");
-                performMovement(order.x, order.y, sneakFactor);
+                performMovement(order.targetX, order.targetY, sneakFactor);
             } else if (order.operation === "Smoke") {
-                performTurretShooting(order.x, order.y);
+                performTurretShooting(order.targetX, order.targetY);
                 smoking = true;
             } else if (order.operation === "Attack") {
-                performTurretShooting(order.x, order.y);
+                performTurretShooting(order.targetX, order.targetY);
                 firing = true;
             }
 
