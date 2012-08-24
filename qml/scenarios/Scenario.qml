@@ -103,6 +103,7 @@ BaseScenario {
         return unitsArray;
     }
 
+    // TODO: make this a property! This method is invoked far too often!
     function enemyUnits(player) {
         if (player === "") {
             return unitsLoader.item.children;
@@ -274,11 +275,12 @@ BaseScenario {
                                 map.source = unitsLoader.item.mapFile
 
                                 for (var i = 0; i < unitsLoader.item.children.length; i++) {
-                                    unitsLoader.item.children[i].unitIndex = i;
-                                    togglePause.connect(unitsLoader.item.children[i].togglePause);
-                                    unitsLoader.item.children[i].actionFinished.connect(ScenarioLogic.actionFinished);
-                                    unitsLoader.item.children[i].movementStateChange.connect(ScenarioLogic.handleUnitMovement);
-                                    unitSideList.push(unitsLoader.item.children[i].unitSide);
+                                    var unit = unitsLoader.item.children[i];
+                                    unit.unitIndex = i;
+                                    togglePause.connect(unit.togglePause);
+                                    unit.actionFinished.connect(ScenarioLogic.actionFinished);
+                                    unit.movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                                    unitSideList.push(unit.unitSide);
                                 }
 
                                 map.item.setUnits(unitsLoader.item.children);
@@ -603,7 +605,6 @@ BaseScenario {
         running: true
         repeat: true
         onTriggered: {
-//            console.log("Am I running?");
             ScenarioLogic.updateUnitVisibility();
         }
     }

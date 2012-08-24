@@ -82,7 +82,6 @@ Item {
 
     signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
-    signal queueOrderFinished ()
 
     signal moveTo (real newX, real newY, var reparent)
     onMoveTo: ActionLogic.moveTo(newX, newY, reparent);
@@ -111,8 +110,9 @@ Item {
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
 
-    signal continueQueue ()
-    onContinueQueue: ActionLogic.continueQueue();
+//    signal continueQueue ()
+//    onContinueQueue: ActionLogic.continueQueue();
+    function continueQueue() { ActionLogic.continueQueue(); }
 
     // TODO: investigate why signals don't work properly
 //    signal hit(string byWhat, real xWhere, real yWhere) // should be variant.
@@ -138,19 +138,6 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        queueOrderFinished.connect(continueQueue);
-
-        // Code that displays all info on unit's states:
-//        var result = "Unit: " + unitType + "\n";
-//        for (var i = 0; i < states.length; i++) {
-//            state = states[i].name;
-//            result += "State: " + states[i].name + ", temp text: " + temp + "\n";
-//        }
-//        result += "\n";
-//        console.log(result);
-    }
-
     function changeStatus(newStatusMessage) {
         unitStatus = newStatusMessage;
         unitStatusChanged(newStatusMessage, unitIndex);
@@ -161,9 +148,10 @@ Item {
             orders[i].destroy();
         }
         currentOrder = -1;
+
 //        delete orders;
 
-        return orders = new Array;
+        return (orders = new Array);
     }
 
     Text {
@@ -271,7 +259,7 @@ Item {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
                 actionFinished(unitIndex, __tempX, __tempY);
-                queueOrderFinished();
+                continueQueue();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
             }

@@ -1204,7 +1204,7 @@ function updateUnitVisibility() {
                     && !EngineHelpers.isObstacleInLOS(map.item.getProps(),
                                                       x1, y1, x2, y2,
                                                       friendlyUnitsList[i])) {
-                console.log("Now visible: " + enemyUnitsList[j].objectName
+                Logger.log("Now visible: " + enemyUnitsList[j].objectName
                             + ", spotted by: " + friendlyUnitsList[i].objectName);
                 enemyUnitsList[j].visible = true;
             }
