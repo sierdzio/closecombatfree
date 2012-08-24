@@ -21,12 +21,13 @@
 #include <QtCore/QFile>
 
 #include "ccfglobal.h"
+#include "config/ccflogger.h"
 
 /*!
   A simple constructor. Initialises parent QObject and CcfError.
   */
-CcfGlobal::CcfGlobal(QObject *parent) :
-    QObject(parent), CcfError()
+CcfGlobal::CcfGlobal(QObject *parent, CcfLogger *logger) :
+    QObject(parent), CcfError(), m_logger(logger)
 {
 }
 
@@ -49,6 +50,7 @@ void CcfGlobal::statusMsg(const QString &message)
   */
 void CcfGlobal::statusMessage(const QString &message)
 {
+    m_logger->log(message);
     emit newStatusMessage(message, this->sender());
 }
 

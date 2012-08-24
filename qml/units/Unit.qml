@@ -47,31 +47,7 @@ Item {
     property int unitWidth: 1 // mm - should be properly recalculated later on
     property int unitHeight: 1 // mm - should be properly recalculated later on
     property list<Soldier> soldiers //Soldiers.soldiers
-//    property var orderMarkers: new Array
     property var orders: new Array;
-
-//    function setOrderMarker(index, orderNumber, orderName) {
-//        // This component renders an order marker.
-//        var component = Qt.createComponent("../../qml/gui/OrderMarker.qml");
-
-//        if (component.status === Component.Ready) {
-//            var marker = component.createObject(root);
-//            marker.visible = true;
-//            marker.index = index;
-//            marker.number = orderNumber;
-////            marker.dragComplete.connect(modifyTargetFromMarker);
-//            marker.orderColor = EngineHelpers.colorForOrder(orderName);
-
-//            orders.push(marker);
-//            return marker;
-//        } else {
-//            return 0;
-//        }
-
-////        marker.x = (targetX - marker.centerX);
-////        marker.y = (targetY - marker.centerY);
-////        marker.visible = true;
-//    }
 
     property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
     property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
@@ -89,7 +65,6 @@ Item {
     property string defenceSphereColor: ""
     property bool paused: false
     property bool moving: false
-//    property var orderQueue: new Array;
 
     signal togglePause ()
     onTogglePause: {

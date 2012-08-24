@@ -36,12 +36,12 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
 {
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
 
-    global = new CcfGlobal(this);
+    logger = new CcfLogger(this, cmdLnParser->isDebug());
+    global = new CcfGlobal(this, logger);
     gameManager = new CcfGameManager(this);
     terrain = new CcfTerrain(this);
     engineHelpers = new CcfEngineHelpers(this);
     scenarioState = new CcfScenarioState(this);
-    logger = new CcfLogger(this, cmdLnParser->isDebug());
     initConfiguration();
 
     rootContext()->setContextProperty("Global", global);

@@ -72,7 +72,8 @@ BaseScenario {
             // If it' desktop, menus should be unrolled:
             if (Config.uiMode == "DESKTOP") {
                 topMenu.openMenu();
-                bottomMenu.openMenu();
+                // TODO: turn back on for release. It's off now because it's annoying ;)
+//                bottomMenu.openMenu();
             }
 
             Config.windowWidthChanged.connect(updateWidth);
@@ -286,8 +287,6 @@ BaseScenario {
                                 // TODO: add some clever code here ;)
                             }
 
-                            // Creates base for order markers.
-//                            ScenarioLogic.initOrderMarkers();
                             roster.populateUnits(playerUnits(ScenarioState.playerSide));
                             hideNonPlayerUnits();
                             ScenarioState.setAvailableSides(unitSideList);

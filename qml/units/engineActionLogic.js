@@ -161,7 +161,6 @@ function queueOrder (orderName, newX, newY, parent) {
 
     if (component.status === Component.Ready) {
         var order = component.createObject(parent);
-        order.visible = true;
         order.index = orders.length;
         order.number = orders.length;
         order.operation = orderName;
