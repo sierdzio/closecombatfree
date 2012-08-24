@@ -5,94 +5,10 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
 {
     m_zoom = 1.0;
     m_paused = false;
+    m_menuBackgroundColor = QColor("#7e8c24");
 }
 
-// Non-properties
-
-/*!
-  Checks which order markers should be visible and clears those no longer needed.
-  */
-//void CcfQmlBaseScenario::calculateOrderMarkerVisibility(int index)
-//{
-//    QObject *orderMarker = m_orderMarkersContainer.value(index);
-//    var unit = unitsLoader.item.children[index];
-
-//    var anyOrdersLeft = false;
-//    var orders = unit.orderQueue;
-
-//    if (orders.length == 0) {
-//        for (var i = 0; i < orderMarker.length; i++) {
-//            if (orderMarker[i] != 0) {
-//                orderMarker[i].destroy();
-//                orderMarker[i] = 0;
-//            }
-//        }
-//    } else {
-//        for (var i = 0; i < orders.length; i++) {
-//            if (orders[i].performed == true) {
-//                if (i < orderMarker.length) {
-//                    if (orderMarker[i] != 0) {
-//                        orderMarker[i].destroy();
-//                        orderMarker[i] = 0;
-//                    }
-//                }
-//            } else {
-//                anyOrdersLeft = true;
-//            }
-//        }
-//    }
-
-//    // Clean markers on queue finish
-//    if (anyOrdersLeft == false) {
-//        orderMarker = new Array;
-//    }
-//}
-
-/*!
-  Crreates an order marker and places it on game map.
-  */
-//void CcfQmlBaseScenario::setOrderMarker(int index, int orderNumber, const QString &orderName,
-//                                        qreal targetX, qreal targetY)
-//{
-//    QObject *marker;
-//    this->metaObject()->invokeMethod(this, "createOrderMarkerComponent", Qt::DirectConnection, Q_RETURN_ARG(QObject, *marker));
-
-//    marker->setProperty("index", index);
-//    marker->setProperty("number", orderNumber);
-//    marker.dragComplete.connect(modifyTargetFromMarker);
-//    orderMarkersContainer[index][orderNumber] = marker;
-
-//    marker->setProperty("x", (targetX - marker->property("centerX").toInt()));
-//    marker->setProperty("y", (targetY - marker->property("centerY").toInt()));
-//    marker->setProperty("orderColor", EngineHelpers.colorForOrder(orderName));
-//    marker->setProperty("visible", true);
-//    m_orderMarkersContainer.insert(index, marker);
-//}
-
-/*!
-  When user drags order marker about the game area, unit's orders are being updated.
-  */
-//void CcfQmlBaseScenario::modifyTargetFromMarker(int unitIndex, int orderNumber)
-//{
-//    var marker = orderMarkersContainer[unitIndex][orderNumber];
-//    var newX = marker.x + marker.centerX;
-//    var newY = marker.y + marker.centerY;
-//    var unit = unitsLoader.item.children[unitIndex];
-
-    // Not sure whether this should stay!
-    //    unit.cancelOrder();
-//    unit.modifyOrder(orderNumber, newX, newY);
-//}
-
-/*!
-  Initialises order markers' container.
-  */
-//void CcfQmlBaseScenario::initOrderMarkers()
-//{
-//    for (var i = 0; i < unitsLoader.item.children.length; i++) {
-//        orderMarkersContainer[i] = new Array;
-//    }
-//}
+// Non-properties:
 
 // Property getters:
 
@@ -134,11 +50,6 @@ QString CcfQmlBaseScenario::getMapFile()
 //QList<QObject *> CcfQmlBaseScenario::getEffectsContainer()
 //{
 //    return m_effectsContainer;
-//}
-
-//QList<QObject *> CcfQmlBaseScenario::getOrderMarkersContainer()
-//{
-//    return m_orderMarkersContainer;
 //}
 
 //QList<QObject *> CcfQmlBaseScenario::getUnitGroups()
@@ -262,19 +173,6 @@ void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
 
 //    if (wasChaged)
 //        emit effectsContainerChanged();
-//}
-
-//void CcfQmlBaseScenario::setOrderMarkersContainer(const QList<QObject *> &orderMarkersContainer)
-//{
-//    qDebug(qPrintable("O. markers length: %d"), orderMarkersContainer.length());
-//    bool wasChaged = false;
-//    if (orderMarkersContainer != m_orderMarkersContainer)
-//        wasChaged = true;
-
-//    m_orderMarkersContainer = orderMarkersContainer;
-
-//    if (wasChaged)
-//        emit orderMarkersContainerChanged();
 //}
 
 //void CcfQmlBaseScenario::setUnitGroups(const QList<QObject *> &unitGroups)

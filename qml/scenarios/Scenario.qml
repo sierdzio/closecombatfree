@@ -24,21 +24,8 @@ import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 import QmlBase 0.1
 
 BaseScenario {
-//Rectangle {
-//    property string scenarioFile: ""
-//    property string scenarioWinStatus: "no" // won, lost, ...
-//    property int __aimLineRotation: 0
-//    property int __rubberBandRotation: 0
-//    property int __unitIndex: -1
-//    // Is this a single scenario, or a campaign? Convenience bool (same info can
-//    // be taken from other sources
-//    property bool __isCampaign: false
-//    // Map path for campaigns
-//    property string mapFile: ""
 //    // Holds graphical effects (muzzle flashes, hit animations etc.).
     property var effectsContainer: new Array;
-//    // Holds order markers.
-//    property var orderMarkersContainer: new Array;
 //    // Holds unit groups (ones created with CTRL + digit).
     property var unitGroups: new Array(10);
 
@@ -62,7 +49,6 @@ BaseScenario {
 
     id: root
     focus: true;
-//    color: menuBackgroundColor
 
     anchors.left: parent.left
     anchors.top: parent.top
