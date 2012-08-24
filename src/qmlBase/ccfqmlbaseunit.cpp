@@ -65,13 +65,13 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
 //    m_centerY = m_unitHeight/2;
 //    m_tempX;
 //    m_tempY;
-    m_scheduledOperation = QString();
+//    m_scheduledOperation = QString();
     m_currentOrder = -1;
     m_selected = false;
     m_firing = false;
     m_smoking = false;
     m_defenceSphereRotation = 0;
-    m_defenceSphereColor = QString();
+//    m_defenceSphereColor = QString();
     m_paused = false;
     m_moving = false;
 }

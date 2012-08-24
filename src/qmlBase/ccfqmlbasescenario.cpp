@@ -6,7 +6,10 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
     m_zoom = 1.0;
     m_paused = false;
     m_menuBackgroundColor = QColor("#7e8c24");
-//    m_units = NULL;
+    m_aimLineRotation = 0;
+    m_rubberBandRotation = 0;
+    m_unitIndex = -1;
+    m_isCampaign = false;
 }
 
 // Non-properties:
