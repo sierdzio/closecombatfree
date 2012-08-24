@@ -24,6 +24,7 @@
 
 #include "ccfmain.h"
 #include "qmlBase/ccfqmlbasescenario.h"
+#include "qmlBase/ccfqmlbaseunit.h"
 
 /*!
   Main view's constructor, full of important stuff.
@@ -35,6 +36,7 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
     QQuickView(parent), CcfError(), cmdLnParser(cmd)
 {
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
+    qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");
 
     logger = new CcfLogger(this, cmdLnParser->isDebug());
     global = new CcfGlobal(this, logger);

@@ -22,8 +22,9 @@ import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/units"
 import "../../qml/units/engineActionLogic.js" as ActionLogic
+import QmlBase 0.1
 
-Item {
+BaseUnit {
 //    property string objectType: "unit"
 //    // Sadly, this is needed for file saving:
 //    property string unitFileName: "Unit"
@@ -46,16 +47,17 @@ Item {
 //    property int acceleration: 1 // m/s^2 (maybe... could be arbitrary - to be decided later)
 //    property int unitWidth: 1 // mm - should be properly recalculated later on
 //    property int unitHeight: 1 // mm - should be properly recalculated later on
-//    property list<Soldier> soldiers //Soldiers.soldiers
+    property list<Soldier> soldiers //Soldiers.soldiers
 //    property var orders: new Array;
 
 //    property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
 //    property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
-//    property int centerX: unitWidth/2
-//    property int centerY: unitHeight/2
 
-//    property int __tempX: x
-//    property int __tempY: y
+    centerX: unitWidth/2
+    centerY: unitHeight/2
+
+    tempX: x
+    tempY: y
 //    property string scheduledOperation;
 //    property int currentOrder: -1
 //    property bool selected: false
@@ -227,9 +229,9 @@ Item {
 
         onRunningChanged: { // Not sure whether doing that will be good under all circumstances
             if ((!rotationAnimation.running) && (unitStatus != "STOPPED")) {
-                xMoveAnimation.to = __tempX;
+                xMoveAnimation.to = tempX;
                 xMoveAnimation.running = true;
-                yMoveAnimation.to = __tempY;
+                yMoveAnimation.to = tempY;
                 yMoveAnimation.running = true;
             }
         }
@@ -249,7 +251,7 @@ Item {
             if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
-                actionFinished(unitIndex, __tempX, __tempY);
+                actionFinished(unitIndex, tempX, tempY);
                 continueQueue();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");
