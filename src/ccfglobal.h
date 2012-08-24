@@ -44,7 +44,7 @@ class CcfGlobal : public QObject, public CcfError
     Q_OBJECT
 
 public:
-    explicit CcfGlobal(QObject *parent = 0, CcfLogger *logger);
+    explicit CcfGlobal(QObject *parent = 0, CcfLogger *logger = 0);
     Q_INVOKABLE void disableQrcUse(QObject *object);
     Q_INVOKABLE QString getFileContents(const QString &filePath);
 

@@ -154,13 +154,13 @@ function cancelOrder () {
 
   Puts a new order at the end of a queue.
   */
-function queueOrder (orderName, newX, newY, parent) {
+function queueOrder (orderName, newX, newY, reparent) {
     // QRC is needed here, because files from different directories have acces
     // to this method, and relative paths don't work for all of them.
     var component = Qt.createComponent("qrc:/gui/OrderMarker.qml");
 
     if (component.status === Component.Ready) {
-        var order = component.createObject(parent);
+        var order = component.createObject(reparent);
         order.index = orders.length;
         order.number = orders.length;
         order.operation = orderName;

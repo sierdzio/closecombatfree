@@ -84,17 +84,17 @@ Item {
     signal actionFinished (int index, real targetX, real targetY)
     signal queueOrderFinished ()
 
-    signal moveTo (real newX, real newY, var parent)
-    onMoveTo: ActionLogic.moveTo(newX, newY, parent);
+    signal moveTo (real newX, real newY, var reparent)
+    onMoveTo: ActionLogic.moveTo(newX, newY, reparent);
 
-    signal moveFastTo (real newX, real newY, var parent)
-    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, parent);
+    signal moveFastTo (real newX, real newY, var reparent)
+    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, reparent);
 
-    signal sneakToSignal (real newX, real newY, var parent)
+    signal sneakToSignal (real newX, real newY, var reparent)
 //    onSneakTo: ActionLogic.sneakTo(newX, newY);
-    function sneakTo(newX, newY, parent) {
-        sneakToSignal(newX, newY, parent);
-        ActionLogic.sneakTo(newX, newY, parent);
+    function sneakTo(newX, newY, reparent) {
+        sneakToSignal(newX, newY, reparent);
+        ActionLogic.sneakTo(newX, newY, reparent);
     }
 
     signal selectionChanged (bool state, int index)
@@ -106,7 +106,7 @@ Item {
     // TODO: investigate why signals don't work properly
 //    signal queueOrder (string orderName, real newX, real newY)
 //    onQueueOrder: ActionLogic.queueOrder(orderName, newX, newY);
-    function queueOrder(orderName, newX, newY, parent) { ActionLogic.queueOrder(orderName, newX, newY, parent); }
+    function queueOrder(orderName, newX, newY, reparent) { ActionLogic.queueOrder(orderName, newX, newY, reparent); }
 
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
@@ -161,6 +161,7 @@ Item {
             orders[i].destroy();
         }
         currentOrder = -1;
+//        delete orders;
 
         return orders = new Array;
     }
