@@ -65,10 +65,10 @@ function sneakTo (newX, newY, reparent) {
   When rotation stops, code in Unit.qml picks up and starts movement.
   */
 function performMovement (newX, newY, factor) {
-    __tempX = newX - (centerX);
-    __tempY = newY - (centerY);
+    tempX = newX - (centerX);
+    tempY = newY - (centerY);
 
-    var newRotation = EngineHelpers.rotationAngle(x, y, __tempX, __tempY);
+    var newRotation = EngineHelpers.rotationAngle(x, y, tempX, tempY);
     rotationAnimation.duration = EngineHelpers.rotationDuration(rotation,
                                                         newRotation, rotationSpeed);
     rotationAnimation.to = newRotation;
@@ -76,8 +76,8 @@ function performMovement (newX, newY, factor) {
     moving = true;
 
     var moveDuration = EngineHelpers.targetDistance(x, y,
-                                            __tempX,
-                                            __tempY) * 800 / (maxSpeed * factor);
+                                            tempX,
+                                            tempY) * 800 / (maxSpeed * factor);
     xMoveAnimation.duration = moveDuration;
     yMoveAnimation.duration = moveDuration;
 }
@@ -110,8 +110,8 @@ function turretFireTo (targetX, targetY, reparent) {
   When rotation stops, code in Tank.qml picks up and starts movement.
   */
 function performTurretShooting (targetX, targetY) {
-    __tempX = targetX;
-    __tempY = targetY;
+    tempX = targetX;
+    tempY = targetY;
     var newRotation = EngineHelpers.rotationAngle(x, y,
                                           targetX - centerX,
                                           targetY - centerY) - rotation;
@@ -164,7 +164,6 @@ function queueOrder (orderName, newX, newY, reparent) {
         order.index = orders.length;
         order.number = orders.length;
         order.operation = orderName;
-//        order.dragComplete.connect(modifyOrder);
         order.orderColor = EngineHelpers.colorForOrder(orderName);
 
         order.x = (newX - order.centerX);
@@ -193,7 +192,7 @@ function processQueue () {
   */
 function continueQueue () {
     var noOrdersLeft = true;
-
+//    Logger.log("Debug " + ordersLength());
     for (var i = 0; i < orders.length; i++) {
         var order = orders[i];
         if (order.performed === true) {
@@ -226,6 +225,7 @@ function continueQueue () {
     }
 
     if (noOrdersLeft == true) {
+//        Logger.log("Debug " + ordersLength());
         clearOrderQueue();
     }
 }

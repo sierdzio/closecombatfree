@@ -48,7 +48,7 @@ BaseUnit {
 //    property int unitWidth: 1 // mm - should be properly recalculated later on
 //    property int unitHeight: 1 // mm - should be properly recalculated later on
     property list<Soldier> soldiers //Soldiers.soldiers
-//    property var orders: new Array;
+    property var orders: new Array;
 
 //    property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
 //    property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
@@ -142,9 +142,10 @@ BaseUnit {
         }
         currentOrder = -1;
 
-//        delete orders;
+        delete orders;
 
         return (orders = new Array);
+//        return ordersClear();
     }
 
     Text {

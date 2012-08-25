@@ -58,7 +58,7 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     m_unitWidth = 1;
     m_unitHeight = 1;
 //    m_soldiers;
-//    m_orders;
+//    m_orders.clear();
     m_moveFastFactor = 1.5;
     m_sneakFactor = 0.4;
 //    m_centerX = m_unitWidth/2;
@@ -168,10 +168,21 @@ int CcfQmlBaseUnit::getUnitHeight()
 //    return m_soldiers;
 //}
 
-QQmlListReference CcfQmlBaseUnit::getOrders()
-{
-    return m_orders;
-}
+//QVariantList CcfQmlBaseUnit::getOrders()
+//{
+////    qDebug("C++ debug! Length: %d", m_orders.count());
+//    return m_orders;
+//}
+
+//int CcfQmlBaseUnit::ordersLength()
+//{
+//    return m_orders.count();
+//}
+
+//void CcfQmlBaseUnit::ordersClear()
+//{
+//    m_orders.clear();
+//}
 
 qreal CcfQmlBaseUnit::getMoveFastFactor()
 {
@@ -460,11 +471,11 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
 //    emit soldiersChanged();
 //}
 
-void CcfQmlBaseUnit::setOrders(const QQmlListReference &orders)
-{
-    m_orders = orders;
-    emit ordersChanged();
-}
+//void CcfQmlBaseUnit::setOrders(QVariantList orders)
+//{
+//    m_orders = orders;
+//    emit ordersChanged();
+//}
 
 void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 {

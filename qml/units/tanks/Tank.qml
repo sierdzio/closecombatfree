@@ -72,13 +72,13 @@ Unit {
             // Warning! This order is important for order markers!
             turret.firing = true;
             firing = false;
-            actionFinished(unitIndex, __tempX, __tempY);
+            actionFinished(unitIndex, tempX, tempY);
             continueQueue();
         } else if (smoking == true) {
             // Warning! This order is important for order markers!
             turret.smoking = true;
             smoking = false;
-            actionFinished(unitIndex, __tempX, __tempY);
+            actionFinished(unitIndex, tempX, tempY);
             continueQueue();
         }
     }

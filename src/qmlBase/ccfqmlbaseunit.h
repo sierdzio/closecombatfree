@@ -3,6 +3,7 @@
 
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlListReference>
+//#include <QtCore/QVariantList>
 
 /*!
  * \brief The CcfQmlBaseUnit class is an experiment to see if moving most functionality
@@ -38,7 +39,7 @@ class CcfQmlBaseUnit : public QQuickItem
     Q_PROPERTY(int unitWidth READ getUnitWidth WRITE setUnitWidth NOTIFY unitWidthChanged)
     Q_PROPERTY(int unitHeight READ getUnitHeight WRITE setUnitHeight NOTIFY unitHeightChanged)
 //    Q_PROPERTY(QQmlListReference soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
-    Q_PROPERTY(QQmlListReference orders READ getOrders WRITE setOrders NOTIFY ordersChanged)
+//    Q_PROPERTY(QVariantList orders READ getOrders WRITE setOrders NOTIFY ordersChanged)
     Q_PROPERTY(qreal moveFastFactor READ getMoveFastFactor WRITE setMoveFastFactor NOTIFY moveFastFactorChanged)
     Q_PROPERTY(qreal sneakFactor READ getSneakFactor WRITE setSneakFactor NOTIFY sneakFactorChanged)
     Q_PROPERTY(int centerX READ getCenterX WRITE setCenterX NOTIFY centerXChanged)
@@ -77,7 +78,9 @@ public:
     int getUnitWidth();
     int getUnitHeight();
 //    QQmlListReference getSoldiers();
-    QQmlListReference getOrders();
+//    QVariantList getOrders();
+//    Q_INVOKABLE int ordersLength();
+//    Q_INVOKABLE void ordersClear();
     qreal getMoveFastFactor();
     qreal getSneakFactor();
     int getCenterX();
@@ -113,7 +116,7 @@ public:
     void setUnitWidth(int unitWidth);
     void setUnitHeight(int unitHeight);
 //    void setSoldiers(const QQmlListReference &soldiers);
-    void setOrders(const QQmlListReference &orders);
+//    void setOrders(QVariantList orders);
     void setMoveFastFactor(qreal moveFastFactor);
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
@@ -149,7 +152,7 @@ signals:
     void unitWidthChanged();
     void unitHeightChanged();
     void soldiersChanged();
-    void ordersChanged();
+//    void ordersChanged();
     void moveFastFactorChanged();
     void sneakFactorChanged();
     void centerXChanged();
@@ -184,8 +187,8 @@ private:
     int m_acceleration;
     int m_unitWidth;
     int m_unitHeight;
-    QQmlListReference m_soldiers;
-    QQmlListReference m_orders;
+//    QQmlListReference m_soldiers;
+//    QVariantList m_orders;
     qreal m_moveFastFactor;
     qreal m_sneakFactor;
     int m_centerX;
