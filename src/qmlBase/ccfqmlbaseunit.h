@@ -1,6 +1,8 @@
 #ifndef CCFQMLBASEUNIT_H
 #define CCFQMLBASEUNIT_H
 
+#include <QtCore/QObject>
+#include <QtCore/QList>
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlComponent>
 //#include <QtQml/QQmlListReference>
@@ -62,7 +64,14 @@ class CcfQmlBaseUnit : public QQuickItem
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
-    Q_INVOKABLE QObject *createTestObjectFromCpp();
+    Q_INVOKABLE void changeStatus(const QString &newStatusMessage);
+    Q_INVOKABLE void performMovement(qreal newX, qreal newY, qreal factor);
+
+    Q_INVOKABLE QObject *createOrder();
+    Q_INVOKABLE void queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent);
+    Q_INVOKABLE void continueQueue();
+    Q_INVOKABLE void clearOrderQueue();
+    Q_INVOKABLE void deleteOrder(int index);
 
     // Property getters:
     QString getObjectType();
@@ -139,6 +148,8 @@ public:
     void setMoving(bool moving);
 
 signals:
+    void unitStatusChanged(const QString &newStatus, int index);
+
     void objectTypeChanged();
     void unitFileNameChanged();
     void unitTypeChanged();
@@ -176,7 +187,8 @@ signals:
 
 private:
     CcfMain *m_mainInstance;
-    QQmlComponent *m_orderMarkerComponent;
+    QQmlComponent *m_ordersComponent;
+    QList<QObject *> m_orders;
 
     // Properties:
     QString m_objectType;

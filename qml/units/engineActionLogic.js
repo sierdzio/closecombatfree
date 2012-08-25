@@ -64,23 +64,23 @@ function sneakTo (newX, newY, reparent) {
 
   When rotation stops, code in Unit.qml picks up and starts movement.
   */
-function performMovement (newX, newY, factor) {
-    tempX = newX - (centerX);
-    tempY = newY - (centerY);
+//function performMovement (newX, newY, factor) {
+//    tempX = newX - (centerX);
+//    tempY = newY - (centerY);
 
-    var newRotation = EngineHelpers.rotationAngle(x, y, tempX, tempY);
-    rotationAnimation.duration = EngineHelpers.rotationDuration(rotation,
-                                                        newRotation, rotationSpeed);
-    rotationAnimation.to = newRotation;
-    rotationAnimation.running = true;
-    moving = true;
+//    var newRotation = EngineHelpers.rotationAngle(x, y, tempX, tempY);
+//    rotationAnimation.duration = EngineHelpers.rotationDuration(rotation,
+//                                                        newRotation, rotationSpeed);
+//    rotationAnimation.to = newRotation;
+//    rotationAnimation.running = true;
+//    moving = true;
 
-    var moveDuration = EngineHelpers.targetDistance(x, y,
-                                            tempX,
-                                            tempY) * 800 / (maxSpeed * factor);
-    xMoveAnimation.duration = moveDuration;
-    yMoveAnimation.duration = moveDuration;
-}
+//    var moveDuration = EngineHelpers.targetDistance(x, y,
+//                                            tempX,
+//                                            tempY) * 800 / (maxSpeed * factor);
+//    xMoveAnimation.duration = moveDuration;
+//    yMoveAnimation.duration = moveDuration;
+//}
 
 /*!
   \memberof engineActionLogic
@@ -154,24 +154,27 @@ function cancelOrder () {
 
   Puts a new order at the end of a queue.
   */
-function queueOrder (orderName, newX, newY, reparent) {
-    // QRC is needed here, because files from different directories have acces
-    // to this method, and relative paths don't work for all of them.
-    var component = Qt.createComponent("qrc:/gui/OrderMarker.qml");
+//function queueOrder (orderName, newX, newY, reparent) {
+//    // QRC is needed here, because files from different directories have acces
+//    // to this method, and relative paths don't work for all of them.
+////    var component = Qt.createComponent("qrc:/gui/OrderMarker.qml");
 
-    if (component.status === Component.Ready) {
-        var order = component.createObject(reparent);
-        order.index = orders.length;
-        order.number = orders.length;
-        order.operation = orderName;
-        order.orderColor = EngineHelpers.colorForOrder(orderName);
+////    if (component.status === Component.Ready) {
+////        var order = component.createObject(reparent);
+//    var order = createOrder();
+//    if (order !== 0) {
+//        order.parent = reparent;
+//        order.index = orders.length;
+//        order.number = orders.length;
+//        order.operation = orderName;
+//        order.orderColor = EngineHelpers.colorForOrder(orderName);
 
-        order.x = (newX - order.centerX);
-        order.y = (newY - order.centerY);
-        order.visible = true;
-        orders.push(order);
-    }
-}
+//        order.x = (newX - order.centerX);
+//        order.y = (newY - order.centerY);
+//        order.visible = true;
+//        orders.push(order);
+//    }
+//}
 
 /*!
   \memberof engineActionLogic
@@ -190,44 +193,44 @@ function processQueue () {
 
   Processes next element in the queue.
   */
-function continueQueue () {
-    var noOrdersLeft = true;
-//    Logger.log("Debug " + ordersLength());
-    for (var i = 0; i < orders.length; i++) {
-        var order = orders[i];
-        if (order.performed === true) {
-            continue;
-        } else {
-            currentOrder = i;
+//function continueQueue () {
+//    var noOrdersLeft = true;
+////    Logger.log("Debug " + ordersLength());
+//    for (var i = 0; i < orders.length; i++) {
+//        var order = orders[i];
+//        if (order.performed === true) {
+//            continue;
+//        } else {
+//            currentOrder = i;
 
-            if (order.operation === "Move") {
-                changeStatus("MOVING");
-                performMovement(order.targetX, order.targetY, 1);
-            } else if (order.operation === "Move fast") {
-                changeStatus("MOVING FAST");
-                performMovement(order.targetX, order.targetY, moveFastFactor);
-            } else if (order.operation === "Sneak") {
-                changeStatus("SNEAKING");
-                performMovement(order.targetX, order.targetY, sneakFactor);
-            } else if (order.operation === "Smoke") {
-                performTurretShooting(order.targetX, order.targetY);
-                smoking = true;
-            } else if (order.operation === "Attack") {
-                performTurretShooting(order.targetX, order.targetY);
-                firing = true;
-            }
+//            if (order.operation === "Move") {
+//                changeStatus("MOVING");
+//                performMovement(order.targetX, order.targetY, 1);
+//            } else if (order.operation === "Move fast") {
+//                changeStatus("MOVING FAST");
+//                performMovement(order.targetX, order.targetY, moveFastFactor);
+//            } else if (order.operation === "Sneak") {
+//                changeStatus("SNEAKING");
+//                performMovement(order.targetX, order.targetY, sneakFactor);
+//            } else if (order.operation === "Smoke") {
+//                performTurretShooting(order.targetX, order.targetY);
+//                smoking = true;
+//            } else if (order.operation === "Attack") {
+//                performTurretShooting(order.targetX, order.targetY);
+//                firing = true;
+//            }
 
-            order.performed = true;
-            noOrdersLeft = false;
-            // Ensures that unit performs one order at a time
-            break;
-        }
-    }
+//            order.performed = true;
+//            noOrdersLeft = false;
+//            // Ensures that unit performs one order at a time
+//            break;
+//        }
+//    }
 
-    if (noOrdersLeft == true) {
-        clearOrderQueue();
-    }
-}
+//    if (noOrdersLeft == true) {
+//        clearOrderQueue();
+//    }
+//}
 
 /*!
   \memberof engineActionLogic

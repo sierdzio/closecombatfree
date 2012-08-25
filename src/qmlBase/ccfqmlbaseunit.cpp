@@ -1,7 +1,9 @@
 #include "ccfqmlbaseunit.h"
 #include "ccfmain.h"
+#include "logic/ccfenginehelpers.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QVariant>
 
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     QQuickItem(parent)
@@ -34,17 +36,134 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     m_moving = false;
 
     m_mainInstance = CcfMain::instance();
-    m_orderMarkerComponent = new QQmlComponent(m_mainInstance->engine(),
-                                               QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
+    m_ordersComponent = new QQmlComponent(m_mainInstance->engine(),
+                                          QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
 }
 
-QObject *CcfQmlBaseUnit::createTestObjectFromCpp()
+void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
 {
-    if (m_orderMarkerComponent->isReady()) {
-        QObject *object = m_orderMarkerComponent->create();
+    m_unitStatus = newStatusMessage;
+    emit unitStatusChanged(newStatusMessage, m_unitIndex);
+}
+
+void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
+{
+    m_tempX = newX - (m_centerX);
+    m_tempY = newY - (m_centerY);
+
+    qreal newRotation = CcfEngineHelpers::rotationAngle(property("x").toReal(),
+                                                        property("y").toReal(), m_tempX, m_tempY);
+    QObject *rotationAnimation = findChild<QObject *>("rotationAnimation");
+    if (rotationAnimation) {
+        rotationAnimation->setProperty("duration",
+                                       CcfEngineHelpers::rotationDuration(property("rotation").toReal(),
+                                                                          newRotation, m_rotationSpeed));
+        rotationAnimation->setProperty("to", newRotation);
+        rotationAnimation->setProperty("running", true);
+    }
+    m_moving = true;
+
+    QObject *xMoveAnimation = findChild<QObject *>("xMoveAnimation");
+    QObject *yMoveAnimation = findChild<QObject *>("yMoveAnimation");
+    if (xMoveAnimation && yMoveAnimation) {
+        qreal moveDuration = CcfEngineHelpers::targetDistance(property("x").toReal(),
+                                                              property("y").toReal(),
+                                                              m_tempX,
+                                                              m_tempY) * 800 / (m_maxSpeed * factor);
+        setProperty("duration", moveDuration);
+        setProperty("duration", moveDuration);
+    }
+}
+
+/*!
+  Returns a ready-made pointer to a new OrderMarker. Warning: needs to be reparented in
+  QML in order to be visible!
+ */
+QObject *CcfQmlBaseUnit::createOrder()
+{
+    if (m_ordersComponent->isReady()) {
+        QObject *object = m_ordersComponent->create();
         return object;
     } else {
         return 0;
+    }
+}
+
+void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent)
+{
+    QObject *order = createOrder();
+    if (order != 0) {
+//        order->setParent(reparent);
+        order->setProperty("parent", qVariantFromValue(reparent));
+        order->setProperty("index", m_orders.length());
+        order->setProperty("number", m_orders.length());
+        order->setProperty("operation", orderName);
+        order->setProperty("orderColor", CcfEngineHelpers::colorForOrder(orderName));
+
+        order->setProperty("x", (x - order->property("centerX").toReal()));
+        order->setProperty("y", (y - order->property("centerY").toReal()));
+        order->setProperty("visible", true);
+        m_orders.append(order);
+    }
+}
+
+void CcfQmlBaseUnit::continueQueue()
+{
+    bool noOrdersLeft = true;
+
+    for (int i = 0; i < m_orders.length(); ++i) {
+        QObject *order = m_orders.value(i);
+        if (order->property("performed").toBool() == true) {
+            continue;
+        } else {
+            m_currentOrder = i;
+
+            qreal targetX = order->property("targetX").toReal();
+            qreal targetY = order->property("targetY").toReal();
+            QString operation = order->property("operation").toString();
+            if (operation == "Move") {
+                changeStatus("MOVING");
+                performMovement(targetX, targetY, 1);
+            } else if (operation == "Move fast") {
+                changeStatus("MOVING FAST");
+                performMovement(targetX, targetY, m_moveFastFactor);
+            } else if (operation == "Sneak") {
+                changeStatus("SNEAKING");
+                performMovement(targetX, targetY, m_sneakFactor);
+            } else if (operation == "Smoke") {
+//                performTurretShooting(targetX, targetY);
+                m_smoking = true;
+            } else if (operation == "Attack") {
+//                performTurretShooting(targetX, targetY);
+                m_firing = true;
+            }
+
+            order->setProperty("performed", true);
+            noOrdersLeft = false;
+            // Ensures that unit performs one order at a time
+            break;
+        }
+    }
+
+    if (noOrdersLeft == true) {
+        clearOrderQueue();
+    }
+}
+
+void CcfQmlBaseUnit::clearOrderQueue()
+{
+    for (int i = 0; i < m_orders.length(); ++i) {
+        deleteOrder(i);
+    }
+    m_currentOrder = -1;
+
+    m_orders.clear();
+}
+
+void CcfQmlBaseUnit::deleteOrder(int index)
+{
+    if (index < m_orders.length()) {
+        delete m_orders.takeAt(index);  //.at(index);
     }
 }
 

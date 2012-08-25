@@ -48,7 +48,7 @@ BaseUnit {
         movementStateChange(moving, unitIndex);
     }
 
-    signal unitStatusChanged (string newStatus, int index)
+//    signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
 
     signal moveTo (real newX, real newY, var reparent)
@@ -70,12 +70,12 @@ BaseUnit {
     signal cancelOrder ()
     onCancelOrder: ActionLogic.cancelOrder();
 
-    function queueOrder(orderName, newX, newY, reparent) { ActionLogic.queueOrder(orderName, newX, newY, reparent); }
+//    function queueOrder(orderName, newX, newY, reparent) { ActionLogic.queueOrder(orderName, newX, newY, reparent); }
 
     signal processQueue ()
     onProcessQueue: ActionLogic.processQueue();
 
-    function continueQueue() { ActionLogic.continueQueue(); }
+//    function continueQueue() { ActionLogic.continueQueue(); }
     function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }
 
     id: root
@@ -97,28 +97,20 @@ BaseUnit {
         }
     }
 
-    function changeStatus(newStatusMessage) {
-        unitStatus = newStatusMessage;
-        unitStatusChanged(newStatusMessage, unitIndex);
-    }
+//    function changeStatus(newStatusMessage) {
+//        unitStatus = newStatusMessage;
+//        unitStatusChanged(newStatusMessage, unitIndex);
+//    }
 
-    function clearOrderQueue() {
-        createTestObjectFromCpp().parent = root;
-//        if (om !== 0) {
-//            om.parent = root;
-//            om.visible = true;
+//    function clearOrderQueue() {
+//        for (var i = 0; i < orders.length; ++i) {
+////            orders[i].destroy();
+//            deleteOrder(i);
 //        }
+//        currentOrder = -1;
 
-        for (var i = 0; i < orders.length; ++i) {
-            orders[i].destroy();
-        }
-        currentOrder = -1;
-
-        delete orders;
-
-        return (orders = new Array);
-//        return ordersClear();
-    }
+//        return (orders = new Array);
+//    }
 
     Text {
         id: groupMembership
@@ -194,6 +186,7 @@ BaseUnit {
     }
 
     RotationAnimation on rotation {
+        objectName: "rotationAnimation"
         id: rotationAnimation
         duration: 2000
         direction: RotationAnimation.Shortest
@@ -211,6 +204,7 @@ BaseUnit {
     }
 
     NumberAnimation on x {
+        objectName: "xMoveAnimation"
         id: xMoveAnimation
         duration: 2500
         easing.type: Easing.InOutQuad
@@ -233,6 +227,7 @@ BaseUnit {
     }
 
     NumberAnimation on y {
+        objectName: "yMoveAnimation"
         id: yMoveAnimation
         duration: 2500
         easing.type: Easing.InOutQuad
