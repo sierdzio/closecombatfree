@@ -47,8 +47,9 @@
 class CcfMain : public QQuickView, public CcfError
 {
     Q_OBJECT
+
 public:
-    explicit CcfMain(CcfCommandLineParser *cmd, QWindow *parent = 0);
+    static CcfMain *instance(CcfCommandLineParser *cmd = 0);
     bool isConfigMaximised();
     void resizeView(QSize newSize);
 
@@ -58,8 +59,12 @@ public slots:
     void disableQrc(QObject *object);
 
 private:
+    explicit CcfMain(CcfCommandLineParser *cmd, QWindow *parent = 0);
+    Q_DISABLE_COPY(CcfMain)
+
     bool initConfiguration();
 
+    static CcfMain *m_instance;
     CcfConfig *configuration;
     CcfGlobal *global;
     CcfGameManager *gameManager;

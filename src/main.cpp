@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    CcfMain *viewer = new CcfMain(&cmd);
+    CcfMain *viewer = CcfMain::instance(&cmd);
     if (!viewer->isErrorState()) {
         QUrl source = QUrl::fromLocalFile("qml/main.qml");
         viewer->setSource(source);

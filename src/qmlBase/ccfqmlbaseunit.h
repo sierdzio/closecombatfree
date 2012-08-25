@@ -2,8 +2,11 @@
 #define CCFQMLBASEUNIT_H
 
 #include <QtQuick/QQuickItem>
-#include <QtQml/QQmlListReference>
+#include <QtQml/QQmlComponent>
+//#include <QtQml/QQmlListReference>
 //#include <QtCore/QVariantList>
+
+class CcfMain;
 
 /*!
  * \brief The CcfQmlBaseUnit class is an experiment to see if moving most functionality
@@ -19,7 +22,7 @@ class CcfQmlBaseUnit : public QQuickItem
     // Sadly, this is needed for file saving:
     Q_PROPERTY(QString unitFileName READ getUnitFileName WRITE setUnitFileName NOTIFY unitFileNameChanged)
     Q_PROPERTY(QString unitType READ getUnitType WRITE setUnitType NOTIFY unitTypeChanged)
-    // TODO: Hange to QImage, perhaps?
+    // TODO: Change to QImage, perhaps?
     Q_PROPERTY(QString unitLogo READ getUnitLogo WRITE setUnitLogo NOTIFY unitLogoChanged)
     Q_PROPERTY(QString unitStatus READ getUnitStatus WRITE setUnitStatus NOTIFY unitStatusChanged)
     Q_PROPERTY(QString unitSide READ getUnitSide WRITE setUnitSide NOTIFY unitSideChanged)
@@ -58,6 +61,8 @@ class CcfQmlBaseUnit : public QQuickItem
 
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
+
+    Q_INVOKABLE QObject *createTestObjectFromCpp();
 
     // Property getters:
     QString getObjectType();
@@ -170,6 +175,10 @@ signals:
     void movingChanged();
 
 private:
+    CcfMain *m_mainInstance;
+    QQmlComponent *m_orderMarkerComponent;
+
+    // Properties:
     QString m_objectType;
     QString m_unitFileName;
     QString m_unitType;

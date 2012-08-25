@@ -1,4 +1,7 @@
 #include "ccfqmlbaseunit.h"
+#include "ccfmain.h"
+
+#include <QtCore/QFileInfo>
 
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     QQuickItem(parent)
@@ -29,6 +32,20 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     m_defenceSphereRotation = 0;
     m_paused = false;
     m_moving = false;
+
+    m_mainInstance = CcfMain::instance();
+    m_orderMarkerComponent = new QQmlComponent(m_mainInstance->engine(),
+                                               QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
+}
+
+QObject *CcfQmlBaseUnit::createTestObjectFromCpp()
+{
+    if (m_orderMarkerComponent->isReady()) {
+        QObject *object = m_orderMarkerComponent->create();
+        return object;
+    } else {
+        return 0;
+    }
 }
 
 // Property getters:

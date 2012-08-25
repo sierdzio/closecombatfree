@@ -26,6 +26,22 @@
 #include "qmlBase/ccfqmlbasescenario.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 
+// Singleton
+CcfMain *CcfMain::m_instance = NULL;
+
+/*!
+  Returns instance of CcfMain class. Creates a new one if none exist.
+  Only one instance of this class is allowed. Optionally takes in a command line
+  parser object \a cmd, so that code execution can be influenced by command line
+  arguments.
+ */
+CcfMain *CcfMain::instance(CcfCommandLineParser *cmd)
+{
+    if (!m_instance)
+        m_instance = new CcfMain(cmd, 0);
+    return m_instance;
+}
+
 /*!
   Main view's constructor, full of important stuff.
 

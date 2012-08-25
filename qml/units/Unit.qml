@@ -103,6 +103,12 @@ BaseUnit {
     }
 
     function clearOrderQueue() {
+        createTestObjectFromCpp().parent = root;
+//        if (om !== 0) {
+//            om.parent = root;
+//            om.visible = true;
+//        }
+
         for (var i = 0; i < orders.length; ++i) {
             orders[i].destroy();
         }
