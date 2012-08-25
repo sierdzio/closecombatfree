@@ -225,7 +225,6 @@ function continueQueue () {
     }
 
     if (noOrdersLeft == true) {
-//        Logger.log("Debug " + ordersLength());
         clearOrderQueue();
     }
 }

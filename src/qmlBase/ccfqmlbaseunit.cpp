@@ -3,43 +3,6 @@
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     QQuickItem(parent)
 {
-    //    property string objectType: "unit"
-    //    property string unitFileName: "Unit"
-    //    property string unitType: "Generic unit"
-    //    property string unitLogo: ""
-    //    property string unitStatus: "READY"
-    //    property string unitSide: "neutral"
-    //    property int groupNumber: 0 // For now, a unit can be only in one group
-    //    property int unitIndex: -1
-    //    property bool sideMarkVisible: true
-    //    property string sideMarkSource: "../../img/units/sideMarks/sideMark_side_1.png"
-    //    property string sideMarkSet: "side"
-    //    property int rotationSpeed: 1 // seconds needed for half rotation (180 deg)
-    //    property int turretRotationSpeed: 1 // seconds needed for half rotation (180 deg)
-    //    property int maxSpeed: 1 // km/h - not really, this will be tweaked later
-    //    property int acceleration: 1 // m/s^2 (maybe... could be arbitrary - to be decided later)
-    //    property int unitWidth: 1 // mm - should be properly recalculated later on
-    //    property int unitHeight: 1 // mm - should be properly recalculated later on
-    //    property list<Soldier> soldiers //Soldiers.soldiers
-    //    property var orders: new Array;
-
-    //    property real moveFastFactor: 1.5 // Factor of movement speed (maxSpeed)
-    //    property real sneakFactor: 0.4 // Factor of movement speed (maxSpeed)
-    //    property int centerX: unitWidth/2
-    //    property int centerY: unitHeight/2
-
-    //    property int __tempX: x
-    //    property int __tempY: y
-    //    property string scheduledOperation;
-    //    property int currentOrder: -1
-    //    property bool selected: false
-    //    property bool firing: false
-    //    property bool smoking: false
-    //    property int defenceSphereRotation: 0
-    //    property string defenceSphereColor: ""
-    //    property bool paused: false
-    //    property bool moving: false
-
     m_objectType = QStringLiteral("unit");
     m_unitFileName = QStringLiteral("Unit");
     m_unitType = QStringLiteral("Generic unit");
@@ -57,21 +20,13 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     m_acceleration = 1;
     m_unitWidth = 1;
     m_unitHeight = 1;
-//    m_soldiers;
-//    m_orders.clear();
     m_moveFastFactor = 1.5;
     m_sneakFactor = 0.4;
-//    m_centerX = m_unitWidth/2;
-//    m_centerY = m_unitHeight/2;
-//    m_tempX;
-//    m_tempY;
-//    m_scheduledOperation = QString();
     m_currentOrder = -1;
     m_selected = false;
     m_firing = false;
     m_smoking = false;
     m_defenceSphereRotation = 0;
-//    m_defenceSphereColor = QString();
     m_paused = false;
     m_moving = false;
 }
