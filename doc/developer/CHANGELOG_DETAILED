@@ -7,7 +7,8 @@ Some more history can be devised from git sources (although even there, the thin
 
 25.08.2012:
  - finish initial transition of Unit.qml to C++
- - 
+ - transfer all code from engineActionLogic.js to C++ (well, almost)
+ - tests are going well so far
 
 23-24.08.2012:
  - battles with new ScenarioBase continue

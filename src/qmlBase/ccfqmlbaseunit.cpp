@@ -40,12 +40,22 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
 }
 
+QString CcfQmlBaseUnit::operation(int index)
+{
+    return m_orders.at(index)->property("operation").toString();
+}
+
 void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
 {
     m_unitStatus = newStatusMessage;
     emit unitStatusChanged(newStatusMessage, m_unitIndex);
 }
 
+/*!
+  Performs movement order by starting the rotation animation.
+
+  When rotation stops, code in Unit.qml picks up and starts movement.
+  */
 void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
 {
     m_tempX = newX - (m_centerX);
@@ -60,6 +70,8 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
                                                                           newRotation, m_rotationSpeed));
         rotationAnimation->setProperty("to", newRotation);
         rotationAnimation->setProperty("running", true);
+    } else {
+        m_mainInstance->logger()->log("Could not instantiate rotationAnimation in CcfQmlBase.");
     }
     m_moving = true;
 
@@ -72,7 +84,54 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
                                                               m_tempY) * 800 / (m_maxSpeed * factor);
         setProperty("duration", moveDuration);
         setProperty("duration", moveDuration);
+    } else {
+        m_mainInstance->logger()->log("Could not instantiate xMoveAnimation or yMoveAnimation in CcfQmlBase.");
     }
+}
+
+/*!
+  Performs firing order by starting the turret rotation animation.
+
+  When rotation stops, code in Tank.qml picks up and starts movement.
+  */
+void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
+{
+    m_tempX = targetX;
+    m_tempY = targetY;
+    QObject *tra = findChild<QObject *>("turretRotationAnimation");
+    if (tra) {
+        qreal newRotation = CcfEngineHelpers::rotationAngle(
+                    property("x").toReal(),
+                    property("y").toReal(),
+                    targetX - m_centerX,
+                    targetY - m_centerY) - property("rotation").toReal();
+        tra->setProperty("duration", CcfEngineHelpers::rotationDuration(
+                             property("turretRotation").toReal(),
+                             newRotation,
+                             property("turretRotationSpeed").toReal()));
+        tra->setProperty("to", newRotation);
+        tra->setProperty("running", true);
+    } else {
+        m_mainInstance->logger()->log("Could not instantiate turretRotationAnimation in CcfQmlBase.");
+    }
+
+    changeStatus("ROTATING");
+}
+
+/*!
+  Calculates result of a hit
+  */
+void CcfQmlBaseUnit::hit(QObject *byWhat, qreal xWhere, qreal yWhere)
+{
+    Q_UNUSED(byWhat);
+    Q_UNUSED(xWhere);
+    Q_UNUSED(yWhere);
+
+    // For now, not much logic is in ... :)
+    cancelOrder();
+    // Strangely, both state change calls invoke on base state only once!
+    setState("destroyed");
+    setState("destroyed_base");
 }
 
 /*!
@@ -89,6 +148,37 @@ QObject *CcfQmlBaseUnit::createOrder()
     }
 }
 
+/*!
+  Cancels unit's orders, clears order queue.
+  */
+void CcfQmlBaseUnit::cancelOrder()
+{
+    changeStatus("STOPPED");
+    clearOrderQueue();
+    m_moving = false;
+
+    if ((m_firing == false) && (m_smoking == false))  {
+        QObject *xma = findChild<QObject *>("xMoveAnimation");
+        if (xma) xma->metaObject()->invokeMethod(xma, "stop");
+        QObject *yma = findChild<QObject *>("yMoveAnimation");
+        if (yma) yma->metaObject()->invokeMethod(yma, "stop");
+        QObject *ram = findChild<QObject *>("rotationAnimation");
+        if (ram) ram->metaObject()->invokeMethod(ram, "stop");
+        changeStatus("READY");
+    }
+
+    if ((m_firing == true) || (m_smoking == true))  {
+        QObject *tra = findChild<QObject *>("turretRotationAnimation");
+        if (tra) tra->metaObject()->invokeMethod(tra, "stop");
+        m_smoking = false;
+        m_firing = false;
+        changeStatus("READY");
+    }
+}
+
+/*!
+  Puts a new order at the end of a queue.
+  */
 void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent)
 {
     QObject *order = createOrder();
@@ -107,6 +197,9 @@ void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObj
     }
 }
 
+/*!
+  Processes next element in the queue.
+  */
 void CcfQmlBaseUnit::continueQueue()
 {
     bool noOrdersLeft = true;
@@ -131,10 +224,10 @@ void CcfQmlBaseUnit::continueQueue()
                 changeStatus("SNEAKING");
                 performMovement(targetX, targetY, m_sneakFactor);
             } else if (operation == "Smoke") {
-//                performTurretShooting(targetX, targetY);
+                performTurretShooting(targetX, targetY);
                 m_smoking = true;
             } else if (operation == "Attack") {
-//                performTurretShooting(targetX, targetY);
+                performTurretShooting(targetX, targetY);
                 m_firing = true;
             }
 
@@ -147,6 +240,17 @@ void CcfQmlBaseUnit::continueQueue()
 
     if (noOrdersLeft == true) {
         clearOrderQueue();
+    }
+}
+
+/*!
+  Makes sure that queue in execution is not disturbed
+  by new calls. Called to begin queue execution.
+  */
+void CcfQmlBaseUnit::processQueue()
+{
+    if (m_currentOrder == -1) {
+        continueQueue();
     }
 }
 

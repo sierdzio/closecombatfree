@@ -52,6 +52,7 @@ public:
     static CcfMain *instance(CcfCommandLineParser *cmd = 0);
     bool isConfigMaximised();
     void resizeView(QSize newSize);
+    CcfLogger *logger();
 
 public slots:
     void quit();
@@ -65,15 +66,15 @@ private:
     bool initConfiguration();
 
     static CcfMain *m_instance;
-    CcfConfig *configuration;
-    CcfGlobal *global;
-    CcfGameManager *gameManager;
-    CcfTerrain *terrain;
-    CcfEngineHelpers *engineHelpers;
-    CcfScenarioState *scenarioState;
-    CcfLogger *logger;
-    CcfCommandLineParser *cmdLnParser;
-    QString pwd;
+    CcfConfig *m_configuration;
+    CcfGlobal *m_global;
+    CcfGameManager *m_gameManager;
+    CcfTerrain *m_terrain;
+    CcfEngineHelpers *m_engineHelpers;
+    CcfScenarioState *m_scenarioState;
+    CcfLogger *m_logger;
+    CcfCommandLineParser *m_cmdLnParser;
+    QString m_pwd;
 };
 
 /*! @}*/

@@ -49,37 +49,37 @@ CcfMain *CcfMain::instance(CcfCommandLineParser *cmd)
   signals and slots, reads config file(s).
   */
 CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
-    QQuickView(parent), CcfError(), cmdLnParser(cmd)
+    QQuickView(parent), CcfError(), m_cmdLnParser(cmd)
 {
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
     qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");
 
-    logger = new CcfLogger(this, cmdLnParser->isDebug());
-    global = new CcfGlobal(this, logger);
-    gameManager = new CcfGameManager(this);
-    terrain = new CcfTerrain(this);
-    engineHelpers = new CcfEngineHelpers(this);
-    scenarioState = new CcfScenarioState(this);
+    m_logger = new CcfLogger(this, m_cmdLnParser->isDebug());
+    m_global = new CcfGlobal(this, m_logger);
+    m_gameManager = new CcfGameManager(this);
+    m_terrain = new CcfTerrain(this);
+    m_engineHelpers = new CcfEngineHelpers(this);
+    m_scenarioState = new CcfScenarioState(this);
     initConfiguration();
 
-    rootContext()->setContextProperty("Global", global);
-    rootContext()->setContextProperty("Config", configuration);
-    rootContext()->setContextProperty("GameManager", gameManager);
-    rootContext()->setContextProperty("Terrain", terrain);
-    rootContext()->setContextProperty("EngineHelpers", engineHelpers);
-    rootContext()->setContextProperty("ScenarioState", scenarioState);
-    rootContext()->setContextProperty("Logger", logger);
+    rootContext()->setContextProperty("Global", m_global);
+    rootContext()->setContextProperty("Config", m_configuration);
+    rootContext()->setContextProperty("GameManager", m_gameManager);
+    rootContext()->setContextProperty("Terrain", m_terrain);
+    rootContext()->setContextProperty("EngineHelpers", m_engineHelpers);
+    rootContext()->setContextProperty("ScenarioState", m_scenarioState);
+    rootContext()->setContextProperty("Logger", m_logger);
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
 
     setResizeMode(QQuickView::SizeRootObjectToView);
 //    connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
-    connect(configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
+    connect(m_configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
-    connect(configuration, SIGNAL(maximise()), this, SLOT(showMaximized()));
-    connect(configuration, SIGNAL(demaximise()), this, SLOT(showNormal()));
-    connect(global, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
+    connect(m_configuration, SIGNAL(maximise()), this, SLOT(showMaximized()));
+    connect(m_configuration, SIGNAL(demaximise()), this, SLOT(showNormal()));
+    connect(m_global, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
 }
 
 /*!
@@ -87,7 +87,7 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
   */
 bool CcfMain::isConfigMaximised()
 {
-    return configuration->isMaximised();
+    return m_configuration->isMaximised();
 }
 
 /*!
@@ -95,7 +95,15 @@ bool CcfMain::isConfigMaximised()
   */
 void CcfMain::resizeView(QSize newSize)
 {
-    configuration->windowResized(newSize);
+    m_configuration->windowResized(newSize);
+}
+
+/*!
+  Returns a pointer to CcfLogger instance. Meant for logging, of course.
+ */
+CcfLogger *CcfMain::logger()
+{
+    return m_logger;
 }
 
 /*!
@@ -106,12 +114,12 @@ void CcfMain::resizeView(QSize newSize)
   */
 void CcfMain::quit()
 {
-    configuration->saveConfig();
-    if (configuration->isErrorState()) {
-        qWarning(qPrintable(configuration->errorMessage()), NULL);
+    m_configuration->saveConfig();
+    if (m_configuration->isErrorState()) {
+        qWarning(qPrintable(m_configuration->errorMessage()), NULL);
     }
 
-    delete configuration;
+    delete m_configuration;
     qApp->quit();
 }
 
@@ -145,16 +153,16 @@ void CcfMain::disableQrc(QObject *object)
   */
 bool CcfMain::initConfiguration()
 {
-    configuration = new CcfConfig("config", global, this);
-    if (configuration->isErrorState()) {
+    m_configuration = new CcfConfig("config", m_global, this);
+    if (m_configuration->isErrorState()) {
         printf("Error while reading configuration file! Message: %s\n",
-               qPrintable(configuration->errorMessage()));
+               qPrintable(m_configuration->errorMessage()));
         printf("Loading default configuration... ");
-        delete configuration;
-        configuration = new CcfConfig("config_default", global, this);
+        delete m_configuration;
+        m_configuration = new CcfConfig("config_default", m_global, this);
 
-        if (configuration->isErrorState()) {
-            printf("ERROR: %s\n", qPrintable(configuration->errorMessage()));
+        if (m_configuration->isErrorState()) {
+            printf("ERROR: %s\n", qPrintable(m_configuration->errorMessage()));
             return false;
         } else {
             printf("OK\n");

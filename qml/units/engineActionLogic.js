@@ -32,30 +32,30 @@
 
   Queues the order to move at casual speed; starts processing of the queue.
   */
-function moveTo (newX, newY, reparent) {
-    queueOrder("Move", newX, newY, reparent);
-    processQueue();
-}
+//function moveTo (newX, newY, reparent) {
+//    queueOrder("Move", newX, newY, reparent);
+//    processQueue();
+//}
 
 /*!
   \memberof engineActionLogic
 
   Queues the order to move fast; starts processing of the queue.
   */
-function moveFastTo (newX, newY, reparent) {
-    queueOrder("Move fast", newX, newY, reparent);
-    processQueue();
-}
+//function moveFastTo (newX, newY, reparent) {
+//    queueOrder("Move fast", newX, newY, reparent);
+//    processQueue();
+//}
 
 /*!
   \memberof engineActionLogic
 
   Queues the order to move at slow speed; starts processing of the queue.
   */
-function sneakTo (newX, newY, reparent) {
-    queueOrder("Sneak", newX, newY, reparent);
-    processQueue();
-}
+//function sneakTo (newX, newY, reparent) {
+//    queueOrder("Sneak", newX, newY, reparent);
+//    processQueue();
+//}
 
 /*!
   \memberof engineActionLogic
@@ -87,20 +87,20 @@ function sneakTo (newX, newY, reparent) {
 
   Queues the order fire smoke with the turret; starts processing of the queue.
   */
-function turretSmokeTo (targetX, targetY, reparent) {
-    queueOrder("Smoke", targetX, targetY, reparent);
-    processQueue();
-}
+//function turretSmokeTo (targetX, targetY, reparent) {
+//    queueOrder("Smoke", targetX, targetY, reparent);
+//    processQueue();
+//}
 
 /*!
   \memberof engineActionLogic
 
   Queues the order attack with the turret; starts processing of the queue.
   */
-function turretFireTo (targetX, targetY, reparent) {
-    queueOrder("Attack", targetX, targetY, reparent);
-    processQueue();
-}
+//function turretFireTo (targetX, targetY, reparent) {
+//    queueOrder("Attack", targetX, targetY, reparent);
+//    processQueue();
+//}
 
 /*!
   \memberof engineActionLogic
@@ -109,45 +109,45 @@ function turretFireTo (targetX, targetY, reparent) {
 
   When rotation stops, code in Tank.qml picks up and starts movement.
   */
-function performTurretShooting (targetX, targetY) {
-    tempX = targetX;
-    tempY = targetY;
-    var newRotation = EngineHelpers.rotationAngle(x, y,
-                                          targetX - centerX,
-                                          targetY - centerY) - rotation;
-    turretRotationAnimation.duration = EngineHelpers.rotationDuration(turretRotation,
-                                                              newRotation,
-                                                              turretRotationSpeed);
-    turretRotationAnimation.to = newRotation;
-    turretRotationAnimation.running = true;
+//function performTurretShooting (targetX, targetY) {
+//    tempX = targetX;
+//    tempY = targetY;
+//    var newRotation = EngineHelpers.rotationAngle(x, y,
+//                                          targetX - centerX,
+//                                          targetY - centerY) - rotation;
+//    turretRotationAnimation.duration = EngineHelpers.rotationDuration(turretRotation,
+//                                                              newRotation,
+//                                                              turretRotationSpeed);
+//    turretRotationAnimation.to = newRotation;
+//    turretRotationAnimation.running = true;
 
-    changeStatus("ROTATING");
-}
+//    changeStatus("ROTATING");
+//}
 
 /*!
   \memberof engineActionLogic
 
   Cancels unit's orders, clears order queue.
   */
-function cancelOrder () {
-    changeStatus("STOPPED");
-    clearOrderQueue();
-    moving = false;
+//function cancelOrder () {
+//    changeStatus("STOPPED");
+//    clearOrderQueue();
+//    moving = false;
 
-    if ((firing == false) && (smoking == false))  {
-        xMoveAnimation.stop();
-        yMoveAnimation.stop();
-        rotationAnimation.stop();
-        changeStatus("READY");
-    }
+//    if ((firing == false) && (smoking == false))  {
+//        xMoveAnimation.stop();
+//        yMoveAnimation.stop();
+//        rotationAnimation.stop();
+//        changeStatus("READY");
+//    }
 
-    if ((firing == true) || (smoking == true))  {
-        turretRotationAnimation.stop();
-        smoking = false;
-        firing = false;
-        changeStatus("READY");
-    }
-}
+//    if ((firing == true) || (smoking == true))  {
+//        turretRotationAnimation.stop();
+//        smoking = false;
+//        firing = false;
+//        changeStatus("READY");
+//    }
+//}
 
 /*!
   \memberof engineActionLogic
@@ -176,17 +176,17 @@ function cancelOrder () {
 //    }
 //}
 
-/*!
-  \memberof engineActionLogic
+///*!
+//  \memberof engineActionLogic
 
-  Makes sure that queue in execution is not disturbed
-  by new calls. Called to begin queue execution.
-  */
-function processQueue () {
-    if (currentOrder == -1) {
-        continueQueue();
-    }
-}
+//  Makes sure that queue in execution is not disturbed
+//  by new calls. Called to begin queue execution.
+//  */
+//function processQueue () {
+//    if (currentOrder == -1) {
+//        continueQueue();
+//    }
+//}
 
 /*!
   \memberof engineActionLogic
@@ -232,19 +232,19 @@ function processQueue () {
 //    }
 //}
 
-/*!
-  \memberof engineActionLogic
+///*!
+//  \memberof engineActionLogic
 
-  Calculates result of a hit
-  */
-function hit(byWhat, xWhere, yWhere) {
-    // For now, not much logic is in ... :)
-    cancelOrder();
-    // Strangely, both state change calls invoke on base state only once!
-//    if (states.contains("destroyed"))
-        state = "destroyed";
-//    else
-        state = "destroyed_base";
+//  Calculates result of a hit
+//  */
+//function hit(byWhat, xWhere, yWhere) {
+//    // For now, not much logic is in ... :)
+//    cancelOrder();
+//    // Strangely, both state change calls invoke on base state only once!
+////    if (states.contains("destroyed"))
+//        state = "destroyed";
+////    else
+//        state = "destroyed_base";
 
-    Logger.log("Hit! By: " + byWhat + ", where: (" + xWhere + ", " + yWhere + ")");
-}
+//    Logger.log("Hit! By: " + byWhat + ", where: (" + xWhere + ", " + yWhere + ")");
+//}

@@ -64,12 +64,17 @@ class CcfQmlBaseUnit : public QQuickItem
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
+    Q_INVOKABLE QString operation(int index);
     Q_INVOKABLE void changeStatus(const QString &newStatusMessage);
     Q_INVOKABLE void performMovement(qreal newX, qreal newY, qreal factor);
+    Q_INVOKABLE void performTurretShooting(qreal targetX, qreal targetY);
+    Q_INVOKABLE void hit(QObject *byWhat, qreal xWhere, qreal yWhere);
 
     Q_INVOKABLE QObject *createOrder();
+    Q_INVOKABLE void cancelOrder();
     Q_INVOKABLE void queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent);
     Q_INVOKABLE void continueQueue();
+    Q_INVOKABLE void processQueue();
     Q_INVOKABLE void clearOrderQueue();
     Q_INVOKABLE void deleteOrder(int index);
 

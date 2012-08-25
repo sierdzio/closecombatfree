@@ -13,6 +13,7 @@ Code changes:
  - add units property to Scenario c++, for easy use in code (JS and C++)
  - continue moving Unit to C++
  - consider removing effects container and using the new particle system instead
+ - introduce convenience methods for shortening ::invokeMethod() and ::findChild()
 
 New features:
  - add weather system

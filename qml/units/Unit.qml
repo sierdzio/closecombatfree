@@ -51,32 +51,57 @@ BaseUnit {
 //    signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
 
-    signal moveTo (real newX, real newY, var reparent)
-    onMoveTo: ActionLogic.moveTo(newX, newY, reparent);
+//    signal moveTo (real newX, real newY, var reparent)
+//    onMoveTo: ActionLogic.moveTo(newX, newY, reparent);
 
-    signal moveFastTo (real newX, real newY, var reparent)
-    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, reparent);
+//    signal moveFastTo (real newX, real newY, var reparent)
+//    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, reparent);
 
-    signal sneakToSignal (real newX, real newY, var reparent)
+//    signal sneakToSignal (real newX, real newY, var reparent)
 //    onSneakTo: ActionLogic.sneakTo(newX, newY);
+
+    signal movementBegan();
+    function moveTo(newX, newY, reparent) {
+        movementBegan();
+        queueOrder("Move", newX, newY, reparent);
+        processQueue();
+    }
+
+    function moveFastTo(newX, newY, reparent) {
+        movementBegan();
+        queueOrder("Move", newX, newY, reparent);
+        processQueue();
+    }
+
     function sneakTo(newX, newY, reparent) {
+        movementBegan();
         sneakToSignal(newX, newY, reparent);
         ActionLogic.sneakTo(newX, newY, reparent);
+    }
+
+    function turretSmokeTo (targetX, targetY, reparent) {
+        queueOrder("Smoke", targetX, targetY, reparent);
+        processQueue();
+    }
+
+    function turretFireTo (targetX, targetY, reparent) {
+        queueOrder("Attack", targetX, targetY, reparent);
+        processQueue();
     }
 
     signal selectionChanged (bool state, int index)
     onSelectedChanged: selectionChanged(selected, unitIndex);
 
-    signal cancelOrder ()
-    onCancelOrder: ActionLogic.cancelOrder();
+//    signal cancelOrder ()
+//    onCancelOrder: ActionLogic.cancelOrder();
 
 //    function queueOrder(orderName, newX, newY, reparent) { ActionLogic.queueOrder(orderName, newX, newY, reparent); }
 
-    signal processQueue ()
-    onProcessQueue: ActionLogic.processQueue();
+//    signal processQueue ()
+//    onProcessQueue: ActionLogic.processQueue();
 
 //    function continueQueue() { ActionLogic.continueQueue(); }
-    function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }
+//    function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }
 
     id: root
     width: unitWidth

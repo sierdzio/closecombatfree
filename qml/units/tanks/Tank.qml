@@ -40,9 +40,10 @@ Unit {
     property int turretSize: 60
     property color hullColor: "#7b8259"
 
-    onMoveTo: exhaust.pulse(2000);
-    onMoveFastTo: exhaust.pulse(2000);
-    onSneakToSignal: exhaust.pulse(2000);
+//    onMoveTo: exhaust.pulse(2000);
+//    onMoveFastTo: exhaust.pulse(2000);
+//    onSneakToSignal: exhaust.pulse(2000);
+    onMovementBegan: exhaust.pulse(2000);
 
     onTurretRotationChanged: turret.turretRotation = turretRotation;
 
@@ -56,14 +57,17 @@ Unit {
         turret.y = centerY - turret.centerY;
     }
 
-    signal fireTo (real targetX, real targetY, var reparent)
-    onFireTo: ActionLogic.turretFireTo(targetX, targetY, reparent);
+//    signal fireTo (real targetX, real targetY, var reparent)
+//    onFireTo:
+    function fireTo(targetX, targetY, reparent) {
+        turretFireTo(targetX, targetY, reparent);
+    }
 
-    signal smokeToSignal (real targetX, real targetY, var reparent)
+//    signal smokeToSignal (real targetX, real targetY, var reparent)
 //    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
     function smokeTo(targetX, targetY, reparent) {
-        smokeToSignal(targetX, targetY, reparent);
-        ActionLogic.turretSmokeTo(targetX, targetY, reparent);
+//        smokeToSignal(targetX, targetY, reparent);
+        turretSmokeTo(targetX, targetY, reparent);
     }
 
     function performFiring() {
@@ -96,6 +100,7 @@ Unit {
     unitHeight: 1
 
     RotationAnimation on turretRotation {
+        objectName: "turretRotationAnimation"
         id: turretRotationAnimation
         paused: running? root.paused : false
         duration: 3000

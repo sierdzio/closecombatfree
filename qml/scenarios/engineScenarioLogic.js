@@ -253,7 +253,8 @@ function actionFinished(index, targetX, targetY) {
     var unit = units[index];
 
     if (unit.currentOrder !== -1) {
-        var scheduledOperation = unit.orders[unit.currentOrder].operation;
+//        var scheduledOperation = unit.orders[unit.currentOrder].operation;
+        var scheduledOperation = unit.operation(unit.currentOrder);
         if ((scheduledOperation !== "Move")
                 && (scheduledOperation !== "Move fast")
                 && (scheduledOperation !== "Sneak")
@@ -321,7 +322,7 @@ function firingActionFinished(index, targetX, targetY) {
         }
 
         effectsContainer.push(effect);
-        var scheduledOperation = unit.orders[unit.currentOrder].operation;
+        var scheduledOperation = unit.operation(unit.currentOrder);
 
         if (scheduledOperation === "Attack") {
             effect.animationString = "gun_fire";
