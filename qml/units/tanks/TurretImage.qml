@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import "../../effects"
 
 Item {
     property int centerX: turretSize/2
@@ -71,33 +72,10 @@ Item {
 
             source: barrelSegment1Texture
 
-            Image {
-                property int imageNumber: 0
-                id: fireImage
-                visible: true
-                source: ""
-                scale: 2
+            GunFireEffect {
+                id: gunFire
                 anchors.bottom: barrelSegment1.top
                 anchors.horizontalCenter: barrelSegment1.horizontalCenter
-            }
-        }
-    }
-
-    Timer {
-        id: fireTimer
-        interval: 20
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            var imgNumber = fireImage.imageNumber;
-
-            if (imgNumber != 5) {
-                fireImage.imageNumber = imgNumber + 1;
-                fireImage.source = "../../../img/effects/gun_fire" + (imgNumber + 1) + ".png";
-            } else if (imgNumber == 5) {
-                fireImage.imageNumber = 0;
-                fireImage.source = "";
-                fireTimer.stop();
             }
         }
     }
@@ -119,7 +97,7 @@ Item {
             ParallelAnimation {
                 ScriptAction {
                     script: {
-                        fireTimer.start();
+                        gunFire.pulse(200);
                     }
                 }
                 SequentialAnimation {

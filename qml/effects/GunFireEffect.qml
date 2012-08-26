@@ -5,50 +5,75 @@ Item {
     id: root
 
     function burst(amount) {
-        exhaust.burst(amount);
+        fire.burst(amount);
     }
 
     function pulse(duration, verbose) {
         if (verbose === true) {
-            exhaust.lifeSpan = 1500;
+            fire.lifeSpan = 1500;
             angle.angleVariation = 30;
         }
 
-        exhaust.pulse(duration);
+        fire.pulse(duration);
+        trailEmitter.pulse(1500);
     }
 
     ParticleSystem {
+        id: particleSystem
         anchors.fill: parent
 
         Emitter {
-            id: exhaust
+            id: fire
             enabled: false
             width: 3
             height: 3
             anchors.centerIn: parent
+            group: "A"
 
-            lifeSpan: 600
-            lifeSpanVariation: 800
+            lifeSpan: 80
+            lifeSpanVariation: 20
             velocity: AngleDirection {
                 id: angle
-                magnitude: 20
-                angle: 90
+                magnitude: 2
+                angle: 270
                 angleVariation: 10
             }
 
             acceleration: PointDirection {xVariation: 10; yVariation: 10;}
-            velocityFromMovement: 12
-            size: 20
-        }
-
-        Turbulence {
-            anchors.fill: parent
-            strength: 5
+            velocityFromMovement: -22
+            size: 30
         }
 
         ImageParticle {
-            source: "../../img/effects/vehicle_smoke_light.png"
-            alphaVariation: 0.5
+            source: "../../img/effects/gun_fire_particle1.png"
+            width: 30
+            height: 30
+            groups: "A"
+            entryEffect: ImageParticle.None
+        }
+    }
+
+    ImageParticle {
+        source: "../../img/effects/vehicle_smoke_flash.png"
+        width: 30
+        height: 30
+        groups: "B"
+        system: particleSystem
+        entryEffect: ImageParticle.Fade
+    }
+
+    Emitter {
+        id: trailEmitter
+        enabled: false
+        group: "B"
+        system: particleSystem
+
+        lifeSpan: 600
+        lifeSpanVariation: 800
+        velocity: AngleDirection {
+            magnitude: 15
+            angle: 270
+            angleVariation: 30
         }
     }
 }
