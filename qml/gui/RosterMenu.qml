@@ -47,7 +47,7 @@ Rectangle {
                                  "unitStatus": currentUnit.unitStatus,
                                  "unitSelected": currentUnit.selected});
 //            currentUnit['unitStatusChanged(QString, int)'].connect(changeStatus); // TODO: Refactor for Qt5
-            currentUnit.selectionChanged.connect(selectionChanged);
+            currentUnit.selectedChanged.connect(selectionChanged);
         }
 
         // Get widest and highest dimension from cells:

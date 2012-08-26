@@ -35,8 +35,8 @@ class CcfError
 {
 public:
     CcfError();
-    bool isErrorState();
-    QString errorMessage();
+    bool isErrorState() const;
+    QString errorMessage() const;
     void enterErrorState(const QString &errorMessage);
 
 private:

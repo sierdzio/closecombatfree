@@ -48,7 +48,7 @@ CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QOb
 /*!
   A convenience method returning nicely formatted string with config brief.
   */
-QString CcfConfig::configurationString()
+QString CcfConfig::configurationString() const
 {
     QString result;
     if (!isErrorState()) {
@@ -62,7 +62,7 @@ QString CcfConfig::configurationString()
 
   \sa toggleUiMode, setUiMode
   */
-QString CcfConfig::getUiMode()
+QString CcfConfig::getUiMode() const
 {
     return configuration->value("uimode").toUpper();
 }
@@ -99,7 +99,7 @@ void CcfConfig::toggleUiMode()
 
   \sa toggleTerrainInfoMode
   */
-QString CcfConfig::getTerrainInfoMode()
+QString CcfConfig::getTerrainInfoMode() const
 {
     return m_terrainInfoMode;
 }
@@ -122,7 +122,7 @@ void CcfConfig::toggleTerrainInfoMode()
 /*!
   Returns game window's width.
   */
-int CcfConfig::getWindowWidth()
+int CcfConfig::getWindowWidth() const
 {
     return runtimeWidth;
 }
@@ -130,7 +130,7 @@ int CcfConfig::getWindowWidth()
 /*!
   Returns game window's height.
   */
-int CcfConfig::getWindowHeight()
+int CcfConfig::getWindowHeight() const
 {
     return runtimeHeight;
 }
@@ -166,7 +166,7 @@ bool CcfConfig::saveConfig()
 /*!
   Returns key number for a given \a functionName.
   */
-int CcfConfig::keyForFunction(const QString &functionName)
+int CcfConfig::keyForFunction(const QString &functionName) const
 {
     int result = -1;
 
@@ -181,7 +181,7 @@ int CcfConfig::keyForFunction(const QString &functionName)
 /*!
   Finds Qt key number for a given \a character.
   */
-int CcfConfig::findQtKey(QChar character)
+int CcfConfig::findQtKey(QChar character) const
 {
     int result = -1;
 
@@ -198,7 +198,7 @@ int CcfConfig::findQtKey(QChar character)
 
   \sa boolToString
   */
-bool CcfConfig::stringToBool(const QString &stringToConvert)
+bool CcfConfig::stringToBool(const QString &stringToConvert) const
 {
     if (stringToConvert == "true") {
         return true;
@@ -215,7 +215,7 @@ bool CcfConfig::stringToBool(const QString &stringToConvert)
 
   \sa stringToBool
   */
-QString CcfConfig::boolToString(bool boolToConvert)
+QString CcfConfig::boolToString(bool boolToConvert) const
 {
     if (boolToConvert == true) {
         return "true";
@@ -332,7 +332,7 @@ void CcfConfig::forceSetWindowHeight(int height)
 
   \sa setMaximised
   */
-bool CcfConfig::isMaximised()
+bool CcfConfig::isMaximised() const
 {
     QString result = configuration->value("maximised");
     return stringToBool(result);
@@ -364,7 +364,7 @@ void CcfConfig::setMaximised(bool newValue)
 
   \sa setRememberDimensions
   */
-bool CcfConfig::isRememberDimensionsSet()
+bool CcfConfig::isRememberDimensionsSet() const
 {
     QString result = configuration->value("remember dimensions on exit");
     return stringToBool(result);
@@ -391,7 +391,7 @@ void CcfConfig::setRememberDimensions(bool newValue)
 
   \sa shortcutValuesList
   */
-QStringList CcfConfig::shortcutNamesList()
+QStringList CcfConfig::shortcutNamesList() const
 {
     return keyboardShortcuts.keys();
 }
@@ -401,7 +401,7 @@ QStringList CcfConfig::shortcutNamesList()
 
   \sa shortcutNamesList
   */
-QStringList CcfConfig::shortcutValuesList()
+QStringList CcfConfig::shortcutValuesList() const
 {
     return keyboardShortcuts.values();
 }

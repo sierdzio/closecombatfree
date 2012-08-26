@@ -69,7 +69,6 @@ OTHER_FILES += \
     ../qml/scenarios/engineScenarioLogic.js \
     ../qml/scenarios/Scenario.qml \
     ../qml/effects/Effect.qml \
-    ../qml/units/engineActionLogic.js \
     ../qml/units/Unit.qml \
     ../qml/units/tanks/TurretImage.qml \
     ../qml/units/tanks/Turret.qml \

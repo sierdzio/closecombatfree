@@ -271,6 +271,39 @@ void CcfQmlBaseUnit::deleteOrder(int index)
     }
 }
 
+void CcfQmlBaseUnit::moveTo(qreal newX, qreal newY, QObject *reparent)
+{
+    emit movementBegan();
+    queueOrder("Move", newX, newY, reparent);
+    processQueue();
+}
+
+void CcfQmlBaseUnit::moveFastTo(qreal newX, qreal newY, QObject *reparent)
+{
+    emit movementBegan();
+    queueOrder("Move fast", newX, newY, reparent);
+    processQueue();
+}
+
+void CcfQmlBaseUnit::sneakTo(qreal newX, qreal newY, QObject *reparent)
+{
+    emit movementBegan();
+    queueOrder("Sneak", newX, newY, reparent);
+    processQueue();
+}
+
+void CcfQmlBaseUnit::turretFireTo(qreal targetX, qreal targetY, QObject *reparent)
+{
+    queueOrder("Attack", targetX, targetY, reparent);
+    processQueue();
+}
+
+void CcfQmlBaseUnit::turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent)
+{
+    queueOrder("Smoke", targetX, targetY, reparent);
+    processQueue();
+}
+
 // Property getters:
 
 QString CcfQmlBaseUnit::getObjectType()
@@ -777,7 +810,7 @@ void CcfQmlBaseUnit::setSelected(bool selected)
     m_selected = selected;
 
     if (wasChaged)
-        emit selectedChanged();
+        emit selectedChanged(m_selected, m_unitIndex);
 }
 
 void CcfQmlBaseUnit::setFiring(bool firing)

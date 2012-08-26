@@ -31,7 +31,7 @@ CcfError::CcfError()
 /*!
   Returns true is object is in error state.
   */
-bool CcfError::isErrorState()
+bool CcfError::isErrorState() const
 {
     return m_errorState;
 }
@@ -39,7 +39,7 @@ bool CcfError::isErrorState()
 /*!
   Returns error message.
   */
-QString CcfError::errorMessage()
+QString CcfError::errorMessage() const
 {
     return m_errorMessage;
 }

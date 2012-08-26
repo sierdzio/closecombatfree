@@ -89,8 +89,8 @@ public:
     explicit CcfConfig(const QString &configFilePath, CcfGlobal *globalObject,
                        QObject *parent = 0);
 
-    Q_INVOKABLE QString configurationString();
-    Q_INVOKABLE int keyForFunction(const QString &functionName);
+    Q_INVOKABLE QString configurationString() const;
+    Q_INVOKABLE int keyForFunction(const QString &functionName) const;
     Q_INVOKABLE void toggleUiMode();
     Q_INVOKABLE void toggleTerrainInfoMode();
     Q_INVOKABLE void setUiMode(const QString &newMode);
@@ -98,17 +98,17 @@ public:
     Q_INVOKABLE void setWindowHeight(int height);
     Q_INVOKABLE void forceSetWindowWidth(int width);
     Q_INVOKABLE void forceSetWindowHeight(int height);
-    Q_INVOKABLE bool isMaximised();
+    Q_INVOKABLE bool isMaximised() const;
     Q_INVOKABLE void setMaximised(bool newValue);
-    Q_INVOKABLE bool isRememberDimensionsSet();
+    Q_INVOKABLE bool isRememberDimensionsSet() const;
     Q_INVOKABLE void setRememberDimensions(bool newValue);
-    Q_INVOKABLE QStringList shortcutNamesList();
-    Q_INVOKABLE QStringList shortcutValuesList();
+    Q_INVOKABLE QStringList shortcutNamesList() const;
+    Q_INVOKABLE QStringList shortcutValuesList() const;
     Q_INVOKABLE void setShortcut(const QString &option, const QString &value);
-    QString getUiMode();
-    QString getTerrainInfoMode();
-    int getWindowWidth();
-    int getWindowHeight();
+    QString getUiMode() const;
+    QString getTerrainInfoMode() const;
+    int getWindowWidth() const;
+    int getWindowHeight() const;
     bool saveConfig();
 
 public slots:
@@ -161,9 +161,9 @@ signals:
     void sizeModifiedInGame(int width, int height);
 
 private:
-    int findQtKey(QChar character);
-    bool stringToBool(const QString &stringToConvert);
-    QString boolToString(bool boolToConvert);
+    int findQtKey(QChar character) const;
+    bool stringToBool(const QString &stringToConvert) const;
+    QString boolToString(bool boolToConvert) const;
     void parseValidKeyboardShortcuts();
 
     int runtimeWidth, runtimeHeight;

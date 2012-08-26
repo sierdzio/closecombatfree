@@ -21,12 +21,10 @@
 import QtQuick 2.0
 import "../../qml/gui"
 import "../../qml/units"
-import "../../qml/units/engineActionLogic.js" as ActionLogic
 import QmlBase 0.1
 
 BaseUnit {
-    property list<Soldier> soldiers //Soldiers.soldiers
-    property var orders: new Array;
+    property list<Soldier> soldiers;
 
     centerX: unitWidth/2
     centerY: unitHeight/2
@@ -48,60 +46,7 @@ BaseUnit {
         movementStateChange(moving, unitIndex);
     }
 
-//    signal unitStatusChanged (string newStatus, int index)
     signal actionFinished (int index, real targetX, real targetY)
-
-//    signal moveTo (real newX, real newY, var reparent)
-//    onMoveTo: ActionLogic.moveTo(newX, newY, reparent);
-
-//    signal moveFastTo (real newX, real newY, var reparent)
-//    onMoveFastTo: ActionLogic.moveFastTo(newX, newY, reparent);
-
-//    signal sneakToSignal (real newX, real newY, var reparent)
-//    onSneakTo: ActionLogic.sneakTo(newX, newY);
-
-    signal movementBegan();
-    function moveTo(newX, newY, reparent) {
-        movementBegan();
-        queueOrder("Move", newX, newY, reparent);
-        processQueue();
-    }
-
-    function moveFastTo(newX, newY, reparent) {
-        movementBegan();
-        queueOrder("Move", newX, newY, reparent);
-        processQueue();
-    }
-
-    function sneakTo(newX, newY, reparent) {
-        movementBegan();
-        sneakToSignal(newX, newY, reparent);
-        ActionLogic.sneakTo(newX, newY, reparent);
-    }
-
-    function turretSmokeTo (targetX, targetY, reparent) {
-        queueOrder("Smoke", targetX, targetY, reparent);
-        processQueue();
-    }
-
-    function turretFireTo (targetX, targetY, reparent) {
-        queueOrder("Attack", targetX, targetY, reparent);
-        processQueue();
-    }
-
-    signal selectionChanged (bool state, int index)
-    onSelectedChanged: selectionChanged(selected, unitIndex);
-
-//    signal cancelOrder ()
-//    onCancelOrder: ActionLogic.cancelOrder();
-
-//    function queueOrder(orderName, newX, newY, reparent) { ActionLogic.queueOrder(orderName, newX, newY, reparent); }
-
-//    signal processQueue ()
-//    onProcessQueue: ActionLogic.processQueue();
-
-//    function continueQueue() { ActionLogic.continueQueue(); }
-//    function hit(byWhat, xWhere, yWhere) { ActionLogic.hit(byWhat, xWhere, yWhere); }
 
     id: root
     width: unitWidth
@@ -121,21 +66,6 @@ BaseUnit {
             positionChanged(x, y, unitIndex);
         }
     }
-
-//    function changeStatus(newStatusMessage) {
-//        unitStatus = newStatusMessage;
-//        unitStatusChanged(newStatusMessage, unitIndex);
-//    }
-
-//    function clearOrderQueue() {
-//        for (var i = 0; i < orders.length; ++i) {
-////            orders[i].destroy();
-//            deleteOrder(i);
-//        }
-//        currentOrder = -1;
-
-//        return (orders = new Array);
-//    }
 
     Text {
         id: groupMembership

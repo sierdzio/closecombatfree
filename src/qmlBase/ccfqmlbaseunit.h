@@ -49,7 +49,6 @@ class CcfQmlBaseUnit : public QQuickItem
     Q_PROPERTY(int unitWidth READ getUnitWidth WRITE setUnitWidth NOTIFY unitWidthChanged)
     Q_PROPERTY(int unitHeight READ getUnitHeight WRITE setUnitHeight NOTIFY unitHeightChanged)
 //    Q_PROPERTY(QQmlListReference soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
-//    Q_PROPERTY(QVariantList orders READ getOrders WRITE setOrders NOTIFY ordersChanged)
     Q_PROPERTY(qreal moveFastFactor READ getMoveFastFactor WRITE setMoveFastFactor NOTIFY moveFastFactorChanged)
     Q_PROPERTY(qreal sneakFactor READ getSneakFactor WRITE setSneakFactor NOTIFY sneakFactorChanged)
     Q_PROPERTY(int centerX READ getCenterX WRITE setCenterX NOTIFY centerXChanged)
@@ -83,6 +82,12 @@ public:
     Q_INVOKABLE void clearOrderQueue();
     Q_INVOKABLE void deleteOrder(int index);
 
+    Q_INVOKABLE void moveTo(qreal newX, qreal newY, QObject *reparent);
+    Q_INVOKABLE void moveFastTo(qreal newX, qreal newY, QObject *reparent);
+    Q_INVOKABLE void sneakTo(qreal newX, qreal newY, QObject *reparent);
+    Q_INVOKABLE void turretFireTo(qreal targetX, qreal targetY, QObject *reparent);
+    Q_INVOKABLE void turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent);
+
     // Property getters:
     QString getObjectType();
     QString getUnitFileName();
@@ -102,9 +107,6 @@ public:
     int getUnitWidth();
     int getUnitHeight();
 //    QQmlListReference getSoldiers();
-//    QVariantList getOrders();
-//    Q_INVOKABLE int ordersLength();
-//    Q_INVOKABLE void ordersClear();
     qreal getMoveFastFactor();
     qreal getSneakFactor();
     int getCenterX();
@@ -140,7 +142,6 @@ public:
     void setUnitWidth(int unitWidth);
     void setUnitHeight(int unitHeight);
 //    void setSoldiers(const QQmlListReference &soldiers);
-//    void setOrders(QVariantList orders);
     void setMoveFastFactor(qreal moveFastFactor);
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
@@ -159,6 +160,7 @@ public:
 
 signals:
     void unitStatusChanged(const QString &newStatus, int index);
+    void movementBegan();
 
     void objectTypeChanged();
     void unitFileNameChanged();
@@ -178,7 +180,6 @@ signals:
     void unitWidthChanged();
     void unitHeightChanged();
     void soldiersChanged();
-//    void ordersChanged();
     void moveFastFactorChanged();
     void sneakFactorChanged();
     void centerXChanged();
@@ -187,7 +188,7 @@ signals:
     void tempYChanged();
     void scheduledOperationChanged();
     void currentOrderChanged();
-    void selectedChanged();
+    void selectedChanged(bool state, int index);
     void firingChanged();
     void smokingChanged();
     void defenceSphereRotationChanged();
@@ -219,7 +220,6 @@ private:
     int m_unitWidth;
     int m_unitHeight;
 //    QQmlListReference m_soldiers;
-//    QVariantList m_orders;
     qreal m_moveFastFactor;
     qreal m_sneakFactor;
     int m_centerX;
