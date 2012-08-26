@@ -125,11 +125,12 @@ OTHER_FILES += \
     ../qml/weather/Weather.qml \
     ../qml/effects/Shadow.qml \
     ../qml/menus/MainMenu.qml \
-    ../maps/Map_tst4.qml
+    ../maps/Map_tst4.qml \
+    ../qml/effects/GunFireEffect.qml
 
-RESOURCES += \
+#RESOURCES += \
 #    skinResource.qrc \
 #    tempResource.qrc \
 #    imgResource.qrc \
-    coreResource.qrc
+#    coreResource.qrc
  

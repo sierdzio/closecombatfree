@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="gui/OrderMarker.qml">../qml/gui/OrderMarker.qml</file> <!-- This part is crucial for orders to work! -->
-    </qresource>
-</RCC>
