@@ -47,7 +47,7 @@ Item {
         }
 
         ImageParticle {
-            source: "../../img/effects/vehicle_smoke.png"
+            source: "../../img/effects/vehicle_smoke_light.png"
             alphaVariation: 0.5
         }
     }
