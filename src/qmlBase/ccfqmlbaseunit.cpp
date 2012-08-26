@@ -306,87 +306,87 @@ void CcfQmlBaseUnit::turretSmokeTo(qreal targetX, qreal targetY, QObject *repare
 
 // Property getters:
 
-QString CcfQmlBaseUnit::getObjectType()
+QString CcfQmlBaseUnit::getObjectType() const
 {
     return m_objectType;
 }
 
-QString CcfQmlBaseUnit::getUnitFileName()
+QString CcfQmlBaseUnit::getUnitFileName() const
 {
     return m_unitFileName;
 }
 
-QString CcfQmlBaseUnit::getUnitType()
+QString CcfQmlBaseUnit::getUnitType() const
 {
     return m_unitType;
 }
 
-QString CcfQmlBaseUnit::getUnitLogo()
+QString CcfQmlBaseUnit::getUnitLogo() const
 {
     return m_unitLogo;
 }
 
-QString CcfQmlBaseUnit::getUnitStatus()
+QString CcfQmlBaseUnit::getUnitStatus() const
 {
     return m_unitStatus;
 }
 
-QString CcfQmlBaseUnit::getUnitSide()
+QString CcfQmlBaseUnit::getUnitSide() const
 {
     return m_unitSide;
 }
 
-int CcfQmlBaseUnit::getGroupNumber()
+int CcfQmlBaseUnit::getGroupNumber() const
 {
     return m_groupNumber;
 }
 
-int CcfQmlBaseUnit::getUnitIndex()
+int CcfQmlBaseUnit::getUnitIndex() const
 {
     return m_unitIndex;
 }
 
-bool CcfQmlBaseUnit::getSideMarkVisible()
+bool CcfQmlBaseUnit::getSideMarkVisible() const
 {
     return m_sideMarkVisible;
 }
 
-QString CcfQmlBaseUnit::getSideMarkSource()
+QString CcfQmlBaseUnit::getSideMarkSource() const
 {
     return m_sideMarkSource;
 }
 
-QString CcfQmlBaseUnit::getSideMarkSet()
+QString CcfQmlBaseUnit::getSideMarkSet() const
 {
     return m_sideMarkSet;
 }
 
-int CcfQmlBaseUnit::getRotationSpeed()
+int CcfQmlBaseUnit::getRotationSpeed() const
 {
     return m_rotationSpeed;
 }
 
-int CcfQmlBaseUnit::getTurretRotationSpeed()
+int CcfQmlBaseUnit::getTurretRotationSpeed() const
 {
     return m_turretRotationSpeed;
 }
 
-int CcfQmlBaseUnit::getMaxSpeed()
+int CcfQmlBaseUnit::getMaxSpeed() const
 {
     return m_maxSpeed;
 }
 
-int CcfQmlBaseUnit::getAcceleration()
+int CcfQmlBaseUnit::getAcceleration() const
 {
     return m_acceleration;
 }
 
-int CcfQmlBaseUnit::getUnitWidth()
+int CcfQmlBaseUnit::getUnitWidth() const
 {
     return m_unitWidth;
 }
 
-int CcfQmlBaseUnit::getUnitHeight()
+int CcfQmlBaseUnit::getUnitHeight() const
 {
     return m_unitHeight;
 }
@@ -396,93 +396,77 @@ int CcfQmlBaseUnit::getUnitHeight()
 //    return m_soldiers;
 //}
 
-//QVariantList CcfQmlBaseUnit::getOrders()
-//{
-////    qDebug("C++ debug! Length: %d", m_orders.count());
-//    return m_orders;
-//}
-
-//int CcfQmlBaseUnit::ordersLength()
-//{
-//    return m_orders.count();
-//}
-
-//void CcfQmlBaseUnit::ordersClear()
-//{
-//    m_orders.clear();
-//}
-
-qreal CcfQmlBaseUnit::getMoveFastFactor()
+qreal CcfQmlBaseUnit::getMoveFastFactor() const
 {
     return m_moveFastFactor;
 }
 
-qreal CcfQmlBaseUnit::getSneakFactor()
+qreal CcfQmlBaseUnit::getSneakFactor() const
 {
     return m_sneakFactor;
 }
 
-int CcfQmlBaseUnit::getCenterX()
+int CcfQmlBaseUnit::getCenterX() const
 {
     return m_centerX;
 }
 
-int CcfQmlBaseUnit::getCenterY()
+int CcfQmlBaseUnit::getCenterY() const
 {
     return m_centerY;
 }
 
-int CcfQmlBaseUnit::getTempX()
+int CcfQmlBaseUnit::getTempX() const
 {
     return m_tempX;
 }
 
-int CcfQmlBaseUnit::getTempY()
+int CcfQmlBaseUnit::getTempY() const
 {
     return m_tempY;
 }
 
-QString CcfQmlBaseUnit::getScheduledOperation()
+QString CcfQmlBaseUnit::getScheduledOperation() const
 {
     return m_scheduledOperation;
 }
 
-int CcfQmlBaseUnit::getCurrentOrder()
+int CcfQmlBaseUnit::getCurrentOrder() const
 {
     return m_currentOrder;
 }
 
-bool CcfQmlBaseUnit::getSelected()
+bool CcfQmlBaseUnit::getSelected() const
 {
     return m_selected;
 }
 
-bool CcfQmlBaseUnit::getFiring()
+bool CcfQmlBaseUnit::getFiring() const
 {
     return m_firing;
 }
 
-bool CcfQmlBaseUnit::getSmoking()
+bool CcfQmlBaseUnit::getSmoking() const
 {
     return m_smoking;
 }
 
-int CcfQmlBaseUnit::getDefenceSphereRotation()
+int CcfQmlBaseUnit::getDefenceSphereRotation() const
 {
     return m_defenceSphereRotation;
 }
 
-QString CcfQmlBaseUnit::getDefenceSphereColor()
+QString CcfQmlBaseUnit::getDefenceSphereColor() const
 {
     return m_defenceSphereColor;
 }
 
-bool CcfQmlBaseUnit::getPaused()
+bool CcfQmlBaseUnit::getPaused() const
 {
     return m_paused;
 }
 
-bool CcfQmlBaseUnit::getMoving()
+bool CcfQmlBaseUnit::getMoving() const
 {
     return m_moving;
 }

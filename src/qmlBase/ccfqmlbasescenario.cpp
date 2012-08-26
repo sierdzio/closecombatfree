@@ -16,37 +16,37 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
 
 // Property getters:
 
-QString CcfQmlBaseScenario::getScenarioFile()
+QString CcfQmlBaseScenario::getScenarioFile() const
 {
     return m_scenarioFile;
 }
 
-QString CcfQmlBaseScenario::getScenarioWinStatus()
+QString CcfQmlBaseScenario::getScenarioWinStatus() const
 {
     return m_scenarioWinStatus;
 }
 
-int CcfQmlBaseScenario::getAimLineRotation()
+int CcfQmlBaseScenario::getAimLineRotation() const
 {
     return m_aimLineRotation;
 }
 
-int CcfQmlBaseScenario::getRubberBandRotation()
+int CcfQmlBaseScenario::getRubberBandRotation() const
 {
     return m_rubberBandRotation;
 }
 
-int CcfQmlBaseScenario::getUnitIndex()
+int CcfQmlBaseScenario::getUnitIndex() const
 {
     return m_unitIndex;
 }
 
-bool CcfQmlBaseScenario::getIsCampaign()
+bool CcfQmlBaseScenario::getIsCampaign() const
 {
     return m_isCampaign;
 }
 
-QString CcfQmlBaseScenario::getMapFile()
+QString CcfQmlBaseScenario::getMapFile() const
 {
     return m_mapFile;
 }
@@ -61,27 +61,27 @@ QString CcfQmlBaseScenario::getMapFile()
 //    return m_unitGroups;
 //}
 
-qreal CcfQmlBaseScenario::getZoom()
+qreal CcfQmlBaseScenario::getZoom() const
 {
     return m_zoom;
 }
 
-QPoint CcfQmlBaseScenario::getZoomPoint()
+QPoint CcfQmlBaseScenario::getZoomPoint() const
 {
     return m_zoomPoint;
 }
 
-bool CcfQmlBaseScenario::getPaused()
+bool CcfQmlBaseScenario::getPaused() const
 {
     return m_paused;
 }
 
-QColor CcfQmlBaseScenario::getMenuBackgroundColor()
+QColor CcfQmlBaseScenario::getMenuBackgroundColor() const
 {
     return m_menuBackgroundColor;
 }
 
-QQmlListReference CcfQmlBaseScenario::getUnits()
+QQmlListReference CcfQmlBaseScenario::getUnits() const
 {
     return m_units;
 }

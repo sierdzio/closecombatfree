@@ -74,13 +74,9 @@ public:
     Q_INVOKABLE void performTurretShooting(qreal targetX, qreal targetY);
     Q_INVOKABLE void hit(QObject *byWhat, qreal xWhere, qreal yWhere);
 
-    Q_INVOKABLE QObject *createOrder();
+    Q_INVOKABLE void continueQueue();
     Q_INVOKABLE void cancelOrder();
     Q_INVOKABLE void queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent);
-    Q_INVOKABLE void continueQueue();
-    Q_INVOKABLE void processQueue();
-    Q_INVOKABLE void clearOrderQueue();
-    Q_INVOKABLE void deleteOrder(int index);
 
     Q_INVOKABLE void moveTo(qreal newX, qreal newY, QObject *reparent);
     Q_INVOKABLE void moveFastTo(qreal newX, qreal newY, QObject *reparent);
@@ -88,40 +84,59 @@ public:
     Q_INVOKABLE void turretFireTo(qreal targetX, qreal targetY, QObject *reparent);
     Q_INVOKABLE void turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent);
 
+protected:
+    QObject *createOrder();
+    void processQueue();
+    void clearOrderQueue();
+    void deleteOrder(int index);
+
+signals:
+    void unitStatusChanged(const QString &newStatus, int index);
+    void movementBegan();
+
+private:
+    CcfMain *m_mainInstance;
+    QQmlComponent *m_ordersComponent;
+    QList<QObject *> m_orders;
+
+    // // // //
+    // Everything below is property handling:
+    // // // //
+protected:
     // Property getters:
-    QString getObjectType();
-    QString getUnitFileName();
-    QString getUnitType();
-    QString getUnitLogo();
-    QString getUnitStatus();
-    QString getUnitSide();
-    int getGroupNumber();
-    int getUnitIndex();
-    bool getSideMarkVisible();
-    QString getSideMarkSource();
-    QString getSideMarkSet();
-    int getRotationSpeed();
-    int getTurretRotationSpeed();
-    int getMaxSpeed();
-    int getAcceleration();
-    int getUnitWidth();
-    int getUnitHeight();
+    QString getObjectType() const;
+    QString getUnitFileName() const;
+    QString getUnitType() const;
+    QString getUnitLogo() const;
+    QString getUnitStatus() const;
+    QString getUnitSide() const;
+    int getGroupNumber() const;
+    int getUnitIndex() const;
+    bool getSideMarkVisible() const;
+    QString getSideMarkSource() const;
+    QString getSideMarkSet() const;
+    int getRotationSpeed() const;
+    int getTurretRotationSpeed() const;
+    int getMaxSpeed() const;
+    int getAcceleration() const;
+    int getUnitWidth() const;
+    int getUnitHeight() const;
 //    QQmlListReference getSoldiers();
-    qreal getMoveFastFactor();
-    qreal getSneakFactor();
-    int getCenterX();
-    int getCenterY();
-    int getTempX();
-    int getTempY();
-    QString getScheduledOperation();
-    int getCurrentOrder();
-    bool getSelected();
-    bool getFiring();
-    bool getSmoking();
-    int getDefenceSphereRotation();
-    QString getDefenceSphereColor();
-    bool getPaused();
-    bool getMoving();
+    qreal getMoveFastFactor() const;
+    qreal getSneakFactor() const;
+    int getCenterX() const;
+    int getCenterY() const;
+    int getTempX() const;
+    int getTempY() const;
+    QString getScheduledOperation() const;
+    int getCurrentOrder() const;
+    bool getSelected() const;
+    bool getFiring() const;
+    bool getSmoking() const;
+    int getDefenceSphereRotation() const;
+    QString getDefenceSphereColor() const;
+    bool getPaused() const;
+    bool getMoving() const;
 
     // Property setters:
     void setObjectType(const QString &objectType);
@@ -159,9 +174,6 @@ public:
     void setMoving(bool moving);
 
 signals:
-    void unitStatusChanged(const QString &newStatus, int index);
-    void movementBegan();
-
     void objectTypeChanged();
     void unitFileNameChanged();
     void unitTypeChanged();
@@ -197,10 +209,6 @@ signals:
     void movingChanged();
 
 private:
-    CcfMain *m_mainInstance;
-    QQmlComponent *m_ordersComponent;
-    QList<QObject *> m_orders;
-
     // Properties:
     QString m_objectType;
     QString m_unitFileName;

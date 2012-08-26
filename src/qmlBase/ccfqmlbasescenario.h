@@ -40,28 +40,27 @@ class CcfQmlBaseScenario : public QQuickItem
     Q_PROPERTY(QPoint zoomPoint READ getZoomPoint WRITE setZoomPoint NOTIFY zoomPointChanged)
     Q_PROPERTY(bool paused READ getPaused WRITE setPaused NOTIFY pausedChanged)
     Q_PROPERTY(QColor menuBackgroundColor READ getMenuBackgroundColor WRITE setMenuBackgroundColor NOTIFY menuBackgroundColorChanged)
-
     Q_PROPERTY(QQmlListReference units READ getUnits WRITE setUnits NOTIFY unitsChanged)
 
 public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
+protected:
     // Property getters:
-    QString getScenarioFile();
-    QString getScenarioWinStatus();
-    int getAimLineRotation();
-    int getRubberBandRotation();
-    int getUnitIndex();
-    bool getIsCampaign();
-    QString getMapFile();
+    QString getScenarioFile() const;
+    QString getScenarioWinStatus() const;
+    int getAimLineRotation() const;
+    int getRubberBandRotation() const;
+    int getUnitIndex() const;
+    bool getIsCampaign() const;
+    QString getMapFile() const;
 //    QList<QObject *> getEffectsContainer();
 //    QList<QObject *> getUnitGroups();
-    qreal getZoom();
-    QPoint getZoomPoint();
-    bool getPaused();
-    QColor getMenuBackgroundColor();
-
-    QQmlListReference getUnits();
+    qreal getZoom() const;
+    QPoint getZoomPoint() const;
+    bool getPaused() const;
+    QColor getMenuBackgroundColor() const;
+    QQmlListReference getUnits() const;
 
     //Property setters:
     void setScenarioFile(const QString &scenarioFile);
