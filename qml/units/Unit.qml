@@ -29,9 +29,6 @@ BaseUnit {
     centerX: unitWidth/2
     centerY: unitHeight/2
 
-    tempX: x
-    tempY: y
-
     signal togglePause ()
     onTogglePause: {
         if (paused == true) {
@@ -150,9 +147,9 @@ BaseUnit {
 
         onRunningChanged: { // Not sure whether doing that will be good under all circumstances
             if ((!rotationAnimation.running) && (unitStatus != "STOPPED")) {
-                xMoveAnimation.to = tempX;
+                xMoveAnimation.to = orderTarget().x - centerX;
                 xMoveAnimation.running = true;
-                yMoveAnimation.to = tempY;
+                yMoveAnimation.to = orderTarget().y - centerY;
                 yMoveAnimation.running = true;
             }
         }
@@ -173,7 +170,7 @@ BaseUnit {
             if ((!xMoveAnimation.running) && (unitStatus != "STOPPED")) {
                 // Warning! This order is important for order markers!
                 changeStatus("READY");
-                actionFinished(unitIndex, tempX, tempY);
+                actionFinished(unitIndex, orderTarget().x, orderTarget().y);
                 continueQueue();
             } else if (unitStatus == "STOPPED") {
                 changeStatus("READY");

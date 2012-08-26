@@ -39,11 +39,7 @@ Unit {
     property int turretSize: 60
     property color hullColor: "#7b8259"
 
-//    onMoveTo: exhaust.pulse(2000);
-//    onMoveFastTo: exhaust.pulse(2000);
-//    onSneakToSignal: exhaust.pulse(2000);
     onMovementBegan: exhaust.pulse(2000);
-
     onTurretRotationChanged: turret.turretRotation = turretRotation;
 
     Component.onCompleted: {
@@ -56,16 +52,11 @@ Unit {
         turret.y = centerY - turret.centerY;
     }
 
-//    signal fireTo (real targetX, real targetY, var reparent)
-//    onFireTo:
     function fireTo(targetX, targetY, reparent) {
         turretFireTo(targetX, targetY, reparent);
     }
 
-//    signal smokeToSignal (real targetX, real targetY, var reparent)
-//    onSmokeTo: ActionLogic.turretSmokeTo(targetX, targetY);
     function smokeTo(targetX, targetY, reparent) {
-//        smokeToSignal(targetX, targetY, reparent);
         turretSmokeTo(targetX, targetY, reparent);
     }
 
@@ -75,13 +66,13 @@ Unit {
             // Warning! This order is important for order markers!
             turret.firing = true;
             firing = false;
-            actionFinished(unitIndex, tempX, tempY);
+            actionFinished(unitIndex, orderTarget().x, orderTarget().y);
             continueQueue();
         } else if (smoking == true) {
             // Warning! This order is important for order markers!
             turret.smoking = true;
             smoking = false;
-            actionFinished(unitIndex, tempX, tempY);
+            actionFinished(unitIndex, orderTarget().x, orderTarget().y);
             continueQueue();
         }
     }

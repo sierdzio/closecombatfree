@@ -4,6 +4,7 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QVariant>
+#include <QtQml/QQmlComponent>
 
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     QQuickItem(parent)
@@ -40,9 +41,26 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
 }
 
-QString CcfQmlBaseUnit::operation(int index)
+QString CcfQmlBaseUnit::operation(int index) const
 {
+    if ((index == -1) || (!isOrderIndexValid(index)))
+        index = m_currentOrder;
     return m_orders.at(index)->property("operation").toString();
+}
+
+QPoint CcfQmlBaseUnit::orderTarget(int index) const
+{
+    if (index == -1)
+        index = m_currentOrder;
+
+    int x = 0;
+    int y = 0;
+    if (isOrderIndexValid(index)) {
+        x = m_orders.at(index)->property("targetX").toInt();
+        y = m_orders.at(index)->property("targetY").toInt();
+    }
+
+    return QPoint(x, y);
 }
 
 void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
@@ -58,11 +76,11 @@ void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
   */
 void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
 {
-    m_tempX = newX - (m_centerX);
-    m_tempY = newY - (m_centerY);
+    qreal tempX = newX - (m_centerX);
+    qreal tempY = newY - (m_centerY);
 
     qreal newRotation = CcfEngineHelpers::rotationAngle(property("x").toReal(),
-                                                        property("y").toReal(), m_tempX, m_tempY);
+                                                        property("y").toReal(), tempX, tempY);
     QObject *rotationAnimation = findChild<QObject *>("rotationAnimation");
     if (rotationAnimation) {
         rotationAnimation->setProperty("duration",
@@ -80,8 +98,8 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
     if (xMoveAnimation && yMoveAnimation) {
         qreal moveDuration = CcfEngineHelpers::targetDistance(property("x").toReal(),
                                                               property("y").toReal(),
-                                                              m_tempX,
-                                                              m_tempY) * 800 / (m_maxSpeed * factor);
+                                                              tempX,
+                                                              tempY) * 800 / (m_maxSpeed * factor);
         setProperty("duration", moveDuration);
         setProperty("duration", moveDuration);
     } else {
@@ -96,8 +114,8 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
   */
 void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
 {
-    m_tempX = targetX;
-    m_tempY = targetY;
+//    m_tempX = targetX;
+//    m_tempY = targetY;
     QObject *tra = findChild<QObject *>("turretRotationAnimation");
     if (tra) {
         qreal newRotation = CcfEngineHelpers::rotationAngle(
@@ -416,15 +434,15 @@ int CcfQmlBaseUnit::getCenterY() const
     return m_centerY;
 }
 
-int CcfQmlBaseUnit::getTempX() const
-{
-    return m_tempX;
-}
+//int CcfQmlBaseUnit::getTempX() const
+//{
+//    return m_tempX;
+//}
 
-int CcfQmlBaseUnit::getTempY() const
-{
-    return m_tempY;
-}
+//int CcfQmlBaseUnit::getTempY() const
+//{
+//    return m_tempY;
+//}
 
 QString CcfQmlBaseUnit::getScheduledOperation() const
 {
@@ -737,29 +755,29 @@ void CcfQmlBaseUnit::setCenterY(int centerY)
         emit centerYChanged();
 }
 
-void CcfQmlBaseUnit::setTempX(int tempX)
-{
-    bool wasChaged = false;
-    if (tempX != m_tempX)
-        wasChaged = true;
+//void CcfQmlBaseUnit::setTempX(int tempX)
+//{
+//    bool wasChaged = false;
+//    if (tempX != m_tempX)
+//        wasChaged = true;
 
-    m_tempX = tempX;
+//    m_tempX = tempX;
 
-    if (wasChaged)
-        emit tempXChanged();
-}
+//    if (wasChaged)
+//        emit tempXChanged();
+//}
 
-void CcfQmlBaseUnit::setTempY(int tempY)
-{
-    bool wasChaged = false;
-    if (tempY != m_tempY)
-        wasChaged = true;
+//void CcfQmlBaseUnit::setTempY(int tempY)
+//{
+//    bool wasChaged = false;
+//    if (tempY != m_tempY)
+//        wasChaged = true;
 
-    m_tempY = tempY;
+//    m_tempY = tempY;
 
-    if (wasChaged)
-        emit tempYChanged();
-}
+//    if (wasChaged)
+//        emit tempYChanged();
+//}
 
 void CcfQmlBaseUnit::setScheduledOperation(const QString &scheduledOperation)
 {
@@ -867,4 +885,11 @@ void CcfQmlBaseUnit::setMoving(bool moving)
 
     if (wasChaged)
         emit movingChanged();
+}
+
+bool CcfQmlBaseUnit::isOrderIndexValid(int index) const
+{
+    if ((index >= 0) && (index < m_orders.length()))
+        return true;
+    return false;
 }

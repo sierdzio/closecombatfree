@@ -3,10 +3,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
+#include <QtCore/QPoint>
 #include <QtQuick/QQuickItem>
-#include <QtQml/QQmlComponent>
-//#include <QtQml/QQmlListReference>
-//#include <QtCore/QVariantList>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -14,6 +12,7 @@
  */
 
 class CcfMain;
+class QQmlComponent;
 
 /*!
   The CcfQmlBaseUnit class is an experiment to see if moving most functionality
@@ -53,8 +52,8 @@ class CcfQmlBaseUnit : public QQuickItem
     Q_PROPERTY(qreal sneakFactor READ getSneakFactor WRITE setSneakFactor NOTIFY sneakFactorChanged)
     Q_PROPERTY(int centerX READ getCenterX WRITE setCenterX NOTIFY centerXChanged)
     Q_PROPERTY(int centerY READ getCenterY WRITE setCenterY NOTIFY centerYChanged)
-    Q_PROPERTY(int tempX READ getTempX WRITE setTempX NOTIFY tempXChanged)
-    Q_PROPERTY(int tempY READ getTempY WRITE setTempY NOTIFY tempYChanged)
+//    Q_PROPERTY(int tempX READ getTempX WRITE setTempX NOTIFY tempXChanged)
+//    Q_PROPERTY(int tempY READ getTempY WRITE setTempY NOTIFY tempYChanged)
     Q_PROPERTY(QString scheduledOperation READ getScheduledOperation WRITE setScheduledOperation NOTIFY scheduledOperationChanged)
     Q_PROPERTY(int currentOrder READ getCurrentOrder WRITE setCurrentOrder NOTIFY currentOrderChanged)
     Q_PROPERTY(bool selected READ getSelected WRITE setSelected NOTIFY selectedChanged)
@@ -68,7 +67,8 @@ class CcfQmlBaseUnit : public QQuickItem
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
-    Q_INVOKABLE QString operation(int index);
+    Q_INVOKABLE QString operation(int index = -1) const;
+    Q_INVOKABLE QPoint orderTarget(int index = -1) const;
     Q_INVOKABLE void changeStatus(const QString &newStatusMessage);
     Q_INVOKABLE void performMovement(qreal newX, qreal newY, qreal factor);
     Q_INVOKABLE void performTurretShooting(qreal targetX, qreal targetY);
@@ -95,6 +95,8 @@ signals:
     void movementBegan();
 
 private:
+    bool isOrderIndexValid(int index) const;
+
     CcfMain *m_mainInstance;
     QQmlComponent *m_ordersComponent;
     QList<QObject *> m_orders;
@@ -126,8 +128,8 @@ protected:
     qreal getSneakFactor() const;
     int getCenterX() const;
     int getCenterY() const;
-    int getTempX() const;
-    int getTempY() const;
+//    int getTempX() const;
+//    int getTempY() const;
     QString getScheduledOperation() const;
     int getCurrentOrder() const;
     bool getSelected() const;
@@ -161,8 +163,8 @@ protected:
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
     void setCenterY(int centerY);
-    void setTempX(int tempX);
-    void setTempY(int tempY);
+//    void setTempX(int tempX);
+//    void setTempY(int tempY);
     void setScheduledOperation(const QString &scheduledOperation);
     void setCurrentOrder(int currentOrder);
     void setSelected(bool selected);
@@ -196,8 +198,8 @@ signals:
     void sneakFactorChanged();
     void centerXChanged();
     void centerYChanged();
-    void tempXChanged();
-    void tempYChanged();
+//    void tempXChanged();
+//    void tempYChanged();
     void scheduledOperationChanged();
     void currentOrderChanged();
     void selectedChanged(bool state, int index);
@@ -232,8 +234,8 @@ private:
     qreal m_sneakFactor;
     int m_centerX;
     int m_centerY;
-    int m_tempX;
-    int m_tempY;
+//    int m_tempX;
+//    int m_tempY;
     QString m_scheduledOperation;
     int m_currentOrder;
     bool m_selected;

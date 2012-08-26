@@ -7,6 +7,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 26.08.2012:
  - include new files into documentation
+ - clean Unit and Scenario
+ - continue transition to C++
+ - add constness where applicable
+ - experimental removal of tempX and Y properties
 
 25.08.2012:
  - finish initial transition of Unit.qml to C++
