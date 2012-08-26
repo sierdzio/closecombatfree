@@ -32,8 +32,8 @@
  */
 
 /*!
-  \brief The CcfEngineHelpers class contains various helper functions frequently needed
-         by the engine.
+  The CcfEngineHelpers class contains various helper functions frequently needed
+  by the engine.
 
   It is referenced in QML as EngineHelpers. It contains a lot of geometrical stuff
   + colour management + some minor things lacing in JavaScript.

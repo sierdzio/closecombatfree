@@ -11,7 +11,7 @@
  */
 
 /*!
- * \brief The CcfScenarioState class stores run-time info about current scenario.
+  The CcfScenarioState class stores run-time info about current scenario.
  */
 class CcfScenarioState : public QObject
 {

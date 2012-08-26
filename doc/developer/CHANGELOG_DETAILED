@@ -5,6 +5,9 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+26.08.2012:
+ - include new files into documentation
+
 25.08.2012:
  - finish initial transition of Unit.qml to C++
  - transfer all code from engineActionLogic.js to C++ (well, almost)

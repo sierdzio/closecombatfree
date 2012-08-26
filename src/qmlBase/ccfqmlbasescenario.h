@@ -8,9 +8,14 @@
 #include <QtQml/QQmlListReference>
 
 /*!
- * \brief The CcfQmlBaseScenario class is an experiment to see if moving most functionality
- * from Scenario.qml to here is sane, doable, and does not require too much effort
- * and nasty workarounds.
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
+/*!
+  The CcfQmlBaseScenario class is an experiment to see if moving most functionality
+  from Scenario.qml to here is sane, doable, and does not require too much effort
+  and nasty workarounds.
  */
 class CcfQmlBaseScenario : public QQuickItem
 {
@@ -106,5 +111,7 @@ private:
     QColor m_menuBackgroundColor;
     QQmlListReference m_units;
 };
+
+/*! @}*/
 
 #endif // CCFQMLBASESCENARIO_H

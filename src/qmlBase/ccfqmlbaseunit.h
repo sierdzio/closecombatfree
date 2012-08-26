@@ -8,12 +8,17 @@
 //#include <QtQml/QQmlListReference>
 //#include <QtCore/QVariantList>
 
+/*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
 class CcfMain;
 
 /*!
- * \brief The CcfQmlBaseUnit class is an experiment to see if moving most functionality
- * from Unit.qml to here is sane, doable, and does not require too much effort
- * and nasty workarounds.
+  The CcfQmlBaseUnit class is an experiment to see if moving most functionality
+  from Unit.qml to here is sane, doable, and does not require too much effort
+  and nasty workarounds.
  */
 class CcfQmlBaseUnit : public QQuickItem
 {
@@ -231,5 +236,7 @@ private:
     bool m_paused;
     bool m_moving;
 };
+
+/*! @}*/
 
 #endif // CCFQMLBASEUNIT_H
