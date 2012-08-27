@@ -6,6 +6,10 @@
 #include <QtCore/QVariant>
 #include <QtQml/QQmlComponent>
 
+/*!
+  BaseUnit constructor - initialises all properties with default values,
+  prepares orderMarker component for object generation.
+  */
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     QQuickItem(parent)
 {
@@ -41,6 +45,10 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
 }
 
+/*!
+  Returns the name of the operation associated with order \a index, or current order
+  if no index is given.
+  */
 QString CcfQmlBaseUnit::operation(int index) const
 {
     if ((index == -1) || (!isOrderIndexValid(index)))
@@ -48,6 +56,10 @@ QString CcfQmlBaseUnit::operation(int index) const
     return m_orders.at(index)->property("operation").toString();
 }
 
+/*!
+  Returns a destination point of order specified by \a index, or if none is given
+  - the current order.
+  */
 QPoint CcfQmlBaseUnit::orderTarget(int index) const
 {
     if (index == -1)
@@ -63,6 +75,9 @@ QPoint CcfQmlBaseUnit::orderTarget(int index) const
     return QPoint(x, y);
 }
 
+/*!
+  Changes unit's status.
+  */
 void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
 {
     m_unitStatus = newStatusMessage;
@@ -114,8 +129,6 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
   */
 void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
 {
-//    m_tempX = targetX;
-//    m_tempY = targetY;
     QObject *tra = findChild<QObject *>("turretRotationAnimation");
     if (tra) {
         qreal newRotation = CcfEngineHelpers::rotationAngle(
@@ -272,6 +285,11 @@ void CcfQmlBaseUnit::processQueue()
     }
 }
 
+/*!
+  Clears the order queue, deleting all orders inside.
+
+  Sets currentOrder to -1.
+  */
 void CcfQmlBaseUnit::clearOrderQueue()
 {
     for (int i = 0; i < m_orders.length(); ++i) {
@@ -282,6 +300,9 @@ void CcfQmlBaseUnit::clearOrderQueue()
     m_orders.clear();
 }
 
+/*!
+  Deletes an order object found at \a index in the orders list.
+  */
 void CcfQmlBaseUnit::deleteOrder(int index)
 {
     if (index < m_orders.length()) {
@@ -289,6 +310,9 @@ void CcfQmlBaseUnit::deleteOrder(int index)
     }
 }
 
+/*!
+  Orders a unit to move. This puts the order in the queue.
+  */
 void CcfQmlBaseUnit::moveTo(qreal newX, qreal newY, QObject *reparent)
 {
     emit movementBegan();
@@ -296,6 +320,11 @@ void CcfQmlBaseUnit::moveTo(qreal newX, qreal newY, QObject *reparent)
     processQueue();
 }
 
+/*!
+  Orders a unit to move fast. This puts the order in the queue.
+
+  \sa moveFastFactor
+  */
 void CcfQmlBaseUnit::moveFastTo(qreal newX, qreal newY, QObject *reparent)
 {
     emit movementBegan();
@@ -303,6 +332,11 @@ void CcfQmlBaseUnit::moveFastTo(qreal newX, qreal newY, QObject *reparent)
     processQueue();
 }
 
+/*!
+  Orders a unit to sneak. This puts the order in the queue.
+
+  \sa sneakFactor
+  */
 void CcfQmlBaseUnit::sneakTo(qreal newX, qreal newY, QObject *reparent)
 {
     emit movementBegan();
@@ -310,12 +344,22 @@ void CcfQmlBaseUnit::sneakTo(qreal newX, qreal newY, QObject *reparent)
     processQueue();
 }
 
+/*!
+  Orders a unit to fire. This puts the order in the queue.
+
+  // TODO: this should be renamed to fireTo().
+  */
 void CcfQmlBaseUnit::turretFireTo(qreal targetX, qreal targetY, QObject *reparent)
 {
     queueOrder("Attack", targetX, targetY, reparent);
     processQueue();
 }
 
+/*!
+  Orders a unit to place smoke. This puts the order in the queue.
+
+  // TODO:: this should be renamed to smokeTo().
+  */
 void CcfQmlBaseUnit::turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent)
 {
     queueOrder("Smoke", targetX, targetY, reparent);
@@ -433,16 +477,6 @@ int CcfQmlBaseUnit::getCenterY() const
 {
     return m_centerY;
 }
-
-//int CcfQmlBaseUnit::getTempX() const
-//{
-//    return m_tempX;
-//}
-
-//int CcfQmlBaseUnit::getTempY() const
-//{
-//    return m_tempY;
-//}
 
 QString CcfQmlBaseUnit::getScheduledOperation() const
 {
@@ -701,12 +735,6 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
 //    emit soldiersChanged();
 //}
 
-//void CcfQmlBaseUnit::setOrders(QVariantList orders)
-//{
-//    m_orders = orders;
-//    emit ordersChanged();
-//}
-
 void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 {
     bool wasChaged = false;
@@ -754,30 +782,6 @@ void CcfQmlBaseUnit::setCenterY(int centerY)
     if (wasChaged)
         emit centerYChanged();
 }
-
-//void CcfQmlBaseUnit::setTempX(int tempX)
-//{
-//    bool wasChaged = false;
-//    if (tempX != m_tempX)
-//        wasChaged = true;
-
-//    m_tempX = tempX;
-
-//    if (wasChaged)
-//        emit tempXChanged();
-//}
-
-//void CcfQmlBaseUnit::setTempY(int tempY)
-//{
-//    bool wasChaged = false;
-//    if (tempY != m_tempY)
-//        wasChaged = true;
-
-//    m_tempY = tempY;
-
-//    if (wasChaged)
-//        emit tempYChanged();
-//}
 
 void CcfQmlBaseUnit::setScheduledOperation(const QString &scheduledOperation)
 {
