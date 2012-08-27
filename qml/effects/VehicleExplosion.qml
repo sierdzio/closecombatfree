@@ -5,19 +5,19 @@ Item {
     id: root
 
     function burst(amount) {
-        fireEmitter.burst(amount);
+        fireEmitter.burst(10);
         afterEffect();
     }
 
     function pulse(duration) {
-        fireEmitter.pulse(duration);
+        fireEmitter.pulse(500);
         afterEffect();
     }
 
     function afterEffect() {
         fireballImage.makeFireball();
         explodeEmitter.pulse(800);
-        smoke.pulse(10000, true);
+        smoke.pulse(20000, true);
     }
 
     /*!
@@ -39,53 +39,51 @@ Item {
             Friction {
                 anchors.fill: parent
                 groups: ["fire"]
-                factor: 0.2
+                factor: 4.4
             }
 
             TrailEmitter {
+                id: smokeTrails
                 group: "smokeTrails"
-                emitRatePerParticle: 10
-                lifeSpan: 100
-                maximumEmitted: 60
-                size: 10
+                emitRatePerParticle: 12
+                lifeSpan: 300
+                maximumEmitted: 20
+                size: 15
             }
-        }
-
-        Turbulence {
-            anchors.fill: parent
-            groups: ["smokeTrails"]
-            strength: 20
         }
 
         Emitter {
             id: fireEmitter
             group: "fire"
             enabled: false
+            z: smokeTrails.z + 1
 
             width: 10
             height: 10
             anchors.centerIn: parent
 
-            emitRate: 80
-            lifeSpan: 300
+            emitRate: 10
+            maximumEmitted: 30
+            lifeSpan: 1200
             lifeSpanVariation: 300
             velocity: AngleDirection {
-                magnitude: 180
+                magnitude: 300
                 angleVariation: 360
             }
 
             acceleration: PointDirection {xVariation: 20; yVariation: 20;}
-            size: 20
+            size: 10
         }
 
         ImageParticle {
-            source: "../../img/effects/vehicle_fire.png"
-            redVariation: 0.6
-            color: "#aa5511"
+            z: smokeParticle.z + 1
+            source: "../../img/effects/gun_fire_particle1.png"
+//            color: "#aa5511"
             groups: ["fire"]
         }
 
         ImageParticle {
+            id: smokeParticle
             source: "../../img/effects/vehicle_smoke.png"
 //            source: "../../img/effects/vehicle_smoke_light.png"
             groups: ["smokeTrails"]
@@ -122,32 +120,32 @@ Item {
         }
     }
 
-    ParticleSystem {
-        id: explodeParticleSystem
-        anchors.fill: parent
+//    ParticleSystem {
+//        id: explodeParticleSystem
+//        anchors.fill: parent
 
-        Emitter {
-            id: explodeEmitter
-            enabled: false
+//        Emitter {
+//            id: explodeEmitter
+//            enabled: false
 
-            anchors.centerIn: parent
-            width: 200
-            height: 200
+//            anchors.centerIn: parent
+//            width: 200
+//            height: 200
 
-            emitRate: 200
-            shape: EllipseShape{}
-            lifeSpan: 300
-            lifeSpanVariation: 150
-            size: 7
-        }
+//            emitRate: 200
+//            shape: EllipseShape{}
+//            lifeSpan: 300
+//            lifeSpanVariation: 150
+//            size: 7
+//        }
 
-        ImageParticle {
-            source: "../../img/effects/vehicle_smoke_flash2.png"
-            color: "#ffffffff"
-            colorVariation: 0.2
-            entryEffect: ImageParticle.Scale
-        }
-    }
+//        ImageParticle {
+//            source: "../../img/effects/vehicle_smoke_flash2.png"
+//            color: "#ffffffff"
+//            colorVariation: 0.2
+//            entryEffect: ImageParticle.Scale
+//        }
+//    }
 
     VehicleExhaust {
         id: smoke

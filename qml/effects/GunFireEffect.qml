@@ -18,6 +18,30 @@ Item {
         trailEmitter.pulse(1500);
     }
 
+    ImageParticle {
+        source: "../../img/effects/vehicle_smoke_flash.png"
+        width: 30
+        height: 30
+        groups: "B"
+        system: particleSystem
+        entryEffect: ImageParticle.Fade
+    }
+
+    Emitter {
+        id: trailEmitter
+        enabled: false
+        group: "B"
+        system: particleSystem
+
+        lifeSpan: 600
+        lifeSpanVariation: 800
+        velocity: AngleDirection {
+            magnitude: 15
+            angle: 270
+            angleVariation: 30
+        }
+    }
+
     ParticleSystem {
         id: particleSystem
         anchors.fill: parent
@@ -49,31 +73,8 @@ Item {
             width: 30
             height: 30
             groups: "A"
-            entryEffect: ImageParticle.None
-        }
-    }
-
-    ImageParticle {
-        source: "../../img/effects/vehicle_smoke_flash.png"
-        width: 30
-        height: 30
-        groups: "B"
-        system: particleSystem
-        entryEffect: ImageParticle.Fade
-    }
-
-    Emitter {
-        id: trailEmitter
-        enabled: false
-        group: "B"
-        system: particleSystem
-
-        lifeSpan: 600
-        lifeSpanVariation: 800
-        velocity: AngleDirection {
-            magnitude: 15
-            angle: 270
-            angleVariation: 30
+            entryEffect: ImageParticle.Fade
+            alpha: 0.4
         }
     }
 }
