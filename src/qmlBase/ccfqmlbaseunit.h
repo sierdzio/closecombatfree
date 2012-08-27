@@ -23,45 +23,217 @@ class CcfQmlBaseUnit : public QQuickItem
 {
     Q_OBJECT
 
-    // Many of those can be changed into local vars, probalby
+    /*!
+      Stores type of the object (like "unit", or "unit/tank").
+      */
     Q_PROPERTY(QString objectType READ getObjectType WRITE setObjectType NOTIFY objectTypeChanged)
-    // Sadly, this is needed for file saving:
+
+    /*!
+      This should hold the actual file name of a unit. This is not a nice solution,
+      but allows to easily tell saving engine how to create a save file.
+
+      Extension is not needed. Example entry: "Tank_tst1"
+      */
     Q_PROPERTY(QString unitFileName READ getUnitFileName WRITE setUnitFileName NOTIFY unitFileNameChanged)
+
+    /*!
+      Holds unit's type. This is different to objectType in that here we already know this IS a unit.
+
+      This is here to make a distinction between a tank, a gun etc.
+
+      // TODO: Probably those 2 properties can be merged!
+      */
     Q_PROPERTY(QString unitType READ getUnitType WRITE setUnitType NOTIFY unitTypeChanged)
-    // TODO: Change to QImage, perhaps?
+
+    /*!
+      Stores a path to unit's logo (which is displayed in roster menu).
+
+      // TODO: Change to QImage, perhaps?
+      */
     Q_PROPERTY(QString unitLogo READ getUnitLogo WRITE setUnitLogo NOTIFY unitLogoChanged)
+
+    /*!
+      Current unit's status.
+
+      // TODO: should it be combined with state?
+      */
     Q_PROPERTY(QString unitStatus READ getUnitStatus WRITE setUnitStatus NOTIFY unitStatusChanged)
+
+    /*!
+      Side this unit is on (defaults to neutral).
+      */
     Q_PROPERTY(QString unitSide READ getUnitSide WRITE setUnitSide NOTIFY unitSideChanged)
+
+    /*!
+      Stores unit's group number. Units that are in the same group can be selected at once
+      by pressing relevant digit on the keyboard (0-9).
+
+      For now, a single unit can be a member of only one group. This might change in the future,
+      or it might stay as it is.
+      */
     Q_PROPERTY(int groupNumber READ getGroupNumber WRITE setGroupNumber NOTIFY groupNumberChanged)
+
+    /*!
+      Unit's index. Needed by the engine.
+
+      TODO: consider dropping this in favor of BaseScenario's index.
+      */
     Q_PROPERTY(int unitIndex READ getUnitIndex WRITE setUnitIndex NOTIFY unitIndexChanged)
+
+    /*!
+      Controlls visibility of the side mark. Side mark is a small image showing unit's side allegiance.
+
+      Useful in debugging and testing, and is currently true by default. For release, this will probably be
+      turned off.
+      */
     Q_PROPERTY(bool sideMarkVisible READ getSideMarkVisible WRITE setSideMarkVisible NOTIFY sideMarkVisibleChanged)
+
+    /*!
+      Holds the path to the image to be used as side mark.
+      */
     Q_PROPERTY(QString sideMarkSource READ getSideMarkSource WRITE setSideMarkSource NOTIFY sideMarkSourceChanged)
-    /*! Defines a set of side marks to be used to decorate this unit.
-        Side mark filenames should be made according to this template:
-       <root>/img/units/sideMarks/sideMark_<sideMarkSet>_<sideNumber>.png
+
+    /*!
+      Defines a set of side marks to be used to decorate this unit.
+      Side mark filenames should be made according to this template:
+      <root>/img/units/sideMarks/sideMark_<sideMarkSet>_<sideNumber>.png
        */
     Q_PROPERTY(QString sideMarkSet READ getSideMarkSet WRITE setSideMarkSet NOTIFY sideMarkSetChanged)
+
+    /*!
+      Speed with which this unit is able to rotate. Units are not clearly specified yet, this will come in later.
+
+      Currently not used much, but will be vital later.
+      */
     Q_PROPERTY(int rotationSpeed READ getRotationSpeed WRITE setRotationSpeed NOTIFY rotationSpeedChanged)
+
+    /*!
+      For tanks - the speed with which turret is rotating (relative to the hull, not the ground!).
+      */
     Q_PROPERTY(int turretRotationSpeed READ getTurretRotationSpeed WRITE setTurretRotationSpeed NOTIFY turretRotationSpeedChanged)
+
+    /*!
+      Maximum speed this unit can move at. Not used at all, currently.
+
+      For now, unit movement is controlled solely by QML animations. This is not good, and can be seen to work badly
+      for long move orders.
+      */
     Q_PROPERTY(int maxSpeed READ getMaxSpeed WRITE setMaxSpeed NOTIFY maxSpeedChanged)
+
+    /*!
+      Acceleration on the unit. Not used, currently.
+
+      \sa maxSpeed
+      */
     Q_PROPERTY(int acceleration READ getAcceleration WRITE setAcceleration NOTIFY accelerationChanged)
+
+    /*!
+      Holds the width of a unit. This is not always synonymous to "width" property, because some units need to
+      have different sizing (for example in tanks, only the hull is taken into account when calculating hits. Lenght
+      of the turret has no influence on that).
+      */
     Q_PROPERTY(int unitWidth READ getUnitWidth WRITE setUnitWidth NOTIFY unitWidthChanged)
+
+    /*!
+      Holds the height of a unit. This is 2D height, so it acctually means "length" of the unit.
+
+      \sa unitWidth
+      */
     Q_PROPERTY(int unitHeight READ getUnitHeight WRITE setUnitHeight NOTIFY unitHeightChanged)
 //    Q_PROPERTY(QQmlListReference soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
+
+    /*!
+      Moving speed of a unit is multiplied by that number, when it's moving fast.
+
+      In contrast to original CC, this affects vehicles, too.
+      */
     Q_PROPERTY(qreal moveFastFactor READ getMoveFastFactor WRITE setMoveFastFactor NOTIFY moveFastFactorChanged)
+
+    /*!
+      Moving speed of a unit is miltiplied by that number, when it's moving fast.
+
+      In contrast to original CC, this affects vehicles, too.
+      */
     Q_PROPERTY(qreal sneakFactor READ getSneakFactor WRITE setSneakFactor NOTIFY sneakFactorChanged)
+
+    /*!
+      Holds the central x coordinate of the unit. It's important because (0, 0) in QML means top-left corner, but
+      for unit shooting and movement, we need to pivot transformations on the central point.
+
+      // TODO: merge those into a single QPoint property.
+
+      \sa centerY
+      */
     Q_PROPERTY(int centerX READ getCenterX WRITE setCenterX NOTIFY centerXChanged)
+
+    /*!
+      Holds the central y coordinate of the unit. It's important because (0, 0) in QML means top-left corner, but
+      for unit shooting and movement, we need to pivot transformations on the central point.
+
+      // TODO: merge those into a single QPoint property.
+
+      \sa centerX
+      */
     Q_PROPERTY(int centerY READ getCenterY WRITE setCenterY NOTIFY centerYChanged)
-//    Q_PROPERTY(int tempX READ getTempX WRITE setTempX NOTIFY tempXChanged)
-//    Q_PROPERTY(int tempY READ getTempY WRITE setTempY NOTIFY tempYChanged)
+
+    /*!
+      Holds currently scheduled operation.
+
+      // TODO: remove this property. Use orders property only.
+      */
     Q_PROPERTY(QString scheduledOperation READ getScheduledOperation WRITE setScheduledOperation NOTIFY scheduledOperationChanged)
+
+    /*!
+      Holds the index of the current order.
+
+      //TODO: This should also be thought over. Maybe it would be possible to remove this one, too.
+      */
     Q_PROPERTY(int currentOrder READ getCurrentOrder WRITE setCurrentOrder NOTIFY currentOrderChanged)
+
+    /*!
+      Returns true if unit is selected. Set to true to select the unit.
+      */
     Q_PROPERTY(bool selected READ getSelected WRITE setSelected NOTIFY selectedChanged)
+
+    /*!
+      Is true when unit is firing. This is mostly for internal use.
+
+      // TODO: rethink, try to remove.
+      */
     Q_PROPERTY(bool firing READ getFiring WRITE setFiring NOTIFY firingChanged)
+
+    /*!
+      Is true when unit is smoking. This is mostly for internal use.
+
+      // TODO: rethink, try to remove.
+      */
     Q_PROPERTY(bool smoking READ getSmoking WRITE setSmoking NOTIFY smokingChanged)
+
+    /*!
+      Holds the angle at which the defence sphere is shown.
+      */
     Q_PROPERTY(int defenceSphereRotation READ getDefenceSphereRotation WRITE setDefenceSphereRotation NOTIFY defenceSphereRotationChanged)
+
+    /*!
+      Controls the colour of the defence sphere.
+      */
     Q_PROPERTY(QString defenceSphereColor READ getDefenceSphereColor WRITE setDefenceSphereColor NOTIFY defenceSphereColorChanged)
+
+    /*!
+      Controlls whether this unit is paused.
+
+      When user pauses the game, a signal is sent to all units, to trigger them into pause.
+
+      As a side note it's worth saying that this distributed pause can be used to unpause a certain unit
+      while the rest remains paused.
+      */
     Q_PROPERTY(bool paused READ getPaused WRITE setPaused NOTIFY pausedChanged)
+
+    /*!
+      Is true when unit is moving.
+
+      // TODO: hide or remove.
+      */
     Q_PROPERTY(bool moving READ getMoving WRITE setMoving NOTIFY movingChanged)
 
 public:
@@ -128,8 +300,6 @@ protected:
     qreal getSneakFactor() const;
     int getCenterX() const;
     int getCenterY() const;
-//    int getTempX() const;
-//    int getTempY() const;
     QString getScheduledOperation() const;
     int getCurrentOrder() const;
     bool getSelected() const;
@@ -163,8 +333,6 @@ protected:
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
     void setCenterY(int centerY);
-//    void setTempX(int tempX);
-//    void setTempY(int tempY);
     void setScheduledOperation(const QString &scheduledOperation);
     void setCurrentOrder(int currentOrder);
     void setSelected(bool selected);
@@ -198,8 +366,6 @@ signals:
     void sneakFactorChanged();
     void centerXChanged();
     void centerYChanged();
-//    void tempXChanged();
-//    void tempYChanged();
     void scheduledOperationChanged();
     void currentOrderChanged();
     void selectedChanged(bool state, int index);
@@ -234,8 +400,6 @@ private:
     qreal m_sneakFactor;
     int m_centerX;
     int m_centerY;
-//    int m_tempX;
-//    int m_tempY;
     QString m_scheduledOperation;
     int m_currentOrder;
     bool m_selected;
