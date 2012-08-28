@@ -5,6 +5,11 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+27-28.08.2012:
+ - add comments to new C++ files
+ - tinker a bit with particle effects to make them look a bit better
+ -
+
 26.08.2012:
  - include new files into documentation
  - clean Unit and Scenario

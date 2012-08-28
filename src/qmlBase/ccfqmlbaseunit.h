@@ -41,21 +41,21 @@ class CcfQmlBaseUnit : public QQuickItem
 
       This is here to make a distinction between a tank, a gun etc.
 
-      // TODO: Probably those 2 properties can be merged!
+      TODO: Probably those 2 properties can be merged!
       */
     Q_PROPERTY(QString unitType READ getUnitType WRITE setUnitType NOTIFY unitTypeChanged)
 
     /*!
       Stores a path to unit's logo (which is displayed in roster menu).
 
-      // TODO: Change to QImage, perhaps?
+      TODO: Change to QImage, perhaps?
       */
     Q_PROPERTY(QString unitLogo READ getUnitLogo WRITE setUnitLogo NOTIFY unitLogoChanged)
 
     /*!
       Current unit's status.
 
-      // TODO: should it be combined with state?
+      TODO: should it be combined with state?
       */
     Q_PROPERTY(QString unitStatus READ getUnitStatus WRITE setUnitStatus NOTIFY unitStatusChanged)
 
@@ -160,7 +160,7 @@ class CcfQmlBaseUnit : public QQuickItem
       Holds the central x coordinate of the unit. It's important because (0, 0) in QML means top-left corner, but
       for unit shooting and movement, we need to pivot transformations on the central point.
 
-      // TODO: merge those into a single QPoint property.
+      TODO: merge those into a single QPoint property.
 
       \sa centerY
       */
@@ -170,7 +170,7 @@ class CcfQmlBaseUnit : public QQuickItem
       Holds the central y coordinate of the unit. It's important because (0, 0) in QML means top-left corner, but
       for unit shooting and movement, we need to pivot transformations on the central point.
 
-      // TODO: merge those into a single QPoint property.
+      TODO: merge those into a single QPoint property.
 
       \sa centerX
       */
@@ -179,14 +179,14 @@ class CcfQmlBaseUnit : public QQuickItem
     /*!
       Holds currently scheduled operation.
 
-      // TODO: remove this property. Use orders property only.
+      TODO: remove this property. Use orders property only.
       */
     Q_PROPERTY(QString scheduledOperation READ getScheduledOperation WRITE setScheduledOperation NOTIFY scheduledOperationChanged)
 
     /*!
       Holds the index of the current order.
 
-      //TODO: This should also be thought over. Maybe it would be possible to remove this one, too.
+      TODO: This should also be thought over. Maybe it would be possible to remove this one, too.
       */
     Q_PROPERTY(int currentOrder READ getCurrentOrder WRITE setCurrentOrder NOTIFY currentOrderChanged)
 
@@ -198,14 +198,14 @@ class CcfQmlBaseUnit : public QQuickItem
     /*!
       Is true when unit is firing. This is mostly for internal use.
 
-      // TODO: rethink, try to remove.
+      TODO: rethink, try to remove.
       */
     Q_PROPERTY(bool firing READ getFiring WRITE setFiring NOTIFY firingChanged)
 
     /*!
       Is true when unit is smoking. This is mostly for internal use.
 
-      // TODO: rethink, try to remove.
+      TODO: rethink, try to remove.
       */
     Q_PROPERTY(bool smoking READ getSmoking WRITE setSmoking NOTIFY smokingChanged)
 
@@ -232,7 +232,7 @@ class CcfQmlBaseUnit : public QQuickItem
     /*!
       Is true when unit is moving.
 
-      // TODO: hide or remove.
+      TODO: hide or remove.
       */
     Q_PROPERTY(bool moving READ getMoving WRITE setMoving NOTIFY movingChanged)
 

@@ -1,5 +1,8 @@
 #include "ccfqmlbasescenario.h"
 
+/*!
+  Standard constructor. Initialises properties to default values.
+  */
 CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) :
     QQuickItem(parent)
 {
