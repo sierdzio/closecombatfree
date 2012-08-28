@@ -78,14 +78,12 @@ Item {
         ImageParticle {
             z: smokeParticle.z + 1
             source: "../../img/effects/gun_fire_particle1.png"
-//            color: "#aa5511"
             groups: ["fire"]
         }
 
         ImageParticle {
             id: smokeParticle
             source: "../../img/effects/vehicle_smoke.png"
-//            source: "../../img/effects/vehicle_smoke_light.png"
             groups: ["smokeTrails"]
             entryEffect: ImageParticle.Scale
         }
@@ -120,32 +118,32 @@ Item {
         }
     }
 
-//    ParticleSystem {
-//        id: explodeParticleSystem
-//        anchors.fill: parent
+    ParticleSystem {
+        id: explodeParticleSystem
+        anchors.fill: parent
 
-//        Emitter {
-//            id: explodeEmitter
-//            enabled: false
+        Emitter {
+            id: explodeEmitter
+            enabled: false
 
-//            anchors.centerIn: parent
-//            width: 200
-//            height: 200
+            anchors.centerIn: parent
+            width: 200
+            height: 200
 
-//            emitRate: 200
-//            shape: EllipseShape{}
-//            lifeSpan: 300
-//            lifeSpanVariation: 150
-//            size: 7
-//        }
+            emitRate: 120
+            shape: EllipseShape{}
+            lifeSpan: 150
+            lifeSpanVariation: 100
+            size: 7
+        }
 
-//        ImageParticle {
-//            source: "../../img/effects/vehicle_smoke_flash2.png"
-//            color: "#ffffffff"
-//            colorVariation: 0.2
-//            entryEffect: ImageParticle.Scale
-//        }
-//    }
+        ImageParticle {
+            source: "../../img/effects/vehicle_smoke_flash2.png"
+            color: "#ffffffff"
+            colorVariation: 0.2
+            entryEffect: ImageParticle.Scale
+        }
+    }
 
     VehicleExhaust {
         id: smoke
