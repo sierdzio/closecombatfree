@@ -49,13 +49,6 @@ class CcfQmlBaseScenario : public CcfObjectBase
     Q_PROPERTY(int aimLineRotation READ getAimLineRotation WRITE setAimLineRotation NOTIFY aimLineRotationChanged)
 
     /*!
-      Also a private property. Needed to resolve some problematic parts of rubber band handling.
-
-      TODO: remove property, handle in c++.
-      */
-//    Q_PROPERTY(int rubberBandRotation READ getRubberBandRotation WRITE setRubberBandRotation NOTIFY rubberBandRotationChanged)
-
-    /*!
       Is this a single scenario, or a campaign? Convenience bool (same info can
       be taken from other sources
       */
@@ -65,9 +58,6 @@ class CcfQmlBaseScenario : public CcfObjectBase
       Map path for campaigns.
       */
     Q_PROPERTY(QString mapFile READ getMapFile WRITE setMapFile NOTIFY mapFileChanged)
-
-    // Holds unit groups (ones created with CTRL + digit).
-//    Q_PROPERTY(QList<QObject *> unitGroups READ getUnitGroups WRITE setUnitGroups NOTIFY unitGroupsChanged)
 
     /*!
       Holds current zoom factor of the game area.
@@ -124,7 +114,7 @@ public:
     Q_INVOKABLE int selectedUnitsCount();
     // TODO: reconsider if that is needed. If it's used only in c++, then there is no
     // need to have it.
-    Q_INVOKABLE QList<QObject *> getAllUnitsButOne(int unitToOmit);
+    Q_INVOKABLE QObjectList getAllUnitsButOne(int unitToOmit);
 
     Q_INVOKABLE void updateEffects();
     Q_INVOKABLE void updateAimLine();
@@ -179,7 +169,6 @@ signals:
 
 protected slots:
     void updateWidth();
-//    void saveGameToFile();
 
 private:
     QObject *createEffect(QObject *parent);
@@ -213,10 +202,8 @@ protected:
     QString getScenarioFile() const;
     QString getScenarioWinStatus() const;
     int getAimLineRotation() const;
-//    int getRubberBandRotation() const;
     bool getIsCampaign() const;
     QString getMapFile() const;
-//    QList<QObject *> getUnitGroups();
     qreal getZoom() const;
     QPoint getZoomPoint() const;
     bool getPaused() const;
@@ -227,10 +214,8 @@ protected:
     void setScenarioFile(const QString &scenarioFile);
     void setScenarioWinStatus(const QString &scenarioWinStatus);
     void setAimLineRotation(int aimLineRotation);
-//    void setRubberBandRotation(int rubberBandRotation);
     void setIsCampaign(bool isCampaign);
     void setMapFile(const QString &mapFile);
-//    void setUnitGroups(const QList<QObject *> &unitGroups);
     void setZoom(qreal zoom);
     void setZoomPoint(const QPoint &zoomPoint);
     void setPaused(bool paused);
@@ -241,10 +226,8 @@ signals:
     void scenarioFileChanged();
     void scenarioWinStatusChanged();
     void aimLineRotationChanged();
-//    void rubberBandRotationChanged();
     void isCampaignChanged();
     void mapFileChanged();
-//    void unitGroupsChanged();
     void zoomChanged();
     void zoomPointChanged();
     void pausedChanged();
@@ -255,10 +238,8 @@ private:
     QString m_scenarioFile;
     QString m_scenarioWinStatus;
     int m_aimLineRotation;
-//    int m_rubberBandRotation;
     bool m_isCampaign;
     QString m_mapFile;
-//    QList<QObject *> m_unitGroups;
     qreal m_zoom;
     QPoint m_zoomPoint;
     bool m_paused;

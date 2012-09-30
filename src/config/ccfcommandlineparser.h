@@ -3,6 +3,11 @@
 
 #include <QtCore/QStringList>
 
+/*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
 class CcfCommandLineParser
 {
 public:
@@ -17,5 +22,7 @@ private:
 
     QStringList switches;
 };
+
+/*! @}*/
 
 #endif // CCFCOMMANDLINEPARSER_H

@@ -3,6 +3,11 @@
 
 #include <QtCore/QObject>
 
+/*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
 class CcfLogger : public QObject
 {
     Q_OBJECT
@@ -15,5 +20,7 @@ public:
 private:
     bool isDebug;
 };
+
+/*! @}*/
 
 #endif // CCFLOGGER_H

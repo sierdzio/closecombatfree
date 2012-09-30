@@ -6,6 +6,11 @@
 #include "logic/ccfobjectbase.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 
+/*!
+  \defgroup CloseCombatFree Game code
+  @{
+ */
+
 class CcfQmlBaseRosterMenu : public CcfObjectBase
 {
     Q_OBJECT
@@ -24,5 +29,7 @@ public slots:
 private:
     QList<CcfQmlBaseUnit *> units;
 };
+
+/*! @}*/
 
 #endif // CCFQMLBASEROSTERMENU_H
