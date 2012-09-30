@@ -54,17 +54,26 @@ void CcfQmlBaseScenario::initConveniencePointers()
     connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
 }
 
+/*!
+  Zooms the game area in by 10%.
+  */
 void CcfQmlBaseScenario::zoomIn()
 {
     m_zoom += 0.1;
 }
 
+/*!
+  Zooms the game area out by 10%.
+  */
 void CcfQmlBaseScenario::zoomOut()
 {
     m_zoom -= 0.1;
 }
 
-QList<QObject *> CcfQmlBaseScenario::playerUnits(const QString &player)
+/*!
+  Returns a QObjectList of units that are on the side of \a player.
+  */
+QObjectList CcfQmlBaseScenario::playerUnits(const QString &player)
 {
     QList<QObject *> unitsArray;
     for (int i = 0; i < m_units.count(); ++i) {
@@ -75,7 +84,10 @@ QList<QObject *> CcfQmlBaseScenario::playerUnits(const QString &player)
     return unitsArray;
 }
 
-QList<QObject *> CcfQmlBaseScenario::enemyUnits(const QString &player)
+/*!
+  Returns a QObjectList of units that are not on the side of \a player.
+  */
+QObjectList CcfQmlBaseScenario::enemyUnits(const QString &player)
 {
     QList<QObject *> unitsArray;
     for (int i = 0; i < m_units.count(); ++i) {
@@ -349,6 +361,9 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
     }
 }
 
+/*!
+  Toggles the in-game pause.
+  */
 void CcfQmlBaseScenario::onTogglePause()
 {
     if (m_paused == true) {
@@ -356,6 +371,8 @@ void CcfQmlBaseScenario::onTogglePause()
     } else {
         m_paused = true;
     }
+
+    emit pausedChanged();
 }
 
 /*!

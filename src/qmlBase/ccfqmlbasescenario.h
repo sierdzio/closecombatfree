@@ -104,8 +104,8 @@ public:
     Q_INVOKABLE void zoomIn();
     Q_INVOKABLE void zoomOut();
 
-    Q_INVOKABLE QList<QObject *> playerUnits(const QString &player = QString());
-    Q_INVOKABLE QList<QObject *> enemyUnits(const QString &player = QString());
+    Q_INVOKABLE QObjectList playerUnits(const QString &player = QString());
+    Q_INVOKABLE QObjectList enemyUnits(const QString &player = QString());
     Q_INVOKABLE void groupUnits(int groupNumber);
     Q_INVOKABLE void selectGroup(int groupNumber);
 
