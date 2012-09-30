@@ -30,26 +30,37 @@ Rectangle {
     property bool selected: false
     property int index: 0
 
+    property int fixedWidth: -1
+    property int fixedHeight: -1
+
     id: root
     color: backgroundColor
     border.color: "#1e1c00"
     border.width: 1
 
     width: {
-        var textWidth = entryStatus.paintedWidth;
+        if (fixedWidth == -1) {
+            var textWidth = entryStatus.paintedWidth;
 
-        if (entryDescription.paintedWidth > textWidth) {
-            textWidth = entryDescription.paintedWidth;
+            if (entryDescription.paintedWidth > textWidth) {
+                textWidth = entryDescription.paintedWidth;
+            }
+
+            return logo.width + textWidth + 5;
+        } else {
+            return fixedWidth;
         }
-
-        return logo.width + textWidth + 5;
     }
 
     height: {
-        if ((entryDescription.paintedHeight + entryStatus.paintedHeight) > (logo.height + 5)) {
-            return (entryDescription.paintedHeight + entryStatus.paintedHeight);
+        if (fixedHeight == -1) {
+            if ((entryDescription.paintedHeight + entryStatus.paintedHeight) > (logo.height + 5)) {
+                return (entryDescription.paintedHeight + entryStatus.paintedHeight);
+            } else {
+                return logo.height + 3;
+            }
         } else {
-            return logo.height + 3;
+            return fixedHeight;
         }
     }
 
@@ -59,7 +70,7 @@ Rectangle {
         }
 
         var newColor = EngineHelpers.colorForStatus(entryStatusText);
-        if (newColor != "ERROR")
+        if (newColor !== "ERROR")
             entryStatusColor = newColor;
         else
             console.log("Error while changing status message color!");

@@ -30,7 +30,6 @@ class CcfScenarioState : public QObject
 public:
     explicit CcfScenarioState(QObject *parent = 0);
 
-protected:
     Q_INVOKABLE QString getPlayerSide();
     Q_INVOKABLE void setPlayerSide(const QString &playerSide);
     Q_INVOKABLE QStringList getAvailableSides();

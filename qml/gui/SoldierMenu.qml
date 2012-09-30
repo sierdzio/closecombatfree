@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
 import "../../qml/gui/menuEntries"
 
 Rectangle {
@@ -28,6 +29,7 @@ Rectangle {
     property bool empty: true
     property color backgroundColor: "#7e8c24"
     property variant soldiersList
+//    property list<Soldier> soldiersList
 
     id: root
     height: soldiers.height

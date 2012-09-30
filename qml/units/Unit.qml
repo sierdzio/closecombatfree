@@ -24,7 +24,7 @@ import "../../qml/units"
 import QmlBase 0.1
 
 BaseUnit {
-    property list<Soldier> soldiers;
+//    property list<Soldier> soldiers;
 
     centerX: unitWidth/2
     centerY: unitHeight/2

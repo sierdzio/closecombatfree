@@ -6,4 +6,5 @@ Currently available tools are:
  - \subpage relative2qrcReadme "relative2qrcReadme"
  - \subpage updateQmlTo2Readme "updateQmlTo2Readme"
  - \subpage archiveProjectReadme "archiveProjectReadme"
+ - \subpage makedocsReadme "makedocsReadme"
 */

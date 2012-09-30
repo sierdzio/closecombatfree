@@ -20,17 +20,17 @@
 
 import QtQuick 2.0
 
-Item {
-    property string objectType: "soldierInfo"
-    property string name: "John Smith"
-    property string role: "Infantryman"
-    property string status: "READY"
-    property string weapon: ""
-    property string soldierLogo: "../../../img/units/generic_soldier_logo.png"
+Item { // Consider changing to QtObject
+//    property string objectType: "soldierInfo"
+//    property string name: "John Smith"
+//    property string role: "Infantryman"
+//    property string status: "READY"
+//    property string weapon: ""
+//    property string soldierLogo: "../../../img/units/generic_soldier_logo.png"
 
-    signal unitStatusChanged(string newStatus)
-    function changeStatus(newStatusMessage) {
-        status = newStatusMessage;
-        unitStatusChanged(newStatusMessage);
-    }
+//    signal unitStatusChanged(string newStatus)
+//    function changeStatus(newStatusMessage) {
+//        status = newStatusMessage;
+//        unitStatusChanged(newStatusMessage);
+//    }
 }

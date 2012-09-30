@@ -19,138 +19,61 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
+
 import "../../qml/gui/menuEntries"
 import "../../qml/units"
 
-Rectangle {
+BaseRosterMenu {
     property int entryWidth: 175
     property int entryHeight: 54
     property int rows: 4
     property color backgroundColor: "#7e8c24"
-    property variant unitsList
+    property variant unitModel
 
     id: root
-    width: units.width
+    width: unitsView.width
     height: (entryHeight * 4) + 3
-
-    color: backgroundColor
-    border.color: "#1e1c00"
-    border.width: 2
-
-    function populateUnits(tmpUnitsList) {
-        unitsList = tmpUnitsList;
-
-        for (var i = 0; i < unitsList.length; i++) {
-            var currentUnit = unitsList[i];
-            unitModel.append({"unitType": currentUnit.unitType,
-                                 "unitLogo": currentUnit.unitLogo,
-                                 "unitStatus": currentUnit.unitStatus,
-                                 "unitSelected": currentUnit.selected});
-//            currentUnit['unitStatusChanged(QString, int)'].connect(changeStatus); // TODO: Refactor for Qt5
-            currentUnit.selectedChanged.connect(selectionChanged);
-        }
-
-        // Get widest and highest dimension from cells:
-        var widestCell = 0;
-        var heighestCell = 0;
-        unitModel.get(0).unitStatus = "MOVING FAST";
-
-        units.currentIndex = 0;
-        var current = units.currentItem;
-        widestCell = current.width;
-        heighestCell = current.height;
-        unitModel.get(0).unitStatus = "READY";
-
-        // Set all elements' dimentions
-        for (var i = 0; i < units.count; i++) {
-            units.currentIndex = i;
-            var current = units.currentItem;
-            current.height = heighestCell;
-            current.width = widestCell;
-        }
-
-        // Set GridView properties
-        units.currentIndex = -1;
-        units.cellWidth = widestCell + 2;
-        units.cellHeight = heighestCell + 2;
-        entryHeight = units.cellHeight;
-        entryWidth = units.cellWidth
-    }
-
-    function getUnitAt(x, y) {
-        var i = units.indexAt(x, y);
-
-        if (i == -1)
-            return i;
-
-        if (unitsList.length <= i)
-            return -1;
-
-        return unitsList[i];
-    }
-
-    function childCenterCoords(x, y) {
-        var index;
-        index = units.indexAt(x, y);
-
-        var row;
-        row = index % rows;
-        var column;
-        column = index / rows;
-
-        var result = {"x": ((column * units.cellWidth) + (units.cellWidth/2)),
-            "y": ((row * units.cellHeight) + (units.cellHeight/2))};
-
-        return result;
-    }
-
-    function changeStatus(newStatus, index) {
-        unitModel.set(findListIndex(index), {"unitStatus": newStatus});
-    }
-
-    function selectionChanged(state, index) {
-        unitModel.set(findListIndex(index), {"unitSelected": state});
-    }
-
-    function findListIndex(unitIndex) {
-        for (var i = 0; i < units.count; ++i) {
-            if (unitsList[i].unitIndex == unitIndex) {
-                return i;
-            }
-        }
-    }
-
-    ListModel {
-        id: unitModel
-    }
 
     Component {
         id: unitDelegate
 
         RosterMenuEntry {
             backgroundColor: root.backgroundColor
-
-            entryText: unitType
-            entryLogo: unitLogo
-            entryStatusText: unitStatus
-            selected: unitSelected
+            entryText: model.modelData.unitType
+            entryLogo: model.modelData.unitLogo
+            entryStatusText: model.modelData.unitStatus
+            selected: model.modelData.selected
         }
     }
 
-    GridView {
-        id: units
-        anchors.topMargin: 2
-        anchors.leftMargin: 2
-        interactive: false
+    Rectangle {
+        id: background
+        color: backgroundColor
+        border.color: "#1e1c00"
+        border.width: 2
 
         anchors.top: parent.top
         anchors.left: parent.left
+        width: unitsView.width
+        height: unitsView.height
 
-        height: (cellHeight * 4) + 3
-        width: (count > 8)? (cellWidth + 3) : (cellWidth * 2) + 3
-        flow: GridView.TopToBottom
+        GridView {
+            objectName: "unitsView"
+            id: unitsView
+            anchors.topMargin: 2
+            anchors.leftMargin: 2
+            interactive: false
 
-        model: unitModel
-        delegate: unitDelegate
+            anchors.top: parent.top
+            anchors.left: parent.left
+
+            height: (cellHeight * 4) + 3
+            width: (count > 8)? (cellWidth + 3) : (cellWidth * 2) + 3
+            flow: GridView.TopToBottom
+
+            model: unitModel
+            delegate: unitDelegate
+        }
     }
 }

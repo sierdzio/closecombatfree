@@ -35,7 +35,10 @@ HEADERS += \
     config/ccflogger.h \
     config/ccfcommandlineparser.h \
     qmlBase/ccfqmlbasescenario.h \
-    qmlBase/ccfqmlbaseunit.h
+    qmlBase/ccfqmlbaseunit.h \
+    logic/ccfobjectbase.h \
+    qmlBase/ccfqmlbasesoldier.h \
+    qmlBase/ccfqmlbaserostermenu.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -52,11 +55,13 @@ SOURCES += main.cpp \
     config/ccflogger.cpp \
     config/ccfcommandlineparser.cpp \
     qmlBase/ccfqmlbasescenario.cpp \
-    qmlBase/ccfqmlbaseunit.cpp
+    qmlBase/ccfqmlbaseunit.cpp \
+    logic/ccfobjectbase.cpp \
+    qmlBase/ccfqmlbasesoldier.cpp \
+    qmlBase/ccfqmlbaserostermenu.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \
-    ../qml/engineLogicHelpers.js \
     ../qml/gui/UnitSelectionBox.qml \
     ../qml/gui/RubberBand.qml \
     ../qml/gui/menuEntries/RosterMenuEntry.qml \
@@ -66,7 +71,6 @@ OTHER_FILES += \
     ../qml/gui/menuEntries/ContextMenuEntry.qml \
     ../qml/gui/ContextMenu.qml \
     ../qml/maps/Map.qml \
-    ../qml/scenarios/engineScenarioLogic.js \
     ../qml/scenarios/Scenario.qml \
     ../qml/effects/Effect.qml \
     ../qml/units/Unit.qml \
@@ -81,7 +85,6 @@ OTHER_FILES += \
     ../qml/gui/ZoomBox.qml \
     ../qml/gui/ZoomButton.qml \
     ../qml/gui/BottomMenu.qml \
-    ../qml/units/Soldier.qml \
     ../qml/gui/SoldierMenu.qml \
     ../qml/gui/OptionsMenu.qml \
     ../qml/gui/StatusMessageMenu.qml \
@@ -126,7 +129,8 @@ OTHER_FILES += \
     ../qml/effects/Shadow.qml \
     ../qml/menus/MainMenu.qml \
     ../maps/Map_tst4.qml \
-    ../qml/effects/GunFireEffect.qml
+    ../qml/effects/GunFireEffect.qml \
+    ../qml/units/old_Soldier.qml
 
 #RESOURCES += \
 #    skinResource.qrc \

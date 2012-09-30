@@ -20,6 +20,7 @@
 
 import QtQuick 2.0
 import QtQuick.Particles 2.0
+import QmlBase 0.1
 
 import "../../../qml/units"
 import "../../../qml/units/tanks"
@@ -50,24 +51,28 @@ Tank {
         barrelSegment1Texture: "../../../img/units/tanks/generic/turret_barrelSegment1_tank_tst3.png"
     }
 
-    soldiers: [
-        Soldier {
-            name: "Thomas Glory"
-            role: "Commander"
-        },
-        Soldier {
-            name: "Marco Ponati"
-            role: "Gunner"
-        },
-        Soldier {
-            name: "Kevin Niven"
-            role: "Loader"
-        },
-        Soldier {
-            name: "Gustav Store"
-            role: "MG gunner"
-        }
-    ]
+//    soldiers: [
+    Soldier {
+        name: "Thomas Glory"
+        role: "Commander"
+    }
+
+    Soldier {
+        name: "Marco Ponati"
+        role: "Gunner"
+    }
+
+    Soldier {
+        name: "Kevin Niven"
+        role: "Loader"
+    }
+
+    Soldier {
+        name: "Gustav Store"
+        role: "MG gunner"
+    }
+//    ]
+
 /*
     Particles {
         id: destroyedFire

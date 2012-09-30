@@ -20,163 +20,22 @@
 
 import QtQuick 2.0
 import "../../qml/gui"
-import "../../qml/scenarios/engineScenarioLogic.js" as ScenarioLogic
 import QmlBase 0.1
 
 BaseScenario {
-//    // Holds graphical effects (muzzle flashes, hit animations etc.).
-    property var effectsContainer: new Array;
-//    // Holds unit groups (ones created with CTRL + digit).
-    property var unitGroups: new Array(10);
-
-    signal closeScenario() // TODO: clean containers to preserve memory
-    signal loadScenario(string path)
-
-    signal togglePause ()
-    onTogglePause: {
-        if (paused == true) {
-            paused = false;
-        } else {
-            paused = true;
-        }
-    }
-
     id: root
     focus: true;
 
     anchors.left: parent.left
     anchors.top: parent.top
 
-    onScenarioFileChanged: {
-        if (scenarioFile != "") {
-            // If it' desktop, menus should be unrolled:
-            if (Config.uiMode == "DESKTOP") {
-                topMenu.openMenu();
-                // TODO: turn back on for release. It's off now because it's annoying ;)
-//                bottomMenu.openMenu();
-            }
-
-            Config.windowWidthChanged.connect(updateWidth);
-            updateWidth();
-            topMenu.save.connect(saveGameToFile);
-            loadGame.gameEntryClicked.connect(loadScenario);
-        }
-    }
-
     // This is a temp name to avoid name clash.
     function saveGameToFile() {
         GameManager.saveGame(units, unitsLoader.item.mapFile);
     }
 
-    function playerUnits(player) {
-        if (player === "") {
-            return units;
-        }
-
-        var unitsArray = new Array;
-        for (var i = 0; i < units.length; ++i) {
-            if (units[i].unitSide === player) {
-                unitsArray.push(units[i]);
-            }
-        }
-        return unitsArray;
-    }
-
-    // TODO: make this a property! This method is invoked far too often!
-    function enemyUnits(player) {
-        if (player === "") {
-            return units;
-        }
-
-        var unitsArray = new Array;
-        for (var i = 0; i < units.length; ++i) {
-            if (units[i].unitSide !== player) {
-                unitsArray.push(units[i]);
-            }
-        }
-        return unitsArray;
-    }
-
-    function togglePlayer() {
-        var sides = new Array;
-        // Find all available sides. TEMP!
-        for (var i = 0; i < units.length; ++i) {
-            if (EngineHelpers.arrayContains(sides, units[i].unitSide) === -1) {
-                sides.push(units[i].unitSide);
-            }
-        }
-
-        // Switch to next one in line.
-        for (var j = 0; j < sides.length; ++j) {
-            if (sides[j] === ScenarioState.playerSide) {
-                if (j != (sides.length - 1)) {
-                    ScenarioState.playerSide = sides[j + 1];
-                } else {
-                    ScenarioState.playerSide = sides[0];
-                }
-
-                Global.statusMessage("Player side changed to: " + ScenarioState.playerSide);
-                break;
-            }
-        }
-
-        hideNonPlayerUnits();
-        scenarioWinStatus = "no";
-        ScenarioLogic.checkScenarioFinished();
-    }
-
-    function hideNonPlayerUnits() {
-        for (var i = 0; i < units.length; ++i) {
-            if (units[i].unitSide !== ScenarioState.playerSide)
-                units[i].visible = false;
-        }
-    }
-
-    function setSideMarks() {
-        for (var i = 0; i < units.length; ++i) {
-            units[i].sideMarkSource = ScenarioState.getSidePath(units[i].unitSide);
-        }
-    }
-
-    function updateWidth() {
-        if (Config.windowWidth < menu.contentWidth) {
-            menu.width = Config.windowWidth;
-        } else {
-            menu.width = menu.contentWidth;
-        }
-    }
-
-    function childAt(x, y) {
-        return unitsLoader.item.childAt(x, y);
-    }
-
-    function childIndexAt(x, y) {
-        return childIndex(childAt(x, y));
-    }
-
-    function childIndex(child) {
-        var result = 0;
-
-        for (var i = 0; i < units.length; i++) {
-            if (child === units[i]) {
-                result = i;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    function zoomIn() {
-        zoom += 0.1;
-    }
-
-    function zoomOut() {
-        zoom -= 0.1;
-    }
-
     Keys.onPressed: {
-        ScenarioLogic.handleKeyPress(event);
+        handleKeyPress(event);
     }
 
     onZoomChanged: {
@@ -188,6 +47,7 @@ BaseScenario {
     }
 
     Flickable {
+        objectName: "gameArea"
         id: gameArea
         height: {
             if ((bottomMenu.width < root.width) || (Config.uiMode == "MOBILE"))
@@ -215,10 +75,13 @@ BaseScenario {
         }
 
         Item {
+            objectName: "zoomArea"
             id: zoomArea
             scale: zoom
 
             Loader {
+                property alias mapItem: map.item
+                objectName: "map"
                 id: map
 
                 onLoaded: {
@@ -257,8 +120,8 @@ BaseScenario {
                                     var unit = units[i];
                                     unit.unitIndex = i;
                                     togglePause.connect(unit.togglePause);
-                                    unit.actionFinished.connect(ScenarioLogic.actionFinished);
-                                    unit.movementStateChange.connect(ScenarioLogic.handleUnitMovement);
+                                    unit.actionFinished.connect(actionFinished);
+                                    unit.movementStateChange.connect(handleUnitMovement);
                                     unitSideList.push(unit.unitSide);
                                 }
 
@@ -268,7 +131,8 @@ BaseScenario {
                                 // TODO: add some clever code here ;)
                             }
 
-                            roster.populateUnits(playerUnits(ScenarioState.playerSide));
+                            initConveniencePointers();
+//                            roster.populateUnits(playerUnits(ScenarioState.playerSide));
                             hideNonPlayerUnits();
                             ScenarioState.setAvailableSides(unitSideList);
                             setSideMarks();
@@ -277,6 +141,7 @@ BaseScenario {
                 }
 
                 MouseArea {
+                    objectName: "mouseAreaMain"
                     id: mouseAreaMain
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.Wheel
@@ -285,54 +150,57 @@ BaseScenario {
 
                     onClicked: {
                         if (mouse.button == Qt.LeftButton) {
-                            ScenarioLogic.handleLeftMouseClick(mouse);
+                            handleLeftMouseClick(mouse);
                         } else if (mouse.button == Qt.RightButton) {
-                            ScenarioLogic.handleRightMouseClick(mouse);
+                            handleRightMouseClick(mouse);
                         }
                     }
 
                     onPressAndHold: {
-                        if (Config.uiMode == "DESKTOP") {QQuickItem
-                            gameArea.interactive = false;
+                        if (Config.uiMode == "DESKTOP") {
+                            interactive = false;
                             if (mouse.button == Qt.LeftButton) {
-                                ScenarioLogic.handlePressAndHoldLeft(mouse);
+                                handlePressAndHoldLeft(mouse);
                             } else if (mouse.button == Qt.RightButton) {
-                                ScenarioLogic.handlePressAndHoldRight(mouse);;
+                                handlePressAndHoldRight(mouse);;
                             }
                         } else if (Config.uiMode == "MOBILE") {
                             if (terrainInfoMode == "OFF") {
-                                ScenarioLogic.handleRightMouseClick(mouse);
+                                handleRightMouseClick(mouse);
                             } else {
-                                ScenarioLogic.handlePressAndHoldRight(mouse);
+                                handlePressAndHoldRight(mouse);
                             }
                         }
                     }
 
                     onReleased: {
                         if (Config.uiMode == "DESKTOP") {
-                            ScenarioLogic.handleMouseReleased();
+                            handleMouseReleased();
                             gameArea.interactive = true;
                         }
                     }
 
                     onDoubleClicked: {
-                        if (followedUnit.index != -1) {
-                            ScenarioLogic.stopFollowingUnit();
+                        if (followingTimer.index != -1) {
+                            stopFollowingUnit();
                         } else {
                             // Especially useful on mobile, where right click is not possible
-                            ScenarioLogic.handleRightMouseClick(mouse);
+                            handleRightMouseClick(mouse);
                         }
                     }
 
                     onWheel: {
-                            ScenarioLogic.handleWheelEventMouseAreaMain(wheel);
+                            handleWheelEventMouseAreaMain(wheel);
                     }
                 }
 
                 Rectangle {
                     property real obscureBeginning: height
                     property real invisibleBeginning: height
+                    property string scheduledOperation: ""
+                    property int unitIndex: -1
 
+                    objectName: "aimLine"
                     id: aimLine
                     z: root.z + 1
                     visible: false
@@ -371,6 +239,8 @@ BaseScenario {
                 }
 
                 RubberBand {
+                    property int rubberBandRotation: 0
+                    objectName: "rubberBand"
                     id: rubberBand
                     visible: false
                     z: root.z + 1
@@ -378,7 +248,7 @@ BaseScenario {
                     transform: Rotation {
                         origin.x: 0
                         origin.y: 0
-                        angle: rubberBandRotation
+                        angle: rubberBand.rubberBandRotation
                     }
                 }
             }
@@ -386,6 +256,7 @@ BaseScenario {
     }
 
     BottomMenu {
+        objectName: "bottomMenu"
         id: bottomMenu
         anchors.bottom: parent.bottom
         anchors.right: parent.right
@@ -393,6 +264,7 @@ BaseScenario {
         visibleHeight: -menu.y
 
         Flickable {
+            objectName: "menu"
             id: menu
             visible: false
             anchors.left: bottomMenu.left
@@ -415,7 +287,7 @@ BaseScenario {
 
                 ContextMenu {
                     // A static context menu, useful on mobile, where there is no right click.
-                    id: contextMenu
+                    id: contextMenuMobile
                     height: roster.height
                     backgroundColor: menuBackgroundColor
                     buttonHeight: ((height/9) - 1)
@@ -423,16 +295,17 @@ BaseScenario {
                     visible: (Config.uiMode === "MOBILE")? true: false;
 
                     Component.onCompleted: {
-                        contextMenu.menuEntryClicked.connect(ScenarioLogic.scheduleContextAction);
+                        contextMenuMobile.menuEntryClicked.connect(scheduleContextAction);
                     }
 
                     Behavior on opacity { NumberAnimation {} }
                 }
 
                 RosterMenu {
+                    objectName: "roster"
                     id: roster
                     backgroundColor: menuBackgroundColor
-                    z: contextMenu.z - 1
+                    z: contextMenuMobile.z - 1
 
                     MouseArea {
                         id: mouseAreaRoster
@@ -441,16 +314,16 @@ BaseScenario {
 
                         onClicked: {
                             if (mouse.button == Qt.LeftButton) {
-                                ScenarioLogic.handleLeftMouseClickRoster(mouse);
+                                handleLeftMouseClickRoster(mouse);
                             } else if (mouse.button == Qt.RightButton) {
-                                ScenarioLogic.handleRightMouseClickRoster(mouse);
+                                handleRightMouseClickRoster(mouse);
                             }
                         }
 
                         onDoubleClicked: {
-                            ScenarioLogic.cleanContextAction();
+                            cleanContextAction();
                             var unit = roster.getUnitAt(mouse.x, mouse.y);
-                            ScenarioLogic.centerViewOnUnit(unit);
+                            centerViewOnUnit(unit);
                         }
                     }
 
@@ -458,6 +331,7 @@ BaseScenario {
                 }
 
                 SoldierMenu {
+                    objectName: "soldierMenu"
                     id: soldierMenu
                     height: roster.height
                     opacity: (empty)? 0 : 1;
@@ -485,13 +359,17 @@ BaseScenario {
         }
     }
 
-    Loader {
-        id: contextLoader
-        rotation: 0
+    ContextMenu {
+        objectName: "contextMenu"
+        id: contextMenu
+        x: 0
+        y: 0
         z: roster.z + 1
+        visible: false
     }
 
     Text {
+        objectName: "terrainInfoText"
         id: terrainInfoText
         text: ""
         visible: (text == "")? false : true;
@@ -523,8 +401,9 @@ BaseScenario {
         }
 
         SimpleInfoBox {
+            objectName: "followingInfoBox"
             id: followingInfoBox
-            opacity: (followedUnit.running)? 1 : 0
+            opacity: (followingTimer.running)? 1 : 0
             headerText: "Following:"
             bodyText: ""
             Behavior on opacity { NumberAnimation {} }
@@ -532,6 +411,7 @@ BaseScenario {
     }
 
     TopMenu {
+        objectName: "topMenu"
         id: topMenu
         anchors.top: gameArea.top
         anchors.right: gameArea.right
@@ -559,6 +439,7 @@ BaseScenario {
     }
 
     LoadGameMenu {
+        objectName: "loadGame"
         id: loadGame
         anchors.fill: parent
         visible: false
@@ -570,12 +451,12 @@ BaseScenario {
         visible: false
     }
 
-    Item {
-        property int index: -1
-        property bool running: false
+//    Item {
+//        property int index: -1
+//        property bool running: false
 
-        id: followedUnit
-    }
+//        id: followedUnit
+//    }
 
     // Timer for visibility updates
     Timer {
@@ -584,51 +465,57 @@ BaseScenario {
         running: true
         repeat: true
         onTriggered: {
-            ScenarioLogic.updateUnitVisibility();
+            updateUnitVisibility();
         }
     }
 
     // Timer for aimline rotation updates.
     Timer {
+        objectName: "rotationTimer"
         id: rotationTimer
         interval: 120
         running: false
         repeat: true
         onTriggered: {
-            ScenarioLogic.updateAimLine();
+            updateAimLine();
         }
     }
 
     // Timer for rubber band
     Timer {
+        objectName: "rubberBandTimer"
         id: rubberBandTimer
         interval: 120
         running: false
         repeat: true
         onTriggered: {
-            ScenarioLogic.updateRubberBand(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
+            updateRubberBand(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
         }
     }
 
     // Timer for on-screen animations..
     Timer {
+        objectName: "effectsTimer"
         id: effectsTimer
         interval: 80
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            ScenarioLogic.updateEffects();
+            updateEffects();
         }
     }
 
     // Timer for unit following..
     Timer {
+        property int index: -1
+
+        objectName: "followingTimer"
         id: followingTimer
         interval: 20
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            ScenarioLogic.updateFollowingUnit();
+            updateFollowingUnit();
         }
     }
 

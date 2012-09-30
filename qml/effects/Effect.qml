@@ -28,4 +28,16 @@ Image {
     source: ""
     scale: 3
     z: 5
+
+    function nextFrame() {
+        if (imageNumber !== 5) {
+            imageNumber++;
+            source = "../../img/effects" + "/" + animationString
+                    + imageNumber + ".png";
+        } else if (imageNumber === 5) {
+            imageNumber = 0;
+            source = "";
+           running = false;
+        }
+    }
 }

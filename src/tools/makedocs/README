@@ -1,0 +1,11 @@
+/*! \page makedocsReadme README for makedocs
+
+Makedocs is an automated script for generating CCF documentation. It detects
+qhelpgenerator automatically, builds all available documentations and prints out
+any warnings and errors reported by doxygen.
+
+This is the script:
+
+\include makedocs
+
+*/ 

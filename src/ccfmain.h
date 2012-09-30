@@ -35,6 +35,12 @@
 #include "ccfgamemanager.h"
 #include "ccfterrain.h"
 
+#define cmain CcfMain::instance()
+#define clogger CcfMain::instance()->logger()
+
+#define mmain m_mainInstance
+#define mlogger m_mainInstance->logger()
+
 /*!
   \ingroup CloseCombatFree
   @{
@@ -53,6 +59,10 @@ public:
     bool isConfigMaximised();
     void resizeView(QSize newSize);
     CcfLogger *logger();
+    CcfConfig *config();
+    CcfScenarioState *scenarioState();
+    CcfGlobal *global();
+    CcfTerrain *terrain();
 
 public slots:
     void quit();

@@ -14,6 +14,15 @@ Code changes:
  - continue moving Unit to C++
  - consider removing effects container and using the new particle system instead
  - introduce convenience methods for shortening ::invokeMethod() and ::findChild()
+ - investigate if CcfTerrain is leaking memory on Scenario change
+ - remove scheduledOperation entirely, or at least move it from Unit to aimLine
+ - make pointers to frequently used QML objects C++ class members (to save time by
+   avoiding searching them constantly with findChild)
+ - make sure to use local methods instead of QMO:invokeMethod after transfer to C++ is complete
+ - make sure to update obstacle handling so that it uses the superb QQItem::contains
+ - make Soldiers in Unit.qml into a c++ attached property somehow. Not easy stuff, but vital
+ - find a way to make Soldiers property of units work as intended & be useful at the same time
+ - consider moving RosterMenu to c++, too (possible large gains in connecting to Scenario more directly)
 
 New features:
  - add weather system

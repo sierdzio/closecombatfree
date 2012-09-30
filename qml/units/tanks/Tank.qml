@@ -52,13 +52,13 @@ Unit {
         turret.y = centerY - turret.centerY;
     }
 
-    function fireTo(targetX, targetY, reparent) {
-        turretFireTo(targetX, targetY, reparent);
-    }
+//    function fireTo(targetX, targetY, reparent) {
+//        turretFireTo(targetX, targetY, reparent);
+//    }
 
-    function smokeTo(targetX, targetY, reparent) {
-        turretSmokeTo(targetX, targetY, reparent);
-    }
+//    function smokeTo(targetX, targetY, reparent) {
+//        turretSmokeTo(targetX, targetY, reparent);
+//    }
 
     function performFiring() {
         changeStatus("READY");

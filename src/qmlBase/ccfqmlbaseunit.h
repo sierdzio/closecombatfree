@@ -5,6 +5,10 @@
 #include <QtCore/QList>
 #include <QtCore/QPoint>
 #include <QtQuick/QQuickItem>
+#include <QtQml/QQmlListProperty>
+
+#include "logic/ccfobjectbase.h"
+#include "qmlBase/ccfqmlbasesoldier.h"
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -19,7 +23,7 @@ class QQmlComponent;
   from Unit.qml to here is sane, doable, and does not require too much effort
   and nasty workarounds.
  */
-class CcfQmlBaseUnit : public QQuickItem
+class CcfQmlBaseUnit : public CcfObjectBase
 {
     Q_OBJECT
 
@@ -140,7 +144,11 @@ class CcfQmlBaseUnit : public QQuickItem
       \sa unitWidth
       */
     Q_PROPERTY(int unitHeight READ getUnitHeight WRITE setUnitHeight NOTIFY unitHeightChanged)
-//    Q_PROPERTY(QQmlListReference soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
+
+    /*!
+      Temp. We'll see if it works.
+      */
+//    Q_PROPERTY(QQmlListProperty<CcfQmlBaseSoldier> soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
 
     /*!
       Moving speed of a unit is multiplied by that number, when it's moving fast.
@@ -239,6 +247,7 @@ class CcfQmlBaseUnit : public QQuickItem
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
+//    Q_INVOKABLE QVariantList soldiersList();
     Q_INVOKABLE QString operation(int index = -1) const;
     Q_INVOKABLE QPoint orderTarget(int index = -1) const;
     Q_INVOKABLE void changeStatus(const QString &newStatusMessage);
@@ -253,11 +262,13 @@ public:
     Q_INVOKABLE void moveTo(qreal newX, qreal newY, QObject *reparent);
     Q_INVOKABLE void moveFastTo(qreal newX, qreal newY, QObject *reparent);
     Q_INVOKABLE void sneakTo(qreal newX, qreal newY, QObject *reparent);
-    Q_INVOKABLE void turretFireTo(qreal targetX, qreal targetY, QObject *reparent);
-    Q_INVOKABLE void turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent);
+    Q_INVOKABLE void fireTo(qreal targetX, qreal targetY, QObject *reparent);
+    Q_INVOKABLE void smokeTo(qreal targetX, qreal targetY, QObject *reparent);
+
+    Q_INVOKABLE QVariantList soldiers();
 
 protected:
-    QObject *createOrder();
+    QObject *createOrder(QObject *parent);
     void processQueue();
     void clearOrderQueue();
     void deleteOrder(int index);
@@ -271,12 +282,13 @@ private:
 
     CcfMain *m_mainInstance;
     QQmlComponent *m_ordersComponent;
-    QList<QObject *> m_orders;
+    QObjectList m_orders;
+    QVariantList m_soldiers;
 
     // // // //
     // Everything below is property handling:
     // // // //
-protected:
+public:
     // Property getters:
     QString getObjectType() const;
     QString getUnitFileName() const;
@@ -295,7 +307,7 @@ protected:
     int getAcceleration() const;
     int getUnitWidth() const;
     int getUnitHeight() const;
-//    QQmlListReference getSoldiers();
+//    QQmlListProperty<CcfQmlBaseSoldier> getSoldiers();
     qreal getMoveFastFactor() const;
     qreal getSneakFactor() const;
     int getCenterX() const;
@@ -328,7 +340,7 @@ protected:
     void setAcceleration(int acceleration);
     void setUnitWidth(int unitWidth);
     void setUnitHeight(int unitHeight);
-//    void setSoldiers(const QQmlListReference &soldiers);
+//    void setSoldiers(QQmlListProperty<CcfQmlBaseSoldier> soldiers);
     void setMoveFastFactor(qreal moveFastFactor);
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
@@ -361,7 +373,7 @@ signals:
     void accelerationChanged();
     void unitWidthChanged();
     void unitHeightChanged();
-    void soldiersChanged();
+//    void soldiersChanged();
     void moveFastFactorChanged();
     void sneakFactorChanged();
     void centerXChanged();
@@ -395,7 +407,7 @@ private:
     int m_acceleration;
     int m_unitWidth;
     int m_unitHeight;
-//    QQmlListReference m_soldiers;
+//    QQmlListProperty<CcfQmlBaseSoldier> m_soldiers;
     qreal m_moveFastFactor;
     qreal m_sneakFactor;
     int m_centerX;

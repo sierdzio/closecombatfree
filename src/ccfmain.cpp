@@ -23,8 +23,10 @@
 #include <QtQml/QQmlEngine>
 
 #include "ccfmain.h"
+#include "qmlBase/ccfqmlbaserostermenu.h"
 #include "qmlBase/ccfqmlbasescenario.h"
 #include "qmlBase/ccfqmlbaseunit.h"
+#include "qmlBase/ccfqmlbasesoldier.h"
 
 // Singleton
 CcfMain *CcfMain::m_instance = NULL;
@@ -51,8 +53,10 @@ CcfMain *CcfMain::instance(CcfCommandLineParser *cmd)
 CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
     QQuickView(parent), CcfError(), m_cmdLnParser(cmd)
 {
+    qmlRegisterType<CcfQmlBaseRosterMenu>("QmlBase", 0, 1, "BaseRosterMenu");
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
-    qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");
+    qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");    
+    qmlRegisterType<CcfQmlBaseSoldier>("QmlBase", 0, 1, "Soldier");
 
     m_logger = new CcfLogger(this, m_cmdLnParser->isDebug());
     m_global = new CcfGlobal(this, m_logger);
@@ -104,6 +108,26 @@ void CcfMain::resizeView(QSize newSize)
 CcfLogger *CcfMain::logger()
 {
     return m_logger;
+}
+
+CcfConfig *CcfMain::config()
+{
+    return m_configuration;
+}
+
+CcfScenarioState *CcfMain::scenarioState()
+{
+    return m_scenarioState;
+}
+
+CcfGlobal *CcfMain::global()
+{
+    return m_global;
+}
+
+CcfTerrain *CcfMain::terrain()
+{
+    return m_terrain;
 }
 
 /*!

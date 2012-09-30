@@ -2,7 +2,7 @@
 #include "ccfmain.h"
 #include "logic/ccfenginehelpers.h"
 
-#include <QtCore/QFileInfo>
+//#include <QtCore/QFileInfo>
 #include <QtCore/QVariant>
 #include <QtQml/QQmlComponent>
 
@@ -10,8 +10,7 @@
   BaseUnit constructor - initialises all properties with default values,
   prepares orderMarker component for object generation.
   */
-CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
-    QQuickItem(parent)
+CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) : CcfObjectBase(parent)
 {
     m_objectType = QStringLiteral("unit");
     m_unitFileName = QStringLiteral("Unit");
@@ -43,7 +42,25 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) :
     m_mainInstance = CcfMain::instance();
     m_ordersComponent = new QQmlComponent(m_mainInstance->engine(),
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
+
+//    // Get soldiers up front:
+//    for (int i = 0; i < children().length(); ++i) {
+//        qDebug(qPrintable(QString(QString::number(i) + children().at(i)->metaObject()->className())));
+//        if (children().at(i)->metaObject()->className() == QString("CcfQmlBaseSoldier"))
+//            m_soldiers.append(children().at(i));
+//    }
 }
+
+//QVariantList CcfQmlBaseUnit::soldiersList()
+//{
+//    QVariantList result;
+//    // TODO: resolve.
+////    for (int i = 0; i < m_soldiers; ++i) {
+////        result.append(m_soldiers.at(i));
+////    }
+
+//    return result;
+//}
 
 /*!
   Returns the name of the operation associated with order \a index, or current order
@@ -94,31 +111,28 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
     qreal tempX = newX - (m_centerX);
     qreal tempY = newY - (m_centerY);
 
-    qreal newRotation = CcfEngineHelpers::rotationAngle(property("x").toReal(),
-                                                        property("y").toReal(), tempX, tempY);
-    QObject *rotationAnimation = findChild<QObject *>("rotationAnimation");
+    qreal newRotation = CcfEngineHelpers::rotationAngle(x(), y(), tempX, tempY);
+    QObject *rotationAnimation = child("rotationAnimation");
     if (rotationAnimation) {
-        rotationAnimation->setProperty("duration",
-                                       CcfEngineHelpers::rotationDuration(property("rotation").toReal(),
-                                                                          newRotation, m_rotationSpeed));
-        rotationAnimation->setProperty("to", newRotation);
-        rotationAnimation->setProperty("running", true);
+        rotationAnimation->set("duration",
+                               CcfEngineHelpers::rotationDuration(rotation(),
+                                                                  newRotation, m_rotationSpeed));
+        rotationAnimation->set("to", newRotation);
+        rotationAnimation->set("running", true);
     } else {
-        m_mainInstance->logger()->log("Could not instantiate rotationAnimation in CcfQmlBase.");
+        mmain->logger()->log("Could not instantiate rotationAnimation in CcfQmlBase.");
     }
     m_moving = true;
 
-    QObject *xMoveAnimation = findChild<QObject *>("xMoveAnimation");
-    QObject *yMoveAnimation = findChild<QObject *>("yMoveAnimation");
+    QObject *xMoveAnimation = child("xMoveAnimation");
+    QObject *yMoveAnimation = child("yMoveAnimation");
     if (xMoveAnimation && yMoveAnimation) {
-        qreal moveDuration = CcfEngineHelpers::targetDistance(property("x").toReal(),
-                                                              property("y").toReal(),
-                                                              tempX,
+        qreal moveDuration = CcfEngineHelpers::targetDistance(x(), y(), tempX,
                                                               tempY) * 800 / (m_maxSpeed * factor);
-        setProperty("duration", moveDuration);
-        setProperty("duration", moveDuration);
+        set("duration", moveDuration);
+        set("duration", moveDuration);
     } else {
-        m_mainInstance->logger()->log("Could not instantiate xMoveAnimation or yMoveAnimation in CcfQmlBase.");
+        mmain->logger()->log("Could not instantiate xMoveAnimation or yMoveAnimation in CcfQmlBase.");
     }
 }
 
@@ -129,21 +143,20 @@ void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
   */
 void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
 {
-    QObject *tra = findChild<QObject *>("turretRotationAnimation");
+    QObject *tra = child("turretRotationAnimation");
     if (tra) {
         qreal newRotation = CcfEngineHelpers::rotationAngle(
-                    property("x").toReal(),
-                    property("y").toReal(),
+                    x(), y(),
                     targetX - m_centerX,
-                    targetY - m_centerY) - property("rotation").toReal();
-        tra->setProperty("duration", CcfEngineHelpers::rotationDuration(
+                    targetY - m_centerY) - rotation();
+        tra->set("duration", CcfEngineHelpers::rotationDuration(
                              property("turretRotation").toReal(),
                              newRotation,
                              property("turretRotationSpeed").toReal()));
-        tra->setProperty("to", newRotation);
-        tra->setProperty("running", true);
+        tra->set("to", newRotation);
+        tra->set("running", true);
     } else {
-        m_mainInstance->logger()->log("Could not instantiate turretRotationAnimation in CcfQmlBase.");
+        mmain->logger()->log("Could not instantiate turretRotationAnimation in CcfQmlBase.");
     }
 
     changeStatus("ROTATING");
@@ -169,10 +182,11 @@ void CcfQmlBaseUnit::hit(QObject *byWhat, qreal xWhere, qreal yWhere)
   Returns a ready-made pointer to a new OrderMarker. Warning: needs to be reparented in
   QML in order to be visible!
  */
-QObject *CcfQmlBaseUnit::createOrder()
+QObject *CcfQmlBaseUnit::createOrder(QObject *parent)
 {
     if (m_ordersComponent->isReady()) {
         QObject *object = m_ordersComponent->create();
+        object->setProperty("parent", qVariantFromValue(parent));
         return object;
     } else {
         return 0;
@@ -189,18 +203,18 @@ void CcfQmlBaseUnit::cancelOrder()
     m_moving = false;
 
     if ((m_firing == false) && (m_smoking == false))  {
-        QObject *xma = findChild<QObject *>("xMoveAnimation");
-        if (xma) xma->metaObject()->invokeMethod(xma, "stop");
-        QObject *yma = findChild<QObject *>("yMoveAnimation");
-        if (yma) yma->metaObject()->invokeMethod(yma, "stop");
-        QObject *ram = findChild<QObject *>("rotationAnimation");
-        if (ram) ram->metaObject()->invokeMethod(ram, "stop");
+        QObject *xma = child("xMoveAnimation");
+        if (xma) invoke(xma, "stop");
+        QObject *yma = child("yMoveAnimation");
+        if (yma) invoke(yma, "stop");
+        QObject *ram = child("rotationAnimation");
+        if (ram) invoke(ram, "stop");
         changeStatus("READY");
     }
 
     if ((m_firing == true) || (m_smoking == true))  {
-        QObject *tra = findChild<QObject *>("turretRotationAnimation");
-        if (tra) tra->metaObject()->invokeMethod(tra, "stop");
+        QObject *tra = child("turretRotationAnimation");
+        if (tra) invoke(tra, "stop");
         m_smoking = false;
         m_firing = false;
         changeStatus("READY");
@@ -212,18 +226,16 @@ void CcfQmlBaseUnit::cancelOrder()
   */
 void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent)
 {
-    QObject *order = createOrder();
+    QObject *order = createOrder(reparent);
     if (order != 0) {
-//        order->setParent(reparent);
-        order->setProperty("parent", qVariantFromValue(reparent));
-        order->setProperty("index", m_orders.length());
-        order->setProperty("number", m_orders.length());
-        order->setProperty("operation", orderName);
-        order->setProperty("orderColor", CcfEngineHelpers::colorForOrder(orderName));
+        order->set("index", m_orders.length());
+        order->set("number", m_orders.length());
+        order->set("operation", orderName);
+        order->set("orderColor", CcfEngineHelpers::colorForOrder(orderName));
 
-        order->setProperty("x", (x - order->property("centerX").toReal()));
-        order->setProperty("y", (y - order->property("centerY").toReal()));
-        order->setProperty("visible", true);
+        order->set("x", (x - order->property("centerX").toReal()));
+        order->set("y", (y - order->property("centerY").toReal()));
+        order->set("visible", true);
         m_orders.append(order);
     }
 }
@@ -262,7 +274,7 @@ void CcfQmlBaseUnit::continueQueue()
                 m_firing = true;
             }
 
-            order->setProperty("performed", true);
+            order->set("performed", true);
             noOrdersLeft = false;
             // Ensures that unit performs one order at a time
             break;
@@ -295,8 +307,8 @@ void CcfQmlBaseUnit::clearOrderQueue()
     for (int i = 0; i < m_orders.length(); ++i) {
         deleteOrder(i);
     }
-    m_currentOrder = -1;
 
+    m_currentOrder = -1;
     m_orders.clear();
 }
 
@@ -346,10 +358,8 @@ void CcfQmlBaseUnit::sneakTo(qreal newX, qreal newY, QObject *reparent)
 
 /*!
   Orders a unit to fire. This puts the order in the queue.
-
-  // TODO: this should be renamed to fireTo().
   */
-void CcfQmlBaseUnit::turretFireTo(qreal targetX, qreal targetY, QObject *reparent)
+void CcfQmlBaseUnit::fireTo(qreal targetX, qreal targetY, QObject *reparent)
 {
     queueOrder("Attack", targetX, targetY, reparent);
     processQueue();
@@ -357,13 +367,26 @@ void CcfQmlBaseUnit::turretFireTo(qreal targetX, qreal targetY, QObject *reparen
 
 /*!
   Orders a unit to place smoke. This puts the order in the queue.
-
-  // TODO:: this should be renamed to smokeTo().
   */
-void CcfQmlBaseUnit::turretSmokeTo(qreal targetX, qreal targetY, QObject *reparent)
+void CcfQmlBaseUnit::smokeTo(qreal targetX, qreal targetY, QObject *reparent)
 {
     queueOrder("Smoke", targetX, targetY, reparent);
     processQueue();
+}
+
+QVariantList CcfQmlBaseUnit::soldiers()
+{
+    if (m_soldiers.isEmpty()) {
+        // Get soldiers up front:
+        QObjectList kids = children();
+
+        for (int i = 0; i < kids.length(); ++i) {
+            if (kids.at(i)->metaObject()->className() == QString("CcfQmlBaseSoldier"))
+                m_soldiers.append(qVariantFromValue(kids.at(i)));
+        }
+    }
+
+    return m_soldiers;
 }
 
 // Property getters:
@@ -453,7 +476,7 @@ int CcfQmlBaseUnit::getUnitHeight() const
     return m_unitHeight;
 }
 
-//QQmlListReference CcfQmlBaseUnit::getSoldiers()
+//QQmlListProperty<CcfQmlBaseSoldier> CcfQmlBaseUnit::getSoldiers()
 //{
 //    return m_soldiers;
 //}
@@ -729,7 +752,7 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
         emit unitHeightChanged();
 }
 
-//void CcfQmlBaseUnit::setSoldiers(const QQmlListReference &soldiers)
+//void CcfQmlBaseUnit::setSoldiers(QQmlListProperty<CcfQmlBaseSoldier> soldiers)
 //{
 //    m_soldiers = soldiers;
 //    emit soldiersChanged();

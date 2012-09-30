@@ -5,10 +5,44 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
-27-28.08.2012:
+29-30.09.2012:
+ - continue porting. That's a lot of workt
+ - change contextLoader into contextMenu
+ - add comments
+
+26.09.2012:
+ - move last property of Scenario.qml to c++ (unitGroups)
+ - start moving all handle methods to c++
+ - add CcfQmlBaseRosterMenu c++ class. It should make things mightly easier
+
+09.09.2012:
+ - remove soldiers property from unit. Soldiers will be just declared as subitems
+   from now on. This is a bit ugly, but handling them as property in C++ was next
+   to impossible
+
+01-05.09.2012:
+ - start moving methods from engineScenarioLogic.js to C++
+ - fix some recently introduced bugs
+ - remove unitIndex property from Scenario
+ - simplify scheduleContextAction
+ - remove followedUnit item
+ - make QmlBase classes be based on updated CcfObjectBase
+ - add more convenience methods
+ - update unit's c++ code to use those new goodies
+ - make pointers to children be searched for only once, on scenario load
+ - add makedocs
+ - add convenience macros, too (set, get, getInt, etc. all defined in CcfBaseObject)
+
+31.08.2012:
+ - continue work on making Scenario c++ based
+ - fix hit detection to include unit rotation
+
+27-29.08.2012:
  - add comments to new C++ files
  - tinker a bit with particle effects to make them look a bit better
- -
+ - try moving methods from ScenarioLogic to c++
+ - try removing properties that are not really needed
+ - move switchEffectFrame() to Effect.qml
 
 26.08.2012:
  - include new files into documentation

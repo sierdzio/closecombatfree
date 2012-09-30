@@ -24,14 +24,13 @@ import "../../qml/gui/menuEntries"
 Rectangle {    
     property int buttonWidth: moveFastButton.width
     property int buttonHeight: 19
-    property int unitIndex: -1
     property color backgroundColor: "#5e2c24"
     property color entryBackgroundColor: backgroundColor
 
-    signal menuEntryClicked(int currentUnitIndex, string menuEntry)
+    signal menuEntryClicked(string menuEntry)
 
     function prepareSignal(menuEntry) {
-        menuEntryClicked(unitIndex, menuEntry);
+        menuEntryClicked(menuEntry);
     }
 
     id: root
@@ -40,7 +39,6 @@ Rectangle {
     color: backgroundColor
     border.width: 2
     border.color: "#000000"
-//    focus: true
 
     Grid {
         id: entries

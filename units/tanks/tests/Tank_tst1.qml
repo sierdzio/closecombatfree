@@ -19,6 +19,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
+
 import "../../../qml/units"
 import "../../../qml/units/tanks"
 
@@ -42,21 +44,25 @@ Tank {
         id: turret
     }
 
-    soldiers: [
-        Soldier {
-            role: "Commander"
-        },
-        Soldier {
-            role: "Gunner"
-        },
-        Soldier {
-            role: "Loader"
-        },
-        Soldier {
-            role: "Assistant"
-        },
-        Soldier {
-            role: "Assistant"
-        }
-    ]
+//    soldiers: [
+    Soldier {
+        role: "Commander"
+    }
+
+    Soldier {
+        role: "Gunner"
+    }
+
+    Soldier {
+        role: "Loader"
+    }
+
+    Soldier {
+        role: "Assistant"
+    }
+
+    Soldier {
+        role: "Assistant"
+    }
+//    ]
 }

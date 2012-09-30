@@ -1,0 +1,36 @@
+#!/bin/sh
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "Usage: makedocs"
+  echo "When invoked from CCF root dir, it generates all documentation"
+  echo "targets automatically. If qhelpgenerator is available, it will"
+  echo "also generate .qch files ready for use in Qt Assistant."
+  echo
+  echo "Prints out warnings and errors reported by doxygen."
+  echo
+  echo "Requires: doxygen, [installed Qt libs]."
+else
+# Highly suboptimal, but will do for now
+  if [ -f ../user.docconf ]; then
+    cd ..
+  fi
+  if [ -f ../developer.docconf ]; then
+    cd ..
+  fi
+
+  cat developer.docconf > tempdeveloper
+  cat user.docconf > tempuser
+
+# Use local qhelpgenerator
+  if [ ! -z "$(which qhelpgenerator)" ]; then
+    echo "\nQHG_LOCATION = $(which qhelpgenerator)" >> tempuser
+    echo "\nQHG_LOCATION = $(which qhelpgenerator)" >> tempdeveloper
+  fi
+
+  doxygen tempuser | grep -E warning\|error
+  doxygen tempdeveloper | grep -E warning\|error
+
+  rm tempuser
+  rm tempdeveloper
+
+  echo "Documentation build was successful."
+fi

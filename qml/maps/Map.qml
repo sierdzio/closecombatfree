@@ -74,7 +74,7 @@ Item {
 
     function setUnits(units) {
         for (var i = 0; i < units.length; i++) {
-            if (units[i].objectType !== undefined && units[i].objectType == "unit")
+            if (units[i].objectType !== undefined && units[i].objectType === "unit")
                 units[i].positionChanged.connect(checkForHits);
         }
     }
