@@ -3,6 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
+#include <QtCore/QVariant>
 #include <QtCore/QPoint>
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlListProperty>

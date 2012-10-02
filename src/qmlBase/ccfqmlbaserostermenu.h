@@ -25,7 +25,7 @@ public:
     Q_INVOKABLE void populateUnits(QList<CcfQmlBaseUnit *> tmpUnitsList);
     Q_INVOKABLE CcfQmlBaseUnit *getUnitAt(qreal x, qreal y);
     Q_INVOKABLE int getUnitIndexAt(qreal x, qreal y);
-    QPointF childCenterCoords(qreal x, qreal y);
+    Q_INVOKABLE QPointF childCenterCoords(qreal x, qreal y);
 
 public slots:
     void changeStatus(const QString &newStatus, int index);

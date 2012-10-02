@@ -2,8 +2,6 @@
 #include "ccfmain.h"
 #include "logic/ccfenginehelpers.h"
 
-//#include <QtCore/QFileInfo>
-#include <QtCore/QVariant>
 #include <QtQml/QQmlComponent>
 
 /*!
@@ -42,25 +40,7 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) : CcfObjectBase(parent)
     m_mainInstance = CcfMain::instance();
     m_ordersComponent = new QQmlComponent(m_mainInstance->engine(),
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
-
-//    // Get soldiers up front:
-//    for (int i = 0; i < children().length(); ++i) {
-//        qDebug(qPrintable(QString(QString::number(i) + children().at(i)->metaObject()->className())));
-//        if (children().at(i)->metaObject()->className() == QString("CcfQmlBaseSoldier"))
-//            m_soldiers.append(children().at(i));
-//    }
 }
-
-//QVariantList CcfQmlBaseUnit::soldiersList()
-//{
-//    QVariantList result;
-//    // TODO: resolve.
-////    for (int i = 0; i < m_soldiers; ++i) {
-////        result.append(m_soldiers.at(i));
-////    }
-
-//    return result;
-//}
 
 /*!
   Returns the name of the operation associated with order \a index, or current order
@@ -70,7 +50,7 @@ QString CcfQmlBaseUnit::operation(int index) const
 {
     if ((index == -1) || (!isOrderIndexValid(index)))
         index = m_currentOrder;
-    return m_orders.at(index)->property("operation").toString();
+    return m_orders.at(index)->getString("operation");
 }
 
 /*!
@@ -85,8 +65,8 @@ QPoint CcfQmlBaseUnit::orderTarget(int index) const
     int x = 0;
     int y = 0;
     if (isOrderIndexValid(index)) {
-        x = m_orders.at(index)->property("targetX").toInt();
-        y = m_orders.at(index)->property("targetY").toInt();
+        x = m_orders.at(index)->getInt("targetX");
+        y = m_orders.at(index)->getInt("targetY");
     }
 
     return QPoint(x, y);
@@ -150,9 +130,9 @@ void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
                     targetX - m_centerX,
                     targetY - m_centerY) - rotation();
         tra->set("duration", CcfEngineHelpers::rotationDuration(
-                             property("turretRotation").toReal(),
-                             newRotation,
-                             property("turretRotationSpeed").toReal()));
+                     getReal("turretRotation"),
+                     newRotation,
+                     getReal("turretRotationSpeed")));
         tra->set("to", newRotation);
         tra->set("running", true);
     } else {
@@ -186,7 +166,7 @@ QObject *CcfQmlBaseUnit::createOrder(QObject *parent)
 {
     if (m_ordersComponent->isReady()) {
         QObject *object = m_ordersComponent->create();
-        object->setProperty("parent", qVariantFromValue(parent));
+        object->set("parent", QVariant::fromValue(parent));
         return object;
     } else {
         return 0;
@@ -233,8 +213,8 @@ void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObj
         order->set("operation", orderName);
         order->set("orderColor", CcfEngineHelpers::colorForOrder(orderName));
 
-        order->set("x", (x - order->property("centerX").toReal()));
-        order->set("y", (y - order->property("centerY").toReal()));
+        order->set("x", (x - order->getReal("centerX")));
+        order->set("y", (y - order->getReal("centerY")));
         order->set("visible", true);
         m_orders.append(order);
     }
@@ -249,14 +229,14 @@ void CcfQmlBaseUnit::continueQueue()
 
     for (int i = 0; i < m_orders.length(); ++i) {
         QObject *order = m_orders.value(i);
-        if (order->property("performed").toBool() == true) {
+        if (order->getBool("performed") == true) {
             continue;
         } else {
             m_currentOrder = i;
 
-            qreal targetX = order->property("targetX").toReal();
-            qreal targetY = order->property("targetY").toReal();
-            QString operation = order->property("operation").toString();
+            qreal targetX = order->getReal("targetX");
+            qreal targetY = order->getReal("targetY");
+            QString operation = order->getString("operation");
             if (operation == "Move") {
                 changeStatus("MOVING");
                 performMovement(targetX, targetY, 1);
@@ -374,6 +354,9 @@ void CcfQmlBaseUnit::smokeTo(qreal targetX, qreal targetY, QObject *reparent)
     processQueue();
 }
 
+/*!
+  Return a list of soldiers in this unit.
+  */
 QVariantList CcfQmlBaseUnit::soldiers()
 {
     if (m_soldiers.isEmpty()) {
@@ -382,7 +365,7 @@ QVariantList CcfQmlBaseUnit::soldiers()
 
         for (int i = 0; i < kids.length(); ++i) {
             if (kids.at(i)->metaObject()->className() == QString("CcfQmlBaseSoldier"))
-                m_soldiers.append(qVariantFromValue(kids.at(i)));
+                m_soldiers.append(QVariant::fromValue(kids.at(i)));
         }
     }
 
@@ -475,11 +458,6 @@ int CcfQmlBaseUnit::getUnitHeight() const
 {
     return m_unitHeight;
 }
-
-//QQmlListProperty<CcfQmlBaseSoldier> CcfQmlBaseUnit::getSoldiers()
-//{
-//    return m_soldiers;
-//}
 
 qreal CcfQmlBaseUnit::getMoveFastFactor() const
 {
@@ -751,12 +729,6 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
     if (wasChaged)
         emit unitHeightChanged();
 }
-
-//void CcfQmlBaseUnit::setSoldiers(QQmlListProperty<CcfQmlBaseSoldier> soldiers)
-//{
-//    m_soldiers = soldiers;
-//    emit soldiersChanged();
-//}
 
 void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 {

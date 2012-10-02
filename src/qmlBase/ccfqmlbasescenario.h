@@ -84,8 +84,6 @@ class CcfQmlBaseScenario : public CcfObjectBase
       */
     Q_PROPERTY(QQmlListReference units READ getUnits WRITE setUnits NOTIFY unitsChanged)
 
-//    property var unitGroups: new Array(10);
-
 public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
