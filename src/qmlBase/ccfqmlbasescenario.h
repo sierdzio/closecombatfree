@@ -92,13 +92,7 @@ public:
     Q_INVOKABLE void centerViewOnUnit(QObject *unit);
     Q_INVOKABLE void cleanContextAction();
 
-    // TODO: all "update" methods - change into slots and connect directly to
-    // timers' triggered() signals.
-    Q_INVOKABLE void updateRubberBand(qreal x, qreal y);
-    Q_INVOKABLE void updateUnitVisibility();
-    Q_INVOKABLE void updateEffects();
-    Q_INVOKABLE void updateAimLine();
-    Q_INVOKABLE void updateFollowingUnit();
+
 
     Q_INVOKABLE void handleLeftMouseClick(QObject *mouse);
     Q_INVOKABLE void handleRightMouseClick(QObject *mouse);
@@ -126,6 +120,11 @@ signals:
 
 protected slots:
     void updateWidth();
+    void updateRubberBand(qreal x = 0.0, qreal y = 0.0);
+    void updateUnitVisibility();
+    void updateEffects();
+    void updateAimLine();
+    void updateFollowingUnit();
 
 private:
     void hideNonPlayerUnits();

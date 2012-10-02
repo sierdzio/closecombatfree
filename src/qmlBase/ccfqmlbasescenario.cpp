@@ -52,6 +52,11 @@ void CcfQmlBaseScenario::initConveniencePointers()
     m_roster->populateUnits(listReferenceToUnitList(m_units));
 
     connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
+    connect(m_rotationTimer, SIGNAL(triggered()), this, SLOT(updateAimLine()));
+    connect(m_effectsTimer, SIGNAL(triggered()), this, SLOT(updateEffects()));
+    connect(m_followingTimer, SIGNAL(triggered()), this, SLOT(updateFollowingUnit()));
+    connect(child("sceneUpdateTimer"), SIGNAL(triggered()), this, SLOT(updateUnitVisibility()));
+    connect(child("rubberBandTimer"), SIGNAL(triggered()), this, SLOT(updateRubberBand()));
 
     hideNonPlayerUnits();
     setSideMarks();
@@ -616,6 +621,9 @@ void CcfQmlBaseScenario::updateAimLine()
 {
     CcfQmlBaseUnit *unit = ccfUnit(m_units.at(m_aimLine->getInt("unitIndex")));
 
+    if (unit == 0)
+        return;
+
     if (m_aimLine->isVisible()) {
         qreal x1 = unit->x() + unit->getCenterX();
         qreal y1 = unit->y() + unit->getCenterY();
@@ -829,8 +837,12 @@ void CcfQmlBaseScenario::checkScenarioFinished()
   */
 void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
 {
-    qreal rubberX = 0, rubberY = 0,
-            rubberX2 = 0, rubberY2 = 0; // 2 edges of the rubber band,
+    if (x == 0.0) // TODO: should be fuzzy compare
+        x = m_mouseAreaMain->getReal("mouseX");
+    if (y == 0.0) // TODO: should be fuzzy compare
+        y = m_mouseAreaMain->getReal("mouseY");
+
+    qreal rubberX = 0, rubberY = 0, rubberX2 = 0, rubberY2 = 0; // 2 edges of the rubber band,
     // in root's coordinates.
     QQuickItem *rubberBand = item("rubberBand");
     //    int rbRotation = rubberBand->getInt("rubberBandRotation");

@@ -451,13 +451,11 @@ BaseScenario {
 
     // Timer for visibility updates
     Timer {
+        objectName: "sceneUpdateTimer"
         id: sceneUpdateTimer
         interval: 1000
         running: true
         repeat: true
-        onTriggered: {
-            updateUnitVisibility();
-        }
     }
 
     // Timer for aimline rotation updates.
@@ -467,9 +465,6 @@ BaseScenario {
         interval: 120
         running: false
         repeat: true
-        onTriggered: {
-            updateAimLine();
-        }
     }
 
     // Timer for rubber band
@@ -479,9 +474,6 @@ BaseScenario {
         interval: 120
         running: false
         repeat: true
-        onTriggered: {
-            updateRubberBand(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
-        }
     }
 
     // Timer for on-screen animations..
@@ -489,11 +481,9 @@ BaseScenario {
         objectName: "effectsTimer"
         id: effectsTimer
         interval: 80
+        running: false
         repeat: true
         triggeredOnStart: true
-        onTriggered: {
-            updateEffects();
-        }
     }
 
     // Timer for unit following..
@@ -503,29 +493,8 @@ BaseScenario {
         objectName: "followingTimer"
         id: followingTimer
         interval: 20
+        running: false
         repeat: true
         triggeredOnStart: true
-        onTriggered: {
-            updateFollowingUnit();
-        }
     }
-
-    // ------------------
-    // Testing area.
-//    Rectangle {
-//        id: test1
-//        color: "#ffff22"
-//        width: 15
-//        height: 15
-
-//        Behavior on x { NumberAnimation {} }
-//        Behavior on y { NumberAnimation {} }
-//    }
-
-//    Rectangle {
-//        id: test2
-//        color: "#ff22ff"
-//        width: 15
-//        height: 15
-//    }
 }
