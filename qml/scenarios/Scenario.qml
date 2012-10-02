@@ -108,6 +108,7 @@ BaseScenario {
                     }
 
                     onLoaded: {
+                        // TODO: move this method to C++
                         if (scenarioFile != "") {
                             var unitSideList = new Array;
 
@@ -132,10 +133,7 @@ BaseScenario {
                             }
 
                             initConveniencePointers();
-//                            roster.populateUnits(playerUnits(ScenarioState.playerSide));
-                            hideNonPlayerUnits();
                             ScenarioState.setAvailableSides(unitSideList);
-                            setSideMarks();
                         }
                     }
                 }
@@ -158,7 +156,7 @@ BaseScenario {
 
                     onPressAndHold: {
                         if (Config.uiMode == "DESKTOP") {
-                            interactive = false;
+                            gameArea.interactive = false;
                             if (mouse.button == Qt.LeftButton) {
                                 handlePressAndHoldLeft(mouse);
                             } else if (mouse.button == Qt.RightButton) {
@@ -450,13 +448,6 @@ BaseScenario {
         anchors.fill: parent
         visible: false
     }
-
-//    Item {
-//        property int index: -1
-//        property bool running: false
-
-//        id: followedUnit
-//    }
 
     // Timer for visibility updates
     Timer {

@@ -52,6 +52,9 @@ void CcfQmlBaseScenario::initConveniencePointers()
     m_roster->populateUnits(listReferenceToUnitList(m_units));
 
     connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
+
+    hideNonPlayerUnits();
+    setSideMarks();
 }
 
 /*!

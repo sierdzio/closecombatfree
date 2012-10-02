@@ -88,62 +88,17 @@ public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
     Q_INVOKABLE void initConveniencePointers();
-
-    Q_INVOKABLE void zoomIn();
-    Q_INVOKABLE void zoomOut();
-
-    Q_INVOKABLE QObjectList playerUnits(const QString &player = QString());
-    Q_INVOKABLE QObjectList enemyUnits(const QString &player = QString());
-    Q_INVOKABLE void groupUnits(int groupNumber);
-    Q_INVOKABLE void selectGroup(int groupNumber);
-
-    Q_INVOKABLE bool checkIfUnitCanFire(const QString &scheduledOperation);
-    Q_INVOKABLE void performContextAction(int index, qreal targetX, qreal targetY);
-    Q_INVOKABLE void placeWaypoint(int index, qreal targetX, qreal targetY);
-    Q_INVOKABLE void issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
-    Q_INVOKABLE void issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
-    Q_INVOKABLE void actionFinished(int index, qreal targetX, qreal targetY);
-
-    Q_INVOKABLE void firingActionFinished(int index, qreal targetX, qreal targetY);
+    Q_INVOKABLE void stopFollowingUnit();
+    Q_INVOKABLE void centerViewOnUnit(QObject *unit);
     Q_INVOKABLE void cleanContextAction();
-    Q_INVOKABLE void cancelAllSelectedOrders();
 
-    Q_INVOKABLE QList<QObject *> selectedUnits();
-    Q_INVOKABLE int selectedUnitsCount();
-    // TODO: reconsider if that is needed. If it's used only in c++, then there is no
-    // need to have it.
-    Q_INVOKABLE QObjectList getAllUnitsButOne(int unitToOmit);
-
+    // TODO: all "update" methods - change into slots and connect directly to
+    // timers' triggered() signals.
+    Q_INVOKABLE void updateRubberBand(qreal x, qreal y);
+    Q_INVOKABLE void updateUnitVisibility();
     Q_INVOKABLE void updateEffects();
     Q_INVOKABLE void updateAimLine();
-
-    Q_INVOKABLE QObject *unitAt(qreal x, qreal y);
-    Q_INVOKABLE int unitIndexAt(qreal x, qreal y);
-
-    Q_INVOKABLE void togglePlayer();
-    Q_INVOKABLE void hideNonPlayerUnits();
-    Q_INVOKABLE void setSideMarks();
-    Q_INVOKABLE void checkScenarioFinished();
-
-    Q_INVOKABLE void centerViewOnUnit(QObject *unit);
-    Q_INVOKABLE void centerViewOn(qreal x, qreal y);
-    Q_INVOKABLE void startFollowingUnit(int index);
-    Q_INVOKABLE void stopFollowingUnit();
-    Q_INVOKABLE bool isFollowingOn();
     Q_INVOKABLE void updateFollowingUnit();
-    Q_INVOKABLE void handleUnitMovement(bool isMoving, int unitIndex);
-
-    Q_INVOKABLE void updateRubberBand(qreal x, qreal y);
-    Q_INVOKABLE void selectUnit(int index, int modifier); // Qt::KeyboardModifier
-    Q_INVOKABLE void deselectUnit(int index);
-    Q_INVOKABLE void deselectAllUnits();
-
-    Q_INVOKABLE void selectUnitFromGameArea(QObject *mouse);
-    Q_INVOKABLE void selectUnitFromRoster(QObject *mouse);
-
-    Q_INVOKABLE void setContextMenuPosition(QQuickItem *menu, qreal x, qreal y);
-    Q_INVOKABLE int digitPressed(QObject *event);
-    Q_INVOKABLE void updateUnitVisibility();
 
     Q_INVOKABLE void handleLeftMouseClick(QObject *mouse);
     Q_INVOKABLE void handleRightMouseClick(QObject *mouse);
@@ -156,9 +111,13 @@ public:
     Q_INVOKABLE void handleWheelEventMouseAreaMain(QObject *wheel);
 
 public slots:
+    void zoomIn();
+    void zoomOut();
     // TODO: add optional argument with a list of units to be affected. When empty,
     // it will use selected units
-    Q_INVOKABLE void scheduleContextAction(const QString &operation);
+    void scheduleContextAction(const QString &operation);
+    void handleUnitMovement(bool isMoving, int unitIndex);
+    void actionFinished(int index, qreal targetX, qreal targetY);
 
 signals:
     void togglePause();
@@ -169,6 +128,46 @@ protected slots:
     void updateWidth();
 
 private:
+    void hideNonPlayerUnits();
+    QObjectList playerUnits(const QString &player = QString());
+    QObjectList enemyUnits(const QString &player = QString());
+    void groupUnits(int groupNumber);
+    void selectGroup(int groupNumber);
+
+    bool checkIfUnitCanFire(const QString &scheduledOperation);
+    void performContextAction(int index, qreal targetX, qreal targetY);
+    void placeWaypoint(int index, qreal targetX, qreal targetY);
+    void issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
+    void issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
+
+    void firingActionFinished(int index, qreal targetX, qreal targetY);
+    void cancelAllSelectedOrders();
+
+    QList<QObject *> selectedUnits();
+    int selectedUnitsCount();
+    // TODO: reconsider if that is needed. If it's used only in c++, then there is no
+    // need to have it.
+    QObjectList getAllUnitsButOne(int unitToOmit);
+
+    QObject *unitAt(qreal x, qreal y);
+    int unitIndexAt(qreal x, qreal y);
+
+    void togglePlayer();
+    void setSideMarks();
+    void checkScenarioFinished();
+
+    void centerViewOn(qreal x, qreal y);
+    void startFollowingUnit(int index);
+    bool isFollowingOn();
+    void selectUnit(int index, int modifier);
+    void deselectUnit(int index);
+    void deselectAllUnits();
+
+    void selectUnitFromGameArea(QObject *mouse);
+    void selectUnitFromRoster(QObject *mouse);
+    void setContextMenuPosition(QQuickItem *menu, qreal x, qreal y);
+
+    int digitPressed(QObject *event);
     QObject *createEffect(QObject *parent);
     void onTogglePause();
 
