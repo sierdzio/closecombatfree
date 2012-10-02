@@ -8,6 +8,9 @@
   @{
  */
 
+/*!
+  Class responsible for parsing the command line.
+  */
 class CcfCommandLineParser
 {
 public:

@@ -5,16 +5,26 @@ CcfCommandLineParser::CcfCommandLineParser(const QStringList &args)
     init(args);
 }
 
+/*!
+  Returns true if debug flag is set.
+  */
 bool CcfCommandLineParser::isDebug()
 {
     return switches.contains("debug");
 }
 
+/*!
+  Returns true if help flag is set.
+  */
 bool CcfCommandLineParser::wasHelpRequested()
 {
     return switches.contains("help");
 }
 
+/*!
+  Returns a string (UNIX-terminated lines) containing the help message to be
+  displayed.
+  */
 QString CcfCommandLineParser::helpMessage()
 {
     // TODO: check on Windows, cause it can have problems with lack of \r\n...
@@ -27,6 +37,9 @@ QString CcfCommandLineParser::helpMessage()
                    );
 }
 
+/*!
+  Parses the command line.
+  */
 void CcfCommandLineParser::init(const QStringList &args)
 {
     switches.clear();
