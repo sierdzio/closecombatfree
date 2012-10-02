@@ -32,34 +32,76 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) : CcfObjectBase(paren
   Sets internal pointers to frequently used QML items, thus reducing the overhead
   of repeated searching for them at runtime.
   */
-void CcfQmlBaseScenario::initConveniencePointers()
+void CcfQmlBaseScenario::init()
 {
-    m_aimLine = item("aimLine");
-    m_gameArea = item("gameArea");
-    m_zoomArea = item("zoomArea");
-    m_contextMenu = item("contextMenu");
-    m_effectsTimer = child("effectsTimer");
-    m_rotationTimer = child("rotationTimer");
-    m_followingTimer = child("followingTimer");
-    m_mouseAreaMain = child("mouseAreaMain");
+    if (m_scenarioFile != "") {
+        QStringList unitSideList;
+        QObject *unitsLoader = child("unitsLoader");
+        QObject *unitItem = unitsLoader->property("unitsItem").value<QObject *>();
+        QObject *map = child("map");
+        QObject *mapItem;
 
-    QObjectList mapItemKids = child("map")->property("mapItem").value<QObject *>()->children();
-    for (int i = 0; i < mapItemKids.length() - 2; ++i) {
-        m_props.append(mapItemKids.at(i + 2));
+        if (unitItem->objectName() != "Campaign") {
+            // This is a single scenario
+            map->set("source", unitItem->getString("mapFile"));
+            QObjectList tempList = unitItem->children();
+
+            for (int i = 0; i < tempList.count(); ++i) {
+                CcfQmlBaseUnit *unit = ccfUnit(tempList.at(i));
+                if ((unit != 0) && (unit->property("unitIndex").isValid())) {
+                    unit->setUnitIndex(i);
+                    connect(this, &CcfQmlBaseScenario::togglePause,
+                            unit, &CcfQmlBaseUnit::togglePause);
+                    connect(unit, &CcfQmlBaseUnit::actionFinished,
+                            this, &CcfQmlBaseScenario::actionFinished);
+                    connect(unit, &CcfQmlBaseUnit::movementStateChange,
+                            this, &CcfQmlBaseScenario::handleUnitMovement);
+                    unitSideList.append(unit->getUnitSide());
+                    m_units.append(unit);
+                }
+            }
+
+            mapItem = map->property("mapItem").value<QObject *>();
+
+            if(mapItem != 0)
+                invoke(mapItem, "setUnits", Q_ARG(QVariant, QVariant::fromValue(m_units) ));
+            else
+                mmain->logger()->error("MapItem object was not properly initialised",
+                                       "Robin Hood is a jerk");
+        } else {
+            // This is a campaign
+            // TODO: add some clever code here ;)
+        }
+
+        mmain->scenarioState()->setAvailableSides(unitSideList);
+
+        m_aimLine = item("aimLine");
+        m_gameArea = item("gameArea");
+        m_zoomArea = item("zoomArea");
+        m_contextMenu = item("contextMenu");
+        m_effectsTimer = child("effectsTimer");
+        m_rotationTimer = child("rotationTimer");
+        m_followingTimer = child("followingTimer");
+        m_mouseAreaMain = child("mouseAreaMain");
+
+        QObjectList mapItemKids = mapItem->children();
+        for (int i = 0; i < mapItemKids.length() - 2; ++i) {
+            m_props.append(mapItemKids.at(i + 2));
+        }
+
+        m_roster = findChild<CcfQmlBaseRosterMenu *>("roster");
+        m_roster->populateUnits(m_units);
+
+        connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
+        connect(m_rotationTimer, SIGNAL(triggered()), this, SLOT(updateAimLine()));
+        connect(m_effectsTimer, SIGNAL(triggered()), this, SLOT(updateEffects()));
+        connect(m_followingTimer, SIGNAL(triggered()), this, SLOT(updateFollowingUnit()));
+        connect(child("sceneUpdateTimer"), SIGNAL(triggered()), this, SLOT(updateUnitVisibility()));
+        connect(child("rubberBandTimer"), SIGNAL(triggered()), this, SLOT(updateRubberBand()));
+
+        hideNonPlayerUnits();
+        setSideMarks();
     }
-
-    m_roster = findChild<CcfQmlBaseRosterMenu *>("roster");
-    m_roster->populateUnits(listReferenceToUnitList(m_units));
-
-    connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
-    connect(m_rotationTimer, SIGNAL(triggered()), this, SLOT(updateAimLine()));
-    connect(m_effectsTimer, SIGNAL(triggered()), this, SLOT(updateEffects()));
-    connect(m_followingTimer, SIGNAL(triggered()), this, SLOT(updateFollowingUnit()));
-    connect(child("sceneUpdateTimer"), SIGNAL(triggered()), this, SLOT(updateUnitVisibility()));
-    connect(child("rubberBandTimer"), SIGNAL(triggered()), this, SLOT(updateRubberBand()));
-
-    hideNonPlayerUnits();
-    setSideMarks();
 }
 
 /*!
@@ -1395,7 +1437,7 @@ QColor CcfQmlBaseScenario::getMenuBackgroundColor() const
     return m_menuBackgroundColor;
 }
 
-QQmlListReference CcfQmlBaseScenario::getUnits() const
+QObjectList CcfQmlBaseScenario::getUnits() const
 {
     return m_units;
 }
@@ -1524,7 +1566,7 @@ void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColo
         emit menuBackgroundColorChanged();
 }
 
-void CcfQmlBaseScenario::setUnits(QQmlListReference units)
+void CcfQmlBaseScenario::setUnits(QObjectList units)
 {
     m_units = units;
     emit unitsChanged();

@@ -82,17 +82,14 @@ class CcfQmlBaseScenario : public CcfObjectBase
     /*!
       A convenience list of units available in current scenario. Includes both friendly and enemy units.
       */
-    Q_PROPERTY(QQmlListReference units READ getUnits WRITE setUnits NOTIFY unitsChanged)
+    Q_PROPERTY(QObjectList units READ getUnits WRITE setUnits NOTIFY unitsChanged)
 
 public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
-    Q_INVOKABLE void initConveniencePointers();
     Q_INVOKABLE void stopFollowingUnit();
     Q_INVOKABLE void centerViewOnUnit(QObject *unit);
     Q_INVOKABLE void cleanContextAction();
-
-
 
     Q_INVOKABLE void handleLeftMouseClick(QObject *mouse);
     Q_INVOKABLE void handleRightMouseClick(QObject *mouse);
@@ -105,6 +102,7 @@ public:
     Q_INVOKABLE void handleWheelEventMouseAreaMain(QObject *wheel);
 
 public slots:
+    void init();
     void zoomIn();
     void zoomOut();
     // TODO: add optional argument with a list of units to be affected. When empty,
@@ -204,7 +202,7 @@ protected:
     QPoint getZoomPoint() const;
     bool getPaused() const;
     QColor getMenuBackgroundColor() const;
-    QQmlListReference getUnits() const;
+    QObjectList getUnits() const;
 
     //Property setters:
     void setScenarioFile(const QString &scenarioFile);
@@ -216,7 +214,7 @@ protected:
     void setZoomPoint(const QPoint &zoomPoint);
     void setPaused(bool paused);
     void setMenuBackgroundColor(const QColor &menuBackgroundColor);
-    void setUnits(QQmlListReference units);
+    void setUnits(QObjectList units);
 
 signals:
     void scenarioFileChanged();
@@ -240,7 +238,7 @@ private:
     QPoint m_zoomPoint;
     bool m_paused;
     QColor m_menuBackgroundColor;
-    QQmlListReference m_units;
+    QObjectList m_units;
 };
 
 /*! @}*/

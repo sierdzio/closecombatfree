@@ -92,6 +92,8 @@ BaseScenario {
                 }
 
                 Loader {
+                    property alias unitsItem: unitsLoader.item
+                    objectName: "unitsLoader"
                     id: unitsLoader
                     anchors.fill: parent
                     z: map.z + 1
@@ -107,35 +109,7 @@ BaseScenario {
                         }
                     }
 
-                    onLoaded: {
-                        // TODO: move this method to C++
-                        if (scenarioFile != "") {
-                            var unitSideList = new Array;
-
-                            if (unitsLoader.item.objectName != "Campaign") {
-                                // This is a single scenario
-                                map.source = unitsLoader.item.mapFile;
-                                units = unitsLoader.item.children;
-
-                                for (var i = 0; i < units.length; i++) {
-                                    var unit = units[i];
-                                    unit.unitIndex = i;
-                                    togglePause.connect(unit.togglePause);
-                                    unit.actionFinished.connect(actionFinished);
-                                    unit.movementStateChange.connect(handleUnitMovement);
-                                    unitSideList.push(unit.unitSide);
-                                }
-
-                                map.item.setUnits(units);
-                            } else {
-                                // This is a campaign
-                                // TODO: add some clever code here ;)
-                            }
-
-                            initConveniencePointers();
-                            ScenarioState.setAvailableSides(unitSideList);
-                        }
-                    }
+                    onLoaded: init();
                 }
 
                 MouseArea {

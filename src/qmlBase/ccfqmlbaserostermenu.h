@@ -4,12 +4,13 @@
 #include <QtCore/QList>
 
 #include "logic/ccfobjectbase.h"
-#include "qmlBase/ccfqmlbaseunit.h"
 
 /*!
   \defgroup CloseCombatFree Game code
   @{
  */
+
+class CcfQmlBaseUnit;
 
 /*!
   Acts as a base class for QML file qml/gui/RosterMenu.qml. Created to be closely
@@ -22,7 +23,7 @@ class CcfQmlBaseRosterMenu : public CcfObjectBase
 public:
     explicit CcfQmlBaseRosterMenu(QQuickItem *parent = 0);
 
-    Q_INVOKABLE void populateUnits(QList<CcfQmlBaseUnit *> tmpUnitsList);
+    Q_INVOKABLE void populateUnits(QObjectList tmpUnitsList);
     Q_INVOKABLE CcfQmlBaseUnit *getUnitAt(qreal x, qreal y);
     Q_INVOKABLE int getUnitIndexAt(qreal x, qreal y);
     Q_INVOKABLE QPointF childCenterCoords(qreal x, qreal y);
@@ -32,7 +33,7 @@ public slots:
     void selectionChanged(bool state, int index);
 
 private:
-    QList<CcfQmlBaseUnit *> units;
+    QObjectList units;
 };
 
 /*! @}*/

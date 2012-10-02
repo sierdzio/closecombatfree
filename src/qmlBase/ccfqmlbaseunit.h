@@ -19,6 +19,8 @@
 class CcfMain;
 class QQmlComponent;
 
+typedef QList<CcfQmlBaseUnit *> CcfUnitList;
+
 /*!
   The CcfQmlBaseUnit class is an experiment to see if moving most functionality
   from Unit.qml to here is sane, doable, and does not require too much effort
@@ -262,6 +264,9 @@ public:
 
     Q_INVOKABLE QVariantList soldiers();
 
+public slots:
+    void togglePause();
+
 protected:
     QObject *createOrder(QObject *parent);
     void processQueue();
@@ -270,6 +275,8 @@ protected:
 
 signals:
     void unitStatusChanged(const QString &newStatus, int index);
+    void movementStateChange(bool movingState, int unitIndex);
+    void actionFinished (int index, qreal targetX, qreal targetY);
     void movementBegan();
 
 private:

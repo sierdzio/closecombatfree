@@ -47,8 +47,6 @@ public:
                     QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
                     QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
                     QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
-    QObjectList listReferenceToQList(const QQmlListReference &toConvert);
-    QList<CcfQmlBaseUnit *> listReferenceToUnitList(const QQmlListReference &toConvert);
 };
 
 #endif // CCFOBJECTBASE_H

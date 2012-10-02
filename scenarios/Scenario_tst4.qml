@@ -23,7 +23,7 @@ import "../units/tanks/tests"
 import "../qml/units"
 
 Item {
-    property string mapFile: "../maps/Map_tst4.qml"
+    property string mapFile: "maps/Map_tst4.qml"
 
     id: root
 

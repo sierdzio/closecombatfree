@@ -16,11 +16,20 @@ class CcfLogger : public QObject
 {
     Q_OBJECT
 public:
+    enum MessageType {
+        Log   = 0,
+        Error = 1
+    };
+
     explicit CcfLogger(QObject *parent = 0, bool isDebugOn = false);
 
     Q_INVOKABLE void log(const QString &message, const QString &additionalData = QString());
+    Q_INVOKABLE void error(const QString &message, const QString &additionalData = QString());
     
 private:
+    void addLogEntry(MessageType msgType, const QString &message,
+                     const QString &additionalData = QString());
+
     bool isDebug;
 };
 

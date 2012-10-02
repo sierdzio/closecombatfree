@@ -372,8 +372,13 @@ QVariantList CcfQmlBaseUnit::soldiers()
     return m_soldiers;
 }
 
-// Property getters:
+void CcfQmlBaseUnit::togglePause()
+{
+    m_paused = !m_paused;
+    emit pausedChanged();
+}
 
+// Property getters:
 QString CcfQmlBaseUnit::getObjectType() const
 {
     return m_objectType;
@@ -882,8 +887,10 @@ void CcfQmlBaseUnit::setMoving(bool moving)
 
     m_moving = moving;
 
-    if (wasChaged)
+    if (wasChaged) {
         emit movingChanged();
+        emit movementStateChange(m_moving, m_unitIndex);
+    }
 }
 
 bool CcfQmlBaseUnit::isOrderIndexValid(int index) const

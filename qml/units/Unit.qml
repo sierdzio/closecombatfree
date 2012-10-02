@@ -19,31 +19,14 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import "../../qml/gui"
-import "../../qml/units"
 import QmlBase 0.1
 
-BaseUnit {
-//    property list<Soldier> soldiers;
+import "../../qml/gui"
+import "../../qml/units"
 
+BaseUnit {
     centerX: unitWidth/2
     centerY: unitHeight/2
-
-    signal togglePause ()
-    onTogglePause: {
-        if (paused == true) {
-            paused = false;
-        } else {
-            paused = true;
-        }
-    }
-
-    signal movementStateChange(bool movingState, int unitIndex)
-    onMovingChanged: {
-        movementStateChange(moving, unitIndex);
-    }
-
-    signal actionFinished (int index, real targetX, real targetY)
 
     id: root
     width: unitWidth

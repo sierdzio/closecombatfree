@@ -1,4 +1,5 @@
 #include "ccfqmlbaserostermenu.h"
+#include "qmlBase/ccfqmlbaseunit.h"
 
 CcfQmlBaseRosterMenu::CcfQmlBaseRosterMenu(QQuickItem *parent) :
     CcfObjectBase(parent)
@@ -8,21 +9,21 @@ CcfQmlBaseRosterMenu::CcfQmlBaseRosterMenu(QQuickItem *parent) :
 /*!
   Populates roster menu with units, calculates best fit and fixes the size.
   */
-void CcfQmlBaseRosterMenu::populateUnits(QList<CcfQmlBaseUnit *> tmpUnitsList)
+void CcfQmlBaseRosterMenu::populateUnits(QObjectList tmpUnitsList)
 {
     units = tmpUnitsList;
 
     QObjectList model;
     for (int i = 0; i < units.length(); ++i) {
         model.append(units.at(i));
-        connect(units.at(i), &CcfQmlBaseUnit::selectedChanged,
+        connect(ccfUnit(units.at(i)), &CcfQmlBaseUnit::selectedChanged,
                 this, &CcfQmlBaseRosterMenu::selectionChanged);
     }
 
     // Get widest and highest dimension from cells:
     qreal widestCell = 0;
     qreal heighestCell = 0;
-    units.at(0)->setUnitStatus("MOVING FAST");
+    ccfUnit(units.at(0))->setUnitStatus("MOVING FAST");
 
     set("unitModel", QVariant::fromValue(model));
 
@@ -32,7 +33,7 @@ void CcfQmlBaseRosterMenu::populateUnits(QList<CcfQmlBaseUnit *> tmpUnitsList)
     QQuickItem *current = item(unitsView->property("currentItem").value<QObject *>());
     widestCell = current->width();
     heighestCell = current->height();
-    units.at(0)->setUnitStatus("READY");
+    ccfUnit(units.at(0))->setUnitStatus("READY");
 
     // Set all elements' dimentions
     for (int i = 0; i < units.length(); ++i) {
@@ -68,7 +69,7 @@ CcfQmlBaseUnit *CcfQmlBaseRosterMenu::getUnitAt(qreal x, qreal y)
     if (units.length() <= i)
         return 0;
 
-    return units.at(i);
+    return ccfUnit(units.at(i));
 }
 
 /*!
@@ -122,7 +123,7 @@ QPointF CcfQmlBaseRosterMenu::childCenterCoords(qreal x, qreal y)
   */
 void CcfQmlBaseRosterMenu::changeStatus(const QString &newStatus, int index)
 {
-    units.at(index)->setUnitStatus(newStatus);
+    ccfUnit(units.at(index))->setUnitStatus(newStatus);
 }
 
 /*!
@@ -130,5 +131,5 @@ void CcfQmlBaseRosterMenu::changeStatus(const QString &newStatus, int index)
   */
 void CcfQmlBaseRosterMenu::selectionChanged(bool state, int index)
 {
-    units.at(index)->setSelected(state);
+    ccfUnit(units.at(index))->setSelected(state);
 }

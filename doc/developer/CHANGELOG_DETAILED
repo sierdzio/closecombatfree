@@ -10,6 +10,8 @@ Some more history can be devised from git sources (although even there, the thin
  - add additional data to logger
  - update code, definitions, use of convenience methods now that transition
    to c++ is (for now...) done
+ - move Scenario loading code to C++
+ - make Timer updates more direct (less MOC calls)
 
 29-30.09.2012:
  - continue porting. That's a lot of workt

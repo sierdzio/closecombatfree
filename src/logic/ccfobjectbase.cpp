@@ -58,31 +58,3 @@ bool CcfObjectBase::invoke(QObject *obj, const char *member, QGenericArgument va
     return obj->metaObject()->invokeMethod(obj, member, val0, val1, val2, val3, val4, val5,
                                            val6, val7, val8, val9);
 }
-
-/*!
-  Converts a QQmlListReference \a toConvert into a more robust QList<QObject *>.
-
-  Warning: conversion includes traversing the whole reference list. Not necessarily an
-  optimal way of doing things.
-  */
-QObjectList CcfObjectBase::listReferenceToQList(const QQmlListReference &toConvert)
-{
-    QObjectList result;
-    for (int i = 0; i < toConvert.count(); ++i)
-        result.append(toConvert.at(i));
-    return result;
-}
-
-/*!
-  Converts a QQmlListReference \a toConvert into a more robust QList<CcfQmlBaseUnit *>.
-
-  Warning: conversion includes traversing the whole reference list. Not necessarily an
-  optimal way of doing things.
-  */
-QList<CcfQmlBaseUnit *> CcfObjectBase::listReferenceToUnitList(const QQmlListReference &toConvert)
-{
-    QList<CcfQmlBaseUnit *> result;
-    for (int i = 0; i < toConvert.count(); ++i)
-        result.append(ccfUnit(toConvert.at(i)));
-    return result;
-}
