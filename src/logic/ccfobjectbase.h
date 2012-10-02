@@ -24,6 +24,12 @@
 
 class CcfQmlBaseUnit;
 
+/*!
+  QQuickItem extension class, used as a base for all QML items in Ccf. Contains
+  some convenience defines (set, get, getReal, getInt, getString, getBool) for
+  easy property manipulation. Also sports some particularly useful convenience
+  methods.
+  */
 class CcfObjectBase : public QQuickItem
 {
     Q_OBJECT

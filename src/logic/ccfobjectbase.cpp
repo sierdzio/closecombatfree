@@ -7,16 +7,31 @@ CcfObjectBase::CcfObjectBase(QQuickItem *parent) : QQuickItem(parent)
 {
 }
 
+/*!
+  Returns a QML Unit object pointer, for a given QObject \a unitObject.
+
+  \sa item, child
+  */
 CcfQmlBaseUnit *CcfObjectBase::ccfUnit(QObject *unitObject) const
 {
     return qobject_cast<CcfQmlBaseUnit *>(unitObject);
 }
 
+/*!
+  Returns a pointer to QQuickItem, for a given QString \a objectName.
+
+  \sa ccfUnit, child
+  */
 QQuickItem *CcfObjectBase::item(const QString &objectName) const
 {
     return findChild<QQuickItem *>(objectName);
 }
 
+/*!
+  Returns a pointer to QQuickItem, for a given QObject \a object.
+
+  \sa ccfUnit, child
+  */
 QQuickItem *CcfObjectBase::item(QObject *object)
 {
     return qobject_cast<QQuickItem *>(object);
@@ -24,6 +39,8 @@ QQuickItem *CcfObjectBase::item(QObject *object)
 
 /*!
   Returns a children of this object, specified by \a objectName and cast to QObject.
+
+  \sa ccfUnit, item
   */
 QObject *CcfObjectBase::child(const QString &objectName) const
 {
@@ -31,7 +48,7 @@ QObject *CcfObjectBase::child(const QString &objectName) const
 }
 
 /*!
-  Invokes a method. Shortened syntax of metaObject::invokeMehtod().
+  Invokes a method (has to be defined in MOC). Shortened syntax of metaObject::invokeMehtod().
   */
 bool CcfObjectBase::invoke(QObject *obj, const char *member, QGenericArgument val0, QGenericArgument val1,
                                 QGenericArgument val2, QGenericArgument val3, QGenericArgument val4,

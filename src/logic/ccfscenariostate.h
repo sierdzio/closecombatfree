@@ -34,7 +34,6 @@ public:
     Q_INVOKABLE void setPlayerSide(const QString &playerSide);
     Q_INVOKABLE QStringList getAvailableSides();
     Q_INVOKABLE void setAvailableSides(QStringList availableSides);
-//    Q_INVOKABLE void setAvailableSides(const QList<QObject *> &items);
     Q_INVOKABLE QString getSidePath(const QString &side, const QString &sideMarkSet = "side");
 
 signals:

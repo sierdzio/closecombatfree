@@ -11,6 +11,11 @@
   @{
  */
 
+/*!
+  Acts as a base class for QML file qml/gui/RosterMenu.qml. Created to be closely
+  coupled with Scenario.qml and it's c++ code, so that the logic can be simplified,
+  and performance increased.
+  */
 class CcfQmlBaseRosterMenu : public CcfObjectBase
 {
     Q_OBJECT

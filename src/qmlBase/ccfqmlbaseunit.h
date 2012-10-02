@@ -146,11 +146,6 @@ class CcfQmlBaseUnit : public CcfObjectBase
     Q_PROPERTY(int unitHeight READ getUnitHeight WRITE setUnitHeight NOTIFY unitHeightChanged)
 
     /*!
-      Temp. We'll see if it works.
-      */
-//    Q_PROPERTY(QQmlListProperty<CcfQmlBaseSoldier> soldiers READ getSoldiers WRITE setSoldiers NOTIFY soldiersChanged)
-
-    /*!
       Moving speed of a unit is multiplied by that number, when it's moving fast.
 
       In contrast to original CC, this affects vehicles, too.
@@ -247,7 +242,6 @@ class CcfQmlBaseUnit : public CcfObjectBase
 public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
-//    Q_INVOKABLE QVariantList soldiersList();
     Q_INVOKABLE QString operation(int index = -1) const;
     Q_INVOKABLE QPoint orderTarget(int index = -1) const;
     Q_INVOKABLE void changeStatus(const QString &newStatusMessage);
@@ -307,7 +301,6 @@ public:
     int getAcceleration() const;
     int getUnitWidth() const;
     int getUnitHeight() const;
-//    QQmlListProperty<CcfQmlBaseSoldier> getSoldiers();
     qreal getMoveFastFactor() const;
     qreal getSneakFactor() const;
     int getCenterX() const;
@@ -340,7 +333,6 @@ public:
     void setAcceleration(int acceleration);
     void setUnitWidth(int unitWidth);
     void setUnitHeight(int unitHeight);
-//    void setSoldiers(QQmlListProperty<CcfQmlBaseSoldier> soldiers);
     void setMoveFastFactor(qreal moveFastFactor);
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
@@ -373,7 +365,6 @@ signals:
     void accelerationChanged();
     void unitWidthChanged();
     void unitHeightChanged();
-//    void soldiersChanged();
     void moveFastFactorChanged();
     void sneakFactorChanged();
     void centerXChanged();
@@ -407,7 +398,6 @@ private:
     int m_acceleration;
     int m_unitWidth;
     int m_unitHeight;
-//    QQmlListProperty<CcfQmlBaseSoldier> m_soldiers;
     qreal m_moveFastFactor;
     qreal m_sneakFactor;
     int m_centerX;

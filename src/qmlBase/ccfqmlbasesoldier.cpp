@@ -10,6 +10,9 @@ CcfQmlBaseSoldier::CcfQmlBaseSoldier(QObject *parent) : QObject(parent)
     m_soldierLogo = "../../../img/units/generic_soldier_logo.png";
 }
 
+/*!
+  Changes current status of the soldier.
+  */
 void CcfQmlBaseSoldier::changeStatus(const QString &newStatus)
 {
     m_status = newStatus;

@@ -9,6 +9,9 @@
   @{
  */
 
+/*!
+  This is a base object for Soldire.qml file.
+  */
 class CcfQmlBaseSoldier : public QObject
 {
     Q_OBJECT
