@@ -48,9 +48,20 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) : CcfObjectBase(parent)
   */
 QString CcfQmlBaseUnit::operation(int index) const
 {
-    if ((index == -1) || (!isOrderIndexValid(index)))
-        index = m_currentOrder;
-    return m_orders.at(index)->getString("operation");
+    if (index == -1) {
+        if (m_currentOrder != -1)
+            index = m_currentOrder;
+        else
+            index = 0;
+    }
+
+    if (isOrderIndexValid(index)) {
+        return m_orders.at(index)->getString("operation");
+    } else {
+        mmain->logger()->error("Invalid unit operation index requested",
+                             "Mighty Boosh is a great series");
+        return QString();
+    }
 }
 
 /*!
@@ -484,11 +495,6 @@ int CcfQmlBaseUnit::getCenterY() const
     return m_centerY;
 }
 
-QString CcfQmlBaseUnit::getScheduledOperation() const
-{
-    return m_scheduledOperation;
-}
-
 int CcfQmlBaseUnit::getCurrentOrder() const
 {
     return m_currentOrder;
@@ -781,18 +787,6 @@ void CcfQmlBaseUnit::setCenterY(int centerY)
 
     if (wasChaged)
         emit centerYChanged();
-}
-
-void CcfQmlBaseUnit::setScheduledOperation(const QString &scheduledOperation)
-{
-    bool wasChaged = false;
-    if (scheduledOperation != m_scheduledOperation)
-        wasChaged = true;
-
-    m_scheduledOperation = scheduledOperation;
-
-    if (wasChaged)
-        emit scheduledOperationChanged();
 }
 
 void CcfQmlBaseUnit::setCurrentOrder(int currentOrder)

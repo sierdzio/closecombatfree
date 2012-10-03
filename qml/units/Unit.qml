@@ -169,7 +169,7 @@ BaseUnit {
         paused: running? root.paused : false
     }
 
-    //// Temp debug
+    // TODO: Temp debug
     Rectangle {
         id: destroyedState
         visible: (parent.state === "healthy")? false : true;

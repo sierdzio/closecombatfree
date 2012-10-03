@@ -39,7 +39,7 @@ void CcfQmlBaseScenario::init()
         QObject *unitsLoader = child("unitsLoader");
         QObject *unitItem = unitsLoader->property("unitsItem").value<QObject *>();
         QObject *map = child("map");
-        QObject *mapItem;
+        QObject *mapItem = NULL;
 
         if (unitItem->objectName() != "Campaign") {
             // This is a single scenario
@@ -218,7 +218,7 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
 {
     QList<QObject *> selectedGroup = selectedUnits();
     CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
-    QString scheduledOperation = unit->getScheduledOperation();
+    QString scheduledOperation = m_aimLine->getString("scheduledOperation");
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
@@ -231,7 +231,7 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
-        issueActionOrder(unit, targetX, targetY);
+        issueActionOrder(unit, targetX, targetY, scheduledOperation);
 
         for (int i = 0; i < selectedGroup.length(); ++i) {
             unit = ccfUnit(selectedGroup.at(i));
@@ -240,13 +240,10 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
             if (unit->getUnitIndex() == index)
                 continue;
 
-            // Sets schedule for all units.
-            unit->setScheduledOperation(scheduledOperation);
-
             qreal tempX = targetX + (unit->x() - m_units.at(index)->getReal("x"));
             qreal tempY = targetY + (unit->y() - m_units.at(index)->getReal("y"));
 
-            issueActionOrder(unit, tempX, tempY);
+            issueActionOrder(unit, tempX, tempY, scheduledOperation);
         }
     }
 
@@ -260,7 +257,7 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
 {
     QList<QObject *> selectedGroup = selectedUnits();
     CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
-    QString scheduledOperation = unit->getScheduledOperation();
+    QString scheduledOperation = m_aimLine->getString("scheduledOperation");
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
@@ -273,7 +270,7 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
         // Set up the unit to which the aimLine is anchored.
         // Others are set in the loop later, based on this "main"
         // object.
-        issueWaypointOrder(unit, targetX, targetY);
+        issueWaypointOrder(unit, targetX, targetY, scheduledOperation);
 
 
         for (int i = 0; i < selectedGroup.length(); ++i) {
@@ -283,14 +280,10 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
             if (unit->getUnitIndex() == index)
                 continue;
 
-            // Sets schedule for all units.
-
-            unit->setScheduledOperation(scheduledOperation);
-
             qreal tempX = targetX + (unit->x() - m_units.at(index)->getReal("x"));
             qreal tempY = targetY + (unit->y() - m_units.at(index)->getReal("y"));
 
-            issueWaypointOrder(unit, tempX, tempY);
+            issueWaypointOrder(unit, tempX, tempY, scheduledOperation);
         }
     }
 }
@@ -298,13 +291,8 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
 /*!
   Issues a waypoint order (adds order to unit's queue).
   */
-void CcfQmlBaseScenario::issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y)
+void CcfQmlBaseScenario::issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y, const QString &operation)
 {
-    QString operation = unit->getScheduledOperation();
-
-    // WARNING! Order canceling IS important!
-    //    unit.cancelOrder();
-
     // Clear defence, if it is on.
     unit->setDefenceSphereColor("");
     unit->changeStatus("READY");
@@ -315,13 +303,8 @@ void CcfQmlBaseScenario::issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal
 /*!
   Issues an order (fires queue execution).
   */
-void CcfQmlBaseScenario::issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y)
+void CcfQmlBaseScenario::issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y, const QString &operation)
 {
-    QString operation = unit->getScheduledOperation();
-
-    // WARNING! Order canceling IS important!
-    //    unit.cancelOrder();
-
     // Clear defence, if it is on.
     unit->setDefenceSphereColor("");
     unit->changeStatus("READY");
@@ -366,11 +349,8 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
 {
     QList<QObject *> units = selectedUnits();
 
-    foreach (QObject *obj, units) {
-        obj->set("scheduledOperation", operation);
-    }
-
     m_aimLine->set("unitIndex", units.at(0)->property("unitIndex"));
+    m_aimLine->set("scheduledOperation", operation);
     m_contextMenu->setVisible(false);
 
     if (operation == "Stop") {
@@ -427,8 +407,6 @@ void CcfQmlBaseScenario::onTogglePause()
 
 /*!
   Creates an instance of Effect.qml component.
-
-  WARNING: remember to reparent the resulting object, or else it will not be drawn!
   */
 QObject *CcfQmlBaseScenario::createEffect(QObject *parent)
 {
@@ -529,8 +507,6 @@ int CcfQmlBaseScenario::selectedUnitsCount()
   Returns Array of all units with exception of one, specified by unitIndex.
 
   If unitIndex is -1, this function returns ALL units.
-
-  // TODO: reconsider if it's needed.
   */
 QObjectList CcfQmlBaseScenario::getAllUnitsButOne(int unitToOmit)
 {
@@ -796,8 +772,7 @@ void CcfQmlBaseScenario::updateWidth()
 void CcfQmlBaseScenario::togglePlayer()
 {
     QStringList sides;
-    // Find all available sides. TEMP!
-    // TODO: save this as a property for easy and quick access.
+    // Find all available sides.
     for (int i = 0; i < m_units.count(); ++i) {
         if (!sides.contains(m_units.at(i)->getString("unitSide"))) {
             sides.append(m_units.at(i)->getString("unitSide"));
@@ -879,9 +854,9 @@ void CcfQmlBaseScenario::checkScenarioFinished()
   */
 void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
 {
-    if (x == 0.0) // TODO: should be fuzzy compare
+    if (qFuzzyCompare(x, 0.0))
         x = m_mouseAreaMain->getReal("mouseX");
-    if (y == 0.0) // TODO: should be fuzzy compare
+    if (qFuzzyCompare(y, 0.0))
         y = m_mouseAreaMain->getReal("mouseY");
 
     qreal rubberX = 0, rubberY = 0, rubberX2 = 0, rubberY2 = 0; // 2 edges of the rubber band,

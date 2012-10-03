@@ -71,7 +71,6 @@ QList<QString> *CcfConfigParser::configIndexes()
   */
 void CcfConfigParser::parse(const QString &configFilePath)
 {
-    // TODO: take QRC into account
     QFile file(configFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         enterErrorState("Could not open the config file.");

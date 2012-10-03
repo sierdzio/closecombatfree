@@ -183,13 +183,6 @@ class CcfQmlBaseUnit : public CcfObjectBase
     Q_PROPERTY(int centerY READ getCenterY WRITE setCenterY NOTIFY centerYChanged)
 
     /*!
-      Holds currently scheduled operation.
-
-      TODO: remove this property. Use orders property only.
-      */
-    Q_PROPERTY(QString scheduledOperation READ getScheduledOperation WRITE setScheduledOperation NOTIFY scheduledOperationChanged)
-
-    /*!
       Holds the index of the current order.
 
       TODO: This should also be thought over. Maybe it would be possible to remove this one, too.
@@ -313,7 +306,6 @@ public:
     qreal getSneakFactor() const;
     int getCenterX() const;
     int getCenterY() const;
-    QString getScheduledOperation() const;
     int getCurrentOrder() const;
     bool getSelected() const;
     bool getFiring() const;
@@ -345,7 +337,6 @@ public:
     void setSneakFactor(qreal sneakFactor);
     void setCenterX(int centerX);
     void setCenterY(int centerY);
-    void setScheduledOperation(const QString &scheduledOperation);
     void setCurrentOrder(int currentOrder);
     void setSelected(bool selected);
     void setFiring(bool firing);
@@ -377,7 +368,6 @@ signals:
     void sneakFactorChanged();
     void centerXChanged();
     void centerYChanged();
-    void scheduledOperationChanged();
     void currentOrderChanged();
     void selectedChanged(bool state, int index);
     void firingChanged();
@@ -410,7 +400,6 @@ private:
     qreal m_sneakFactor;
     int m_centerX;
     int m_centerY;
-    QString m_scheduledOperation;
     int m_currentOrder;
     bool m_selected;
     bool m_firing;

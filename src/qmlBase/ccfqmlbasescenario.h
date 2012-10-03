@@ -134,8 +134,8 @@ private:
     bool checkIfUnitCanFire(const QString &scheduledOperation);
     void performContextAction(int index, qreal targetX, qreal targetY);
     void placeWaypoint(int index, qreal targetX, qreal targetY);
-    void issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
-    void issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y);
+    void issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal y, const QString &operation);
+    void issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y, const QString &operation);
 
     void firingActionFinished(int index, qreal targetX, qreal targetY);
     void cancelAllSelectedOrders();

@@ -67,7 +67,7 @@ void CcfGlobal::disableQrcUse(QObject *object)
 /*!
   Returns contents of a file (specified in \a filePath) as a QString.
 
-  WARNING: Paths are always resolved from the directory where the BINARY
+  PLease note that paths are always resolved from the directory where the BINARY
   is located!
   */
 QString CcfGlobal::getFileContents(const QString &filePath)

@@ -5,13 +5,14 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
-02.10.2012:
+02-03.10.2012:
  - more documentation
  - add additional data to logger
  - update code, definitions, use of convenience methods now that transition
    to c++ is (for now...) done
  - move Scenario loading code to C++
  - make Timer updates more direct (less MOC calls)
+ - go through TODO list
 
 29-30.09.2012:
  - continue porting. That's a lot of workt
