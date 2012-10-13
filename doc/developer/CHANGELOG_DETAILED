@@ -5,6 +5,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+13.10.2012:
+ - fix roster menu left click not resulting in unit selection
+ - optimise some parts of the code
+
 02-03.10.2012:
  - more documentation
  - add additional data to logger

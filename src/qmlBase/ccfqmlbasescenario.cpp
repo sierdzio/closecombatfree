@@ -224,7 +224,7 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
             && (scheduledOperation != "Defend")
             && (scheduledOperation != "Stop")
             && (scheduledOperation != "Follow")) {
-        if (checkIfUnitCanFire(scheduledOperation) == false) {
+        if (!checkIfUnitCanFire(scheduledOperation)) {
             return;
         }
 
@@ -263,7 +263,7 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
             && (scheduledOperation != "Defend")
             && (scheduledOperation != "Stop")
             && (scheduledOperation != "Follow")) {
-        if (checkIfUnitCanFire(scheduledOperation) == false) {
+        if (!checkIfUnitCanFire(scheduledOperation)) {
             return;
         }
 
@@ -347,7 +347,7 @@ void CcfQmlBaseScenario::actionFinished(int index, qreal targetX, qreal targetY)
   */
 void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
 {
-    QList<QObject *> units = selectedUnits();
+    CcfUnitList units = objectToUnitList(selectedUnits());
 
     m_aimLine->set("unitIndex", units.at(0)->property("unitIndex"));
     m_aimLine->set("scheduledOperation", operation);
@@ -356,19 +356,19 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
     if (operation == "Stop") {
         // Iterate over every unit!
         for (int i = 0; i < units.length(); ++i) {
-            invoke(units.at(i), "cancelOrder");
+            units.at(i)->cancelOrder();
         }
         cleanContextAction();
     } else if (operation == "Follow") {
-        if (child("followingTimer")->getBool("running") == true)
-            invoke(this, "stopFollowingUnit");
+        if (m_followingTimer->getBool("running"))
+            stopFollowingUnit();
         else
-            invoke(this, "startFollowingUnit", Q_ARG(int, units.at(0)->getInt("unitIndex")));
+            startFollowingUnit(units.at(0)->getInt("unitIndex"));
     } else {
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
-            m_aimLine->setX(units.at(0)->getReal("x") + units.at(0)->getReal("centerX"));
-            m_aimLine->setY(units.at(0)->getReal("y") + units.at(0)->getReal("centerY"));
+            m_aimLine->setX(units.at(0)->x() + units.at(0)->getCenterX());
+            m_aimLine->setY(units.at(0)->y() + units.at(0)->getCenterY());
 
             m_aimLine->set("color", CcfEngineHelpers::colorForOrder(operation));
             invoke(m_rotationTimer, "start");
@@ -376,13 +376,13 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
                 for (int i = 0; i < units.length(); ++i) {
-                    units.at(i)->set("defenceSphereColor", "green");
+                    units.at(i)->setDefenceSphereColor("green");
                     ccfUnit(units.at(i))->changeStatus("AMBUSHING");
                 }
             }
             else if (operation == "Defend") {
                 for (int i = 0; i < units.length(); ++i) {
-                    units.at(i)->set("defenceSphereColor", "blue");
+                    units.at(i)->setDefenceSphereColor("blue");
                     ccfUnit(units.at(i))->changeStatus("AMBUSHING");
                 }
             }
@@ -443,7 +443,9 @@ void CcfQmlBaseScenario::firingActionFinished(int index, qreal targetX, qreal ta
             QObject *hitee = 0;
             hitee = unitAt(targetX, targetY);
 
-            if ((hitee != 0) && (hitee->property("unitIndex").isValid() == true) && (hitee->property("unitType").isValid() == true)) {
+            if ((hitee != 0)
+                    && (hitee->property("unitIndex").isValid() == true)
+                    && (hitee->property("unitType").isValid() == true)) {
                 invoke(hitee, "hit", Q_ARG(QObject *, unit), Q_ARG(qreal, targetX), Q_ARG(qreal, targetY));
             }
         }
@@ -1139,7 +1141,7 @@ void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
 
     CcfQmlBaseUnit *unit = ccfUnit(unitObject);
 
-    if (unit->getSelected() == false) {
+    if (!unit->getSelected()) {
         selectUnitFromGameArea(mouse);
     }
 
@@ -1162,10 +1164,7 @@ void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
   */
 void CcfQmlBaseScenario::handleLeftMouseClickRoster(QObject *mouse)
 {
-    if (m_contextMenu->isVisible() == false) {
-        //performContextAction(mouseAreaMain.mouseX, mouseAreaMain.mouseY);
-        //return;
-    } else {
+    if (!m_contextMenu->isVisible()) {
         cleanContextAction();
         selectUnitFromRoster(mouse);
     }
@@ -1184,7 +1183,7 @@ void CcfQmlBaseScenario::handleRightMouseClickRoster(QObject *mouse)
     CcfQmlBaseUnit *unit = m_roster->getUnitAt(mousex, mousey);
 
     if (unit != 0) {
-        if (unit->getSelected() == false) {
+        if (!unit->getSelected()) {
             selectUnitFromRoster(mouse);
         }
 

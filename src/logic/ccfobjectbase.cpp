@@ -58,3 +58,12 @@ bool CcfObjectBase::invoke(QObject *obj, const char *member, QGenericArgument va
     return obj->metaObject()->invokeMethod(obj, member, val0, val1, val2, val3, val4, val5,
                                            val6, val7, val8, val9);
 }
+
+QList<CcfQmlBaseUnit *> CcfObjectBase::objectToUnitList(QObjectList list)
+{
+    QList<CcfQmlBaseUnit *> result;
+    foreach (QObject *entry, list) {
+        result.append(ccfUnit(entry));
+    }
+    return result;
+}
