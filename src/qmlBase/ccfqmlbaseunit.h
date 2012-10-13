@@ -19,6 +19,10 @@
 class CcfMain;
 class QQmlComponent;
 
+/*!
+  Convenience typedef that shotens the declaration of a list of Units. Much like
+  QObjectList in that respect. See also CcfBaseObject::objectToUnitList().
+  */
 typedef QList<CcfQmlBaseUnit *> CcfUnitList;
 
 /*!
@@ -103,7 +107,7 @@ class CcfQmlBaseUnit : public CcfObjectBase
     /*!
       Defines a set of side marks to be used to decorate this unit.
       Side mark filenames should be made according to this template:
-      <root>/img/units/sideMarks/sideMark_<sideMarkSet>_<sideNumber>.png
+      "root"/img/units/sideMarks/sideMark_sideMarkSet_sideNumber.png
        */
     Q_PROPERTY(QString sideMarkSet READ getSideMarkSet WRITE setSideMarkSet NOTIFY sideMarkSetChanged)
 
@@ -267,9 +271,24 @@ protected:
     void deleteOrder(int index);
 
 signals:
-    void unitStatusChanged(const QString &newStatus, int index);
+    /*!
+      Emitted when unit's status is changed.
+      */
+    void unitStatusChanged(const QString &newStatus, int unitIndex);
+
+    /*!
+      Emitted when the state of unit's movement is changed.
+      */
     void movementStateChange(bool movingState, int unitIndex);
+
+    /*!
+      Emitted when an unit finishes an action.
+      */
     void actionFinished (int index, qreal targetX, qreal targetY);
+
+    /*!
+      Emitted when unit begins moving.
+      */
     void movementBegan();
 
 private:
@@ -280,9 +299,7 @@ private:
     QObjectList m_orders;
     QVariantList m_soldiers;
 
-    // // // //
     // Everything below is property handling:
-    // // // //
 public:
     // Property getters:
     QString getObjectType() const;
@@ -347,34 +364,149 @@ public:
     void setMoving(bool moving);
 
 signals:
+    /*!
+      Emitted when object type is changed.
+      */
     void objectTypeChanged();
+
+    /*!
+      Emitted when unit file name is changed.
+      */
     void unitFileNameChanged();
+
+    /*!
+      Emitted when unit type is changed.
+      */
     void unitTypeChanged();
+
+    /*!
+      Emitted when unit logo is changed.
+      */
     void unitLogoChanged();
+
+    /*!
+      Emitted when unit status is changed.
+      */
     void unitStatusChanged();
+
+    /*!
+      Emitted when unit side is changed.
+      */
     void unitSideChanged();
+
+    /*!
+      Emitted when unit's group number is changed.
+      */
     void groupNumberChanged();
+
+    /*!
+      Emitted when unit's index is changed.
+      */
     void unitIndexChanged();
+
+    /*!
+      Emitted when unit's side mark's visibility is changed.
+      */
     void sideMarkVisibleChanged();
+
+    /*!
+      Emitted when unit's side mark source path is changed.
+      */
     void sideMarkSourceChanged();
+
+    /*!
+      Emitted when unit's set of side marks is changed.
+      */
     void sideMarkSetChanged();
+
+    /*!
+      Emitted when unit's rotation speed is changed.
+      */
     void rotationSpeedChanged();
+
+    /*!
+      Emitted when turret rotation speed is changed.
+      */
     void turretRotationSpeedChanged();
+
+    /*!
+      Emitted when max speed is changed.
+      */
     void maxSpeedChanged();
+
+    /*!
+      Emitted when acceleration is changed.
+      */
     void accelerationChanged();
+
+    /*!
+      Emitted when unit's width is changed.
+      */
     void unitWidthChanged();
+
+    /*!
+      Emitted when unit's height is changed.
+      */
     void unitHeightChanged();
+
+    /*!
+      Emitted when move fast speed factor is changed.
+      */
     void moveFastFactorChanged();
+
+    /*!
+      Emitted when sneak speed factor is changed.
+      */
     void sneakFactorChanged();
+
+    /*!
+      Emitted when center x is changed.
+      */
     void centerXChanged();
+
+    /*!
+      Emitted when center y is changed.
+      */
     void centerYChanged();
+
+    /*!
+      Emitted when current order is changed.
+      */
     void currentOrderChanged();
+
+    /*!
+      Emitted when selection state is changed.
+      */
     void selectedChanged(bool state, int index);
+
+    /*!
+      Emitted when firing state is changed.
+      */
     void firingChanged();
+
+    /*!
+      Emitted when smoking state is changed.
+      */
     void smokingChanged();
+
+    /*!
+      Emitted when defence sphere's rotation is changed.
+      */
     void defenceSphereRotationChanged();
+
+    /*!
+      Emitted when defence sphere's colour is changed.
+      */
     void defenceSphereColorChanged();
+
+    /*!
+      Emitted when paused state is changed.
+      */
     void pausedChanged();
+
+    /*!
+      Emitted when moving state is changed.
+      */
     void movingChanged();
 
 private:

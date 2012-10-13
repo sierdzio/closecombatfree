@@ -383,6 +383,9 @@ QVariantList CcfQmlBaseUnit::soldiers()
     return m_soldiers;
 }
 
+/*!
+  Toggles unit's pause state.
+  */
 void CcfQmlBaseUnit::togglePause()
 {
     m_paused = !m_paused;
@@ -390,153 +393,242 @@ void CcfQmlBaseUnit::togglePause()
 }
 
 // Property getters:
+/*!
+  Returns object type.
+  */
 QString CcfQmlBaseUnit::getObjectType() const
 {
     return m_objectType;
 }
 
+/*!
+  Returns unit's file name.
+  */
 QString CcfQmlBaseUnit::getUnitFileName() const
 {
     return m_unitFileName;
 }
 
+/*!
+  Returns unit's type.
+  */
 QString CcfQmlBaseUnit::getUnitType() const
 {
     return m_unitType;
 }
 
+/*!
+  Returns the path to unit's logo.
+  */
 QString CcfQmlBaseUnit::getUnitLogo() const
 {
     return m_unitLogo;
 }
 
+/*!
+  Returns unit's status.
+  */
 QString CcfQmlBaseUnit::getUnitStatus() const
 {
     return m_unitStatus;
 }
 
+/*!
+  Return's the side this unit is on.
+  */
 QString CcfQmlBaseUnit::getUnitSide() const
 {
     return m_unitSide;
 }
 
+/*!
+  Returns the number of the group this unit is part of. Defaults to 0.
+  */
 int CcfQmlBaseUnit::getGroupNumber() const
 {
     return m_groupNumber;
 }
 
+/*!
+  Return's unit's index, as set by the scenario.
+  */
 int CcfQmlBaseUnit::getUnitIndex() const
 {
     return m_unitIndex;
 }
 
+/*!
+  Returns true if the side mark is visible.
+  */
 bool CcfQmlBaseUnit::getSideMarkVisible() const
 {
     return m_sideMarkVisible;
 }
 
+/*!
+  Returns the path to the side mark image.
+  */
 QString CcfQmlBaseUnit::getSideMarkSource() const
 {
     return m_sideMarkSource;
 }
 
+/*!
+  Returns the side mark set in use.
+  */
 QString CcfQmlBaseUnit::getSideMarkSet() const
 {
     return m_sideMarkSet;
 }
 
+/*!
+  Returns unit's rotation speed.
+  */
 int CcfQmlBaseUnit::getRotationSpeed() const
 {
     return m_rotationSpeed;
 }
 
+/*!
+  Returns the turret's rotation speed.
+  */
 int CcfQmlBaseUnit::getTurretRotationSpeed() const
 {
     return m_turretRotationSpeed;
 }
 
+/*!
+  Returns unit's maximum speed.
+  */
 int CcfQmlBaseUnit::getMaxSpeed() const
 {
     return m_maxSpeed;
 }
 
+/*!
+  Returns unit's acceleration.
+  */
 int CcfQmlBaseUnit::getAcceleration() const
 {
     return m_acceleration;
 }
 
+/*!
+  Returns unit's width. This is not necessarily uniform with the QML component's width.
+  */
 int CcfQmlBaseUnit::getUnitWidth() const
 {
     return m_unitWidth;
 }
 
+/*!
+  Returns unit's height. This is not necessarily uniform with the QML component's height.
+  */
 int CcfQmlBaseUnit::getUnitHeight() const
 {
     return m_unitHeight;
 }
 
+/*!
+  Returns the move fast speed factor.
+  */
 qreal CcfQmlBaseUnit::getMoveFastFactor() const
 {
     return m_moveFastFactor;
 }
 
+/*!
+  Returns the sneak speed factor.
+  */
 qreal CcfQmlBaseUnit::getSneakFactor() const
 {
     return m_sneakFactor;
 }
 
+/*!
+  Returns the cental x coordinate.
+  */
 int CcfQmlBaseUnit::getCenterX() const
 {
     return m_centerX;
 }
 
+/*!
+  Returns the central y coordinate.
+  */
 int CcfQmlBaseUnit::getCenterY() const
 {
     return m_centerY;
 }
 
+/*!
+  Returns current order number.
+  */
 int CcfQmlBaseUnit::getCurrentOrder() const
 {
     return m_currentOrder;
 }
 
+/*!
+  Returns true if unit is selected.
+  */
 bool CcfQmlBaseUnit::getSelected() const
 {
     return m_selected;
 }
 
+/*!
+  Returns true if the unit is firing.
+  */
 bool CcfQmlBaseUnit::getFiring() const
 {
     return m_firing;
 }
 
+/*!
+  Returns true if the unit is smoking.
+  */
 bool CcfQmlBaseUnit::getSmoking() const
 {
     return m_smoking;
 }
 
+/*!
+  Returns defence sphere's rotation in degrees.
+  */
 int CcfQmlBaseUnit::getDefenceSphereRotation() const
 {
     return m_defenceSphereRotation;
 }
 
+/*!
+  Returns the defence sphere's colour.
+  */
 QString CcfQmlBaseUnit::getDefenceSphereColor() const
 {
     return m_defenceSphereColor;
 }
 
+/*!
+  Returns true if the unit is paused.
+  */
 bool CcfQmlBaseUnit::getPaused() const
 {
     return m_paused;
 }
 
+/*!
+  Returns true if the unit is moving.
+  */
 bool CcfQmlBaseUnit::getMoving() const
 {
     return m_moving;
 }
 
 // Property setters:
-
+/*!
+  Sets object type.
+  */
 void CcfQmlBaseUnit::setObjectType(const QString &objectType)
 {
     bool wasChaged = false;
@@ -549,6 +641,9 @@ void CcfQmlBaseUnit::setObjectType(const QString &objectType)
         emit objectTypeChanged();
 }
 
+/*!
+  Sets unit's file name.
+  */
 void CcfQmlBaseUnit::setUnitFileName(const QString &unitFileName)
 {
     bool wasChaged = false;
@@ -561,6 +656,9 @@ void CcfQmlBaseUnit::setUnitFileName(const QString &unitFileName)
         emit unitFileNameChanged();
 }
 
+/*!
+  Sets unit type.
+  */
 void CcfQmlBaseUnit::setUnitType(const QString &unitType)
 {
     bool wasChaged = false;
@@ -573,6 +671,9 @@ void CcfQmlBaseUnit::setUnitType(const QString &unitType)
         emit unitTypeChanged();
 }
 
+/*!
+  Sets the path to unit's logo.
+  */
 void CcfQmlBaseUnit::setUnitLogo(const QString &unitLogo)
 {
     bool wasChaged = false;
@@ -585,6 +686,9 @@ void CcfQmlBaseUnit::setUnitLogo(const QString &unitLogo)
         emit unitLogoChanged();
 }
 
+/*!
+  Sets unit's status.
+  */
 void CcfQmlBaseUnit::setUnitStatus(const QString &unitStatus)
 {
     bool wasChaged = false;
@@ -597,6 +701,9 @@ void CcfQmlBaseUnit::setUnitStatus(const QString &unitStatus)
         emit unitStatusChanged();
 }
 
+/*!
+  Sets the side this unit is on.
+  */
 void CcfQmlBaseUnit::setUnitSide(const QString &unitSide)
 {
     bool wasChaged = false;
@@ -609,6 +716,9 @@ void CcfQmlBaseUnit::setUnitSide(const QString &unitSide)
         emit unitSideChanged();
 }
 
+/*!
+  Sets the group this unit belongs to.
+  */
 void CcfQmlBaseUnit::setGroupNumber(int groupNumber)
 {
     bool wasChaged = false;
@@ -621,6 +731,9 @@ void CcfQmlBaseUnit::setGroupNumber(int groupNumber)
         emit groupNumberChanged();
 }
 
+/*!
+  Sets unit's index.
+  */
 void CcfQmlBaseUnit::setUnitIndex(int unitIndex)
 {
     bool wasChaged = false;
@@ -633,6 +746,9 @@ void CcfQmlBaseUnit::setUnitIndex(int unitIndex)
         emit unitIndexChanged();
 }
 
+/*!
+  Sets the visibility of unit's side mark.
+  */
 void CcfQmlBaseUnit::setSideMarkVisible(bool sideMarkVisible)
 {
     bool wasChaged = false;
@@ -645,6 +761,9 @@ void CcfQmlBaseUnit::setSideMarkVisible(bool sideMarkVisible)
         emit sideMarkVisibleChanged();
 }
 
+/*!
+  Sets the source path to unit's side mark.
+  */
 void CcfQmlBaseUnit::setSideMarkSource(const QString &sideMarkSource)
 {
     bool wasChaged = false;
@@ -657,6 +776,9 @@ void CcfQmlBaseUnit::setSideMarkSource(const QString &sideMarkSource)
         emit sideMarkSourceChanged();
 }
 
+/*!
+  Sets the set in use for side mark.
+  */
 void CcfQmlBaseUnit::setSideMarkSet(const QString &sideMarkSet)
 {
     bool wasChaged = false;
@@ -669,6 +791,9 @@ void CcfQmlBaseUnit::setSideMarkSet(const QString &sideMarkSet)
         emit sideMarkSetChanged();
 }
 
+/*!
+  Sets unit's rotation speed.
+  */
 void CcfQmlBaseUnit::setRotationSpeed(int rotationSpeed)
 {
     bool wasChaged = false;
@@ -681,6 +806,9 @@ void CcfQmlBaseUnit::setRotationSpeed(int rotationSpeed)
         emit rotationSpeedChanged();
 }
 
+/*!
+  Sets unit turret's rotation speed.
+  */
 void CcfQmlBaseUnit::setTurretRotationSpeed(int turretRotationSpeed)
 {
     bool wasChaged = false;
@@ -693,6 +821,9 @@ void CcfQmlBaseUnit::setTurretRotationSpeed(int turretRotationSpeed)
         emit turretRotationSpeedChanged();
 }
 
+/*!
+  Sets unit's maximum speed.
+  */
 void CcfQmlBaseUnit::setMaxSpeed(int maxSpeed)
 {
     bool wasChaged = false;
@@ -705,6 +836,9 @@ void CcfQmlBaseUnit::setMaxSpeed(int maxSpeed)
         emit maxSpeedChanged();
 }
 
+/*!
+  Sets acceleration.
+  */
 void CcfQmlBaseUnit::setAcceleration(int acceleration)
 {
     bool wasChaged = false;
@@ -717,6 +851,9 @@ void CcfQmlBaseUnit::setAcceleration(int acceleration)
         emit accelerationChanged();
 }
 
+/*!
+  Sets unit's width.
+  */
 void CcfQmlBaseUnit::setUnitWidth(int unitWidth)
 {
     bool wasChaged = false;
@@ -729,6 +866,9 @@ void CcfQmlBaseUnit::setUnitWidth(int unitWidth)
         emit unitWidthChanged();
 }
 
+/*!
+  Sets unit's heigth.
+  */
 void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
 {
     bool wasChaged = false;
@@ -741,6 +881,9 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
         emit unitHeightChanged();
 }
 
+/*!
+  Sets the factor for move fast speed.
+  */
 void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 {
     bool wasChaged = false;
@@ -753,6 +896,9 @@ void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
         emit moveFastFactorChanged();
 }
 
+/*!
+  Sets the factor for sneking speed.
+  */
 void CcfQmlBaseUnit::setSneakFactor(qreal sneakFactor)
 {
     bool wasChaged = false;
@@ -765,6 +911,9 @@ void CcfQmlBaseUnit::setSneakFactor(qreal sneakFactor)
         emit sneakFactorChanged();
 }
 
+/*!
+  Sets x coord of unit's central point.
+  */
 void CcfQmlBaseUnit::setCenterX(int centerX)
 {
     bool wasChaged = false;
@@ -777,6 +926,9 @@ void CcfQmlBaseUnit::setCenterX(int centerX)
         emit centerXChanged();
 }
 
+/*!
+  Sets y coord for unit's central point.
+  */
 void CcfQmlBaseUnit::setCenterY(int centerY)
 {
     bool wasChaged = false;
@@ -789,6 +941,9 @@ void CcfQmlBaseUnit::setCenterY(int centerY)
         emit centerYChanged();
 }
 
+/*!
+  Sets current order index.
+  */
 void CcfQmlBaseUnit::setCurrentOrder(int currentOrder)
 {
     bool wasChaged = false;
@@ -801,6 +956,9 @@ void CcfQmlBaseUnit::setCurrentOrder(int currentOrder)
         emit currentOrderChanged();
 }
 
+/*!
+  Makes the unit selected or not.
+  */
 void CcfQmlBaseUnit::setSelected(bool selected)
 {
     bool wasChaged = false;
@@ -813,6 +971,9 @@ void CcfQmlBaseUnit::setSelected(bool selected)
         emit selectedChanged(m_selected, m_unitIndex);
 }
 
+/*!
+  Sets unit's firing status.
+  */
 void CcfQmlBaseUnit::setFiring(bool firing)
 {
     bool wasChaged = false;
@@ -825,6 +986,9 @@ void CcfQmlBaseUnit::setFiring(bool firing)
         emit firingChanged();
 }
 
+/*!
+  Sets unit's smoking status.
+  */
 void CcfQmlBaseUnit::setSmoking(bool smoking)
 {
     bool wasChaged = false;
@@ -837,6 +1001,9 @@ void CcfQmlBaseUnit::setSmoking(bool smoking)
         emit smokingChanged();
 }
 
+/*!
+  Sets defence sphere's rotation in degrees.
+  */
 void CcfQmlBaseUnit::setDefenceSphereRotation(int defenceSphereRotation)
 {
     bool wasChaged = false;
@@ -849,6 +1016,9 @@ void CcfQmlBaseUnit::setDefenceSphereRotation(int defenceSphereRotation)
         emit defenceSphereRotationChanged();
 }
 
+/*!
+  Sets defence sphere's colour.
+  */
 void CcfQmlBaseUnit::setDefenceSphereColor(const QString &defenceSphereColor)
 {
     bool wasChaged = false;
@@ -861,6 +1031,9 @@ void CcfQmlBaseUnit::setDefenceSphereColor(const QString &defenceSphereColor)
         emit defenceSphereColorChanged();
 }
 
+/*!
+  Sets the unit to be paused or not.
+  */
 void CcfQmlBaseUnit::setPaused(bool paused)
 {
     bool wasChaged = false;
@@ -873,6 +1046,9 @@ void CcfQmlBaseUnit::setPaused(bool paused)
         emit pausedChanged();
 }
 
+/*!
+  Sets unit's moving state..
+  */
 void CcfQmlBaseUnit::setMoving(bool moving)
 {
     bool wasChaged = false;
@@ -887,6 +1063,10 @@ void CcfQmlBaseUnit::setMoving(bool moving)
     }
 }
 
+/*!
+  Checks whether the given \a index is in range of the order's list, and returns
+  true if it is indeed valid.
+  */
 bool CcfQmlBaseUnit::isOrderIndexValid(int index) const
 {
     if ((index >= 0) && (index < m_orders.length()))

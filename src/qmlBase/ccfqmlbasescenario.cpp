@@ -1366,57 +1366,90 @@ void CcfQmlBaseScenario::handleWheelEventMouseAreaMain(QObject *wheel)
 }
 
 // Property getters:
+/*!
+  Returns the scenario file path.
+  */
 QString CcfQmlBaseScenario::getScenarioFile() const
 {
     return m_scenarioFile;
 }
 
+/*!
+  Returns the scenario win status.
+  */
 QString CcfQmlBaseScenario::getScenarioWinStatus() const
 {
     return m_scenarioWinStatus;
 }
 
+/*!
+  Returns aim line rotation in degrees.
+  */
 int CcfQmlBaseScenario::getAimLineRotation() const
 {
     return m_aimLineRotation;
 }
 
+/*!
+  Returns true if this is a campaign.
+  */
 bool CcfQmlBaseScenario::getIsCampaign() const
 {
     return m_isCampaign;
 }
 
+/*!
+  Returns the path to map file.
+  */
 QString CcfQmlBaseScenario::getMapFile() const
 {
     return m_mapFile;
 }
 
+/*!
+  Returns the zoom level.
+  */
 qreal CcfQmlBaseScenario::getZoom() const
 {
     return m_zoom;
 }
 
+/*!
+  Returns the central point for zooming.
+  */
 QPoint CcfQmlBaseScenario::getZoomPoint() const
 {
     return m_zoomPoint;
 }
 
+/*!
+  Returns true if the game is paused.
+  */
 bool CcfQmlBaseScenario::getPaused() const
 {
     return m_paused;
 }
 
+/*!
+  Returns the current menu's background colour.
+  */
 QColor CcfQmlBaseScenario::getMenuBackgroundColor() const
 {
     return m_menuBackgroundColor;
 }
 
+/*!
+  Returns a list of all units in this scenario.
+  */
 QObjectList CcfQmlBaseScenario::getUnits() const
 {
     return m_units;
 }
 
 // Property setters:
+/*!
+  Sets the \a scenarioFile, initialises the whole scenario object runtime.
+  */
 void CcfQmlBaseScenario::setScenarioFile(const QString &scenarioFile)
 {
     bool wasChaged = false;
@@ -1444,6 +1477,9 @@ void CcfQmlBaseScenario::setScenarioFile(const QString &scenarioFile)
     }
 }
 
+/*!
+  Sets the \a scenarioWinStatus.
+  */
 void CcfQmlBaseScenario::setScenarioWinStatus(const QString &scenarioWinStatus)
 {
     bool wasChaged = false;
@@ -1456,6 +1492,9 @@ void CcfQmlBaseScenario::setScenarioWinStatus(const QString &scenarioWinStatus)
         emit scenarioWinStatusChanged();
 }
 
+/*!
+  Sets \a aimLineRotation.
+  */
 void CcfQmlBaseScenario::setAimLineRotation(int aimLineRotation)
 {
     bool wasChaged = false;
@@ -1468,6 +1507,9 @@ void CcfQmlBaseScenario::setAimLineRotation(int aimLineRotation)
         emit aimLineRotationChanged();
 }
 
+/*!
+  Determies whether this scenario is part of a campaign with \a isCampaign.
+  */
 void CcfQmlBaseScenario::setIsCampaign(bool isCampaign)
 {
     bool wasChaged = false;
@@ -1480,6 +1522,9 @@ void CcfQmlBaseScenario::setIsCampaign(bool isCampaign)
         emit isCampaignChanged();
 }
 
+/*!
+  Sets scenario's \a mapFile.
+  */
 void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
 {
     bool wasChaged = false;
@@ -1492,6 +1537,9 @@ void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
         emit mapFileChanged();
 }
 
+/*!
+  Sets map's \a zoom level.
+  */
 void CcfQmlBaseScenario::setZoom(qreal zoom)
 {
     bool wasChaged = false;
@@ -1504,6 +1552,9 @@ void CcfQmlBaseScenario::setZoom(qreal zoom)
         emit zoomChanged();
 }
 
+/*!
+  Sets the point (\a zoomPoint) which is the central point for zooming.
+  */
 void CcfQmlBaseScenario::setZoomPoint(const QPoint &zoomPoint)
 {
     bool wasChaged = false;
@@ -1516,6 +1567,9 @@ void CcfQmlBaseScenario::setZoomPoint(const QPoint &zoomPoint)
         emit zoomPointChanged();
 }
 
+/*!
+  Sets the game into \a paused or unpaused state.
+  */
 void CcfQmlBaseScenario::setPaused(bool paused)
 {
     bool wasChaged = false;
@@ -1528,6 +1582,9 @@ void CcfQmlBaseScenario::setPaused(bool paused)
         emit pausedChanged();
 }
 
+/*!
+  Sets menu background colour (\a menuBackgroundColor).
+  */
 void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColor)
 {
     bool wasChaged = false;
@@ -1540,6 +1597,9 @@ void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColo
         emit menuBackgroundColorChanged();
 }
 
+/*!
+  Sets the \a units taking part in this scenario.
+  */
 void CcfQmlBaseScenario::setUnits(QObjectList units)
 {
     m_units = units;

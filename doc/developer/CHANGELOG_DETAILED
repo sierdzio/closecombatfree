@@ -8,6 +8,8 @@ Some more history can be devised from git sources (although even there, the thin
 13.10.2012:
  - fix roster menu left click not resulting in unit selection
  - optimise some parts of the code
+ - update doxygen configuration files
+ - update documentation to fix all doxygen warnings
 
 02-03.10.2012:
  - more documentation

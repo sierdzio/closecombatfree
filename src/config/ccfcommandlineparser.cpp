@@ -1,5 +1,8 @@
 #include "ccfcommandlineparser.h"
 
+/*!
+  Initialises the cmd line parser with a list of arguments (\a args).
+  */
 CcfCommandLineParser::CcfCommandLineParser(const QStringList &args)
 {
     init(args);

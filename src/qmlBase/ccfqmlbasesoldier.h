@@ -70,12 +70,39 @@ public:
     void setSoldierLogo(const QString &soldierLogo);
 
 signals:
+    /*!
+      Emitted when unit's status changes.
+      */
     void unitStatusChanged(const QString &newStatus);
+
+    /*!
+      Emitted when object's type changes.
+      */
     void objectTypeChanged();
+
+    /*!
+      Emitted when name is changed.
+      */
     void nameChanged();
+
+    /*!
+      Emitted when role is changed.
+      */
     void roleChanged();
+
+    /*!
+      Emitted when the status is changed.
+      */
     void statusChanged();
+
+    /*!
+      Emitted when the weapon is changed.
+      */
     void weaponChanged();
+
+    /*!
+      Emitted when the path to soldier's logo changes.
+      */
     void soldierLogoChanged();
 
 private:

@@ -9,7 +9,7 @@ This document is currently just a stub. It should be expanded later on. It is in
 
 CCF is designed so that it is easy to create new maps, units, scenarios and campaigns! Also, if you are intersted in more serious modifications of the game, modding is very easy. Lastly, if you are interested in making this project better, you can join it's development, as CCF is Free Software (http://www.gnu.org/philosophy/free-sw.html).
 
-For casual map and unit making, you need: CCF (obviously), Qt Creator application (or even better, whole Qt SDK grabbed from http://qt-project.org/downloads). Then, open QtCreator, and then open file: <CCF instalation directory>/editor/ScenarioEditor.qml. Then, on left-side pane, open the "Design" tab. This is your basic mapping environment. Warning: CCF, including mappin and modding support, is still in VERY, VERY early stages of development. Use at your own risk ;) Or, more seriously - consider helping us to make this product better!
+For casual map and unit making, you need: CCF (obviously), Qt Creator application (or even better, whole Qt SDK grabbed from http://qt-project.org/downloads). Then, open QtCreator, and then open file: "CCF instalation directory"/editor/ScenarioEditor.qml. Then, on left-side pane, open the "Design" tab. This is your basic mapping environment. Warning: CCF, including mappin and modding support, is still in VERY, VERY early stages of development. Use at your own risk ;) Or, more seriously - consider helping us to make this product better!
 
 NOTE: CCF uses Qt5 framework, which is still not officially released as stable.
 

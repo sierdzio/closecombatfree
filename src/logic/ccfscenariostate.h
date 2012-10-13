@@ -37,8 +37,15 @@ public:
     Q_INVOKABLE QString getSidePath(const QString &side, const QString &sideMarkSet = "side");
 
 signals:
-    Q_INVOKABLE void playerSideChanged();
-    Q_INVOKABLE void availableSidesChanged();
+    /*!
+      Emitted when player changes sides.
+      */
+    void playerSideChanged();
+
+    /*!
+      Emitted when the list of available sides changes.
+      */
+    void availableSidesChanged();
 
 private:
     QString m_playerSide;

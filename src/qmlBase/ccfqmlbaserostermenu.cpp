@@ -1,6 +1,9 @@
 #include "ccfqmlbaserostermenu.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 
+/*!
+  Default constructor.
+  */
 CcfQmlBaseRosterMenu::CcfQmlBaseRosterMenu(QQuickItem *parent) :
     CcfObjectBase(parent)
 {

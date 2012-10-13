@@ -1,5 +1,10 @@
 #include "ccflogger.h"
 
+/*!
+  Initialises the logger with QObject \a parent and an optional parameter \a isDebugOn,
+  which (if set to true) instructs the class to print all messages into the console,
+  apart from doing other standard logging actions.
+  */
 CcfLogger::CcfLogger(QObject *parent, bool isDebugOn) :
     QObject(parent), isDebug(isDebugOn)
 {

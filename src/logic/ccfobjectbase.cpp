@@ -3,6 +3,9 @@
 
 #include <QtQml/QQmlListReference>
 
+/*!
+  Standard constructor, nothing fancy.
+  */
 CcfObjectBase::CcfObjectBase(QQuickItem *parent) : QQuickItem(parent)
 {
 }
@@ -59,6 +62,9 @@ bool CcfObjectBase::invoke(QObject *obj, const char *member, QGenericArgument va
                                            val6, val7, val8, val9);
 }
 
+/*!
+  Returns a CcfUnitList with all objects from \a list casted to CcfQmlBaseUnit.
+  */
 QList<CcfQmlBaseUnit *> CcfObjectBase::objectToUnitList(QObjectList list)
 {
     QList<CcfQmlBaseUnit *> result;

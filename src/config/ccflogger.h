@@ -16,6 +16,12 @@ class CcfLogger : public QObject
 {
     Q_OBJECT
 public:
+    /*!
+      An enum defining possible message types. This is used by addLogEntry() to
+      determine, how the message should be processed (for example, Log messages
+      are logged, but not pushed to the cerr output, while Error messages are logged
+      and print out in the console).
+      */
     enum MessageType {
         Log   = 0,
         Error = 1

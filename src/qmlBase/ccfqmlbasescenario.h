@@ -56,6 +56,8 @@ class CcfQmlBaseScenario : public CcfObjectBase
 
     /*!
       Map path for campaigns.
+
+      // TODO: remove.
       */
     Q_PROPERTY(QString mapFile READ getMapFile WRITE setMapFile NOTIFY mapFileChanged)
 
@@ -112,8 +114,19 @@ public slots:
     void actionFinished(int index, qreal targetX, qreal targetY);
 
 signals:
+    /*!
+      Signal emitted to toggle the paused state.
+      */
     void togglePause();
+
+    /*!
+      Emitted to instruct the scenario to close (used by top level component).
+      */
     void closeScenario(); // TODO: clean containers to preserve memory
+
+    /*!
+      Triggers loading of the scenario with given path.
+      */
     void loadScenario(const QString &path);
 
 protected slots:
@@ -188,11 +201,8 @@ private:
     // TODO: consider changing to QVector
     QMap<int, QObjectList > m_unitGroups;
 
-    // // // //
     // Property handling:
-    // // // //
 protected:
-    // Property getters:
     QString getScenarioFile() const;
     QString getScenarioWinStatus() const;
     int getAimLineRotation() const;
@@ -217,15 +227,55 @@ protected:
     void setUnits(QObjectList units);
 
 signals:
+    /*!
+      Emitted when the scenario file path was changed.
+      */
     void scenarioFileChanged();
+
+    /*!
+      Emitted when the win status changes.
+      */
     void scenarioWinStatusChanged();
+
+    /*!
+      Emitted every time the rotation of the aimLine changes.
+      */
     void aimLineRotationChanged();
+
+    /*!
+      Emitted when the indicator whether this is a campaign is changed.
+      */
     void isCampaignChanged();
+
+    /*!
+      Emitted when the map input file changes.
+      */
     void mapFileChanged();
+
+    /*!
+      Emitted on map zoom change.
+      */
     void zoomChanged();
+
+    /*!
+      Emitted when zoom centre point changes.
+      */
     void zoomPointChanged();
+
+    /*!
+      Emitted when paused state is changed.
+      */
     void pausedChanged();
+
+    /*!
+      Emitted when the background colour of menus is changed.
+      */
     void menuBackgroundColorChanged();
+
+    /*!
+      Emitted when list of units changes (that is, then it's number of items
+      changes or it's substituted for another list).
+      */
     void unitsChanged();
 
 private:

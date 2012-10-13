@@ -110,21 +110,33 @@ CcfLogger *CcfMain::logger()
     return m_logger;
 }
 
+/*!
+  Returns a pointer to CcfConfig instance.
+ */
 CcfConfig *CcfMain::config()
 {
     return m_configuration;
 }
 
+/*!
+  Returns a pointer to CcfScenarioState instance.
+ */
 CcfScenarioState *CcfMain::scenarioState()
 {
     return m_scenarioState;
 }
 
+/*!
+  Returns a pointer to CcfGlobal instance.
+ */
 CcfGlobal *CcfMain::global()
 {
     return m_global;
 }
 
+/*!
+  Returns a pointer to CcfTerrain instance.
+ */
 CcfTerrain *CcfMain::terrain()
 {
     return m_terrain;
