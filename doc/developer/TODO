@@ -6,10 +6,8 @@ Bugs & fixes:
  - visibility detection fails for some props (See tst4)
 
 Code changes:
- - move digitPresses() to EngineHelpers
  - add necessary enums to CcfGlobal
  - investigate if CcfTerrain is leaking memory on Scenario change
- - make sure to use local methods instead of QMO:invokeMethod after transfer to C++ is complete
  - make sure to update obstacle handling so that it uses the superb QQItem::contains
 
 New features:

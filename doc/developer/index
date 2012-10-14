@@ -4,9 +4,9 @@
 
 This document is currently just a stub. It should be expanded later on. It is intended to be a starting point for newcoming developers, as well as a good reference for those already familiar with the code.
 
-Doxygen documentation is provided in doc/ in form of Qt's .qch file. In project's root, there is a file named "developer.docconf". It can be used to automatically generate HTML documentation in doc/html, using command "doxygen developer.docconf" in project's root. That file can be modified to generate other doc formats, too. HTML docs will probably be included in sources by default, too, but only after the API matures a bit. User docs can be created with "doxygen user.docconf".
+Doxygen documentation is provided in doc/ in form of Qt's .qch file and a HTML documentation. Documentation can be generated (and regenerated) by running tools/makedocs from project's root drectory (this requires doxygen tool to be present in PATH. If the script discovers location of Qt binaries, it will also regenerate the .qch file).
 
-WARNING: QHG_LOCATION should be adjusted (in developer.docconf) on every machine, before documentation is built! Otherwise, .qch generation will fail!
+Alternatively, documentation can be generated manually: in project's root, there is a file named "developer.docconf". It can be used to generate HTML documentation in doc/html, using command "doxygen developer.docconf" in project's root. That file can be modified to generate other doc formats, too. User docs can be created with "doxygen user.docconf".
 
   \subsection commands Example commands
   \li Example command for converter: ./convert2qrc -o ../../myTempDir -f
@@ -25,7 +25,6 @@ WARNING: QHG_LOCATION should be adjusted (in developer.docconf) on every machine
   But I have not tried that myself.
 
   \section props Props
-
 Props on the map should have 2 properties set: "objectName" and "cover". If you use Prop.qml or PropRectangle.qml as base object, both are already set to default values for you (but it's a good idea to change them so that they reflect identity of the prop in question).
 
   \section sides Player sides

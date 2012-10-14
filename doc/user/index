@@ -2,18 +2,13 @@
 /*! \mainpage Index page for users
 
   \section intro Welcome!
-
 This document is currently just a stub. It should be expanded later on. It is intended to be a starting point for newcoming users.
 
   \section modding Creating maps and mods
-
 CCF is designed so that it is easy to create new maps, units, scenarios and campaigns! Also, if you are intersted in more serious modifications of the game, modding is very easy. Lastly, if you are interested in making this project better, you can join it's development, as CCF is Free Software (http://www.gnu.org/philosophy/free-sw.html).
 
-For casual map and unit making, you need: CCF (obviously), Qt Creator application (or even better, whole Qt SDK grabbed from http://qt-project.org/downloads). Then, open QtCreator, and then open file: "CCF instalation directory"/editor/ScenarioEditor.qml. Then, on left-side pane, open the "Design" tab. This is your basic mapping environment. Warning: CCF, including mappin and modding support, is still in VERY, VERY early stages of development. Use at your own risk ;) Or, more seriously - consider helping us to make this product better!
-
-NOTE: CCF uses Qt5 framework, which is still not officially released as stable.
+For casual map and unit making, you need: CCF (obviously), Qt Creator application (or even better, whole Qt SDK grabbed from http://qt-project.org/downloads). Then, open QtCreator, and then open file: "CCF instalation directory"/editor/ScenarioEditor.qml. Then, on left-side pane, open the "Design" tab. This is your basic mapping environment. Warning: CCF, including mapping and modding support, is still in VERY, VERY early stages of development. Use at your own risk ;) Or, more seriously - consider helping us to make this product better!
 
   \section contributing Help us make CCF better!
-
 Just as much as mapping and modding is appreciated, so (or even more, currently) is helping us get CCF into shape. Currently, I (sierdzio) am the only developer working on this. The task ahead is huge, and I'm certainly not able to do it all alone, especially now that I am quite busy. All possible help - making souds, art (creating units, textures, background maps etc.), and - of course - code contributions are more than welcome.
 */

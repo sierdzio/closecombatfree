@@ -5,6 +5,9 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+14.10.2012:
+ - update doxygen index, todo list etc.
+
 13.10.2012:
  - fix roster menu left click not resulting in unit selection
  - optimise some parts of the code
