@@ -24,6 +24,9 @@ import QmlBase 0.1
 import "../../qml/gui"
 import "../../qml/units"
 
+/*!
+  Inherits from CcfQmlBaseUnit class. Defines additional, more GUI-related objects.
+  */
 BaseUnit {
     centerX: unitWidth/2
     centerY: unitHeight/2
@@ -33,8 +36,17 @@ BaseUnit {
     height: unitHeight
     state: "healthy"
 
+    /*!
+      Emited when unit changes position (not all the time, though - there
+      are emission dampers in onXChanged() and onYChanged() to prevent
+      too many signals from being emitted.).
+
+      See the snippet below:
+      \snippet qml/units/Unit.qml UnitPositionChanged
+      */
     signal positionChanged(real x, real y, int index)
 
+    //! [UnitPositionChanged]
     onXChanged: {
         if (Math.round(x % 10) === 0) {
             positionChanged(x, y, unitIndex);
@@ -46,7 +58,11 @@ BaseUnit {
             positionChanged(x, y, unitIndex);
         }
     }
+    //! [UnitPositionChanged]
 
+    /*!
+      Displays unit group number (visible if unit was assigned to a group).
+      */
     Text {
         id: groupMembership
         anchors.right: parent.right

@@ -27,6 +27,9 @@ CCF comes with 2 separate sets of documentation:
  If you, on the other hand, downloaded source code, it is likely that you should, or at least want to build docs yourself. This is pretty easy, but requires "doxygen" tool to be installed on your system. If you have it, all that you have to do is:
   - run "doxygen user.docconf" in project's root directory to generate HTML and QCH  user docs
   - run "doxygen developer.docconf" in project's root directory to generate HTML and QCH developer docs
+  
+ Additionally, KDE's doxyqml is used. If it's not installed, documentation will still build. But it can be useful to get it beforehand.
+ Project home is http://agateau.com/projects/doxyqml/ Git repo can be found here: http://quickgit.kde.org/index.php?p=scratch%2Fgateau%2Fdoxyqml.git&a=summary
 
   \section note Note on external sources
 

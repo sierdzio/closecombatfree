@@ -22,6 +22,9 @@ import QtQuick 2.0
 import "../../qml/gui"
 import QmlBase 0.1
 
+/*!
+  Base component for displaying scenarios. Inherits from CcfQmlBaseScenario.
+  */
 BaseScenario {
     id: root
     focus: true;
@@ -46,6 +49,9 @@ BaseScenario {
         gameArea.returnToBounds();
     }
 
+    /*!
+      Main game area. Displays the map and units.
+      */
     Flickable {
         objectName: "gameArea"
         id: gameArea
