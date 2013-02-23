@@ -1,4 +1,4 @@
-#include <QtCore/QFile>
+#include <QFile>
 
 #include "ccfscenariostate.h"
 
@@ -8,8 +8,8 @@
 CcfScenarioState::CcfScenarioState(QObject *parent) :
     QObject(parent)
 {
-    m_playerSide = "neutral";
-    m_availableSides.append("neutral");
+    mPlayerSide = "neutral";
+    mAvailableSides.append("neutral");
 }
 
 /*!
@@ -17,7 +17,7 @@ CcfScenarioState::CcfScenarioState(QObject *parent) :
  */
 QString CcfScenarioState::getPlayerSide()
 {
-    return m_playerSide;
+    return mPlayerSide;
 }
 
 /*!
@@ -26,10 +26,10 @@ QString CcfScenarioState::getPlayerSide()
 void CcfScenarioState::setPlayerSide(const QString &playerSide)
 {
     bool wasChaged = false;
-    if (playerSide != m_playerSide)
+    if (playerSide != mPlayerSide)
         wasChaged = true;
 
-    m_playerSide = playerSide;
+    mPlayerSide = playerSide;
 
     if (wasChaged)
         emit playerSideChanged();
@@ -42,7 +42,7 @@ void CcfScenarioState::setPlayerSide(const QString &playerSide)
  */
 QStringList CcfScenarioState::getAvailableSides()
 {
-    return m_availableSides;
+    return mAvailableSides;
 }
 
 /*!
@@ -52,7 +52,7 @@ QStringList CcfScenarioState::getAvailableSides()
 void CcfScenarioState::setAvailableSides(QStringList availableSides)
 {
     availableSides.removeDuplicates();
-    m_availableSides = availableSides;
+    mAvailableSides = availableSides;
 }
 
 /*!
@@ -63,7 +63,7 @@ void CcfScenarioState::setAvailableSides(QStringList availableSides)
 QString CcfScenarioState::getSidePath(const QString &side, const QString &sideMarkSet)
 {
     QString pathBeginning("../../img/units/sideMarks/sideMark_");
-    int sideIndex = m_availableSides.indexOf(side);
+    int sideIndex = mAvailableSides.indexOf(side);
 
     if (sideIndex == -1)
         return (pathBeginning + "side_1.png");

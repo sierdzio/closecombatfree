@@ -1,9 +1,9 @@
 #ifndef CCFSCENARIOSTATE_H
 #define CCFSCENARIOSTATE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -48,8 +48,8 @@ signals:
     void availableSidesChanged();
 
 private:
-    QString m_playerSide;
-    QStringList m_availableSides;
+    QString mPlayerSide;
+    QStringList mAvailableSides;
 };
 
 /*! @}*/

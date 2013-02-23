@@ -1,7 +1,7 @@
 #ifndef CCFQMLBASEROSTERMENU_H
 #define CCFQMLBASEROSTERMENU_H
 
-#include <QtCore/QList>
+#include <QList>
 
 #include "logic/ccfobjectbase.h"
 
@@ -33,7 +33,7 @@ public slots:
     void selectionChanged(bool state, int index);
 
 private:
-    QObjectList units;
+    QObjectList mUnits;
 };
 
 /*! @}*/

@@ -21,10 +21,10 @@
 #ifndef CCFENGINEHELPERS_H
 #define CCFENGINEHELPERS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QList>
 
 /*!
   \defgroup CloseCombatFree Game code

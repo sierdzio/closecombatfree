@@ -21,9 +21,9 @@
 #ifndef CCFCONFIGSAVER_H
 #define CCFCONFIGSAVER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QList>
+#include <QObject>
+#include <QString>
+#include <QList>
 
 #include "../ccferror.h"
 #include "ccfconfigdata.h"
@@ -47,9 +47,9 @@ public:
     void updateConfigFile();
 
 private:
-    CcfConfigData *m_configuration;
-    QList<QString> *m_configIndexes;
-    QString m_configFilePath;
+    CcfConfigData *mConfiguration;
+    QList<QString> *mConfigIndexes;
+    QString mConfigFilePath;
 };
 
 /*! @}*/

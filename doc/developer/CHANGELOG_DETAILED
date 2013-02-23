@@ -5,6 +5,10 @@ Some more history can be devised from git sources (although even there, the thin
 
 === === === ===
 
+23.02.2013:
+ - unify private members convention to use mVariableName instead of m_variableName
+ - remove QtModule designation from #includes
+
 14.10.2012:
  - update doxygen index, todo list etc.
 

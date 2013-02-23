@@ -21,14 +21,14 @@
 #ifndef CONVERTERQRCGENERATOR_H
 #define CONVERTERQRCGENERATOR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QChar>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QIODevice>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
+#include <QObject>
+#include <QChar>
+#include <QString>
+#include <QStringList>
+#include <QIODevice>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
 
 #include "../../ccferror.h"
 #include "converterflags.h"

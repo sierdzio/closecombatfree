@@ -1,10 +1,10 @@
 #ifndef CCFOBJECTBASE_H
 #define CCFOBJECTBASE_H
 
-#include <QtCore/QString>
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtQuick/QQuickItem>
+#include <QString>
+#include <QObject>
+#include <QVariant>
+#include <QQuickItem>
 
 /*
   Before you complain: yes, we know macros are the root of considerate amount

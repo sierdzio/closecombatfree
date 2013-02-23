@@ -13,7 +13,7 @@ CcfCommandLineParser::CcfCommandLineParser(const QStringList &args)
   */
 bool CcfCommandLineParser::isDebug()
 {
-    return switches.contains("debug");
+    return mSwitches.contains("debug");
 }
 
 /*!
@@ -21,7 +21,7 @@ bool CcfCommandLineParser::isDebug()
   */
 bool CcfCommandLineParser::wasHelpRequested()
 {
-    return switches.contains("help");
+    return mSwitches.contains("help");
 }
 
 /*!
@@ -45,16 +45,16 @@ QString CcfCommandLineParser::helpMessage()
   */
 void CcfCommandLineParser::init(const QStringList &args)
 {
-    switches.clear();
+    mSwitches.clear();
 
     // Foreach instead of ::contains, to get a single-pass.
     foreach (const QString &s, args) {
         QString lower = s.toLower();
 
         if (lower == "-d" || lower == "--debug") {
-            switches.append("debug");
+            mSwitches.append("debug");
         } else if (lower == "-h" || lower == "--help") {
-            switches.append("help");
+            mSwitches.append("help");
         }
     }
 }

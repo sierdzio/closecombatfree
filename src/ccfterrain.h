@@ -21,14 +21,14 @@
 #ifndef CCFTERRAIN_H
 #define CCFTERRAIN_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QSize>
-#include <QtCore/QPoint>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QSize>
+#include <QPoint>
 
-#include <QtGui/QImage>
-#include <QtGui/QColor>
+#include <QImage>
+#include <QColor>
 
 #include "ccferror.h"
 
@@ -61,7 +61,7 @@ public:
 
 private:
     qreal targetDistance(qreal originX, qreal originY, qreal targetX, qreal targetY);
-    QImage *terrainImage;
+    QImage *mTerrainImage;
 };
 
 /*! @}*/

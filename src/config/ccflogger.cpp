@@ -6,7 +6,7 @@
   apart from doing other standard logging actions.
   */
 CcfLogger::CcfLogger(QObject *parent, bool isDebugOn) :
-    QObject(parent), isDebug(isDebugOn)
+    QObject(parent), mIsDebug(isDebugOn)
 {
 }
 
@@ -50,6 +50,6 @@ void CcfLogger::addLogEntry(CcfLogger::MessageType msgType, const QString &messa
     // TODO: clean c++ and QML, and JS files of console.logs. Decide what is debug, and what
     // is log. Period. :)
 
-    if (isDebug || (msgType == Error))
+    if (mIsDebug || (msgType == Error))
         qDebug(qPrintable(result), NULL);
 }

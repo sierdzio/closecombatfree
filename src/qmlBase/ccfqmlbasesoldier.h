@@ -1,8 +1,8 @@
 #ifndef CCFQMLBASESOLDIER_H
 #define CCFQMLBASESOLDIER_H
 
-#include <QtCore/QString>
-#include <QtCore/QObject>
+#include <QString>
+#include <QObject>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -106,12 +106,12 @@ signals:
     void soldierLogoChanged();
 
 private:
-    QString m_objectType;
-    QString m_name;
-    QString m_role;
-    QString m_status;
-    QString m_weapon;
-    QString m_soldierLogo;
+    QString mObjectType;
+    QString mName;
+    QString mRole;
+    QString mStatus;
+    QString mWeapon;
+    QString mSoldierLogo;
 };
 
 /*! @}*/

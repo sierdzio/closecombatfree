@@ -4,25 +4,25 @@
 #include "qmlBase/ccfqmlbaseunit.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
 
-#include <QtCore/QVariant>
-#include <QtCore/QPointF>
-#include <QtQml/QQmlComponent>
-#include <QtQml/QQmlListProperty>
-#include <QtQuick/QQuickItem>
+#include <QVariant>
+#include <QPointF>
+#include <QQmlComponent>
+#include <QQmlListProperty>
+#include <QQuickItem>
 
 /*!
   Standard constructor. Initialises properties to default values.
   */
 CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) : CcfObjectBase(parent)
 {
-    m_zoom = 1.0;
-    m_paused = false;
-    m_menuBackgroundColor = QColor("#7e8c24");
-    m_aimLineRotation = 0;
-    m_isCampaign = false;
+    mZoom = 1.0;
+    mPaused = false;
+    mMenuBackgroundColor = QColor("#7e8c24");
+    mAimLineRotation = 0;
+    mIsCampaign = false;
 
-    m_mainInstance = CcfMain::instance();
-    m_effectsComponent = new QQmlComponent(m_mainInstance->engine(),
+    mMainInstance = CcfMain::instance();
+    mEffectsComponent = new QQmlComponent(mMainInstance->engine(),
                                            QUrl::fromLocalFile("qml/effects/Effect.qml"));
 
     connect(this, &CcfQmlBaseScenario::togglePause, this, &CcfQmlBaseScenario::onTogglePause);
@@ -34,7 +34,7 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) : CcfObjectBase(paren
   */
 void CcfQmlBaseScenario::init()
 {
-    if (m_scenarioFile != "") {
+    if (mScenarioFile != "") {
         QStringList unitSideList;
         QObject *unitsLoader = child("unitsLoader");
         QObject *unitItem = unitsLoader->property("unitsItem").value<QObject *>();
@@ -57,14 +57,14 @@ void CcfQmlBaseScenario::init()
                     connect(unit, &CcfQmlBaseUnit::movementStateChange,
                             this, &CcfQmlBaseScenario::handleUnitMovement);
                     unitSideList.append(unit->getUnitSide());
-                    m_units.append(unit);
+                    mUnits.append(unit);
                 }
             }
 
             mapItem = map->property("mapItem").value<QObject *>();
 
             if(mapItem != 0)
-                invoke(mapItem, "setUnits", Q_ARG(QVariant, QVariant::fromValue(m_units) ));
+                invoke(mapItem, "setUnits", Q_ARG(QVariant, QVariant::fromValue(mUnits) ));
             else
                 mmain->logger()->error("MapItem object was not properly initialised",
                                        "Robin Hood is a jerk");
@@ -75,27 +75,27 @@ void CcfQmlBaseScenario::init()
 
         mmain->scenarioState()->setAvailableSides(unitSideList);
 
-        m_aimLine = item("aimLine");
-        m_gameArea = item("gameArea");
-        m_zoomArea = item("zoomArea");
-        m_contextMenu = item("contextMenu");
-        m_effectsTimer = child("effectsTimer");
-        m_rotationTimer = child("rotationTimer");
-        m_followingTimer = child("followingTimer");
-        m_mouseAreaMain = child("mouseAreaMain");
+        mAimLine = item("aimLine");
+        mGameArea = item("gameArea");
+        mZoomArea = item("zoomArea");
+        mContextMenu = item("contextMenu");
+        mEffectsTimer = child("effectsTimer");
+        mRotationTimer = child("rotationTimer");
+        mFollowingTimer = child("followingTimer");
+        mMouseAreaMain = child("mouseAreaMain");
 
         QObjectList mapItemKids = mapItem->children();
         for (int i = 0; i < mapItemKids.length() - 2; ++i) {
-            m_props.append(mapItemKids.at(i + 2));
+            mProps.append(mapItemKids.at(i + 2));
         }
 
-        m_roster = findChild<CcfQmlBaseRosterMenu *>("roster");
-        m_roster->populateUnits(m_units);
+        mRoster = findChild<CcfQmlBaseRosterMenu *>("roster");
+        mRoster->populateUnits(mUnits);
 
-        connect(m_contextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
-        connect(m_rotationTimer, SIGNAL(triggered()), this, SLOT(updateAimLine()));
-        connect(m_effectsTimer, SIGNAL(triggered()), this, SLOT(updateEffects()));
-        connect(m_followingTimer, SIGNAL(triggered()), this, SLOT(updateFollowingUnit()));
+        connect(mContextMenu, SIGNAL(menuEntryClicked(QString)), this, SLOT(scheduleContextAction(QString)));
+        connect(mRotationTimer, SIGNAL(triggered()), this, SLOT(updateAimLine()));
+        connect(mEffectsTimer, SIGNAL(triggered()), this, SLOT(updateEffects()));
+        connect(mFollowingTimer, SIGNAL(triggered()), this, SLOT(updateFollowingUnit()));
         connect(child("sceneUpdateTimer"), SIGNAL(triggered()), this, SLOT(updateUnitVisibility()));
         connect(child("rubberBandTimer"), SIGNAL(triggered()), this, SLOT(updateRubberBand()));
 
@@ -109,7 +109,7 @@ void CcfQmlBaseScenario::init()
   */
 void CcfQmlBaseScenario::zoomIn()
 {
-    m_zoom += 0.1;
+    mZoom += 0.1;
 }
 
 /*!
@@ -117,7 +117,7 @@ void CcfQmlBaseScenario::zoomIn()
   */
 void CcfQmlBaseScenario::zoomOut()
 {
-    m_zoom -= 0.1;
+    mZoom -= 0.1;
 }
 
 /*!
@@ -126,9 +126,9 @@ void CcfQmlBaseScenario::zoomOut()
 QObjectList CcfQmlBaseScenario::playerUnits(const QString &player)
 {
     QList<QObject *> unitsArray;
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (m_units.at(i)->getString("unitSide") == player) {
-            unitsArray.append(m_units.at(i));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (mUnits.at(i)->getString("unitSide") == player) {
+            unitsArray.append(mUnits.at(i));
         }
     }
     return unitsArray;
@@ -140,9 +140,9 @@ QObjectList CcfQmlBaseScenario::playerUnits(const QString &player)
 QObjectList CcfQmlBaseScenario::enemyUnits(const QString &player)
 {
     QList<QObject *> unitsArray;
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (m_units.at(i)->getString("unitSide") != player) {
-            unitsArray.append(m_units.at(i));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (mUnits.at(i)->getString("unitSide") != player) {
+            unitsArray.append(mUnits.at(i));
         }
     }
     return unitsArray;
@@ -158,15 +158,15 @@ void CcfQmlBaseScenario::groupUnits(int groupNumber)
     }
 
     // Remove old members.
-    if (groupNumber < m_unitGroups.count()) {
-        for (int i = 0; i < m_unitGroups.value(groupNumber).length(); ++i) {
-            if (m_unitGroups.value(groupNumber).at(i)->getBool("selected") == false)
-                m_unitGroups.value(groupNumber).at(i)->set("groupNumber", 0);
+    if (groupNumber < mUnitGroups.count()) {
+        for (int i = 0; i < mUnitGroups.value(groupNumber).length(); ++i) {
+            if (mUnitGroups.value(groupNumber).at(i)->getBool("selected") == false)
+                mUnitGroups.value(groupNumber).at(i)->set("groupNumber", 0);
         }
     }
 
     QObjectList group = selectedUnits();
-    m_unitGroups.insert(groupNumber, group);
+    mUnitGroups.insert(groupNumber, group);
 
     for (int i = 0; i < group.length(); ++i) {
         group.at(i)->set("groupNumber", groupNumber);
@@ -186,7 +186,7 @@ void CcfQmlBaseScenario::selectGroup(int groupNumber)
     if (groupNumber < 0)
         return;
 
-    QObjectList group = m_unitGroups.value(groupNumber);
+    QObjectList group = mUnitGroups.value(groupNumber);
     deselectAllUnits();
 
     for (int i = 0; i < group.length(); ++i) {
@@ -201,7 +201,7 @@ bool CcfQmlBaseScenario::checkIfUnitCanFire(const QString &scheduledOperation)
 {
     // Take obstacles into account
     if ((scheduledOperation == "Attack") || (scheduledOperation == "Smoke")) {
-        if (m_aimLine->getReal("invisibleBeginning") < m_aimLine->height()) {
+        if (mAimLine->getReal("invisibleBeginning") < mAimLine->height()) {
             cleanContextAction();
             return false;
         }
@@ -217,8 +217,8 @@ bool CcfQmlBaseScenario::checkIfUnitCanFire(const QString &scheduledOperation)
 void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal targetY)
 {
     QList<QObject *> selectedGroup = selectedUnits();
-    CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
-    QString scheduledOperation = m_aimLine->getString("scheduledOperation");
+    CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(index));
+    QString scheduledOperation = mAimLine->getString("scheduledOperation");
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
@@ -240,8 +240,8 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
             if (unit->getUnitIndex() == index)
                 continue;
 
-            qreal tempX = targetX + (unit->x() - m_units.at(index)->getReal("x"));
-            qreal tempY = targetY + (unit->y() - m_units.at(index)->getReal("y"));
+            qreal tempX = targetX + (unit->x() - mUnits.at(index)->getReal("x"));
+            qreal tempY = targetY + (unit->y() - mUnits.at(index)->getReal("y"));
 
             issueActionOrder(unit, tempX, tempY, scheduledOperation);
         }
@@ -256,8 +256,8 @@ void CcfQmlBaseScenario::performContextAction(int index, qreal targetX, qreal ta
 void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
 {
     QList<QObject *> selectedGroup = selectedUnits();
-    CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
-    QString scheduledOperation = m_aimLine->getString("scheduledOperation");
+    CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(index));
+    QString scheduledOperation = mAimLine->getString("scheduledOperation");
 
     if ((scheduledOperation != "Ambush")
             && (scheduledOperation != "Defend")
@@ -280,8 +280,8 @@ void CcfQmlBaseScenario::placeWaypoint(int index, qreal targetX, qreal targetY)
             if (unit->getUnitIndex() == index)
                 continue;
 
-            qreal tempX = targetX + (unit->x() - m_units.at(index)->getReal("x"));
-            qreal tempY = targetY + (unit->y() - m_units.at(index)->getReal("y"));
+            qreal tempX = targetX + (unit->x() - mUnits.at(index)->getReal("x"));
+            qreal tempY = targetY + (unit->y() - mUnits.at(index)->getReal("y"));
 
             issueWaypointOrder(unit, tempX, tempY, scheduledOperation);
         }
@@ -297,7 +297,7 @@ void CcfQmlBaseScenario::issueWaypointOrder(CcfQmlBaseUnit *unit, qreal x, qreal
     unit->setDefenceSphereColor("");
     unit->changeStatus("READY");
 
-    unit->queueOrder(operation, x, y, m_zoomArea);
+    unit->queueOrder(operation, x, y, mZoomArea);
 }
 
 /*!
@@ -310,15 +310,15 @@ void CcfQmlBaseScenario::issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y
     unit->changeStatus("READY");
 
     if (operation == "Move") {
-        unit->moveTo(x, y, m_zoomArea);
+        unit->moveTo(x, y, mZoomArea);
     } else if (operation == "Move fast") {
-        unit->moveFastTo(x, y, m_zoomArea);
+        unit->moveFastTo(x, y, mZoomArea);
     } else if (operation == "Sneak") {
-        unit->sneakTo(x, y, m_zoomArea);
+        unit->sneakTo(x, y, mZoomArea);
     } else if (operation == "Attack") {
-        unit->fireTo(x, y, m_zoomArea);
+        unit->fireTo(x, y, mZoomArea);
     } else if (operation == "Smoke") {
-        unit->smokeTo(x, y, m_zoomArea);
+        unit->smokeTo(x, y, mZoomArea);
     }
 }
 
@@ -327,7 +327,7 @@ void CcfQmlBaseScenario::issueActionOrder(CcfQmlBaseUnit *unit, qreal x, qreal y
   */
 void CcfQmlBaseScenario::actionFinished(int index, qreal targetX, qreal targetY)
 {
-    CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
+    CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(index));
 
     if (unit->getCurrentOrder() != -1) {
         QString scheduledOperation = unit->operation(unit->getCurrentOrder());
@@ -349,9 +349,9 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
 {
     CcfUnitList units = objectToUnitList(selectedUnits());
 
-    m_aimLine->set("unitIndex", units.at(0)->property("unitIndex"));
-    m_aimLine->set("scheduledOperation", operation);
-    m_contextMenu->setVisible(false);
+    mAimLine->set("unitIndex", units.at(0)->property("unitIndex"));
+    mAimLine->set("scheduledOperation", operation);
+    mContextMenu->setVisible(false);
 
     if (operation == "Stop") {
         // Iterate over every unit!
@@ -360,19 +360,19 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
         }
         cleanContextAction();
     } else if (operation == "Follow") {
-        if (m_followingTimer->getBool("running"))
+        if (mFollowingTimer->getBool("running"))
             stopFollowingUnit();
         else
             startFollowingUnit(units.at(0)->getInt("unitIndex"));
     } else {
         // Draw aim line for all move/attack operations.
         if ((operation != "Ambush") && (operation != "Defend")) {
-            m_aimLine->setX(units.at(0)->x() + units.at(0)->getCenterX());
-            m_aimLine->setY(units.at(0)->y() + units.at(0)->getCenterY());
+            mAimLine->setX(units.at(0)->x() + units.at(0)->getCenterX());
+            mAimLine->setY(units.at(0)->y() + units.at(0)->getCenterY());
 
-            m_aimLine->set("color", CcfEngineHelpers::colorForOrder(operation));
-            invoke(m_rotationTimer, "start");
-            m_aimLine->setVisible(true);
+            mAimLine->set("color", CcfEngineHelpers::colorForOrder(operation));
+            invoke(mRotationTimer, "start");
+            mAimLine->setVisible(true);
         } else { // Draw defense 'spheres'
             if (operation == "Ambush") {
                 for (int i = 0; i < units.length(); ++i) {
@@ -386,7 +386,7 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
                     ccfUnit(units.at(i))->changeStatus("AMBUSHING");
                 }
             }
-            invoke(m_rotationTimer, "start");
+            invoke(mRotationTimer, "start");
         }
     }
 }
@@ -396,10 +396,10 @@ void CcfQmlBaseScenario::scheduleContextAction(const QString &operation)
   */
 void CcfQmlBaseScenario::onTogglePause()
 {
-    if (m_paused == true) {
-        m_paused = false;
+    if (mPaused == true) {
+        mPaused = false;
     } else {
-        m_paused = true;
+        mPaused = true;
     }
 
     emit pausedChanged();
@@ -410,8 +410,8 @@ void CcfQmlBaseScenario::onTogglePause()
   */
 QObject *CcfQmlBaseScenario::createEffect(QObject *parent)
 {
-    if (m_effectsComponent->isReady()) {
-        QObject *object = m_effectsComponent->create();
+    if (mEffectsComponent->isReady()) {
+        QObject *object = mEffectsComponent->create();
         object->set("parent", QVariant::fromValue(parent));
         return object;
     } else {
@@ -425,15 +425,15 @@ QObject *CcfQmlBaseScenario::createEffect(QObject *parent)
   Turns hit effects on, checks whether someone was hit, etc.
   */
 void CcfQmlBaseScenario::firingActionFinished(int index, qreal targetX, qreal targetY) {
-    QObject *unit = m_units.at(index);
+    QObject *unit = mUnits.at(index);
 
     if (unit->getInt("currentOrder") != -1) {
         // TODO: remove use of effect for smoke and attack - and optimise it away.
-        QObject *effect = createEffect(m_zoomArea);
+        QObject *effect = createEffect(mZoomArea);
         if (effect == 0)
             return;
 
-        m_effects.append(effect);
+        mEffects.append(effect);
         QString scheduledOperation;
         unit->metaObject()->invokeMethod(unit, "operation", Qt::DirectConnection, Q_RETURN_ARG(QString, scheduledOperation));
 
@@ -457,7 +457,7 @@ void CcfQmlBaseScenario::firingActionFinished(int index, qreal targetX, qreal ta
         effect->set("y", targetY);
         effect->set("running", true);
 
-        invoke(m_effectsTimer, "start");
+        invoke(mEffectsTimer, "start");
     }
 }
 
@@ -466,10 +466,10 @@ void CcfQmlBaseScenario::firingActionFinished(int index, qreal targetX, qreal ta
   */
 void CcfQmlBaseScenario::cleanContextAction()
 {
-    invoke(m_rotationTimer, "stop");
-    m_aimLine->setVisible(false);
-    m_aimLine->setHeight(5.0);
-    m_contextMenu->setVisible(false);
+    invoke(mRotationTimer, "stop");
+    mAimLine->setVisible(false);
+    mAimLine->setHeight(5.0);
+    mContextMenu->setVisible(false);
 }
 
 /*!
@@ -489,9 +489,9 @@ void CcfQmlBaseScenario::cancelAllSelectedOrders()
 QList<QObject *> CcfQmlBaseScenario::selectedUnits()
 {
     QList<QObject *> result;
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (m_units.at(i)->getBool("selected") == true)
-            result.append(m_units.at(i));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (mUnits.at(i)->getBool("selected") == true)
+            result.append(mUnits.at(i));
     }
 
     return result;
@@ -514,9 +514,9 @@ QObjectList CcfQmlBaseScenario::getAllUnitsButOne(int unitToOmit)
 {
     QList<QObject *> result;
 
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (m_units.at(i)->getInt("unitIndex") != unitToOmit) {
-            result.append(m_units.at(i));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (mUnits.at(i)->getInt("unitIndex") != unitToOmit) {
+            result.append(mUnits.at(i));
         }
     }
 
@@ -528,10 +528,10 @@ QObjectList CcfQmlBaseScenario::getAllUnitsButOne(int unitToOmit)
   */
 void CcfQmlBaseScenario::centerViewOnUnit(QObject *unit)
 {
-    m_gameArea->set("contentX", (((unit->getReal("x") + unit->getReal("centerX")) * m_zoom)
-                                 - m_gameArea->width()/2));
-    m_gameArea->set("contentY", (((unit->getReal("y") + unit->getReal("centerY")) * m_zoom)
-                                 - m_gameArea->height()/2));
+    mGameArea->set("contentX", (((unit->getReal("x") + unit->getReal("centerX")) * mZoom)
+                                 - mGameArea->width()/2));
+    mGameArea->set("contentY", (((unit->getReal("y") + unit->getReal("centerY")) * mZoom)
+                                 - mGameArea->height()/2));
 }
 
 /*!
@@ -539,8 +539,8 @@ void CcfQmlBaseScenario::centerViewOnUnit(QObject *unit)
   */
 void CcfQmlBaseScenario::centerViewOn(qreal x, qreal y)
 {
-    m_gameArea->set("contentX", (x - m_gameArea->width()/2));
-    m_gameArea->set("contentY", (y - m_gameArea->height()/2));
+    mGameArea->set("contentX", (x - mGameArea->width()/2));
+    mGameArea->set("contentY", (y - mGameArea->height()/2));
 }
 
 /*!
@@ -548,12 +548,12 @@ void CcfQmlBaseScenario::centerViewOn(qreal x, qreal y)
   */
 void CcfQmlBaseScenario::startFollowingUnit(int index)
 {
-    m_followingTimer->set("index", index);
-    m_followingTimer->set("running", true);
-    centerViewOnUnit(m_units.at(index));
-    child("followingInfoBox")->set("bodyText", QString("Unit name: " + m_units.at(index)->getString("unitType")
+    mFollowingTimer->set("index", index);
+    mFollowingTimer->set("running", true);
+    centerViewOnUnit(mUnits.at(index));
+    child("followingInfoBox")->set("bodyText", QString("Unit name: " + mUnits.at(index)->getString("unitType")
                                                        + "\nDouble click to stop."));
-    invoke(m_followingTimer, "start");
+    invoke(mFollowingTimer, "start");
 }
 
 /*!
@@ -561,9 +561,9 @@ void CcfQmlBaseScenario::startFollowingUnit(int index)
   */
 void CcfQmlBaseScenario::stopFollowingUnit()
 {
-    m_followingTimer->set("index", -1);
-    m_followingTimer->set("running", false);
-    invoke(m_followingTimer, "stop");
+    mFollowingTimer->set("index", -1);
+    mFollowingTimer->set("running", false);
+    invoke(mFollowingTimer, "stop");
 }
 
 /*!
@@ -571,7 +571,7 @@ void CcfQmlBaseScenario::stopFollowingUnit()
   */
 bool CcfQmlBaseScenario::isFollowingOn()
 {
-    return m_followingTimer->getBool("running");
+    return mFollowingTimer->getBool("running");
 }
 
 /*!
@@ -582,11 +582,11 @@ bool CcfQmlBaseScenario::isFollowingOn()
   */
 void CcfQmlBaseScenario::updateFollowingUnit()
 {
-    QObject *unit = m_units.at(m_followingTimer->getInt("index"));
+    QObject *unit = mUnits.at(mFollowingTimer->getInt("index"));
     if (unit->getBool("moving") == true) {
         centerViewOnUnit(unit);
     } else {
-        invoke(m_followingTimer, "stop");
+        invoke(mFollowingTimer, "stop");
     }
 }
 
@@ -595,14 +595,14 @@ void CcfQmlBaseScenario::updateFollowingUnit()
   */
 void CcfQmlBaseScenario::handleUnitMovement(bool isMoving, int unitIndex)
 {
-    if (m_followingTimer->getInt("index") != unitIndex) {
+    if (mFollowingTimer->getInt("index") != unitIndex) {
         return;
     }
 
     if (isMoving == true) {
-        invoke(m_followingTimer, "start");
+        invoke(mFollowingTimer, "start");
     } else if (isMoving == false) {
-        invoke(m_followingTimer, "stop");
+        invoke(mFollowingTimer, "stop");
     }
 }
 
@@ -611,9 +611,9 @@ void CcfQmlBaseScenario::handleUnitMovement(bool isMoving, int unitIndex)
   */
 void CcfQmlBaseScenario::updateEffects() {
     bool haveAllEffectsFinished = true;
-    for (int i = 0; i < m_effects.length(); i++) {
-        if (m_effects.at(i)->getBool("running") == true) {
-            invoke(m_effects.at(i), "nextFrame");
+    for (int i = 0; i < mEffects.length(); i++) {
+        if (mEffects.at(i)->getBool("running") == true) {
+            invoke(mEffects.at(i), "nextFrame");
             haveAllEffectsFinished = false;
         }
     }
@@ -621,14 +621,14 @@ void CcfQmlBaseScenario::updateEffects() {
     // Clear list if all effects have finished.
     // Crude, but might optimise the code a bit.
     if (haveAllEffectsFinished == true) {
-        invoke(m_effectsTimer, "stop");
+        invoke(mEffectsTimer, "stop");
 
-        for (int i = 0; i < m_effects.length(); i++) {
-            QObject *effect = m_effects.at(i);
+        for (int i = 0; i < mEffects.length(); i++) {
+            QObject *effect = mEffects.at(i);
             delete effect;
         }
 
-        m_effects.clear();
+        mEffects.clear();
     }
 }
 
@@ -639,31 +639,31 @@ void CcfQmlBaseScenario::updateEffects() {
   */
 void CcfQmlBaseScenario::updateAimLine()
 {
-    CcfQmlBaseUnit *unit = ccfUnit(m_units.at(m_aimLine->getInt("unitIndex")));
+    CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(mAimLine->getInt("unitIndex")));
 
     if (unit == 0)
         return;
 
-    if (m_aimLine->isVisible()) {
+    if (mAimLine->isVisible()) {
         qreal x1 = unit->x() + unit->getCenterX();
         qreal y1 = unit->y() + unit->getCenterY();
-        qreal x2 = m_mouseAreaMain->getReal("mouseX");
-        qreal y2 = m_mouseAreaMain->getReal("mouseY");
+        qreal x2 = mMouseAreaMain->getReal("mouseX");
+        qreal y2 = mMouseAreaMain->getReal("mouseY");
 
-        m_aimLine->setX(x1);
-        m_aimLine->setY(y1);
+        mAimLine->setX(x1);
+        mAimLine->setY(y1);
 
         qreal newRotation = CcfEngineHelpers::rotationAngle(x2, y2, x1, y1);
 
-        if (m_aimLineRotation != newRotation) {
+        if (mAimLineRotation != newRotation) {
             setAimLineRotation(newRotation);
-            m_aimLine->setHeight(CcfEngineHelpers::targetDistance(x1, y1, x2, y2));
+            mAimLine->setHeight(CcfEngineHelpers::targetDistance(x1, y1, x2, y2));
 
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
             qreal terrainObscure = mmain->terrain()->checkForTerrainInLOS(x1, y1, x2, y2, unit);
-            qreal propsObscure = CcfEngineHelpers::checkForObstaclesInLOS(m_props,
+            qreal propsObscure = CcfEngineHelpers::checkForObstaclesInLOS(mProps,
                                                                           x1, y1, x2, y2,
                                                                           new QObject());
 
@@ -685,36 +685,36 @@ void CcfQmlBaseScenario::updateAimLine()
             // is further than current one.
             if (terrainObscure != 0) {
                 if (terrainObscure < 0) {
-                    m_aimLine->set("obscureBeginning", -terrainObscure);
+                    mAimLine->set("obscureBeginning", -terrainObscure);
                 } else {
-                    m_aimLine->set("invisibleBeginning", terrainObscure);
+                    mAimLine->set("invisibleBeginning", terrainObscure);
                 }
             } else {
-                m_aimLine->set("obscureBeginning", m_aimLine->height());
-                m_aimLine->set("invisibleBeginning", m_aimLine->height());
+                mAimLine->set("obscureBeginning", mAimLine->height());
+                mAimLine->set("invisibleBeginning", mAimLine->height());
             }
 
             if (propsObscure != 0) {
                 if (propsObscure < 0) {
-                    m_aimLine->set("obscureBeginning", -propsObscure);
+                    mAimLine->set("obscureBeginning", -propsObscure);
                 } else {
-                    m_aimLine->set("invisibleBeginning", propsObscure);
+                    mAimLine->set("invisibleBeginning", propsObscure);
                 }
             }
 
             if (unitsObscure != 0) {
                 if (unitsObscure < 0) {
-                    m_aimLine->set("obscureBeginning", -unitsObscure);
+                    mAimLine->set("obscureBeginning", -unitsObscure);
                 } else {
-                    m_aimLine->set("invisibleBeginning", unitsObscure);
+                    mAimLine->set("invisibleBeginning", unitsObscure);
                 }
             }
         }
     } else {
         qreal tempRotation = CcfEngineHelpers::rotationAngle(unit->x() + unit->getCenterX(),
                                                              unit->y() + unit->getCenterY(),
-                                                             m_mouseAreaMain->getReal("mouseX"),
-                                                             m_mouseAreaMain->getReal("mouseY"));
+                                                             mMouseAreaMain->getReal("mouseX"),
+                                                             mMouseAreaMain->getReal("mouseY"));
         unit->setDefenceSphereRotation(unit->rotation() + CcfEngineHelpers::angleTo8Step(tempRotation));
     }
 }
@@ -726,11 +726,11 @@ void CcfQmlBaseScenario::updateAimLine()
   */
 QObject *CcfQmlBaseScenario::unitAt(qreal x, qreal y)
 {
-    for (int i = 0; i < m_units.count(); ++i) {
-        QQuickItem *item = qobject_cast<QQuickItem *>(m_units.at(i));
-        QPointF mapped = item->mapFromItem(m_zoomArea, QPointF(x, y));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        QQuickItem *item = qobject_cast<QQuickItem *>(mUnits.at(i));
+        QPointF mapped = item->mapFromItem(mZoomArea, QPointF(x, y));
         if (item->contains(mapped)) {
-            return m_units.at(i);
+            return mUnits.at(i);
         }
     }
 
@@ -744,9 +744,9 @@ QObject *CcfQmlBaseScenario::unitAt(qreal x, qreal y)
   */
 int CcfQmlBaseScenario::unitIndexAt(qreal x, qreal y)
 {
-    for (int i = 0; i < m_units.count(); ++i) {
-        QQuickItem *item = qobject_cast<QQuickItem *>(m_units.at(i));
-        QPointF mapped = item->mapFromItem(m_zoomArea, QPointF(x, y));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        QQuickItem *item = qobject_cast<QQuickItem *>(mUnits.at(i));
+        QPointF mapped = item->mapFromItem(mZoomArea, QPointF(x, y));
         if (item->contains(mapped)) {
             return i;
         }
@@ -775,9 +775,9 @@ void CcfQmlBaseScenario::togglePlayer()
 {
     QStringList sides;
     // Find all available sides.
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (!sides.contains(m_units.at(i)->getString("unitSide"))) {
-            sides.append(m_units.at(i)->getString("unitSide"));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (!sides.contains(mUnits.at(i)->getString("unitSide"))) {
+            sides.append(mUnits.at(i)->getString("unitSide"));
         }
     }
 
@@ -796,7 +796,7 @@ void CcfQmlBaseScenario::togglePlayer()
     }
 
     hideNonPlayerUnits();
-    m_scenarioWinStatus = "no";
+    mScenarioWinStatus = "no";
     checkScenarioFinished();
 }
 
@@ -805,9 +805,9 @@ void CcfQmlBaseScenario::togglePlayer()
   */
 void CcfQmlBaseScenario::hideNonPlayerUnits()
 {
-    for (int i = 0; i < m_units.count(); ++i) {
-        if (m_units.at(i)->getString("unitSide") != mmain->scenarioState()->getPlayerSide())
-            m_units.at(i)->set("visible", false);
+    for (int i = 0; i < mUnits.count(); ++i) {
+        if (mUnits.at(i)->getString("unitSide") != mmain->scenarioState()->getPlayerSide())
+            mUnits.at(i)->set("visible", false);
     }
 }
 
@@ -816,8 +816,8 @@ void CcfQmlBaseScenario::hideNonPlayerUnits()
   */
 void CcfQmlBaseScenario::setSideMarks()
 {
-    for (int i = 0; i < m_units.count(); ++i) {
-        m_units.at(i)->set("sideMarkSource", mmain->scenarioState()->getSidePath(m_units.at(i)->getString("unitSide")));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        mUnits.at(i)->set("sideMarkSource", mmain->scenarioState()->getSidePath(mUnits.at(i)->getString("unitSide")));
     }
 }
 
@@ -831,8 +831,8 @@ void CcfQmlBaseScenario::checkScenarioFinished()
     // It's probable that this should be done elsewhere.
     bool areAllEnemiesDestroyed = true;
     bool areAllAlliesDestroyed = true;
-    for (int i = 0; i < m_units.count(); ++i) {
-        QObject *currentUnit = m_units.at(i);
+    for (int i = 0; i < mUnits.count(); ++i) {
+        QObject *currentUnit = mUnits.at(i);
         if ((currentUnit->getString("unitSide") != mmain->scenarioState()->getPlayerSide()) && (currentUnit->getString("state") == "healthy")) {
             areAllEnemiesDestroyed = false;
         } else if ((currentUnit->getString("unitSide") == mmain->scenarioState()->getPlayerSide()) &&(currentUnit->getString("state") == "healthy")) {
@@ -840,12 +840,12 @@ void CcfQmlBaseScenario::checkScenarioFinished()
         }
     }
 
-    if (m_scenarioWinStatus == "no") {
+    if (mScenarioWinStatus == "no") {
         if (areAllEnemiesDestroyed) {
-            m_scenarioWinStatus = "won";
+            mScenarioWinStatus = "won";
             mmain->global()->statusMessage("All enemies destroyed. You have won!");
         } else if (areAllAlliesDestroyed) {
-            m_scenarioWinStatus = "lost";
+            mScenarioWinStatus = "lost";
             mmain->global()->statusMessage("All allies destroyed. You have lost!");
         }
     }
@@ -857,9 +857,9 @@ void CcfQmlBaseScenario::checkScenarioFinished()
 void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
 {
     if (qFuzzyCompare(x, 0.0))
-        x = m_mouseAreaMain->getReal("mouseX");
+        x = mMouseAreaMain->getReal("mouseX");
     if (qFuzzyCompare(y, 0.0))
-        y = m_mouseAreaMain->getReal("mouseY");
+        y = mMouseAreaMain->getReal("mouseY");
 
     qreal rubberX = 0, rubberY = 0, rubberX2 = 0, rubberY2 = 0; // 2 edges of the rubber band,
     // in root's coordinates.
@@ -923,8 +923,8 @@ void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
     //    test2.y = rubberY2;
 
     // Selecting units:
-    for (int i = 0; i < m_units.count(); ++i) {
-        CcfQmlBaseUnit *unit = ccfUnit(m_units.at(i));
+    for (int i = 0; i < mUnits.count(); ++i) {
+        CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(i));
 
         if (unit->getSelected() == true)
             continue;
@@ -943,7 +943,7 @@ void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
   */
 void CcfQmlBaseScenario::selectUnit(int index, int modifier) //Qt::KeyboardModifier
 {
-    CcfQmlBaseUnit *unit = ccfUnit(m_units.at(index));
+    CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(index));
     if ((unit->getUnitSide() != mmain->scenarioState()->getPlayerSide())
             || (unit->state() != "healthy")) {
         return;
@@ -973,7 +973,7 @@ void CcfQmlBaseScenario::selectUnit(int index, int modifier) //Qt::KeyboardModif
   */
 void CcfQmlBaseScenario::deselectUnit(int index)
 {
-    m_units.at(index)->set("selected", false);
+    mUnits.at(index)->set("selected", false);
 }
 
 /*!
@@ -982,7 +982,7 @@ void CcfQmlBaseScenario::deselectUnit(int index)
 void CcfQmlBaseScenario::deselectAllUnits()
 {
     invoke(child("soldierMenu"), "clear");
-    for (int i = 0; i < m_units.count(); ++i) {
+    for (int i = 0; i < mUnits.count(); ++i) {
         deselectUnit(i);
     }
 }
@@ -1011,7 +1011,7 @@ void CcfQmlBaseScenario::selectUnitFromRoster(QObject *mouse)
 {
     CcfQmlBaseUnit *unit = NULL;
 
-    unit = m_roster->getUnitAt(mouse->getReal("x"), mouse->getReal("y"));
+    unit = mRoster->getUnitAt(mouse->getReal("x"), mouse->getReal("y"));
 
     if (unit != NULL) {
         selectUnit(unit->getUnitIndex(), mouse->getInt("modifiers"));
@@ -1089,7 +1089,7 @@ void CcfQmlBaseScenario::updateUnitVisibility()
             qreal y2 = enemy->y() + enemy->getCenterY();
 
             if (mmain->terrain()->isTargetVisible(x1, y1, x2, y2)
-                    && !CcfEngineHelpers::isObstacleInLOS(m_props,
+                    && !CcfEngineHelpers::isObstacleInLOS(mProps,
                                                           x1, y1, x2, y2,
                                                           friendly)) {
                 mmain->logger()->log("Now visible: " + enemy->objectName()
@@ -1105,15 +1105,15 @@ void CcfQmlBaseScenario::updateUnitVisibility()
   */
 void CcfQmlBaseScenario::handleLeftMouseClick(QObject *mouse)
 {
-    if ((!m_contextMenu->isVisible()) && (m_aimLine->isVisible())) {
+    if ((!mContextMenu->isVisible()) && (mAimLine->isVisible())) {
         if (mouse->getInt("modifiers") == Qt::ShiftModifier) {
-            placeWaypoint(m_aimLine->getInt("unitIndex"),
-                          m_mouseAreaMain->getReal("mouseX"),
-                          m_mouseAreaMain->getReal("mouseY"));
+            placeWaypoint(mAimLine->getInt("unitIndex"),
+                          mMouseAreaMain->getReal("mouseX"),
+                          mMouseAreaMain->getReal("mouseY"));
         } else {
-            performContextAction(m_aimLine->getInt("unitIndex"),
-                                 m_mouseAreaMain->getReal("mouseX"),
-                                 m_mouseAreaMain->getReal("mouseY"));
+            performContextAction(mAimLine->getInt("unitIndex"),
+                                 mMouseAreaMain->getReal("mouseX"),
+                                 mMouseAreaMain->getReal("mouseY"));
         }
     } else {
         cleanContextAction();
@@ -1127,13 +1127,13 @@ void CcfQmlBaseScenario::handleLeftMouseClick(QObject *mouse)
 void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
 {
     cleanContextAction();
-    if (m_aimLine->isVisible() == true)
+    if (mAimLine->isVisible() == true)
         cancelAllSelectedOrders();
 
     QObject *unitObject = NULL;
-    unitObject = unitAt(m_mouseAreaMain->getReal("mouseX"), m_mouseAreaMain->getReal("mouseY"));
+    unitObject = unitAt(mMouseAreaMain->getReal("mouseX"), mMouseAreaMain->getReal("mouseY"));
 
-    if ((unitObject == m_mouseAreaMain) || (unitObject == NULL)
+    if ((unitObject == mMouseAreaMain) || (unitObject == NULL)
             || (unitObject->getString("unitSide") != mmain->scenarioState()->getPlayerSide())) {
         deselectAllUnits();
         return;
@@ -1146,17 +1146,17 @@ void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
     }
 
     // Fixes context menu at the centre of unit object.
-    QPointF mappedCoords = mapFromItem(m_gameArea,
-                                       QPointF((unit->x() + unit->getCenterX()) * m_zoom,
-                                               (unit->y() + unit->getCenterY()) * m_zoom));
+    QPointF mappedCoords = mapFromItem(mGameArea,
+                                       QPointF((unit->x() + unit->getCenterX()) * mZoom,
+                                               (unit->y() + unit->getCenterY()) * mZoom));
 
-    setContextMenuPosition(m_contextMenu,
-                           mappedCoords.x() - (m_gameArea->getReal("contentX")),
-                           mappedCoords.y() - (m_gameArea->getReal("contentY")));
+    setContextMenuPosition(mContextMenu,
+                           mappedCoords.x() - (mGameArea->getReal("contentX")),
+                           mappedCoords.y() - (mGameArea->getReal("contentY")));
 
-    m_contextMenu->setVisible(true);
+    mContextMenu->setVisible(true);
     //    m_contextMenu->set("unitIndex", unit->getUnitIndex());
-    m_aimLine->set("unitIndex", unit->getUnitIndex());
+    mAimLine->set("unitIndex", unit->getUnitIndex());
 }
 
 /*!
@@ -1164,7 +1164,7 @@ void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
   */
 void CcfQmlBaseScenario::handleLeftMouseClickRoster(QObject *mouse)
 {
-    if (!m_contextMenu->isVisible()) {
+    if (!mContextMenu->isVisible()) {
         cleanContextAction();
         selectUnitFromRoster(mouse);
     }
@@ -1180,21 +1180,21 @@ void CcfQmlBaseScenario::handleRightMouseClickRoster(QObject *mouse)
     qreal mousex = mouse->getReal("x");
     qreal mousey = mouse->getReal("y");
 
-    CcfQmlBaseUnit *unit = m_roster->getUnitAt(mousex, mousey);
+    CcfQmlBaseUnit *unit = mRoster->getUnitAt(mousex, mousey);
 
     if (unit != 0) {
         if (!unit->getSelected()) {
             selectUnitFromRoster(mouse);
         }
 
-        QPointF rosterUnitCoords = m_roster->childCenterCoords(mousex, mousey);
+        QPointF rosterUnitCoords = mRoster->childCenterCoords(mousex, mousey);
         // Fixes context menu at the centre of unit object.
-        setContextMenuPosition(m_contextMenu,
+        setContextMenuPosition(mContextMenu,
                                child("menu")->getReal("x") + rosterUnitCoords.x(),
                                height() + child("menu")->getReal("y") + rosterUnitCoords.y());
 
         // Displays the context menu. This is suboptimal.
-        m_contextMenu->setVisible(true);
+        mContextMenu->setVisible(true);
     }
 }
 
@@ -1289,14 +1289,14 @@ void CcfQmlBaseScenario::handleKeyPress(QObject *event)
                 invoke(child("bottomMenu"), "toggleMenu");
             } else if (key == config->keyForFunction("follow")) {
                 QObjectList selectedOnes = selectedUnits();
-                if ((m_followingTimer->getBool("running") == false) && (selectedOnes.length() > 0)) {
+                if ((mFollowingTimer->getBool("running") == false) && (selectedOnes.length() > 0)) {
                     //                    unitIndex = selectedOnes[0].unitIndex;
                     startFollowingUnit(selectedOnes.at(0)->getInt("unitIndex"));
-                } else if (m_followingTimer->getBool("running") == true) {
+                } else if (mFollowingTimer->getBool("running") == true) {
                     if (selectedOnes.length() > 0) {
                         int unitIndex = selectedOnes.at(0)->getInt("unitIndex");
 
-                        if (m_followingTimer->getInt("index") == unitIndex) {
+                        if (mFollowingTimer->getInt("index") == unitIndex) {
                             stopFollowingUnit();
                         } else {
                             startFollowingUnit(unitIndex);
@@ -1350,7 +1350,7 @@ void CcfQmlBaseScenario::handleWheelEventMouseAreaMain(QObject *wheel)
     QPointF delta = wheel->property("angleDelta").toPointF();
 
     if (wheel->getInt("modifiers") == Qt::ControlModifier) {
-        m_zoom += delta.y()/800;
+        mZoom += delta.y()/800;
         emit zoomChanged();
     } else if (wheel->getInt("modifiers") == Qt::ShiftModifier) {
         int magnitude = 0;
@@ -1359,7 +1359,7 @@ void CcfQmlBaseScenario::handleWheelEventMouseAreaMain(QObject *wheel)
         else
             magnitude = delta.y();
 
-        invoke(m_gameArea, "flick", Q_ARG(qreal, magnitude * 5), Q_ARG(qreal, 1.0));
+        invoke(mGameArea, "flick", Q_ARG(qreal, magnitude * 5), Q_ARG(qreal, 1.0));
     } else {
         wheel->set("accepted", false);
     }
@@ -1371,7 +1371,7 @@ void CcfQmlBaseScenario::handleWheelEventMouseAreaMain(QObject *wheel)
   */
 QString CcfQmlBaseScenario::getScenarioFile() const
 {
-    return m_scenarioFile;
+    return mScenarioFile;
 }
 
 /*!
@@ -1379,7 +1379,7 @@ QString CcfQmlBaseScenario::getScenarioFile() const
   */
 QString CcfQmlBaseScenario::getScenarioWinStatus() const
 {
-    return m_scenarioWinStatus;
+    return mScenarioWinStatus;
 }
 
 /*!
@@ -1387,7 +1387,7 @@ QString CcfQmlBaseScenario::getScenarioWinStatus() const
   */
 int CcfQmlBaseScenario::getAimLineRotation() const
 {
-    return m_aimLineRotation;
+    return mAimLineRotation;
 }
 
 /*!
@@ -1395,7 +1395,7 @@ int CcfQmlBaseScenario::getAimLineRotation() const
   */
 bool CcfQmlBaseScenario::getIsCampaign() const
 {
-    return m_isCampaign;
+    return mIsCampaign;
 }
 
 /*!
@@ -1403,7 +1403,7 @@ bool CcfQmlBaseScenario::getIsCampaign() const
   */
 QString CcfQmlBaseScenario::getMapFile() const
 {
-    return m_mapFile;
+    return mMapFile;
 }
 
 /*!
@@ -1411,7 +1411,7 @@ QString CcfQmlBaseScenario::getMapFile() const
   */
 qreal CcfQmlBaseScenario::getZoom() const
 {
-    return m_zoom;
+    return mZoom;
 }
 
 /*!
@@ -1419,7 +1419,7 @@ qreal CcfQmlBaseScenario::getZoom() const
   */
 QPoint CcfQmlBaseScenario::getZoomPoint() const
 {
-    return m_zoomPoint;
+    return mZoomPoint;
 }
 
 /*!
@@ -1427,7 +1427,7 @@ QPoint CcfQmlBaseScenario::getZoomPoint() const
   */
 bool CcfQmlBaseScenario::getPaused() const
 {
-    return m_paused;
+    return mPaused;
 }
 
 /*!
@@ -1435,7 +1435,7 @@ bool CcfQmlBaseScenario::getPaused() const
   */
 QColor CcfQmlBaseScenario::getMenuBackgroundColor() const
 {
-    return m_menuBackgroundColor;
+    return mMenuBackgroundColor;
 }
 
 /*!
@@ -1443,7 +1443,7 @@ QColor CcfQmlBaseScenario::getMenuBackgroundColor() const
   */
 QObjectList CcfQmlBaseScenario::getUnits() const
 {
-    return m_units;
+    return mUnits;
 }
 
 // Property setters:
@@ -1453,10 +1453,10 @@ QObjectList CcfQmlBaseScenario::getUnits() const
 void CcfQmlBaseScenario::setScenarioFile(const QString &scenarioFile)
 {
     bool wasChaged = false;
-    if (scenarioFile != m_scenarioFile)
+    if (scenarioFile != mScenarioFile)
         wasChaged = true;
 
-    m_scenarioFile = scenarioFile;
+    mScenarioFile = scenarioFile;
 
     if (wasChaged)
         emit scenarioFileChanged();
@@ -1483,10 +1483,10 @@ void CcfQmlBaseScenario::setScenarioFile(const QString &scenarioFile)
 void CcfQmlBaseScenario::setScenarioWinStatus(const QString &scenarioWinStatus)
 {
     bool wasChaged = false;
-    if (scenarioWinStatus != m_scenarioWinStatus)
+    if (scenarioWinStatus != mScenarioWinStatus)
         wasChaged = true;
 
-    m_scenarioWinStatus = scenarioWinStatus;
+    mScenarioWinStatus = scenarioWinStatus;
 
     if (wasChaged)
         emit scenarioWinStatusChanged();
@@ -1498,10 +1498,10 @@ void CcfQmlBaseScenario::setScenarioWinStatus(const QString &scenarioWinStatus)
 void CcfQmlBaseScenario::setAimLineRotation(int aimLineRotation)
 {
     bool wasChaged = false;
-    if (aimLineRotation != m_aimLineRotation)
+    if (aimLineRotation != mAimLineRotation)
         wasChaged = true;
 
-    m_aimLineRotation = aimLineRotation;
+    mAimLineRotation = aimLineRotation;
 
     if (wasChaged)
         emit aimLineRotationChanged();
@@ -1513,10 +1513,10 @@ void CcfQmlBaseScenario::setAimLineRotation(int aimLineRotation)
 void CcfQmlBaseScenario::setIsCampaign(bool isCampaign)
 {
     bool wasChaged = false;
-    if (isCampaign != m_isCampaign)
+    if (isCampaign != mIsCampaign)
         wasChaged = true;
 
-    m_isCampaign = isCampaign;
+    mIsCampaign = isCampaign;
 
     if (wasChaged)
         emit isCampaignChanged();
@@ -1528,10 +1528,10 @@ void CcfQmlBaseScenario::setIsCampaign(bool isCampaign)
 void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
 {
     bool wasChaged = false;
-    if (mapFile != m_mapFile)
+    if (mapFile != mMapFile)
         wasChaged = true;
 
-    m_mapFile = mapFile;
+    mMapFile = mapFile;
 
     if (wasChaged)
         emit mapFileChanged();
@@ -1543,10 +1543,10 @@ void CcfQmlBaseScenario::setMapFile(const QString &mapFile)
 void CcfQmlBaseScenario::setZoom(qreal zoom)
 {
     bool wasChaged = false;
-    if (zoom != m_zoom)
+    if (zoom != mZoom)
         wasChaged = true;
 
-    m_zoom = zoom;
+    mZoom = zoom;
 
     if (wasChaged)
         emit zoomChanged();
@@ -1558,10 +1558,10 @@ void CcfQmlBaseScenario::setZoom(qreal zoom)
 void CcfQmlBaseScenario::setZoomPoint(const QPoint &zoomPoint)
 {
     bool wasChaged = false;
-    if (zoomPoint != m_zoomPoint)
+    if (zoomPoint != mZoomPoint)
         wasChaged = true;
 
-    m_zoomPoint = zoomPoint;
+    mZoomPoint = zoomPoint;
 
     if (wasChaged)
         emit zoomPointChanged();
@@ -1573,10 +1573,10 @@ void CcfQmlBaseScenario::setZoomPoint(const QPoint &zoomPoint)
 void CcfQmlBaseScenario::setPaused(bool paused)
 {
     bool wasChaged = false;
-    if (paused != m_paused)
+    if (paused != mPaused)
         wasChaged = true;
 
-    m_paused = paused;
+    mPaused = paused;
 
     if (wasChaged)
         emit pausedChanged();
@@ -1588,10 +1588,10 @@ void CcfQmlBaseScenario::setPaused(bool paused)
 void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColor)
 {
     bool wasChaged = false;
-    if (menuBackgroundColor != m_menuBackgroundColor)
+    if (menuBackgroundColor != mMenuBackgroundColor)
         wasChaged = true;
 
-    m_menuBackgroundColor = menuBackgroundColor;
+    mMenuBackgroundColor = menuBackgroundColor;
 
     if (wasChaged)
         emit menuBackgroundColorChanged();
@@ -1602,6 +1602,6 @@ void CcfQmlBaseScenario::setMenuBackgroundColor(const QColor &menuBackgroundColo
   */
 void CcfQmlBaseScenario::setUnits(QObjectList units)
 {
-    m_units = units;
+    mUnits = units;
     emit unitsChanged();
 }

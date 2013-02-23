@@ -18,8 +18,8 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/qmath.h>
-#include <QtCore/QVariant>
+#include <qmath.h>
+#include <QVariant>
 
 #include "ccfenginehelpers.h"
 

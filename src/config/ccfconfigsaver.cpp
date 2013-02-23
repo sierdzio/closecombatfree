@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include "ccfconfigsaver.h"
 
@@ -29,8 +29,8 @@ CcfConfigSaver::CcfConfigSaver(CcfConfigData *configuration,
                                QList<QString> *configIndexes,
                                const QString &configFilePath,
                                QObject *parent) :
-    QObject(parent), m_configuration(configuration),
-    m_configIndexes(configIndexes), m_configFilePath(configFilePath)
+    QObject(parent), mConfiguration(configuration),
+    mConfigIndexes(configIndexes), mConfigFilePath(configFilePath)
 {
 }
 
@@ -41,8 +41,8 @@ void CcfConfigSaver::updateConfigFile()
 {
     // Check, whether there was any change.
     bool wasChange = false;
-    for (int i = 0; i < m_configuration->size(); ++i) {
-        if (m_configuration->state(i) == true) {
+    for (int i = 0; i < mConfiguration->size(); ++i) {
+        if (mConfiguration->state(i) == true) {
             wasChange = true;
             break;
         }
@@ -55,16 +55,16 @@ void CcfConfigSaver::updateConfigFile()
 
     // Else, look through the file for the changed lines, and replace them.
     // Old config is renamed to "config_old", new one into "config".
-    QFile::remove(m_configFilePath + "_old");
-    QFile::rename(m_configFilePath, m_configFilePath + "_old");
+    QFile::remove(mConfigFilePath + "_old");
+    QFile::rename(mConfigFilePath, mConfigFilePath + "_old");
 
-    QFile file(m_configFilePath + "_old");
+    QFile file(mConfigFilePath + "_old");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         enterErrorState("Could not open the config file.");
         return;
     }
 
-    QFile newFile(m_configFilePath);
+    QFile newFile(mConfigFilePath);
     if (!newFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         enterErrorState("Could not open the config file.");
         return;
@@ -74,7 +74,7 @@ void CcfConfigSaver::updateConfigFile()
     while (!file.atEnd()) {
         QString replacement;
         QString line = file.readLine();
-        QString option = m_configIndexes->at(i);
+        QString option = mConfigIndexes->at(i);
         // Skip comments
         if ((option == "Empty")
                 || (option == "Comment")) {
@@ -83,12 +83,12 @@ void CcfConfigSaver::updateConfigFile()
             continue;
         }
 
-        if (m_configuration->contains(option)) {
-            if (m_configuration->state(option) == true) {
+        if (mConfiguration->contains(option)) {
+            if (mConfiguration->state(option) == true) {
                 if (line.contains(" = ")) {
-                    replacement = option + " = " + m_configuration->value(option);
+                    replacement = option + " = " + mConfiguration->value(option);
                 } else if (line.contains("=")) {
-                    replacement = option + "=" + m_configuration->value(option);
+                    replacement = option + "=" + mConfiguration->value(option);
                 }
 
                 // Replace the needed fragment of code:

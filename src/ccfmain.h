@@ -21,10 +21,10 @@
 #ifndef CCFMAIN_H
 #define CCFMAIN_H
 
-#include <QtCore/QObject>
-#include <QtCore/QSize>
-#include <QtGui/QWindow>
-#include <QtQuick/QQuickView>
+#include <QObject>
+#include <QSize>
+#include <QWindow>
+#include <QQuickView>
 
 #include "config/ccfconfig.h"
 #include "config/ccflogger.h"
@@ -38,8 +38,8 @@
 #define cmain CcfMain::instance()
 #define clogger CcfMain::instance()->logger()
 
-#define mmain m_mainInstance
-#define mlogger m_mainInstance->logger()
+#define mmain mMainInstance
+#define mlogger mMainInstance->logger()
 
 /*!
   \ingroup CloseCombatFree
@@ -75,16 +75,16 @@ private:
 
     bool initConfiguration();
 
-    static CcfMain *m_instance;
-    CcfConfig *m_configuration;
-    CcfGlobal *m_global;
-    CcfGameManager *m_gameManager;
-    CcfTerrain *m_terrain;
-    CcfEngineHelpers *m_engineHelpers;
-    CcfScenarioState *m_scenarioState;
-    CcfLogger *m_logger;
-    CcfCommandLineParser *m_cmdLnParser;
-    QString m_pwd;
+    static CcfMain *mInstance;
+    CcfConfig *mConfiguration;
+    CcfGlobal *mGlobal;
+    CcfGameManager *mGameManager;
+    CcfTerrain *mTerrain;
+    CcfEngineHelpers *mEngineHelpers;
+    CcfScenarioState *mScenarioState;
+    CcfLogger *mLogger;
+    CcfCommandLineParser *mCmdLnParser;
+    QString mPwd;
 };
 
 /*! @}*/

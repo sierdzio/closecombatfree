@@ -1,7 +1,7 @@
 #include "ccfobjectbase.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 
-#include <QtQml/QQmlListReference>
+#include <QQmlListReference>
 
 /*!
   Standard constructor, nothing fancy.

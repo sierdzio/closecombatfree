@@ -25,7 +25,7 @@
   */
 CcfError::CcfError()
 {
-    m_errorState = false;
+    mErrorState = false;
 }
 
 /*!
@@ -33,7 +33,7 @@ CcfError::CcfError()
   */
 bool CcfError::isErrorState() const
 {
-    return m_errorState;
+    return mErrorState;
 }
 
 /*!
@@ -41,7 +41,7 @@ bool CcfError::isErrorState() const
   */
 QString CcfError::errorMessage() const
 {
-    return m_errorMessage;
+    return mErrorMessage;
 }
 
 /*!
@@ -54,6 +54,6 @@ QString CcfError::errorMessage() const
   */
 void CcfError::enterErrorState(const QString &errorMsg)
 {
-    m_errorState = true;
-    m_errorMessage = errorMsg;
+    mErrorState = true;
+    mErrorMessage = errorMsg;
 }

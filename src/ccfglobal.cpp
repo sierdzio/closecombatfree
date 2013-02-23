@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include "ccfglobal.h"
 #include "config/ccflogger.h"
@@ -27,7 +27,7 @@
   A simple constructor. Initialises parent QObject and CcfError.
   */
 CcfGlobal::CcfGlobal(QObject *parent, CcfLogger *logger) :
-    QObject(parent), CcfError(), m_logger(logger)
+    QObject(parent), CcfError(), mLogger(logger)
 {
 }
 
@@ -50,7 +50,7 @@ void CcfGlobal::statusMsg(const QString &message)
   */
 void CcfGlobal::statusMessage(const QString &message)
 {
-    m_logger->log(message);
+    mLogger->log(message);
     emit newStatusMessage(message, this->sender());
 }
 

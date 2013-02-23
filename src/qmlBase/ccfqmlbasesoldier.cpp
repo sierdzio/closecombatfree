@@ -5,12 +5,12 @@
   */
 CcfQmlBaseSoldier::CcfQmlBaseSoldier(QObject *parent) : QObject(parent)
 {    
-    m_objectType = "soldierInfo";
-    m_name = "John Smith";
-    m_role = "Infantryman";
-    m_status = "READY";
-    m_weapon = "";
-    m_soldierLogo = "../../../img/units/generic_soldier_logo.png";
+    mObjectType = "soldierInfo";
+    mName = "John Smith";
+    mRole = "Infantryman";
+    mStatus = "READY";
+    mWeapon = "";
+    mSoldierLogo = "../../../img/units/generic_soldier_logo.png";
 }
 
 /*!
@@ -18,7 +18,7 @@ CcfQmlBaseSoldier::CcfQmlBaseSoldier(QObject *parent) : QObject(parent)
   */
 void CcfQmlBaseSoldier::changeStatus(const QString &newStatus)
 {
-    m_status = newStatus;
+    mStatus = newStatus;
     emit unitStatusChanged(newStatus);
 }
 
@@ -27,7 +27,7 @@ void CcfQmlBaseSoldier::changeStatus(const QString &newStatus)
   */
 QString CcfQmlBaseSoldier::getObjectType() const
 {
-    return m_objectType;
+    return mObjectType;
 }
 
 /*!
@@ -35,7 +35,7 @@ QString CcfQmlBaseSoldier::getObjectType() const
   */
 QString CcfQmlBaseSoldier::getName() const
 {
-    return m_name;
+    return mName;
 }
 
 /*!
@@ -43,7 +43,7 @@ QString CcfQmlBaseSoldier::getName() const
   */
 QString CcfQmlBaseSoldier::getRole() const
 {
-    return m_role;
+    return mRole;
 }
 
 /*!
@@ -51,7 +51,7 @@ QString CcfQmlBaseSoldier::getRole() const
   */
 QString CcfQmlBaseSoldier::getStatus() const
 {
-    return m_status;
+    return mStatus;
 }
 
 /*!
@@ -59,7 +59,7 @@ QString CcfQmlBaseSoldier::getStatus() const
   */
 QString CcfQmlBaseSoldier::getWeapon() const
 {
-    return m_weapon;
+    return mWeapon;
 }
 
 /*!
@@ -67,7 +67,7 @@ QString CcfQmlBaseSoldier::getWeapon() const
   */
 QString CcfQmlBaseSoldier::getSoldierLogo() const
 {
-    return m_soldierLogo;
+    return mSoldierLogo;
 }
 
 /*!
@@ -76,10 +76,10 @@ QString CcfQmlBaseSoldier::getSoldierLogo() const
 void CcfQmlBaseSoldier::setObjectType(const QString &objectType)
 {
     bool wasChaged = false;
-    if (objectType != m_objectType)
+    if (objectType != mObjectType)
         wasChaged = true;
 
-    m_objectType = objectType;
+    mObjectType = objectType;
 
     if (wasChaged)
         emit objectTypeChanged();
@@ -91,10 +91,10 @@ void CcfQmlBaseSoldier::setObjectType(const QString &objectType)
 void CcfQmlBaseSoldier::setName(const QString &name)
 {
     bool wasChaged = false;
-    if (name != m_name)
+    if (name != mName)
         wasChaged = true;
 
-    m_name = name;
+    mName = name;
 
     if (wasChaged)
         emit nameChanged();
@@ -106,10 +106,10 @@ void CcfQmlBaseSoldier::setName(const QString &name)
 void CcfQmlBaseSoldier::setRole(const QString &role)
 {
     bool wasChaged = false;
-    if (role != m_role)
+    if (role != mRole)
         wasChaged = true;
 
-    m_role = role;
+    mRole = role;
 
     if (wasChaged)
         emit roleChanged();
@@ -121,10 +121,10 @@ void CcfQmlBaseSoldier::setRole(const QString &role)
 void CcfQmlBaseSoldier::setStatus(const QString &status)
 {
     bool wasChaged = false;
-    if (status != m_status)
+    if (status != mStatus)
         wasChaged = true;
 
-    m_status = status;
+    mStatus = status;
 
     if (wasChaged)
         emit statusChanged();
@@ -136,10 +136,10 @@ void CcfQmlBaseSoldier::setStatus(const QString &status)
 void CcfQmlBaseSoldier::setWeapon(const QString &weapon)
 {
     bool wasChaged = false;
-    if (weapon != m_weapon)
+    if (weapon != mWeapon)
         wasChaged = true;
 
-    m_weapon = weapon;
+    mWeapon = weapon;
 
     if (wasChaged)
         emit weaponChanged();
@@ -151,10 +151,10 @@ void CcfQmlBaseSoldier::setWeapon(const QString &weapon)
 void CcfQmlBaseSoldier::setSoldierLogo(const QString &soldierLogo)
 {
     bool wasChaged = false;
-    if (soldierLogo != m_soldierLogo)
+    if (soldierLogo != mSoldierLogo)
         wasChaged = true;
 
-    m_soldierLogo = soldierLogo;
+    mSoldierLogo = soldierLogo;
 
     if (wasChaged)
         emit soldierLogoChanged();

@@ -21,11 +21,11 @@
 #ifndef CCFCONFIG_H
 #define CCFCONFIG_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QSize>
-#include <QtCore/QMap>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QSize>
+#include <QMap>
 
 #include "../ccferror.h"
 #include "../ccfglobal.h"
@@ -166,14 +166,14 @@ private:
     QString boolToString(bool boolToConvert) const;
     void parseValidKeyboardShortcuts();
 
-    int runtimeWidth, runtimeHeight;
-    QString m_terrainInfoMode;
-    QString filePath;
-    CcfGlobal *global;
-    CcfConfigParser *parser;
-    CcfConfigSaver *saver;
-    CcfConfigData *configuration;
-    QMap<QString, QString> keyboardShortcuts;
+    int mRuntimeWidth, mRuntimeHeight;
+    QString mTerrainInfoMode;
+    QString mFilePath;
+    CcfGlobal *mGlobal;
+    CcfConfigParser *mParser;
+    CcfConfigSaver *mSaver;
+    CcfConfigData *mConfiguration;
+    QMap<QString, QString> mKeyboardShortcuts;
 };
 
 /*! @}*/

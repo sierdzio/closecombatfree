@@ -21,7 +21,7 @@
 #ifndef CCFERROR_H
 #define CCFERROR_H
 
-#include <QtCore/QString>
+#include <QString>
 
 /*!
   \defgroup CcfError Base error class for CCF
@@ -40,8 +40,8 @@ public:
     void enterErrorState(const QString &errorMessage);
 
 private:
-    bool m_errorState;
-    QString m_errorMessage;
+    bool mErrorState;
+    QString mErrorMessage;
 };
 
 /*! @}*/

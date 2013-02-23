@@ -21,13 +21,13 @@
 #ifndef CONVERTERMAIN_H
 #define CONVERTERMAIN_H
 
-#include <QtCore/QObject>
-#include <QtCore/QChar>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QIODevice>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
+#include <QObject>
+#include <QChar>
+#include <QString>
+#include <QStringList>
+#include <QIODevice>
+#include <QDir>
+#include <QFile>
 
 #include "../../ccferror.h"
 #include "converterflags.h"

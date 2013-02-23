@@ -21,14 +21,14 @@
 #ifndef CCFGAMEMANAGER_H
 #define CCFGAMEMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QTextStream>
-#include <QtQml/QQmlListReference>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QQmlListReference>
 
 #include "ccferror.h"
 
@@ -63,8 +63,8 @@ private:
                                     const QString &propertyName,
                                     bool useQuotes = false);
 
-    QStringList m_scenariosList;
-    QString tab;
+    QStringList mScenariosList;
+    QString mTab;
 };
 
 /*! @}*/

@@ -21,13 +21,13 @@
 #ifndef CONVERTERFLAGS_H
 #define CONVERTERFLAGS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QChar>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QDir>
-#include <QtCore/QFlag>
-#include <QtCore/QFlags>
+#include <QObject>
+#include <QChar>
+#include <QString>
+#include <QStringList>
+#include <QDir>
+#include <QFlag>
+#include <QFlags>
 
 #include "../../ccferror.h"
 

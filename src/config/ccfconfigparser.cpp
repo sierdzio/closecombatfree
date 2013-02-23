@@ -18,10 +18,10 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/QByteArray>
-#include <QtCore/QIODevice>
-#include <QtCore/QFile>
-#include <QtCore/QStringList>
+#include <QByteArray>
+#include <QIODevice>
+#include <QFile>
+#include <QStringList>
 
 #include "ccfconfigparser.h"
 
@@ -35,8 +35,8 @@
 CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent) :
     QObject(parent), CcfError()
 {
-    m_configuration = new CcfConfigData();
-    m_configIndexes = new QList<QString>();
+    mConfiguration = new CcfConfigData();
+    mConfigIndexes = new QList<QString>();
     parse(configFilePath);
 }
 
@@ -52,7 +52,7 @@ CcfConfigParser::CcfConfigParser(const QString &configFilePath, QObject *parent)
   */
 CcfConfigData *CcfConfigParser::configuration()
 {
-    return m_configuration;
+    return mConfiguration;
 }
 
 /*!
@@ -63,7 +63,7 @@ CcfConfigData *CcfConfigParser::configuration()
   */
 QList<QString> *CcfConfigParser::configIndexes()
 {
-    return m_configIndexes;
+    return mConfigIndexes;
 }
 
 /*!
@@ -95,7 +95,7 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
     QString line = lineToParse.simplified();
 
     if (line.isEmpty()) {
-        m_configIndexes->insert(lineNumber, "Empty");
+        mConfigIndexes->insert(lineNumber, "Empty");
         return true;
     }
 
@@ -105,7 +105,7 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
         if (character.isSpace()) {
             continue; // Could be an empty line or a comment
         } else if (character == QChar('#')) {// || (character == QChar('\n')) || (character == QChar('\0'))) {
-            m_configIndexes->insert(lineNumber, "Comment");
+            mConfigIndexes->insert(lineNumber, "Comment");
             return true; // It's a comment
         } else {
             break; // Non comment, non empty line. Continue with parsing.
@@ -127,8 +127,8 @@ bool CcfConfigParser::readLine(int lineNumber, const QString &lineToParse)
     QString value = lineData.at(1);
 
     // Add key and value checks here
-    m_configuration->insert(key, value, false);
-    m_configIndexes->insert(lineNumber, key);
+    mConfiguration->insert(key, value, false);
+    mConfigIndexes->insert(lineNumber, key);
 
     return true;
 }

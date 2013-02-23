@@ -14,19 +14,19 @@ CcfQmlBaseRosterMenu::CcfQmlBaseRosterMenu(QQuickItem *parent) :
   */
 void CcfQmlBaseRosterMenu::populateUnits(QObjectList tmpUnitsList)
 {
-    units = tmpUnitsList;
+    mUnits = tmpUnitsList;
 
     QObjectList model;
-    for (int i = 0; i < units.length(); ++i) {
-        model.append(units.at(i));
-        connect(ccfUnit(units.at(i)), &CcfQmlBaseUnit::selectedChanged,
+    for (int i = 0; i < mUnits.length(); ++i) {
+        model.append(mUnits.at(i));
+        connect(ccfUnit(mUnits.at(i)), &CcfQmlBaseUnit::selectedChanged,
                 this, &CcfQmlBaseRosterMenu::selectionChanged);
     }
 
     // Get widest and highest dimension from cells:
     qreal widestCell = 0;
     qreal heighestCell = 0;
-    ccfUnit(units.at(0))->setUnitStatus("MOVING FAST");
+    ccfUnit(mUnits.at(0))->setUnitStatus("MOVING FAST");
 
     set("unitModel", QVariant::fromValue(model));
 
@@ -36,10 +36,10 @@ void CcfQmlBaseRosterMenu::populateUnits(QObjectList tmpUnitsList)
     QQuickItem *current = item(unitsView->property("currentItem").value<QObject *>());
     widestCell = current->width();
     heighestCell = current->height();
-    ccfUnit(units.at(0))->setUnitStatus("READY");
+    ccfUnit(mUnits.at(0))->setUnitStatus("READY");
 
     // Set all elements' dimentions
-    for (int i = 0; i < units.length(); ++i) {
+    for (int i = 0; i < mUnits.length(); ++i) {
         unitsView->set("currentIndex", i);
         current = item(unitsView->property("currentItem").value<QObject *>());
         current->set("fixedHeight", heighestCell);
@@ -69,10 +69,10 @@ CcfQmlBaseUnit *CcfQmlBaseRosterMenu::getUnitAt(qreal x, qreal y)
     if (i == -1)
         return 0;
 
-    if (units.length() <= i)
+    if (mUnits.length() <= i)
         return 0;
 
-    return ccfUnit(units.at(i));
+    return ccfUnit(mUnits.at(i));
 }
 
 /*!
@@ -90,7 +90,7 @@ int CcfQmlBaseRosterMenu::getUnitIndexAt(qreal x, qreal y)
     if (i == -1)
         return 0;
 
-    if (units.length() <= i)
+    if (mUnits.length() <= i)
         return 0;
 
     return i;
@@ -126,7 +126,7 @@ QPointF CcfQmlBaseRosterMenu::childCenterCoords(qreal x, qreal y)
   */
 void CcfQmlBaseRosterMenu::changeStatus(const QString &newStatus, int index)
 {
-    ccfUnit(units.at(index))->setUnitStatus(newStatus);
+    ccfUnit(mUnits.at(index))->setUnitStatus(newStatus);
 }
 
 /*!
@@ -134,5 +134,5 @@ void CcfQmlBaseRosterMenu::changeStatus(const QString &newStatus, int index)
   */
 void CcfQmlBaseRosterMenu::selectionChanged(bool state, int index)
 {
-    ccfUnit(units.at(index))->setSelected(state);
+    ccfUnit(mUnits.at(index))->setSelected(state);
 }

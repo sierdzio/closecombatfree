@@ -1,10 +1,10 @@
 #ifndef CCFQMLBASESCENARIO_H
 #define CCFQMLBASESCENARIO_H
 
-#include <QtCore/QString>
-#include <QtCore/QList>
-#include <QtCore/QPoint>
-#include <QtQml/QQmlListReference>
+#include <QString>
+#include <QList>
+#include <QPoint>
+#include <QQmlListReference>
 
 #include "logic/ccfobjectbase.h"
 
@@ -181,25 +181,25 @@ private:
     QObject *createEffect(QObject *parent);
     void onTogglePause();
 
-    CcfMain *m_mainInstance;
-    QQmlComponent *m_effectsComponent;
+    CcfMain *mMainInstance;
+    QQmlComponent *mEffectsComponent;
     // TODO: maybe replace with particle system?
-    QObjectList m_effects;
+    QObjectList mEffects;
 
     // Convenience pointers:
-    QQuickItem *m_aimLine;
-    QQuickItem *m_gameArea;
-    QQuickItem *m_zoomArea;
-    QQuickItem *m_contextMenu;
-    QObject *m_effectsTimer;
-    QObject *m_rotationTimer;
-    QObject *m_followingTimer;
-    QObject *m_mouseAreaMain;
+    QQuickItem *mAimLine;
+    QQuickItem *mGameArea;
+    QQuickItem *mZoomArea;
+    QQuickItem *mContextMenu;
+    QObject *mEffectsTimer;
+    QObject *mRotationTimer;
+    QObject *mFollowingTimer;
+    QObject *mMouseAreaMain;
 
-    CcfQmlBaseRosterMenu *m_roster;
-    QObjectList m_props;
+    CcfQmlBaseRosterMenu *mRoster;
+    QObjectList mProps;
     // TODO: consider changing to QVector
-    QMap<int, QObjectList > m_unitGroups;
+    QMap<int, QObjectList > mUnitGroups;
 
     // Property handling:
 protected:
@@ -279,16 +279,16 @@ signals:
     void unitsChanged();
 
 private:
-    QString m_scenarioFile;
-    QString m_scenarioWinStatus;
-    int m_aimLineRotation;
-    bool m_isCampaign;
-    QString m_mapFile;
-    qreal m_zoom;
-    QPoint m_zoomPoint;
-    bool m_paused;
-    QColor m_menuBackgroundColor;
-    QObjectList m_units;
+    QString mScenarioFile;
+    QString mScenarioWinStatus;
+    int mAimLineRotation;
+    bool mIsCampaign;
+    QString mMapFile;
+    qreal mZoom;
+    QPoint mZoomPoint;
+    bool mPaused;
+    QColor mMenuBackgroundColor;
+    QObjectList mUnits;
 };
 
 /*! @}*/

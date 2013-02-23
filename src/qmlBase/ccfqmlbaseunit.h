@@ -1,12 +1,12 @@
 #ifndef CCFQMLBASEUNIT_H
 #define CCFQMLBASEUNIT_H
 
-#include <QtCore/QObject>
-#include <QtCore/QList>
-#include <QtCore/QVariant>
-#include <QtCore/QPoint>
-#include <QtQuick/QQuickItem>
-#include <QtQml/QQmlListProperty>
+#include <QObject>
+#include <QList>
+#include <QVariant>
+#include <QPoint>
+#include <QQuickItem>
+#include <QQmlListProperty>
 
 #include "logic/ccfobjectbase.h"
 #include "qmlBase/ccfqmlbasesoldier.h"
@@ -294,10 +294,10 @@ signals:
 private:
     bool isOrderIndexValid(int index) const;
 
-    CcfMain *m_mainInstance;
-    QQmlComponent *m_ordersComponent;
-    QObjectList m_orders;
-    QVariantList m_soldiers;
+    CcfMain *mMainInstance;
+    QQmlComponent *mOrdersComponent;
+    QObjectList mOrders;
+    QVariantList mSoldiers;
 
     // Everything below is property handling:
 public:
@@ -511,35 +511,35 @@ signals:
 
 private:
     // Properties:
-    QString m_objectType;
-    QString m_unitFileName;
-    QString m_unitType;
-    QString m_unitLogo;
-    QString m_unitStatus;
-    QString m_unitSide;
-    int m_groupNumber;
-    int m_unitIndex;
-    bool m_sideMarkVisible;
-    QString m_sideMarkSource;
-    QString m_sideMarkSet;
-    int m_rotationSpeed;
-    int m_turretRotationSpeed;
-    int m_maxSpeed;
-    int m_acceleration;
-    int m_unitWidth;
-    int m_unitHeight;
-    qreal m_moveFastFactor;
-    qreal m_sneakFactor;
-    int m_centerX;
-    int m_centerY;
-    int m_currentOrder;
-    bool m_selected;
-    bool m_firing;
-    bool m_smoking;
-    int m_defenceSphereRotation;
-    QString m_defenceSphereColor;
-    bool m_paused;
-    bool m_moving;
+    QString mObjectType;
+    QString mUnitFileName;
+    QString mUnitType;
+    QString mUnitLogo;
+    QString mUnitStatus;
+    QString mUnitSide;
+    int mGroupNumber;
+    int mUnitIndex;
+    bool mSideMarkVisible;
+    QString mSideMarkSource;
+    QString mSideMarkSet;
+    int mRotationSpeed;
+    int mTurretRotationSpeed;
+    int mMaxSpeed;
+    int mAcceleration;
+    int mUnitWidth;
+    int mUnitHeight;
+    qreal mMoveFastFactor;
+    qreal mSneakFactor;
+    int mCenterX;
+    int mCenterY;
+    int mCurrentOrder;
+    bool mSelected;
+    bool mFiring;
+    bool mSmoking;
+    int mDefenceSphereRotation;
+    QString mDefenceSphereColor;
+    bool mPaused;
+    bool mMoving;
 };
 
 /*! @}*/

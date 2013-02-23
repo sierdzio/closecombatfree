@@ -21,8 +21,8 @@
 #ifndef CCFGLOBAL_H
 #define CCFGLOBAL_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 
 #include "ccferror.h"
 
@@ -65,7 +65,7 @@ signals:
     void disableQrc(QObject *object);
 
 private:
-    CcfLogger *m_logger;
+    CcfLogger *mLogger;
 };
 
 /*! @}*/

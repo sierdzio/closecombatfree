@@ -21,8 +21,8 @@
 #ifndef CCFCONFIGDATA_H
 #define CCFCONFIGDATA_H
 
-#include <QtCore/QVector>
-#include <QtCore/QString>
+#include <QVector>
+#include <QString>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -73,10 +73,10 @@ private:
 
     // Those params are divided to avoid monster QMaps.
     // All indexes are equal.
-    QVector<QString> m_configKeys;
-    QVector<QString> m_configValues;
+    QVector<QString> mConfigKeys;
+    QVector<QString> mConfigValues;
     // TODO: change bool into an enum, to get error capabilities
-    QVector<bool>    m_configStates;
+    QVector<bool>    mConfigStates;
 };
 
 /*! @}*/

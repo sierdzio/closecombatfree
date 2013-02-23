@@ -1,7 +1,7 @@
 #ifndef CCFLOGGER_H
 #define CCFLOGGER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -36,7 +36,7 @@ private:
     void addLogEntry(MessageType msgType, const QString &message,
                      const QString &additionalData = QString());
 
-    bool isDebug;
+    bool mIsDebug;
 };
 
 /*! @}*/

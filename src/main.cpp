@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtGui/QGuiApplication>
+#include <QGuiApplication>
 
 #include "ccfmain.h"
 #include "config/ccfcommandlineparser.h"

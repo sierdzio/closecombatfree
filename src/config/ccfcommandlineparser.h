@@ -1,7 +1,7 @@
 #ifndef CCFCOMMANDLINEPARSER_H
 #define CCFCOMMANDLINEPARSER_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 /*!
   \defgroup CloseCombatFree Game code
@@ -23,7 +23,7 @@ public:
 private:
     void init(const QStringList &args);
 
-    QStringList switches;
+    QStringList mSwitches;
 };
 
 /*! @}*/

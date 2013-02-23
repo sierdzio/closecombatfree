@@ -21,9 +21,9 @@
 #ifndef CCFCONFIGPARSER_H
 #define CCFCONFIGPARSER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QList>
+#include <QObject>
+#include <QString>
+#include <QList>
 
 #include "../ccferror.h"
 #include "ccfconfigdata.h"
@@ -56,8 +56,8 @@ private:
     void parse(const QString &configFilePath);
     bool readLine(int lineNumber, const QString &line);
 
-    CcfConfigData *m_configuration;
-    QList<QString> *m_configIndexes;
+    CcfConfigData *mConfiguration;
+    QList<QString> *mConfigIndexes;
 };
 
 /*! @}*/

@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtCore/qmath.h>
+#include <qmath.h>
 
 #include "ccfterrain.h"
 
@@ -54,7 +54,7 @@ void CcfTerrain::setTerrainImageUrl(const QString &url, int width, int height)
     }
 //    qDebug() << nUrl;
     QImage tempImage(nUrl);
-    terrainImage = new QImage(tempImage.scaled(QSize(width, height)));
+    mTerrainImage = new QImage(tempImage.scaled(QSize(width, height)));
 }
 
 /*!
@@ -65,7 +65,7 @@ void CcfTerrain::setTerrainImageUrl(const QString &url, int width, int height)
   */
 int CcfTerrain::pixelInfo(int x, int y)
 {
-    QRgb result(terrainImage->pixel(QPoint(x, y)));
+    QRgb result(mTerrainImage->pixel(QPoint(x, y)));
     return qRed(result) + qGreen(result) + qBlue(result);
 }
 

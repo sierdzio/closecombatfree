@@ -28,11 +28,11 @@
 CcfGameManager::CcfGameManager(QObject *parent) :
     QObject(parent), CcfError()
 {
-    tab = "    ";
+    mTab = "    ";
 
 //    QDir scenarioDir("scenarios");
 //    m_scenariosList = scenarioDir.entryList(QDir::Files);
-    m_scenariosList = qmlFileList("scenarios");
+    mScenariosList = qmlFileList("scenarios");
 }
 
 /*!
@@ -40,7 +40,7 @@ CcfGameManager::CcfGameManager(QObject *parent) :
   */
 QString CcfGameManager::scenarioPath(int index)
 {
-    return m_scenariosList.at(index);
+    return mScenariosList.at(index);
 }
 
 /*!
@@ -83,16 +83,16 @@ void CcfGameManager::saveGame(const QQmlListReference &unitsList,
         // In release code, this needs to include order queue,
         // soldier states, damages etc.
         QObject *unit = unitsList.at(i);
-        units += tab + unit->property("unitFileName").toString() + " {\n"
-                + tab + tab + "objectName: \"" + unit->objectName() + "\"\n"
-                + tab + tab + "x: " + unit->property("x").toString() + "\n"
-                + tab + tab + "y: " + unit->property("y").toString() + "\n"
-                + tab + tab + "rotation: " + unit->property("rotation").toString() + "\n"
-                + tab + tab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n"
-                + tab + tab + "state: \"" + unit->property("state").toString() + "\"\n";
+        units += mTab + unit->property("unitFileName").toString() + " {\n"
+                + mTab + mTab + "objectName: \"" + unit->objectName() + "\"\n"
+                + mTab + mTab + "x: " + unit->property("x").toString() + "\n"
+                + mTab + mTab + "y: " + unit->property("y").toString() + "\n"
+                + mTab + mTab + "rotation: " + unit->property("rotation").toString() + "\n"
+                + mTab + mTab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n"
+                + mTab + mTab + "state: \"" + unit->property("state").toString() + "\"\n";
         units += addSavePropertyIfExists(unit, "turretRotation");
         units += addSavePropertyIfExists(unit, "hullColor", true);
-        units += tab + "}\n";
+        units += mTab + "}\n";
     }
     fileContent.replace("%units%", units);
 
@@ -117,7 +117,7 @@ QStringList CcfGameManager::qmlFileList(const QString &directoryToSearch)
   */
 QStringList CcfGameManager::scenariosList()
 {
-    return m_scenariosList;
+    return mScenariosList;
 }
 
 /*!
@@ -140,7 +140,7 @@ QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
     QString result;
     QByteArray ba = propertyName.toLocal8Bit();
     if (object->metaObject()->indexOfProperty(ba.data()) != -1) {
-        result = tab + tab + propertyName + ": ";
+        result = mTab + mTab + propertyName + ": ";
         if (useQuotes)
             result += "\"";
         result += object->property(ba.data()).toString();

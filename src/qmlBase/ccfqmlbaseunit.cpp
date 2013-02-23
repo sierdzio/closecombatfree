@@ -2,7 +2,7 @@
 #include "ccfmain.h"
 #include "logic/ccfenginehelpers.h"
 
-#include <QtQml/QQmlComponent>
+#include <QQmlComponent>
 
 /*!
   BaseUnit constructor - initialises all properties with default values,
@@ -10,35 +10,35 @@
   */
 CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) : CcfObjectBase(parent)
 {
-    m_objectType = QStringLiteral("unit");
-    m_unitFileName = QStringLiteral("Unit");
-    m_unitType = QStringLiteral("Generic unit");
-    m_unitLogo = QStringLiteral("../../img/units/generic_unit_logo.png");
-    m_unitStatus = QStringLiteral("READY");
-    m_unitSide = QStringLiteral("neutral");
-    m_groupNumber = 0;
-    m_unitIndex = -1;
-    m_sideMarkVisible = true;
-    m_sideMarkSource = QStringLiteral("../../img/units/sideMarks/sideMark_side_1.png");
-    m_sideMarkSet = QStringLiteral("side");
-    m_rotationSpeed = 1;
-    m_turretRotationSpeed = 1;
-    m_maxSpeed = 1;
-    m_acceleration = 1;
-    m_unitWidth = 1;
-    m_unitHeight = 1;
-    m_moveFastFactor = 1.5;
-    m_sneakFactor = 0.4;
-    m_currentOrder = -1;
-    m_selected = false;
-    m_firing = false;
-    m_smoking = false;
-    m_defenceSphereRotation = 0;
-    m_paused = false;
-    m_moving = false;
+    mObjectType = QStringLiteral("unit");
+    mUnitFileName = QStringLiteral("Unit");
+    mUnitType = QStringLiteral("Generic unit");
+    mUnitLogo = QStringLiteral("../../img/units/generic_unit_logo.png");
+    mUnitStatus = QStringLiteral("READY");
+    mUnitSide = QStringLiteral("neutral");
+    mGroupNumber = 0;
+    mUnitIndex = -1;
+    mSideMarkVisible = true;
+    mSideMarkSource = QStringLiteral("../../img/units/sideMarks/sideMark_side_1.png");
+    mSideMarkSet = QStringLiteral("side");
+    mRotationSpeed = 1;
+    mTurretRotationSpeed = 1;
+    mMaxSpeed = 1;
+    mAcceleration = 1;
+    mUnitWidth = 1;
+    mUnitHeight = 1;
+    mMoveFastFactor = 1.5;
+    mSneakFactor = 0.4;
+    mCurrentOrder = -1;
+    mSelected = false;
+    mFiring = false;
+    mSmoking = false;
+    mDefenceSphereRotation = 0;
+    mPaused = false;
+    mMoving = false;
 
-    m_mainInstance = CcfMain::instance();
-    m_ordersComponent = new QQmlComponent(m_mainInstance->engine(),
+    mMainInstance = CcfMain::instance();
+    mOrdersComponent = new QQmlComponent(mMainInstance->engine(),
                                           QUrl::fromLocalFile("qml/gui/OrderMarker.qml"));
 }
 
@@ -49,14 +49,14 @@ CcfQmlBaseUnit::CcfQmlBaseUnit(QQuickItem *parent) : CcfObjectBase(parent)
 QString CcfQmlBaseUnit::operation(int index) const
 {
     if (index == -1) {
-        if (m_currentOrder != -1)
-            index = m_currentOrder;
+        if (mCurrentOrder != -1)
+            index = mCurrentOrder;
         else
             index = 0;
     }
 
     if (isOrderIndexValid(index)) {
-        return m_orders.at(index)->getString("operation");
+        return mOrders.at(index)->getString("operation");
     } else {
         mmain->logger()->error("Invalid unit operation index requested",
                              "Mighty Boosh is a great series");
@@ -71,13 +71,13 @@ QString CcfQmlBaseUnit::operation(int index) const
 QPoint CcfQmlBaseUnit::orderTarget(int index) const
 {
     if (index == -1)
-        index = m_currentOrder;
+        index = mCurrentOrder;
 
     int x = 0;
     int y = 0;
     if (isOrderIndexValid(index)) {
-        x = m_orders.at(index)->getInt("targetX");
-        y = m_orders.at(index)->getInt("targetY");
+        x = mOrders.at(index)->getInt("targetX");
+        y = mOrders.at(index)->getInt("targetY");
     }
 
     return QPoint(x, y);
@@ -88,8 +88,8 @@ QPoint CcfQmlBaseUnit::orderTarget(int index) const
   */
 void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
 {
-    m_unitStatus = newStatusMessage;
-    emit unitStatusChanged(newStatusMessage, m_unitIndex);
+    mUnitStatus = newStatusMessage;
+    emit unitStatusChanged(newStatusMessage, mUnitIndex);
 }
 
 /*!
@@ -99,27 +99,27 @@ void CcfQmlBaseUnit::changeStatus(const QString &newStatusMessage)
   */
 void CcfQmlBaseUnit::performMovement(qreal newX, qreal newY, qreal factor)
 {
-    qreal tempX = newX - (m_centerX);
-    qreal tempY = newY - (m_centerY);
+    qreal tempX = newX - (mCenterX);
+    qreal tempY = newY - (mCenterY);
 
     qreal newRotation = CcfEngineHelpers::rotationAngle(x(), y(), tempX, tempY);
     QObject *rotationAnimation = child("rotationAnimation");
     if (rotationAnimation) {
         rotationAnimation->set("duration",
                                CcfEngineHelpers::rotationDuration(rotation(),
-                                                                  newRotation, m_rotationSpeed));
+                                                                  newRotation, mRotationSpeed));
         rotationAnimation->set("to", newRotation);
         rotationAnimation->set("running", true);
     } else {
         mmain->logger()->log("Could not instantiate rotationAnimation in CcfQmlBase.");
     }
-    m_moving = true;
+    mMoving = true;
 
     QObject *xMoveAnimation = child("xMoveAnimation");
     QObject *yMoveAnimation = child("yMoveAnimation");
     if (xMoveAnimation && yMoveAnimation) {
         qreal moveDuration = CcfEngineHelpers::targetDistance(x(), y(), tempX,
-                                                              tempY) * 800 / (m_maxSpeed * factor);
+                                                              tempY) * 800 / (mMaxSpeed * factor);
         set("duration", moveDuration);
         set("duration", moveDuration);
     } else {
@@ -138,8 +138,8 @@ void CcfQmlBaseUnit::performTurretShooting(qreal targetX, qreal targetY)
     if (tra) {
         qreal newRotation = CcfEngineHelpers::rotationAngle(
                     x(), y(),
-                    targetX - m_centerX,
-                    targetY - m_centerY) - rotation();
+                    targetX - mCenterX,
+                    targetY - mCenterY) - rotation();
         tra->set("duration", CcfEngineHelpers::rotationDuration(
                      getReal("turretRotation"),
                      newRotation,
@@ -175,8 +175,8 @@ void CcfQmlBaseUnit::hit(QObject *byWhat, qreal xWhere, qreal yWhere)
  */
 QObject *CcfQmlBaseUnit::createOrder(QObject *parent)
 {
-    if (m_ordersComponent->isReady()) {
-        QObject *object = m_ordersComponent->create();
+    if (mOrdersComponent->isReady()) {
+        QObject *object = mOrdersComponent->create();
         object->set("parent", QVariant::fromValue(parent));
         return object;
     } else {
@@ -191,9 +191,9 @@ void CcfQmlBaseUnit::cancelOrder()
 {
     changeStatus("STOPPED");
     clearOrderQueue();
-    m_moving = false;
+    mMoving = false;
 
-    if ((m_firing == false) && (m_smoking == false))  {
+    if ((mFiring == false) && (mSmoking == false))  {
         QObject *xma = child("xMoveAnimation");
         if (xma) invoke(xma, "stop");
         QObject *yma = child("yMoveAnimation");
@@ -203,11 +203,11 @@ void CcfQmlBaseUnit::cancelOrder()
         changeStatus("READY");
     }
 
-    if ((m_firing == true) || (m_smoking == true))  {
+    if ((mFiring == true) || (mSmoking == true))  {
         QObject *tra = child("turretRotationAnimation");
         if (tra) invoke(tra, "stop");
-        m_smoking = false;
-        m_firing = false;
+        mSmoking = false;
+        mFiring = false;
         changeStatus("READY");
     }
 }
@@ -219,15 +219,15 @@ void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObj
 {
     QObject *order = createOrder(reparent);
     if (order != 0) {
-        order->set("index", m_orders.length());
-        order->set("number", m_orders.length());
+        order->set("index", mOrders.length());
+        order->set("number", mOrders.length());
         order->set("operation", orderName);
         order->set("orderColor", CcfEngineHelpers::colorForOrder(orderName));
 
         order->set("x", (x - order->getReal("centerX")));
         order->set("y", (y - order->getReal("centerY")));
         order->set("visible", true);
-        m_orders.append(order);
+        mOrders.append(order);
     }
 }
 
@@ -238,12 +238,12 @@ void CcfQmlBaseUnit::continueQueue()
 {
     bool noOrdersLeft = true;
 
-    for (int i = 0; i < m_orders.length(); ++i) {
-        QObject *order = m_orders.value(i);
+    for (int i = 0; i < mOrders.length(); ++i) {
+        QObject *order = mOrders.value(i);
         if (order->getBool("performed") == true) {
             continue;
         } else {
-            m_currentOrder = i;
+            mCurrentOrder = i;
 
             qreal targetX = order->getReal("targetX");
             qreal targetY = order->getReal("targetY");
@@ -253,16 +253,16 @@ void CcfQmlBaseUnit::continueQueue()
                 performMovement(targetX, targetY, 1);
             } else if (operation == "Move fast") {
                 changeStatus("MOVING FAST");
-                performMovement(targetX, targetY, m_moveFastFactor);
+                performMovement(targetX, targetY, mMoveFastFactor);
             } else if (operation == "Sneak") {
                 changeStatus("SNEAKING");
-                performMovement(targetX, targetY, m_sneakFactor);
+                performMovement(targetX, targetY, mSneakFactor);
             } else if (operation == "Smoke") {
                 performTurretShooting(targetX, targetY);
-                m_smoking = true;
+                mSmoking = true;
             } else if (operation == "Attack") {
                 performTurretShooting(targetX, targetY);
-                m_firing = true;
+                mFiring = true;
             }
 
             order->set("performed", true);
@@ -283,7 +283,7 @@ void CcfQmlBaseUnit::continueQueue()
   */
 void CcfQmlBaseUnit::processQueue()
 {
-    if (m_currentOrder == -1) {
+    if (mCurrentOrder == -1) {
         continueQueue();
     }
 }
@@ -295,12 +295,12 @@ void CcfQmlBaseUnit::processQueue()
   */
 void CcfQmlBaseUnit::clearOrderQueue()
 {
-    for (int i = 0; i < m_orders.length(); ++i) {
+    for (int i = 0; i < mOrders.length(); ++i) {
         deleteOrder(i);
     }
 
-    m_currentOrder = -1;
-    m_orders.clear();
+    mCurrentOrder = -1;
+    mOrders.clear();
 }
 
 /*!
@@ -308,8 +308,8 @@ void CcfQmlBaseUnit::clearOrderQueue()
   */
 void CcfQmlBaseUnit::deleteOrder(int index)
 {
-    if (index < m_orders.length()) {
-        delete m_orders.takeAt(index);  //.at(index);
+    if (index < mOrders.length()) {
+        delete mOrders.takeAt(index);  //.at(index);
     }
 }
 
@@ -370,17 +370,17 @@ void CcfQmlBaseUnit::smokeTo(qreal targetX, qreal targetY, QObject *reparent)
   */
 QVariantList CcfQmlBaseUnit::soldiers()
 {
-    if (m_soldiers.isEmpty()) {
+    if (mSoldiers.isEmpty()) {
         // Get soldiers up front:
         QObjectList kids = children();
 
         for (int i = 0; i < kids.length(); ++i) {
             if (kids.at(i)->metaObject()->className() == QString("CcfQmlBaseSoldier"))
-                m_soldiers.append(QVariant::fromValue(kids.at(i)));
+                mSoldiers.append(QVariant::fromValue(kids.at(i)));
         }
     }
 
-    return m_soldiers;
+    return mSoldiers;
 }
 
 /*!
@@ -388,7 +388,7 @@ QVariantList CcfQmlBaseUnit::soldiers()
   */
 void CcfQmlBaseUnit::togglePause()
 {
-    m_paused = !m_paused;
+    mPaused = !mPaused;
     emit pausedChanged();
 }
 
@@ -398,7 +398,7 @@ void CcfQmlBaseUnit::togglePause()
   */
 QString CcfQmlBaseUnit::getObjectType() const
 {
-    return m_objectType;
+    return mObjectType;
 }
 
 /*!
@@ -406,7 +406,7 @@ QString CcfQmlBaseUnit::getObjectType() const
   */
 QString CcfQmlBaseUnit::getUnitFileName() const
 {
-    return m_unitFileName;
+    return mUnitFileName;
 }
 
 /*!
@@ -414,7 +414,7 @@ QString CcfQmlBaseUnit::getUnitFileName() const
   */
 QString CcfQmlBaseUnit::getUnitType() const
 {
-    return m_unitType;
+    return mUnitType;
 }
 
 /*!
@@ -422,7 +422,7 @@ QString CcfQmlBaseUnit::getUnitType() const
   */
 QString CcfQmlBaseUnit::getUnitLogo() const
 {
-    return m_unitLogo;
+    return mUnitLogo;
 }
 
 /*!
@@ -430,7 +430,7 @@ QString CcfQmlBaseUnit::getUnitLogo() const
   */
 QString CcfQmlBaseUnit::getUnitStatus() const
 {
-    return m_unitStatus;
+    return mUnitStatus;
 }
 
 /*!
@@ -438,7 +438,7 @@ QString CcfQmlBaseUnit::getUnitStatus() const
   */
 QString CcfQmlBaseUnit::getUnitSide() const
 {
-    return m_unitSide;
+    return mUnitSide;
 }
 
 /*!
@@ -446,7 +446,7 @@ QString CcfQmlBaseUnit::getUnitSide() const
   */
 int CcfQmlBaseUnit::getGroupNumber() const
 {
-    return m_groupNumber;
+    return mGroupNumber;
 }
 
 /*!
@@ -454,7 +454,7 @@ int CcfQmlBaseUnit::getGroupNumber() const
   */
 int CcfQmlBaseUnit::getUnitIndex() const
 {
-    return m_unitIndex;
+    return mUnitIndex;
 }
 
 /*!
@@ -462,7 +462,7 @@ int CcfQmlBaseUnit::getUnitIndex() const
   */
 bool CcfQmlBaseUnit::getSideMarkVisible() const
 {
-    return m_sideMarkVisible;
+    return mSideMarkVisible;
 }
 
 /*!
@@ -470,7 +470,7 @@ bool CcfQmlBaseUnit::getSideMarkVisible() const
   */
 QString CcfQmlBaseUnit::getSideMarkSource() const
 {
-    return m_sideMarkSource;
+    return mSideMarkSource;
 }
 
 /*!
@@ -478,7 +478,7 @@ QString CcfQmlBaseUnit::getSideMarkSource() const
   */
 QString CcfQmlBaseUnit::getSideMarkSet() const
 {
-    return m_sideMarkSet;
+    return mSideMarkSet;
 }
 
 /*!
@@ -486,7 +486,7 @@ QString CcfQmlBaseUnit::getSideMarkSet() const
   */
 int CcfQmlBaseUnit::getRotationSpeed() const
 {
-    return m_rotationSpeed;
+    return mRotationSpeed;
 }
 
 /*!
@@ -494,7 +494,7 @@ int CcfQmlBaseUnit::getRotationSpeed() const
   */
 int CcfQmlBaseUnit::getTurretRotationSpeed() const
 {
-    return m_turretRotationSpeed;
+    return mTurretRotationSpeed;
 }
 
 /*!
@@ -502,7 +502,7 @@ int CcfQmlBaseUnit::getTurretRotationSpeed() const
   */
 int CcfQmlBaseUnit::getMaxSpeed() const
 {
-    return m_maxSpeed;
+    return mMaxSpeed;
 }
 
 /*!
@@ -510,7 +510,7 @@ int CcfQmlBaseUnit::getMaxSpeed() const
   */
 int CcfQmlBaseUnit::getAcceleration() const
 {
-    return m_acceleration;
+    return mAcceleration;
 }
 
 /*!
@@ -518,7 +518,7 @@ int CcfQmlBaseUnit::getAcceleration() const
   */
 int CcfQmlBaseUnit::getUnitWidth() const
 {
-    return m_unitWidth;
+    return mUnitWidth;
 }
 
 /*!
@@ -526,7 +526,7 @@ int CcfQmlBaseUnit::getUnitWidth() const
   */
 int CcfQmlBaseUnit::getUnitHeight() const
 {
-    return m_unitHeight;
+    return mUnitHeight;
 }
 
 /*!
@@ -534,7 +534,7 @@ int CcfQmlBaseUnit::getUnitHeight() const
   */
 qreal CcfQmlBaseUnit::getMoveFastFactor() const
 {
-    return m_moveFastFactor;
+    return mMoveFastFactor;
 }
 
 /*!
@@ -542,7 +542,7 @@ qreal CcfQmlBaseUnit::getMoveFastFactor() const
   */
 qreal CcfQmlBaseUnit::getSneakFactor() const
 {
-    return m_sneakFactor;
+    return mSneakFactor;
 }
 
 /*!
@@ -550,7 +550,7 @@ qreal CcfQmlBaseUnit::getSneakFactor() const
   */
 int CcfQmlBaseUnit::getCenterX() const
 {
-    return m_centerX;
+    return mCenterX;
 }
 
 /*!
@@ -558,7 +558,7 @@ int CcfQmlBaseUnit::getCenterX() const
   */
 int CcfQmlBaseUnit::getCenterY() const
 {
-    return m_centerY;
+    return mCenterY;
 }
 
 /*!
@@ -566,7 +566,7 @@ int CcfQmlBaseUnit::getCenterY() const
   */
 int CcfQmlBaseUnit::getCurrentOrder() const
 {
-    return m_currentOrder;
+    return mCurrentOrder;
 }
 
 /*!
@@ -574,7 +574,7 @@ int CcfQmlBaseUnit::getCurrentOrder() const
   */
 bool CcfQmlBaseUnit::getSelected() const
 {
-    return m_selected;
+    return mSelected;
 }
 
 /*!
@@ -582,7 +582,7 @@ bool CcfQmlBaseUnit::getSelected() const
   */
 bool CcfQmlBaseUnit::getFiring() const
 {
-    return m_firing;
+    return mFiring;
 }
 
 /*!
@@ -590,7 +590,7 @@ bool CcfQmlBaseUnit::getFiring() const
   */
 bool CcfQmlBaseUnit::getSmoking() const
 {
-    return m_smoking;
+    return mSmoking;
 }
 
 /*!
@@ -598,7 +598,7 @@ bool CcfQmlBaseUnit::getSmoking() const
   */
 int CcfQmlBaseUnit::getDefenceSphereRotation() const
 {
-    return m_defenceSphereRotation;
+    return mDefenceSphereRotation;
 }
 
 /*!
@@ -606,7 +606,7 @@ int CcfQmlBaseUnit::getDefenceSphereRotation() const
   */
 QString CcfQmlBaseUnit::getDefenceSphereColor() const
 {
-    return m_defenceSphereColor;
+    return mDefenceSphereColor;
 }
 
 /*!
@@ -614,7 +614,7 @@ QString CcfQmlBaseUnit::getDefenceSphereColor() const
   */
 bool CcfQmlBaseUnit::getPaused() const
 {
-    return m_paused;
+    return mPaused;
 }
 
 /*!
@@ -622,7 +622,7 @@ bool CcfQmlBaseUnit::getPaused() const
   */
 bool CcfQmlBaseUnit::getMoving() const
 {
-    return m_moving;
+    return mMoving;
 }
 
 // Property setters:
@@ -632,10 +632,10 @@ bool CcfQmlBaseUnit::getMoving() const
 void CcfQmlBaseUnit::setObjectType(const QString &objectType)
 {
     bool wasChaged = false;
-    if (objectType != m_objectType)
+    if (objectType != mObjectType)
         wasChaged = true;
 
-    m_objectType = objectType;
+    mObjectType = objectType;
 
     if (wasChaged)
         emit objectTypeChanged();
@@ -647,10 +647,10 @@ void CcfQmlBaseUnit::setObjectType(const QString &objectType)
 void CcfQmlBaseUnit::setUnitFileName(const QString &unitFileName)
 {
     bool wasChaged = false;
-    if (unitFileName != m_unitFileName)
+    if (unitFileName != mUnitFileName)
         wasChaged = true;
 
-    m_unitFileName = unitFileName;
+    mUnitFileName = unitFileName;
 
     if (wasChaged)
         emit unitFileNameChanged();
@@ -662,10 +662,10 @@ void CcfQmlBaseUnit::setUnitFileName(const QString &unitFileName)
 void CcfQmlBaseUnit::setUnitType(const QString &unitType)
 {
     bool wasChaged = false;
-    if (unitType != m_unitType)
+    if (unitType != mUnitType)
         wasChaged = true;
 
-    m_unitType = unitType;
+    mUnitType = unitType;
 
     if (wasChaged)
         emit unitTypeChanged();
@@ -677,10 +677,10 @@ void CcfQmlBaseUnit::setUnitType(const QString &unitType)
 void CcfQmlBaseUnit::setUnitLogo(const QString &unitLogo)
 {
     bool wasChaged = false;
-    if (unitLogo != m_unitLogo)
+    if (unitLogo != mUnitLogo)
         wasChaged = true;
 
-    m_unitLogo = unitLogo;
+    mUnitLogo = unitLogo;
 
     if (wasChaged)
         emit unitLogoChanged();
@@ -692,10 +692,10 @@ void CcfQmlBaseUnit::setUnitLogo(const QString &unitLogo)
 void CcfQmlBaseUnit::setUnitStatus(const QString &unitStatus)
 {
     bool wasChaged = false;
-    if (unitStatus != m_unitStatus)
+    if (unitStatus != mUnitStatus)
         wasChaged = true;
 
-    m_unitStatus = unitStatus;
+    mUnitStatus = unitStatus;
 
     if (wasChaged)
         emit unitStatusChanged();
@@ -707,10 +707,10 @@ void CcfQmlBaseUnit::setUnitStatus(const QString &unitStatus)
 void CcfQmlBaseUnit::setUnitSide(const QString &unitSide)
 {
     bool wasChaged = false;
-    if (unitSide != m_unitSide)
+    if (unitSide != mUnitSide)
         wasChaged = true;
 
-    m_unitSide = unitSide;
+    mUnitSide = unitSide;
 
     if (wasChaged)
         emit unitSideChanged();
@@ -722,10 +722,10 @@ void CcfQmlBaseUnit::setUnitSide(const QString &unitSide)
 void CcfQmlBaseUnit::setGroupNumber(int groupNumber)
 {
     bool wasChaged = false;
-    if (groupNumber != m_groupNumber)
+    if (groupNumber != mGroupNumber)
         wasChaged = true;
 
-    m_groupNumber = groupNumber;
+    mGroupNumber = groupNumber;
 
     if (wasChaged)
         emit groupNumberChanged();
@@ -737,10 +737,10 @@ void CcfQmlBaseUnit::setGroupNumber(int groupNumber)
 void CcfQmlBaseUnit::setUnitIndex(int unitIndex)
 {
     bool wasChaged = false;
-    if (unitIndex != m_unitIndex)
+    if (unitIndex != mUnitIndex)
         wasChaged = true;
 
-    m_unitIndex = unitIndex;
+    mUnitIndex = unitIndex;
 
     if (wasChaged)
         emit unitIndexChanged();
@@ -752,10 +752,10 @@ void CcfQmlBaseUnit::setUnitIndex(int unitIndex)
 void CcfQmlBaseUnit::setSideMarkVisible(bool sideMarkVisible)
 {
     bool wasChaged = false;
-    if (sideMarkVisible != m_sideMarkVisible)
+    if (sideMarkVisible != mSideMarkVisible)
         wasChaged = true;
 
-    m_sideMarkVisible = sideMarkVisible;
+    mSideMarkVisible = sideMarkVisible;
 
     if (wasChaged)
         emit sideMarkVisibleChanged();
@@ -767,10 +767,10 @@ void CcfQmlBaseUnit::setSideMarkVisible(bool sideMarkVisible)
 void CcfQmlBaseUnit::setSideMarkSource(const QString &sideMarkSource)
 {
     bool wasChaged = false;
-    if (sideMarkSource != m_sideMarkSource)
+    if (sideMarkSource != mSideMarkSource)
         wasChaged = true;
 
-    m_sideMarkSource = sideMarkSource;
+    mSideMarkSource = sideMarkSource;
 
     if (wasChaged)
         emit sideMarkSourceChanged();
@@ -782,10 +782,10 @@ void CcfQmlBaseUnit::setSideMarkSource(const QString &sideMarkSource)
 void CcfQmlBaseUnit::setSideMarkSet(const QString &sideMarkSet)
 {
     bool wasChaged = false;
-    if (sideMarkSet != m_sideMarkSet)
+    if (sideMarkSet != mSideMarkSet)
         wasChaged = true;
 
-    m_sideMarkSet = sideMarkSet;
+    mSideMarkSet = sideMarkSet;
 
     if (wasChaged)
         emit sideMarkSetChanged();
@@ -797,10 +797,10 @@ void CcfQmlBaseUnit::setSideMarkSet(const QString &sideMarkSet)
 void CcfQmlBaseUnit::setRotationSpeed(int rotationSpeed)
 {
     bool wasChaged = false;
-    if (rotationSpeed != m_rotationSpeed)
+    if (rotationSpeed != mRotationSpeed)
         wasChaged = true;
 
-    m_rotationSpeed = rotationSpeed;
+    mRotationSpeed = rotationSpeed;
 
     if (wasChaged)
         emit rotationSpeedChanged();
@@ -812,10 +812,10 @@ void CcfQmlBaseUnit::setRotationSpeed(int rotationSpeed)
 void CcfQmlBaseUnit::setTurretRotationSpeed(int turretRotationSpeed)
 {
     bool wasChaged = false;
-    if (turretRotationSpeed != m_turretRotationSpeed)
+    if (turretRotationSpeed != mTurretRotationSpeed)
         wasChaged = true;
 
-    m_turretRotationSpeed = turretRotationSpeed;
+    mTurretRotationSpeed = turretRotationSpeed;
 
     if (wasChaged)
         emit turretRotationSpeedChanged();
@@ -827,10 +827,10 @@ void CcfQmlBaseUnit::setTurretRotationSpeed(int turretRotationSpeed)
 void CcfQmlBaseUnit::setMaxSpeed(int maxSpeed)
 {
     bool wasChaged = false;
-    if (maxSpeed != m_maxSpeed)
+    if (maxSpeed != mMaxSpeed)
         wasChaged = true;
 
-    m_maxSpeed = maxSpeed;
+    mMaxSpeed = maxSpeed;
 
     if (wasChaged)
         emit maxSpeedChanged();
@@ -842,10 +842,10 @@ void CcfQmlBaseUnit::setMaxSpeed(int maxSpeed)
 void CcfQmlBaseUnit::setAcceleration(int acceleration)
 {
     bool wasChaged = false;
-    if (acceleration != m_acceleration)
+    if (acceleration != mAcceleration)
         wasChaged = true;
 
-    m_acceleration = acceleration;
+    mAcceleration = acceleration;
 
     if (wasChaged)
         emit accelerationChanged();
@@ -857,10 +857,10 @@ void CcfQmlBaseUnit::setAcceleration(int acceleration)
 void CcfQmlBaseUnit::setUnitWidth(int unitWidth)
 {
     bool wasChaged = false;
-    if (unitWidth != m_unitWidth)
+    if (unitWidth != mUnitWidth)
         wasChaged = true;
 
-    m_unitWidth = unitWidth;
+    mUnitWidth = unitWidth;
 
     if (wasChaged)
         emit unitWidthChanged();
@@ -872,10 +872,10 @@ void CcfQmlBaseUnit::setUnitWidth(int unitWidth)
 void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
 {
     bool wasChaged = false;
-    if (unitHeight != m_unitHeight)
+    if (unitHeight != mUnitHeight)
         wasChaged = true;
 
-    m_unitHeight = unitHeight;
+    mUnitHeight = unitHeight;
 
     if (wasChaged)
         emit unitHeightChanged();
@@ -887,10 +887,10 @@ void CcfQmlBaseUnit::setUnitHeight(int unitHeight)
 void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 {
     bool wasChaged = false;
-    if (moveFastFactor != m_moveFastFactor)
+    if (moveFastFactor != mMoveFastFactor)
         wasChaged = true;
 
-    m_moveFastFactor = moveFastFactor;
+    mMoveFastFactor = moveFastFactor;
 
     if (wasChaged)
         emit moveFastFactorChanged();
@@ -902,10 +902,10 @@ void CcfQmlBaseUnit::setMoveFastFactor(qreal moveFastFactor)
 void CcfQmlBaseUnit::setSneakFactor(qreal sneakFactor)
 {
     bool wasChaged = false;
-    if (sneakFactor != m_sneakFactor)
+    if (sneakFactor != mSneakFactor)
         wasChaged = true;
 
-    m_sneakFactor = sneakFactor;
+    mSneakFactor = sneakFactor;
 
     if (wasChaged)
         emit sneakFactorChanged();
@@ -917,10 +917,10 @@ void CcfQmlBaseUnit::setSneakFactor(qreal sneakFactor)
 void CcfQmlBaseUnit::setCenterX(int centerX)
 {
     bool wasChaged = false;
-    if (centerX != m_centerX)
+    if (centerX != mCenterX)
         wasChaged = true;
 
-    m_centerX = centerX;
+    mCenterX = centerX;
 
     if (wasChaged)
         emit centerXChanged();
@@ -932,10 +932,10 @@ void CcfQmlBaseUnit::setCenterX(int centerX)
 void CcfQmlBaseUnit::setCenterY(int centerY)
 {
     bool wasChaged = false;
-    if (centerY != m_centerY)
+    if (centerY != mCenterY)
         wasChaged = true;
 
-    m_centerY = centerY;
+    mCenterY = centerY;
 
     if (wasChaged)
         emit centerYChanged();
@@ -947,10 +947,10 @@ void CcfQmlBaseUnit::setCenterY(int centerY)
 void CcfQmlBaseUnit::setCurrentOrder(int currentOrder)
 {
     bool wasChaged = false;
-    if (currentOrder != m_currentOrder)
+    if (currentOrder != mCurrentOrder)
         wasChaged = true;
 
-    m_currentOrder = currentOrder;
+    mCurrentOrder = currentOrder;
 
     if (wasChaged)
         emit currentOrderChanged();
@@ -962,13 +962,13 @@ void CcfQmlBaseUnit::setCurrentOrder(int currentOrder)
 void CcfQmlBaseUnit::setSelected(bool selected)
 {
     bool wasChaged = false;
-    if (selected != m_selected)
+    if (selected != mSelected)
         wasChaged = true;
 
-    m_selected = selected;
+    mSelected = selected;
 
     if (wasChaged)
-        emit selectedChanged(m_selected, m_unitIndex);
+        emit selectedChanged(mSelected, mUnitIndex);
 }
 
 /*!
@@ -977,10 +977,10 @@ void CcfQmlBaseUnit::setSelected(bool selected)
 void CcfQmlBaseUnit::setFiring(bool firing)
 {
     bool wasChaged = false;
-    if (firing != m_firing)
+    if (firing != mFiring)
         wasChaged = true;
 
-    m_firing = firing;
+    mFiring = firing;
 
     if (wasChaged)
         emit firingChanged();
@@ -992,10 +992,10 @@ void CcfQmlBaseUnit::setFiring(bool firing)
 void CcfQmlBaseUnit::setSmoking(bool smoking)
 {
     bool wasChaged = false;
-    if (smoking != m_smoking)
+    if (smoking != mSmoking)
         wasChaged = true;
 
-    m_smoking = smoking;
+    mSmoking = smoking;
 
     if (wasChaged)
         emit smokingChanged();
@@ -1007,10 +1007,10 @@ void CcfQmlBaseUnit::setSmoking(bool smoking)
 void CcfQmlBaseUnit::setDefenceSphereRotation(int defenceSphereRotation)
 {
     bool wasChaged = false;
-    if (defenceSphereRotation != m_defenceSphereRotation)
+    if (defenceSphereRotation != mDefenceSphereRotation)
         wasChaged = true;
 
-    m_defenceSphereRotation = defenceSphereRotation;
+    mDefenceSphereRotation = defenceSphereRotation;
 
     if (wasChaged)
         emit defenceSphereRotationChanged();
@@ -1022,10 +1022,10 @@ void CcfQmlBaseUnit::setDefenceSphereRotation(int defenceSphereRotation)
 void CcfQmlBaseUnit::setDefenceSphereColor(const QString &defenceSphereColor)
 {
     bool wasChaged = false;
-    if (defenceSphereColor != m_defenceSphereColor)
+    if (defenceSphereColor != mDefenceSphereColor)
         wasChaged = true;
 
-    m_defenceSphereColor = defenceSphereColor;
+    mDefenceSphereColor = defenceSphereColor;
 
     if (wasChaged)
         emit defenceSphereColorChanged();
@@ -1037,10 +1037,10 @@ void CcfQmlBaseUnit::setDefenceSphereColor(const QString &defenceSphereColor)
 void CcfQmlBaseUnit::setPaused(bool paused)
 {
     bool wasChaged = false;
-    if (paused != m_paused)
+    if (paused != mPaused)
         wasChaged = true;
 
-    m_paused = paused;
+    mPaused = paused;
 
     if (wasChaged)
         emit pausedChanged();
@@ -1052,14 +1052,14 @@ void CcfQmlBaseUnit::setPaused(bool paused)
 void CcfQmlBaseUnit::setMoving(bool moving)
 {
     bool wasChaged = false;
-    if (moving != m_moving)
+    if (moving != mMoving)
         wasChaged = true;
 
-    m_moving = moving;
+    mMoving = moving;
 
     if (wasChaged) {
         emit movingChanged();
-        emit movementStateChange(m_moving, m_unitIndex);
+        emit movementStateChange(mMoving, mUnitIndex);
     }
 }
 
@@ -1069,7 +1069,7 @@ void CcfQmlBaseUnit::setMoving(bool moving)
   */
 bool CcfQmlBaseUnit::isOrderIndexValid(int index) const
 {
-    if ((index >= 0) && (index < m_orders.length()))
+    if ((index >= 0) && (index < mOrders.length()))
         return true;
     return false;
 }

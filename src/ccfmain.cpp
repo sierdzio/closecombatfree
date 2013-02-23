@@ -18,9 +18,9 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-#include <QtGui/QGuiApplication>
-#include <QtQml/QQmlContext>
-#include <QtQml/QQmlEngine>
+#include <QGuiApplication>
+#include <QQmlContext>
+#include <QQmlEngine>
 
 #include "ccfmain.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
@@ -29,7 +29,7 @@
 #include "qmlBase/ccfqmlbasesoldier.h"
 
 // Singleton
-CcfMain *CcfMain::m_instance = NULL;
+CcfMain *CcfMain::mInstance = NULL;
 
 /*!
   Returns instance of CcfMain class. Creates a new one if none exist.
@@ -39,9 +39,9 @@ CcfMain *CcfMain::m_instance = NULL;
  */
 CcfMain *CcfMain::instance(CcfCommandLineParser *cmd)
 {
-    if (!m_instance)
-        m_instance = new CcfMain(cmd, 0);
-    return m_instance;
+    if (!mInstance)
+        mInstance = new CcfMain(cmd, 0);
+    return mInstance;
 }
 
 /*!
@@ -51,39 +51,39 @@ CcfMain *CcfMain::instance(CcfCommandLineParser *cmd)
   signals and slots, reads config file(s).
   */
 CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
-    QQuickView(parent), CcfError(), m_cmdLnParser(cmd)
+    QQuickView(parent), CcfError(), mCmdLnParser(cmd)
 {
     qmlRegisterType<CcfQmlBaseRosterMenu>("QmlBase", 0, 1, "BaseRosterMenu");
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
     qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");    
     qmlRegisterType<CcfQmlBaseSoldier>("QmlBase", 0, 1, "Soldier");
 
-    m_logger = new CcfLogger(this, m_cmdLnParser->isDebug());
-    m_global = new CcfGlobal(this, m_logger);
-    m_gameManager = new CcfGameManager(this);
-    m_terrain = new CcfTerrain(this);
-    m_engineHelpers = new CcfEngineHelpers(this);
-    m_scenarioState = new CcfScenarioState(this);
+    mLogger = new CcfLogger(this, mCmdLnParser->isDebug());
+    mGlobal = new CcfGlobal(this, mLogger);
+    mGameManager = new CcfGameManager(this);
+    mTerrain = new CcfTerrain(this);
+    mEngineHelpers = new CcfEngineHelpers(this);
+    mScenarioState = new CcfScenarioState(this);
     initConfiguration();
 
-    rootContext()->setContextProperty("Global", m_global);
-    rootContext()->setContextProperty("Config", m_configuration);
-    rootContext()->setContextProperty("GameManager", m_gameManager);
-    rootContext()->setContextProperty("Terrain", m_terrain);
-    rootContext()->setContextProperty("EngineHelpers", m_engineHelpers);
-    rootContext()->setContextProperty("ScenarioState", m_scenarioState);
-    rootContext()->setContextProperty("Logger", m_logger);
+    rootContext()->setContextProperty("Global", mGlobal);
+    rootContext()->setContextProperty("Config", mConfiguration);
+    rootContext()->setContextProperty("GameManager", mGameManager);
+    rootContext()->setContextProperty("Terrain", mTerrain);
+    rootContext()->setContextProperty("EngineHelpers", mEngineHelpers);
+    rootContext()->setContextProperty("ScenarioState", mScenarioState);
+    rootContext()->setContextProperty("Logger", mLogger);
 
     QString pwd = qApp->applicationDirPath() + "/";
     rootContext()->setContextProperty("PWD", pwd);
 
     setResizeMode(QQuickView::SizeRootObjectToView);
 //    connect(this, SIGNAL(sceneResized(QSize)), configuration, SLOT(windowResized(QSize)));
-    connect(m_configuration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
+    connect(mConfiguration, SIGNAL(sizeModifiedInGame(int,int)), this, SLOT(forceViewportResize(int,int)));
     connect(engine(), SIGNAL(quit()), this, SLOT(quit()));
-    connect(m_configuration, SIGNAL(maximise()), this, SLOT(showMaximized()));
-    connect(m_configuration, SIGNAL(demaximise()), this, SLOT(showNormal()));
-    connect(m_global, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
+    connect(mConfiguration, SIGNAL(maximise()), this, SLOT(showMaximized()));
+    connect(mConfiguration, SIGNAL(demaximise()), this, SLOT(showNormal()));
+    connect(mGlobal, SIGNAL(disableQrc(QObject*)), this, SLOT(disableQrc(QObject*)));
 }
 
 /*!
@@ -91,7 +91,7 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
   */
 bool CcfMain::isConfigMaximised()
 {
-    return m_configuration->isMaximised();
+    return mConfiguration->isMaximised();
 }
 
 /*!
@@ -99,7 +99,7 @@ bool CcfMain::isConfigMaximised()
   */
 void CcfMain::resizeView(QSize newSize)
 {
-    m_configuration->windowResized(newSize);
+    mConfiguration->windowResized(newSize);
 }
 
 /*!
@@ -107,7 +107,7 @@ void CcfMain::resizeView(QSize newSize)
  */
 CcfLogger *CcfMain::logger()
 {
-    return m_logger;
+    return mLogger;
 }
 
 /*!
@@ -115,7 +115,7 @@ CcfLogger *CcfMain::logger()
  */
 CcfConfig *CcfMain::config()
 {
-    return m_configuration;
+    return mConfiguration;
 }
 
 /*!
@@ -123,7 +123,7 @@ CcfConfig *CcfMain::config()
  */
 CcfScenarioState *CcfMain::scenarioState()
 {
-    return m_scenarioState;
+    return mScenarioState;
 }
 
 /*!
@@ -131,7 +131,7 @@ CcfScenarioState *CcfMain::scenarioState()
  */
 CcfGlobal *CcfMain::global()
 {
-    return m_global;
+    return mGlobal;
 }
 
 /*!
@@ -139,7 +139,7 @@ CcfGlobal *CcfMain::global()
  */
 CcfTerrain *CcfMain::terrain()
 {
-    return m_terrain;
+    return mTerrain;
 }
 
 /*!
@@ -150,12 +150,12 @@ CcfTerrain *CcfMain::terrain()
   */
 void CcfMain::quit()
 {
-    m_configuration->saveConfig();
-    if (m_configuration->isErrorState()) {
-        qWarning(qPrintable(m_configuration->errorMessage()), NULL);
+    mConfiguration->saveConfig();
+    if (mConfiguration->isErrorState()) {
+        qWarning(qPrintable(mConfiguration->errorMessage()), NULL);
     }
 
-    delete m_configuration;
+    delete mConfiguration;
     qApp->quit();
 }
 
@@ -189,16 +189,16 @@ void CcfMain::disableQrc(QObject *object)
   */
 bool CcfMain::initConfiguration()
 {
-    m_configuration = new CcfConfig("config", m_global, this);
-    if (m_configuration->isErrorState()) {
+    mConfiguration = new CcfConfig("config", mGlobal, this);
+    if (mConfiguration->isErrorState()) {
         printf("Error while reading configuration file! Message: %s\n",
-               qPrintable(m_configuration->errorMessage()));
+               qPrintable(mConfiguration->errorMessage()));
         printf("Loading default configuration... ");
-        delete m_configuration;
-        m_configuration = new CcfConfig("config_default", m_global, this);
+        delete mConfiguration;
+        mConfiguration = new CcfConfig("config_default", mGlobal, this);
 
-        if (m_configuration->isErrorState()) {
-            printf("ERROR: %s\n", qPrintable(m_configuration->errorMessage()));
+        if (mConfiguration->isErrorState()) {
+            printf("ERROR: %s\n", qPrintable(mConfiguration->errorMessage()));
             return false;
         } else {
             printf("OK\n");
