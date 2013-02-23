@@ -23,14 +23,26 @@ public:
       and print out in the console).
       */
     enum MessageType {
-        Log   = 0,
-        Error = 1
+        Log    = 0,
+        Error  = 1,
+        Status = 2
     };
 
     explicit CcfLogger(QObject *parent = 0, bool isDebugOn = false);
 
-    Q_INVOKABLE void log(const QString &message, const QString &additionalData = QString());
-    Q_INVOKABLE void error(const QString &message, const QString &additionalData = QString());
+signals:
+    /*!
+      Emited when a new status message is requested.
+      */
+    void newStatusMessage(const QString &message,
+                          QObject *sender);
+
+public slots:
+    void log(const QString &message, const QString &additionalData = QString());
+    void error(const QString &message, const QString &additionalData = QString());
+
+    void statusMsg(const QString &message);
+    void statusMessage(const QString &message);
     
 private:
     void addLogEntry(MessageType msgType, const QString &message,

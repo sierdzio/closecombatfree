@@ -30,10 +30,8 @@
 #include "config/ccflogger.h"
 #include "config/ccfcommandlineparser.h"
 #include "logic/ccfenginehelpers.h"
-#include "logic/ccfscenariostate.h"
 #include "ccfglobal.h"
 #include "ccfgamemanager.h"
-#include "ccfterrain.h"
 
 #define cmain CcfMain::instance()
 #define clogger CcfMain::instance()->logger()
@@ -60,9 +58,7 @@ public:
     void resizeView(QSize newSize);
     CcfLogger *logger();
     CcfConfig *config();
-    CcfScenarioState *scenarioState();
     CcfGlobal *global();
-    CcfTerrain *terrain();
 
 public slots:
     void quit();
@@ -79,9 +75,7 @@ private:
     CcfConfig *mConfiguration;
     CcfGlobal *mGlobal;
     CcfGameManager *mGameManager;
-    CcfTerrain *mTerrain;
     CcfEngineHelpers *mEngineHelpers;
-    CcfScenarioState *mScenarioState;
     CcfLogger *mLogger;
     CcfCommandLineParser *mCmdLnParser;
     QString mPwd;

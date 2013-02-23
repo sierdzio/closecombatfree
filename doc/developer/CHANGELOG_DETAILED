@@ -9,6 +9,9 @@ Some more history can be devised from git sources (although even there, the thin
  - unify private members convention to use mVariableName instead of m_variableName
  - remove QtModule designation from #includes
  - fix order scripting in scenarios
+ - move CcfTerrain and CcfScenarioState out of CcfMain, make them local and attached
+   to CcfScenario instance
+ - add base C++ class for Map.qml component
 
 14.10.2012:
  - update doxygen index, todo list etc.

@@ -19,28 +19,10 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
 
-Item {
-    // Stores background image. Preferably in PNG, although all
-    // QML formats are supported.
-    property string backgroundImage: ""
-    // Holds path to hipsometric map of the terrain.
-    // Terrain defined by intensity of color in the image.
-    // Should be the same size as backgroundImage. If it's not,
-    // it will be stretched to match background.
-    property string hipsometricImage: "../../img/maps/hipsometric_default.png"
-    // Defines, whether hipsometric map should be visible
-    property bool hipsometricMapInFront: false
-    // Defines global opacity value.
-    // Useful for temporarily revealing hidden props
-    // (like, water objects etc.)
-    property real propOpacity: 0.5
-
+BaseMap {
     property variant units
-
-    onHipsometricMapInFrontChanged: {
-        swapBackgrounds();
-    }
 
     id: root
     width: background.sourceSize.width
@@ -62,14 +44,6 @@ Item {
         source: backgroundImage
         anchors.fill: parent
         z: 0
-    }
-
-    function swapBackgrounds() {
-        var z1 = hipsometricMap.z
-        var z2 = background.z
-
-        hipsometricMap.z = z2;
-        background.z = z1;
     }
 
     function setUnits(units) {

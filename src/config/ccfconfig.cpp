@@ -28,8 +28,8 @@
   Currently uses global object in UI mode changing. This is wrong, should and will
   be fixed.
   */
-CcfConfig::CcfConfig(const QString &configFilePath, CcfGlobal *globalObject, QObject *parent) :
-    QObject(parent), CcfError(), mFilePath(configFilePath), mGlobal(globalObject)
+CcfConfig::CcfConfig(const QString &configFilePath, CcfLogger *logger, QObject *parent) :
+    QObject(parent), CcfError(), mFilePath(configFilePath), mLogger(logger)
 {
     mConfiguration = new CcfConfigData();
     mParser = new CcfConfigParser(mFilePath, this);
@@ -79,12 +79,12 @@ void CcfConfig::toggleUiMode()
     if (mode == "desktop") {
         mode = "mobile";
         mConfiguration->replace("uimode", mode);
-        mGlobal->statusMessage("Ui mode changed to: " + mode);
+        mLogger->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     } else if (mode == "mobile") {
         mode = "desktop";
         mConfiguration->replace("uimode", mode);
-        mGlobal->statusMessage("Ui mode changed to: " + mode);
+        mLogger->statusMessage("Ui mode changed to: " + mode);
         emit uiModeChanged();
     }
 }
@@ -275,11 +275,11 @@ void CcfConfig::setUiMode(const QString &newMode)
     if (newMode.toLower() != mConfiguration->value("uimode")) {
         if (newMode.toLower() == "desktop") {
             mConfiguration->replace("uimode", "desktop");
-            mGlobal->statusMessage("Ui mode changed to: desktop");
+            mLogger->statusMessage("Ui mode changed to: desktop");
             emit uiModeChanged();
         } else if (newMode.toLower() == "mobile") {
             mConfiguration->replace("uimode", "mobile");
-            mGlobal->statusMessage("Ui mode changed to: mobile");
+            mLogger->statusMessage("Ui mode changed to: mobile");
             emit uiModeChanged();
         }
     }

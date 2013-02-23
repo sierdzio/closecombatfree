@@ -28,7 +28,7 @@
 #include <QMap>
 
 #include "../ccferror.h"
-#include "../ccfglobal.h"
+#include "ccflogger.h"
 #include "ccfconfigparser.h"
 #include "ccfconfigsaver.h"
 #include "ccfconfigdata.h"
@@ -86,7 +86,7 @@ class CcfConfig : public QObject, public CcfError
     Q_PROPERTY(bool rememberDimensions READ isRememberDimensionsSet WRITE setRememberDimensions NOTIFY rememberDimensionsChanged)
 
 public:
-    explicit CcfConfig(const QString &configFilePath, CcfGlobal *globalObject,
+    explicit CcfConfig(const QString &configFilePath, CcfLogger *logger,
                        QObject *parent = 0);
 
     Q_INVOKABLE QString configurationString() const;
@@ -169,7 +169,7 @@ private:
     int mRuntimeWidth, mRuntimeHeight;
     QString mTerrainInfoMode;
     QString mFilePath;
-    CcfGlobal *mGlobal;
+    CcfLogger *mLogger;
     CcfConfigParser *mParser;
     CcfConfigSaver *mSaver;
     CcfConfigData *mConfiguration;

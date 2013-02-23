@@ -37,6 +37,29 @@ void CcfLogger::error(const QString &message, const QString &additionalData)
     addLogEntry(Error, message, additionalData);
 }
 
+/*!
+  Sends a status message.
+
+  Alias for statusMessage().
+
+  \sa statusMessage
+  */
+void CcfLogger::statusMsg(const QString &message)
+{
+    statusMessage(message);
+}
+
+/*!
+  Sends a status message.
+
+  \sa statusMsg
+  */
+void CcfLogger::statusMessage(const QString &message)
+{
+    addLogEntry(Status, message);
+    emit newStatusMessage(message, this->sender());
+}
+
 void CcfLogger::addLogEntry(CcfLogger::MessageType msgType, const QString &message, const QString &additionalData)
 {
     QString result;

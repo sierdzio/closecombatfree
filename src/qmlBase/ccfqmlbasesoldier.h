@@ -16,6 +16,7 @@ class CcfQmlBaseSoldier : public QObject
 {
     Q_OBJECT
 
+public:
     /*!
       Returns the type of the object, as all other CCF objects do.
 
@@ -50,7 +51,6 @@ class CcfQmlBaseSoldier : public QObject
       */
     Q_PROPERTY(QString soldierLogo READ getSoldierLogo WRITE setSoldierLogo NOTIFY soldierLogoChanged)
 
-public:
     explicit CcfQmlBaseSoldier(QObject *parent = 0);
 
     Q_INVOKABLE void changeStatus(const QString &newStatus);

@@ -38,7 +38,8 @@ HEADERS += \
     qmlBase/ccfqmlbaseunit.h \
     logic/ccfobjectbase.h \
     qmlBase/ccfqmlbasesoldier.h \
-    qmlBase/ccfqmlbaserostermenu.h
+    qmlBase/ccfqmlbaserostermenu.h \
+    qmlBase/ccfqmlbasemap.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -58,7 +59,8 @@ SOURCES += main.cpp \
     qmlBase/ccfqmlbaseunit.cpp \
     logic/ccfobjectbase.cpp \
     qmlBase/ccfqmlbasesoldier.cpp \
-    qmlBase/ccfqmlbaserostermenu.cpp
+    qmlBase/ccfqmlbaserostermenu.cpp \
+    qmlBase/ccfqmlbasemap.cpp
 
 OTHER_FILES += \
     ../qml/main.qml \

@@ -34,6 +34,7 @@ class CcfQmlBaseUnit : public CcfObjectBase
 {
     Q_OBJECT
 
+public:
     /*!
       Stores type of the object (like "unit", or "unit/tank").
       */
@@ -239,7 +240,6 @@ class CcfQmlBaseUnit : public CcfObjectBase
       */
     Q_PROPERTY(bool moving READ getMoving WRITE setMoving NOTIFY movingChanged)
 
-public:
     explicit CcfQmlBaseUnit(QQuickItem *parent = 0);
 
     Q_INVOKABLE QString operation(int index = -1) const;

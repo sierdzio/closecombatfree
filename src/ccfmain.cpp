@@ -25,6 +25,7 @@
 #include "ccfmain.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
 #include "qmlBase/ccfqmlbasescenario.h"
+#include "qmlBase/ccfqmlbasemap.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 #include "qmlBase/ccfqmlbasesoldier.h"
 
@@ -55,23 +56,20 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
 {
     qmlRegisterType<CcfQmlBaseRosterMenu>("QmlBase", 0, 1, "BaseRosterMenu");
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
-    qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");    
+    qmlRegisterType<CcfQmlBaseMap>("QmlBase", 0, 1, "BaseMap");
+    qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");
     qmlRegisterType<CcfQmlBaseSoldier>("QmlBase", 0, 1, "Soldier");
 
     mLogger = new CcfLogger(this, mCmdLnParser->isDebug());
-    mGlobal = new CcfGlobal(this, mLogger);
+    mGlobal = new CcfGlobal(this);
     mGameManager = new CcfGameManager(this);
-    mTerrain = new CcfTerrain(this);
     mEngineHelpers = new CcfEngineHelpers(this);
-    mScenarioState = new CcfScenarioState(this);
     initConfiguration();
 
     rootContext()->setContextProperty("Global", mGlobal);
     rootContext()->setContextProperty("Config", mConfiguration);
     rootContext()->setContextProperty("GameManager", mGameManager);
-    rootContext()->setContextProperty("Terrain", mTerrain);
     rootContext()->setContextProperty("EngineHelpers", mEngineHelpers);
-    rootContext()->setContextProperty("ScenarioState", mScenarioState);
     rootContext()->setContextProperty("Logger", mLogger);
 
     QString pwd = qApp->applicationDirPath() + "/";
@@ -119,27 +117,11 @@ CcfConfig *CcfMain::config()
 }
 
 /*!
-  Returns a pointer to CcfScenarioState instance.
- */
-CcfScenarioState *CcfMain::scenarioState()
-{
-    return mScenarioState;
-}
-
-/*!
   Returns a pointer to CcfGlobal instance.
  */
 CcfGlobal *CcfMain::global()
 {
     return mGlobal;
-}
-
-/*!
-  Returns a pointer to CcfTerrain instance.
- */
-CcfTerrain *CcfMain::terrain()
-{
-    return mTerrain;
 }
 
 /*!
@@ -189,13 +171,13 @@ void CcfMain::disableQrc(QObject *object)
   */
 bool CcfMain::initConfiguration()
 {
-    mConfiguration = new CcfConfig("config", mGlobal, this);
+    mConfiguration = new CcfConfig("config", mLogger, this);
     if (mConfiguration->isErrorState()) {
         printf("Error while reading configuration file! Message: %s\n",
                qPrintable(mConfiguration->errorMessage()));
         printf("Loading default configuration... ");
         delete mConfiguration;
-        mConfiguration = new CcfConfig("config_default", mGlobal, this);
+        mConfiguration = new CcfConfig("config_default", mLogger, this);
 
         if (mConfiguration->isErrorState()) {
             printf("ERROR: %s\n", qPrintable(mConfiguration->errorMessage()));

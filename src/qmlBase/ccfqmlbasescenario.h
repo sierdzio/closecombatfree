@@ -15,6 +15,8 @@
 
 class CcfMain;
 class CcfQmlBaseRosterMenu;
+class CcfScenarioState;
+class CcfTerrain;
 
 class QQmlComponent;
 class QQuickItem;
@@ -28,6 +30,7 @@ class CcfQmlBaseScenario : public CcfObjectBase
 {
     Q_OBJECT
 
+public:
     /*!
       Specifies scenario file to be loaded. This is quite crutial, and allowes for deferred loading
       of game levels.
@@ -86,7 +89,6 @@ class CcfQmlBaseScenario : public CcfObjectBase
       */
     Q_PROPERTY(QObjectList units READ getUnits WRITE setUnits NOTIFY unitsChanged)
 
-public:
     explicit CcfQmlBaseScenario(QQuickItem *parent = 0);
 
     Q_INVOKABLE void stopFollowingUnit();
@@ -182,6 +184,9 @@ private:
     void onTogglePause();
 
     CcfMain *mMainInstance;
+    CcfScenarioState *mScenarioState;
+    CcfTerrain *mTerrain;
+
     QQmlComponent *mEffectsComponent;
     // TODO: maybe replace with particle system?
     QObjectList mEffects;

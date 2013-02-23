@@ -3,6 +3,8 @@
 #include "config/ccfconfig.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
+#include "logic/ccfscenariostate.h"
+#include "ccfterrain.h"
 
 #include <QVariant>
 #include <QPointF>
@@ -22,8 +24,11 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) : CcfObjectBase(paren
     mIsCampaign = false;
 
     mMainInstance = CcfMain::instance();
+    mScenarioState = new CcfScenarioState(this);
+    mTerrain = new CcfTerrain(this);
+
     mEffectsComponent = new QQmlComponent(mMainInstance->engine(),
-                                           QUrl::fromLocalFile("qml/effects/Effect.qml"));
+                                          QUrl::fromLocalFile("qml/effects/Effect.qml"));
 
     connect(this, &CcfQmlBaseScenario::togglePause, this, &CcfQmlBaseScenario::onTogglePause);
 }
@@ -66,14 +71,14 @@ void CcfQmlBaseScenario::init()
             if(mapItem != 0)
                 invoke(mapItem, "setUnits", Q_ARG(QVariant, QVariant::fromValue(mUnits) ));
             else
-                mmain->logger()->error("MapItem object was not properly initialised",
-                                       "Robin Hood is a jerk");
+                mlogger->error("MapItem object was not properly initialised",
+                               "Robin Hood is a jerk");
         } else {
             // This is a campaign
             // TODO: add some clever code here ;)
         }
 
-        mmain->scenarioState()->setAvailableSides(unitSideList);
+        mScenarioState->setAvailableSides(unitSideList);
 
         mAimLine = item("aimLine");
         mGameArea = item("gameArea");
@@ -173,7 +178,7 @@ void CcfQmlBaseScenario::groupUnits(int groupNumber)
     }
 
     //    console.log("Group " + groupNumber + " created.");
-    mmain->global()->statusMessage(tr("Group %1 created.").arg(groupNumber));
+    mlogger->statusMessage(tr("Group %1 created.").arg(groupNumber));
 }
 
 /*!
@@ -529,9 +534,9 @@ QObjectList CcfQmlBaseScenario::getAllUnitsButOne(int unitToOmit)
 void CcfQmlBaseScenario::centerViewOnUnit(QObject *unit)
 {
     mGameArea->set("contentX", (((unit->getReal("x") + unit->getReal("centerX")) * mZoom)
-                                 - mGameArea->width()/2));
+                                - mGameArea->width()/2));
     mGameArea->set("contentY", (((unit->getReal("y") + unit->getReal("centerY")) * mZoom)
-                                 - mGameArea->height()/2));
+                                - mGameArea->height()/2));
 }
 
 /*!
@@ -662,7 +667,7 @@ void CcfQmlBaseScenario::updateAimLine()
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
-            qreal terrainObscure = mmain->terrain()->checkForTerrainInLOS(x1, y1, x2, y2, unit);
+            qreal terrainObscure = mTerrain->checkForTerrainInLOS(x1, y1, x2, y2, unit);
             qreal propsObscure = CcfEngineHelpers::checkForObstaclesInLOS(mProps,
                                                                           x1, y1, x2, y2,
                                                                           new QObject());
@@ -783,14 +788,14 @@ void CcfQmlBaseScenario::togglePlayer()
 
     // Switch to next one in line.
     for (int i = 0; i < sides.length(); ++i) {
-        if (sides.at(i) == mmain->scenarioState()->getPlayerSide()) {
+        if (sides.at(i) == mScenarioState->getPlayerSide()) {
             if (i != (sides.length() - 1)) {
-                mmain->scenarioState()->setPlayerSide(sides.at(i + 1));
+                mScenarioState->setPlayerSide(sides.at(i + 1));
             } else {
-                mmain->scenarioState()->setPlayerSide(sides.at(0));
+                mScenarioState->setPlayerSide(sides.at(0));
             }
 
-            mmain->global()->statusMessage("Player side changed to: " + mmain->scenarioState()->getPlayerSide());
+            mlogger->statusMessage("Player side changed to: " + mScenarioState->getPlayerSide());
             break;
         }
     }
@@ -806,7 +811,7 @@ void CcfQmlBaseScenario::togglePlayer()
 void CcfQmlBaseScenario::hideNonPlayerUnits()
 {
     for (int i = 0; i < mUnits.count(); ++i) {
-        if (mUnits.at(i)->getString("unitSide") != mmain->scenarioState()->getPlayerSide())
+        if (mUnits.at(i)->getString("unitSide") != mScenarioState->getPlayerSide())
             mUnits.at(i)->set("visible", false);
     }
 }
@@ -817,7 +822,7 @@ void CcfQmlBaseScenario::hideNonPlayerUnits()
 void CcfQmlBaseScenario::setSideMarks()
 {
     for (int i = 0; i < mUnits.count(); ++i) {
-        mUnits.at(i)->set("sideMarkSource", mmain->scenarioState()->getSidePath(mUnits.at(i)->getString("unitSide")));
+        mUnits.at(i)->set("sideMarkSource", mScenarioState->getSidePath(mUnits.at(i)->getString("unitSide")));
     }
 }
 
@@ -833,9 +838,9 @@ void CcfQmlBaseScenario::checkScenarioFinished()
     bool areAllAlliesDestroyed = true;
     for (int i = 0; i < mUnits.count(); ++i) {
         QObject *currentUnit = mUnits.at(i);
-        if ((currentUnit->getString("unitSide") != mmain->scenarioState()->getPlayerSide()) && (currentUnit->getString("state") == "healthy")) {
+        if ((currentUnit->getString("unitSide") != mScenarioState->getPlayerSide()) && (currentUnit->getString("state") == "healthy")) {
             areAllEnemiesDestroyed = false;
-        } else if ((currentUnit->getString("unitSide") == mmain->scenarioState()->getPlayerSide()) &&(currentUnit->getString("state") == "healthy")) {
+        } else if ((currentUnit->getString("unitSide") == mScenarioState->getPlayerSide()) &&(currentUnit->getString("state") == "healthy")) {
             areAllAlliesDestroyed = false;
         }
     }
@@ -843,10 +848,10 @@ void CcfQmlBaseScenario::checkScenarioFinished()
     if (mScenarioWinStatus == "no") {
         if (areAllEnemiesDestroyed) {
             mScenarioWinStatus = "won";
-            mmain->global()->statusMessage("All enemies destroyed. You have won!");
+            mlogger->statusMessage("All enemies destroyed. You have won!");
         } else if (areAllAlliesDestroyed) {
             mScenarioWinStatus = "lost";
-            mmain->global()->statusMessage("All allies destroyed. You have lost!");
+            mlogger->statusMessage("All allies destroyed. You have lost!");
         }
     }
 }
@@ -944,7 +949,7 @@ void CcfQmlBaseScenario::updateRubberBand(qreal x, qreal y)
 void CcfQmlBaseScenario::selectUnit(int index, int modifier) //Qt::KeyboardModifier
 {
     CcfQmlBaseUnit *unit = ccfUnit(mUnits.at(index));
-    if ((unit->getUnitSide() != mmain->scenarioState()->getPlayerSide())
+    if ((unit->getUnitSide() != mScenarioState->getPlayerSide())
             || (unit->state() != "healthy")) {
         return;
     }
@@ -1071,8 +1076,8 @@ int CcfQmlBaseScenario::digitPressed(QObject *event)
   */
 void CcfQmlBaseScenario::updateUnitVisibility()
 {
-    QObjectList friendlyUnitsList = playerUnits(mmain->scenarioState()->getPlayerSide());
-    QObjectList enemyUnitsList = enemyUnits(mmain->scenarioState()->getPlayerSide());
+    QObjectList friendlyUnitsList = playerUnits(mScenarioState->getPlayerSide());
+    QObjectList enemyUnitsList = enemyUnits(mScenarioState->getPlayerSide());
 
     for (int i = 0; i < friendlyUnitsList.length(); ++i) {
         for (int j = 0; j < enemyUnitsList.length(); ++j) {
@@ -1088,12 +1093,12 @@ void CcfQmlBaseScenario::updateUnitVisibility()
             qreal x2 = enemy->x() + enemy->getCenterX();
             qreal y2 = enemy->y() + enemy->getCenterY();
 
-            if (mmain->terrain()->isTargetVisible(x1, y1, x2, y2)
+            if (mTerrain->isTargetVisible(x1, y1, x2, y2)
                     && !CcfEngineHelpers::isObstacleInLOS(mProps,
                                                           x1, y1, x2, y2,
                                                           friendly)) {
-                mmain->logger()->log("Now visible: " + enemy->objectName()
-                                     + ", spotted by: " + friendly->objectName());
+                mlogger->log("Now visible: " + enemy->objectName()
+                             + ", spotted by: " + friendly->objectName());
                 enemy->setVisible(true);
             }
         }
@@ -1134,7 +1139,7 @@ void CcfQmlBaseScenario::handleRightMouseClick(QObject *mouse)
     unitObject = unitAt(mMouseAreaMain->getReal("mouseX"), mMouseAreaMain->getReal("mouseY"));
 
     if ((unitObject == mMouseAreaMain) || (unitObject == NULL)
-            || (unitObject->getString("unitSide") != mmain->scenarioState()->getPlayerSide())) {
+            || (unitObject->getString("unitSide") != mScenarioState->getPlayerSide())) {
         deselectAllUnits();
         return;
     }
@@ -1305,7 +1310,7 @@ void CcfQmlBaseScenario::handleKeyPress(QObject *event)
                         stopFollowingUnit();
                     }
                 } else {
-                    mmain->logger()->log("No unit selected to follow.");
+                    mlogger->log("No unit selected to follow.");
                 }
             } else if (selectedUnitsCount() > 0) {
                 if (key == config->keyForFunction("Stop")) {

@@ -31,8 +31,6 @@
   @{
  */
 
-class CcfLogger;
-
 /*!
   Class used as "Global" object in QML.
 
@@ -44,28 +42,15 @@ class CcfGlobal : public QObject, public CcfError
     Q_OBJECT
 
 public:
-    explicit CcfGlobal(QObject *parent = 0, CcfLogger *logger = 0);
+    explicit CcfGlobal(QObject *parent = 0);
     Q_INVOKABLE void disableQrcUse(QObject *object);
     Q_INVOKABLE QString getFileContents(const QString &filePath);
 
-public slots:
-    void statusMsg(const QString &message);
-    void statusMessage(const QString &message);
-
 signals:
-    /*!
-      Emited when a new status message is requested.
-      */
-    void newStatusMessage(const QString &message,
-                          QObject *sender);
-
     /*!
       Emited when disabling QRC is requested.
       */
     void disableQrc(QObject *object);
-
-private:
-    CcfLogger *mLogger;
 };
 
 /*! @}*/
