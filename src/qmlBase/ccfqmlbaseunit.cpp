@@ -175,6 +175,10 @@ void CcfQmlBaseUnit::hit(QObject *byWhat, qreal xWhere, qreal yWhere)
  */
 QObject *CcfQmlBaseUnit::createOrder(QObject *parent)
 {
+    if (parent == 0) {
+        parent = this->parent();
+    }
+
     if (mOrdersComponent->isReady()) {
         QObject *object = mOrdersComponent->create();
         object->set("parent", QVariant::fromValue(parent));
@@ -218,6 +222,7 @@ void CcfQmlBaseUnit::cancelOrder()
 void CcfQmlBaseUnit::queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent)
 {
     QObject *order = createOrder(reparent);
+
     if (order != 0) {
         order->set("index", mOrders.length());
         order->set("number", mOrders.length());

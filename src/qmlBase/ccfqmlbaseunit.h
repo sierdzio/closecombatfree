@@ -251,13 +251,13 @@ public:
 
     Q_INVOKABLE void continueQueue();
     Q_INVOKABLE void cancelOrder();
-    Q_INVOKABLE void queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent);
+    Q_INVOKABLE void queueOrder(const QString &orderName, qreal x, qreal y, QObject *reparent = 0);
 
-    Q_INVOKABLE void moveTo(qreal newX, qreal newY, QObject *reparent);
-    Q_INVOKABLE void moveFastTo(qreal newX, qreal newY, QObject *reparent);
-    Q_INVOKABLE void sneakTo(qreal newX, qreal newY, QObject *reparent);
-    Q_INVOKABLE void fireTo(qreal targetX, qreal targetY, QObject *reparent);
-    Q_INVOKABLE void smokeTo(qreal targetX, qreal targetY, QObject *reparent);
+    Q_INVOKABLE void moveTo(qreal newX, qreal newY, QObject *reparent = 0);
+    Q_INVOKABLE void moveFastTo(qreal newX, qreal newY, QObject *reparent = 0);
+    Q_INVOKABLE void sneakTo(qreal newX, qreal newY, QObject *reparent = 0);
+    Q_INVOKABLE void fireTo(qreal targetX, qreal targetY, QObject *reparent = 0);
+    Q_INVOKABLE void smokeTo(qreal targetX, qreal targetY, QObject *reparent = 0);
 
     Q_INVOKABLE QVariantList soldiers();
 
