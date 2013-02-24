@@ -235,11 +235,10 @@ QObjectList CcfQmlBaseMap::getProps()
   Returns a QVariantMap with details concerning terrain at \a x and \a y.
 
   The variant map is filled with following information:
-  \list
     \li objectType - holds the type of prop or terrain under cursor
     \li cover - denotes how well covered would a unit be when stationed here
     \li heightOverZero - holds height in meters of current point
-  \endlist
+
   \sa terrainInfoString
   */
 QVariantMap CcfQmlBaseMap::terrainInfo(qreal x, qreal y)

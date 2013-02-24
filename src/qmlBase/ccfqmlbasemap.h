@@ -95,8 +95,19 @@ public:
     QString terrainInfoString(qreal x, qreal y);
 
 signals:
+    /*!
+      Emitted when background image is changed.
+      */
     void backgroundImageChanged() const;
+
+    /*!
+      Emitted when hipsometric image is changed.
+      */
     void hipsometricImageChanged() const;
+
+    /*!
+      Emitted when prop opacity value is changed.
+      */
     void propOpacityChanged() const;
 
 public slots:
