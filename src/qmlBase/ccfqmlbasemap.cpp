@@ -52,13 +52,13 @@ CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
 void CcfQmlBaseMap::toggleBackgroundImage()
 {
     mHipsometricMapInFront = !mHipsometricMapInFront;
+    QImage tempImage(mHipsometricPath);
+    mHipsometricImage = tempImage.scaled(mBackgroundImage.size());
     update();
 }
 
 void CcfQmlBaseMap::paint(QPainter *painter)
 {
-    qDebug() << "Painting!";
-    mlogger->log("Painting");
     if (mBackgroundImage.isNull() && mHipsometricImage.isNull())
         return;
 
@@ -187,17 +187,16 @@ QVariantMap CcfQmlBaseMap::terrainInfo(qreal x, qreal y)
     // how much cover does a given spot give to a unit.
     QVariantMap result;
 
+    int info = pixelInfo(x, y);
+    result.insert("heightOverZero", info / 10);
+
     if (childExistsAt(x, y)) {
         QObject *child = childAt(x, y);
-        int info = pixelInfo(x, y);
-        //console.log("Got terrain PIXEL info: " + pixelInfo);
 
         result.insert("objectType", child->objectName());
-        result.insert("heightOverZero", info / 10);
         result.insert("cover", child->getString("cover"));
     } else {
         result.insert("objectType", "unknown");
-        result.insert("heightOverZero", 5);
         result.insert("cover", "poor");
     }
 
