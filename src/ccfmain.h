@@ -33,16 +33,30 @@
 #include "ccfglobal.h"
 #include "ccfgamemanager.h"
 
-#define cmain CcfMain::instance()
-#define clogger CcfMain::instance()->logger()
-
-#define mmain mMainInstance
-#define mlogger mMainInstance->logger()
-
 /*!
-  \ingroup CloseCombatFree
+  \defgroup CloseCombatFree Game Code
   @{
  */
+
+/*!
+  Macro shortcut for main instance of CcfMain class.
+  */
+#define cmain CcfMain::instance()
+
+/*!
+  Macro shortcut for instance of CcfLogger.
+  */
+#define clogger CcfMain::instance()->logger()
+
+/*!
+  Shortcut for variable name of CcfMain class.
+  */
+#define mmain mMainInstance
+
+/*!
+  Shortcut for variable name of CcfLogger class.
+  */
+#define mlogger mMainInstance->logger()
 
 /*!
   Class responsible for displaying the game content on screen,

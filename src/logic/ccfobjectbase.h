@@ -29,8 +29,6 @@
   QObject *obj;
   obj->set("property", value);
   \endcode
-
-  \snippet ccfobjectbase.h CustomMacroNotice
   */
 #define set setProperty
 
@@ -41,6 +39,8 @@
   QObject *obj;
   result = obj->get("width");
   \endcode
+
+  \snippet ccfobjectbase.h CustomMacroNotice
   */
 #define get property
 

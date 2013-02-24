@@ -27,7 +27,7 @@
 #include "ccferror.h"
 
 /*!
-  \ingroup CloseCombatFree
+  \defgroup CloseCombatFree Game Code
   @{
  */
 

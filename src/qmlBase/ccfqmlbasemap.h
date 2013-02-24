@@ -29,7 +29,7 @@
 #include "logic/ccfobjectbase.h"
 
 /*!
-  \ingroup CloseCombatFree
+  \defgroup CloseCombatFree Game Code
   @{
  */
 
