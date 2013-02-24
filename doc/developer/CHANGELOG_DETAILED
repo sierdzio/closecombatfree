@@ -13,7 +13,7 @@ Some more history can be devised from git sources (although even there, the thin
    to CcfScenario instance
  - add base C++ class for Map.qml component
  - merge CcfQmlBaseMap and CcfTerrain
- - use QQuickPaintedItem in BaseMap to conserve memory and speed things up
+ - use QQuickItem in BaseMap to conserve memory and speed things up
 
 14.10.2012:
  - update doxygen index, todo list etc.

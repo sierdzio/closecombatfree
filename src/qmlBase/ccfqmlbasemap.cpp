@@ -21,27 +21,27 @@
 #include <qmath.h>
 #include <QSize>
 #include <QPoint>
-
-#include <QPainter>
 #include <QColor>
+#include <QImage>
+
+#include <QSGNode>
+#include <QSGSimpleTextureNode>
+#include <QSGTexture>
 
 #include "ccfqmlbasemap.h"
 #include "ccfmain.h"
-#include "logic/ccfglobalobjectbase.h"
-
-#include <QDebug>
 
 CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
-    QQuickPaintedItem(parent)
+    CcfObjectBase(parent)
 {
     setWidth(0.0);
     setHeight(0.0);
-    setContentsSize(QSize(0, 0));
-    setOpaquePainting(true);
 
+    mBackgroundTexture = NULL;
+    mHipsometricTexture = NULL;
     mHipsometricMapInFront = false;
-    mHipsometricPath = "../../img/maps/hipsometric_default.png";
-    mPropOpacity = 0.5;
+    setHipsometricImage("img/maps/hipsometric_default.png");
+    setPropOpacity(0.5);
 
     mMainInstance = CcfMain::instance();
 }
@@ -52,21 +52,31 @@ CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
 void CcfQmlBaseMap::toggleBackgroundImage()
 {
     mHipsometricMapInFront = !mHipsometricMapInFront;
-    QImage tempImage(mHipsometricPath);
-    mHipsometricImage = tempImage.scaled(mBackgroundImage.size());
+    setFlags(QQuickItem::ItemHasContents);
     update();
 }
 
-void CcfQmlBaseMap::paint(QPainter *painter)
+QSGNode *CcfQmlBaseMap::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *update)
 {
-    if (mBackgroundImage.isNull() && mHipsometricImage.isNull())
-        return;
+    Q_UNUSED(update);
+    qDebug("Painting!");
 
-    if (mHipsometricMapInFront) {
-        painter->drawImage(QPoint(0, 0), mHipsometricImage);
-    } else {
-        painter->drawImage(QPoint(0, 0), mBackgroundImage);
+    QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
+
+    if (!node) {
+        node = new QSGSimpleTextureNode();
     }
+
+    if (mBackgroundPath.isEmpty() || mHipsometricMapInFront) {
+        mHipsometricTexture = window()->createTextureFromImage(mHipsometricImage);
+        node->setTexture(mHipsometricTexture);
+    } else {
+        mBackgroundTexture = window()->createTextureFromImage(mBackgroundImage);
+        node->setTexture(mBackgroundTexture);
+    }
+
+    node->setRect(boundingRect());
+    return node;
 }
 
 QString CcfQmlBaseMap::getBackgroundImage() const
@@ -92,12 +102,15 @@ void CcfQmlBaseMap::setBackgroundImage(const QString &path)
     mBackgroundPath = path;
 
     if (path.isEmpty()) {
-        mBackgroundImage = QImage();
+        mBackgroundTexture = NULL;
     } else {
+        if (mBackgroundTexture)
+            mBackgroundTexture->deleteLater();
+
         mBackgroundImage = QImage(path);
         setWidth(mBackgroundImage.width());
         setHeight(mBackgroundImage.height());
-        setContentsSize(mBackgroundImage.size());
+        setFlags(QQuickItem::ItemHasContents);
     }
 
     update();
@@ -112,11 +125,13 @@ void CcfQmlBaseMap::setHipsometricImage(const QString &path)
     mHipsometricPath = path;
 
     if (path.isEmpty()) {
-        mHipsometricImage = QImage();
+        mHipsometricTexture = NULL;
     } else {
-        if (!mBackgroundImage.isNull()) {
-            QImage tempImage(path);
-            mHipsometricImage = tempImage.scaled(mBackgroundImage.size());
+        if (mHipsometricTexture)
+            mHipsometricTexture->deleteLater();
+
+        if (mBackgroundTexture) {
+            mHipsometricImage = QImage(path).scaled(QSize(width(), height()));
         } else {
             mHipsometricImage = QImage(path);
         }
@@ -137,10 +152,10 @@ void CcfQmlBaseMap::setPropOpacity(qreal propOpacity)
 void CcfQmlBaseMap::setUnits(const QObjectList &units)
 {
     for (int i = 0; i < units.length(); ++i) {
-        if (units.at(i)->getString("objectType") == "unit")
-            //units[i].positionChanged.connect(checkForHits);
+        if (units.at(i)->getString("objectType") == "unit") {
             connect(units.at(i), SIGNAL(positionChanged(qreal, qreal, int)),
                     this, SLOT(checkForHits(qreal, qreal, int)));
+        }
     }
 }
 
@@ -157,7 +172,7 @@ void CcfQmlBaseMap::checkForHits(qreal x, qreal y, int index)
     mlogger->log("Hit! Who: " + child->objectName());
 
     if (child->property("topVisible").isValid())
-        metaObject()->invokeMethod(child, "removeTop");
+        invoke(child, "removeTop");
 }
 
 bool CcfQmlBaseMap::childExistsAt(qreal x, qreal y)
@@ -171,12 +186,6 @@ bool CcfQmlBaseMap::childExistsAt(qreal x, qreal y)
 
 QObjectList CcfQmlBaseMap::getProps()
 {
-//    var result = new Array(children.length - 2);
-
-//    for (var i = 0; i < children.length - 2; ++i) {
-//        result[i] = (children[i + 2]);
-//    }
-
     return children();
 }
 
@@ -332,15 +341,13 @@ qreal CcfQmlBaseMap::targetDistance(qreal originX, qreal originY, qreal targetX,
   */
 bool CcfQmlBaseMap::checkCoordinateValidity(qreal x, qreal y)
 {
-    if (mBackgroundImage.isNull() && mHipsometricImage.isNull())
+    if (!mBackgroundTexture && !mHipsometricTexture)
         return false; // Images are empty!
 
-    QImage sizeImage = mBackgroundImage.isNull()? mHipsometricImage : mBackgroundImage;
-
-    if (x < 0 || x > sizeImage.width())
+    if (x < 0 || x > mHipsometricImage.width())
         return false;
 
-    if (y < 0 || y > sizeImage.height())
+    if (y < 0 || y > mHipsometricImage.height())
         return false;
 
     return true;

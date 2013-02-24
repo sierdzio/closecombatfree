@@ -25,7 +25,6 @@
 #include <QImage>
 #include <QVariantMap>
 #include <QQuickItem>
-#include <QQuickPaintedItem>
 
 #include "logic/ccfobjectbase.h"
 
@@ -35,7 +34,8 @@
  */
 
 class QImage;
-class QPainter;
+class QSGNode;
+class QSGTexture;
 class CcfMain;
 
 /*!
@@ -50,7 +50,7 @@ class CcfMain;
   Should that not be enough, a different algorithm can easily be added
   ot substituted.
   */
-class CcfQmlBaseMap : public QQuickPaintedItem
+class CcfQmlBaseMap : public CcfObjectBase
 {
     Q_OBJECT
 public:
@@ -78,7 +78,7 @@ public:
 
     explicit CcfQmlBaseMap(QQuickItem *parent = 0);
     void toggleBackgroundImage();
-    void paint(QPainter *painter);
+    QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *update);
 
     // Terrain info:
     Q_INVOKABLE int pixelInfo(qreal x, qreal y);
@@ -116,6 +116,8 @@ private:
     QString mBackgroundPath;
     QString mHipsometricPath;
     qreal mPropOpacity;
+    QSGTexture *mBackgroundTexture;
+    QSGTexture *mHipsometricTexture;
     QImage mBackgroundImage;
     QImage mHipsometricImage;
     QObjectList mUnits;
