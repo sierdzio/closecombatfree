@@ -31,6 +31,9 @@
 #include "ccfqmlbasemap.h"
 #include "ccfmain.h"
 
+/*!
+  Initialises the object and sets properties to default values.
+  */
 CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
     CcfObjectBase(parent)
 {
@@ -40,7 +43,7 @@ CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
     mBackgroundTexture = NULL;
     mHipsometricTexture = NULL;
     mHipsometricMapInFront = false;
-    setHipsometricImage("img/maps/hipsometric_default.png");
+    setHipsometricImagePath("img/maps/hipsometric_default.png");
     setPropOpacity(0.5);
 
     mMainInstance = CcfMain::instance();
@@ -48,6 +51,8 @@ CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
 
 /*!
   Swaps background image that is currently visible to the next one in line.
+
+  For now, this means background image and hipsometric map.
   */
 void CcfQmlBaseMap::toggleBackgroundImage()
 {
@@ -56,6 +61,10 @@ void CcfQmlBaseMap::toggleBackgroundImage()
     update();
 }
 
+
+/*!
+  Paints the item.
+  */
 QSGNode *CcfQmlBaseMap::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *update)
 {
     Q_UNUSED(update);
@@ -78,22 +87,34 @@ QSGNode *CcfQmlBaseMap::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePain
     return node;
 }
 
-QString CcfQmlBaseMap::getBackgroundImage() const
+/*!
+  Returns the path to background image.
+  */
+QString CcfQmlBaseMap::getBackgroundImagePath() const
 {
     return mBackgroundPath;
 }
 
-QString CcfQmlBaseMap::getHipsometricImage() const
+/*!
+  Returns the path to the hipsometric map image.
+  */
+QString CcfQmlBaseMap::getHipsometricImagePath() const
 {
     return mHipsometricPath;
 }
 
+/*!
+  Returns opacity with thich all props are drawn.
+  */
 qreal CcfQmlBaseMap::getPropOpacity() const
 {
     return mPropOpacity;
 }
 
-void CcfQmlBaseMap::setBackgroundImage(const QString &path)
+/*!
+  Sets the \a path to the background image.
+  */
+void CcfQmlBaseMap::setBackgroundImagePath(const QString &path)
 {
     if (mBackgroundPath == path)
         return;
@@ -116,7 +137,10 @@ void CcfQmlBaseMap::setBackgroundImage(const QString &path)
     emit backgroundImageChanged();
 }
 
-void CcfQmlBaseMap::setHipsometricImage(const QString &path)
+/*!
+  Sets the \a path to the image of hipsometric map.
+  */
+void CcfQmlBaseMap::setHipsometricImagePath(const QString &path)
 {
     if (mHipsometricPath == path)
         return;
@@ -139,6 +163,10 @@ void CcfQmlBaseMap::setHipsometricImage(const QString &path)
     emit hipsometricImageChanged();
 }
 
+/*!
+  Sets opacity with which props are being drawn to \a propOpacity. This is useful
+  for debugging and in map design.
+  */
 void CcfQmlBaseMap::setPropOpacity(qreal propOpacity)
 {
     if (mPropOpacity == propOpacity)
@@ -148,6 +176,9 @@ void CcfQmlBaseMap::setPropOpacity(qreal propOpacity)
     emit propOpacityChanged();
 }
 
+/*!
+  Connects all \a units from the list to collision detecting slot.
+  */
 void CcfQmlBaseMap::setUnits(const QObjectList &units)
 {
     for (int i = 0; i < units.length(); ++i) {
@@ -158,6 +189,10 @@ void CcfQmlBaseMap::setUnits(const QObjectList &units)
     }
 }
 
+/*!
+  This method is used to check whether a unit collides with any of the props on
+  the map.
+  */
 void CcfQmlBaseMap::checkForHits(qreal x, qreal y, int index)
 {
     Q_UNUSED(index);
@@ -174,6 +209,9 @@ void CcfQmlBaseMap::checkForHits(qreal x, qreal y, int index)
         invoke(child, "removeTop");
 }
 
+/*!
+  Returns true if there is a prop at \a x and \a y.
+  */
 bool CcfQmlBaseMap::childExistsAt(qreal x, qreal y)
 {
     QObject *child = childAt(x, y);
@@ -183,16 +221,29 @@ bool CcfQmlBaseMap::childExistsAt(qreal x, qreal y)
         return true;
 }
 
+/*!
+  Returns a list of all props.
+
+  \\ TODO: prop clusters!
+  */
 QObjectList CcfQmlBaseMap::getProps()
 {
     return children();
 }
 
+/*!
+  Returns a QVariantMap with details concerning terrain at \a x and \a y.
+
+  The variant map is filled with following information:
+  \list
+    \li objectType - holds the type of prop or terrain under cursor
+    \li cover - denotes how well covered would a unit be when stationed here
+    \li heightOverZero - holds height in meters of current point
+  \endlist
+  \sa terrainInfoString
+  */
 QVariantMap CcfQmlBaseMap::terrainInfo(qreal x, qreal y)
 {
-    // This method is intended to extract terrain information on a given point.
-    // This info should include: type of terrain/ obstacle/ prop, height over "0" level,
-    // how much cover does a given spot give to a unit.
     QVariantMap result;
 
     int info = pixelInfo(x, y);
@@ -211,12 +262,17 @@ QVariantMap CcfQmlBaseMap::terrainInfo(qreal x, qreal y)
     return result;
 }
 
+/*!
+  Returns information from terrainInfo() in a form of a well-formatted string.
+
+  \sa terrainInfo
+  */
 QString CcfQmlBaseMap::terrainInfoString(qreal x, qreal y)
 {
     QVariantMap info = terrainInfo(x, y);
     QString result = "Terrain: " + info.value("objectType").toString()
-        + ". Height: " + info.value("heightOverZero").toString() + " meters"
-        + ". Cover: " + info.value("cover").toString();
+            + ". Height: " + info.value("heightOverZero").toString() + " meters"
+            + ". Cover: " + info.value("cover").toString();
     return result;
 }
 
@@ -240,8 +296,8 @@ int CcfQmlBaseMap::pixelInfo(qreal x, qreal y)
 int CcfQmlBaseMap::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, QObject *currentUnit)
 {
     Q_UNUSED(currentUnit);
-//    int centerX = currentUnit->property("centerX").toInt();
-//    int centerY = currentUnit->property("centerY").toInt();
+    //    int centerX = currentUnit->property("centerX").toInt();
+    //    int centerY = currentUnit->property("centerY").toInt();
 
     int result = 0;
     qreal distance = targetDistance(x1, y1, x2, y2);
@@ -250,7 +306,7 @@ int CcfQmlBaseMap::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, 
     qreal x = x2;
     qreal y = y2;
     // Will be needed to calculate too steep angles for firing
-//    qreal originHeight = pixelInfo(x1, y1);
+    //    qreal originHeight = pixelInfo(x1, y1);
     qreal targetHeight = pixelInfo(x2, y2);
 
     for (int i = 0; i < distance; ++i) {
@@ -282,37 +338,37 @@ int CcfQmlBaseMap::checkForTerrainInLOS(qreal x1, qreal y1, qreal x2, qreal y2, 
  */
 bool CcfQmlBaseMap::isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2)
 {
-        qreal distance = targetDistance(x1, y1, x2, y2);
-        qreal a = (y2 - y1) / (x2 - x1);
-        qreal b = y1 - (a * x1);
-        qreal x = x2;
-        qreal y = y2;
+    qreal distance = targetDistance(x1, y1, x2, y2);
+    qreal a = (y2 - y1) / (x2 - x1);
+    qreal b = y1 - (a * x1);
+    qreal x = x2;
+    qreal y = y2;
 
-        qreal originHeight = pixelInfo(x1, y1);
-        qreal targetHeight = pixelInfo(x2, y2);
+    qreal originHeight = pixelInfo(x1, y1);
+    qreal targetHeight = pixelInfo(x2, y2);
 
-        for (int i = 0; i < distance; ++i) {
-            if (x2 >= x1) {
-                // Prevent overlenghtening
-                if (x > x2)
-                    break;
-                x = x1 + i;
-            } else {
-                // Prevent overlenghtening
-                if (x < x2)
-                    break;
-                x = x1 - i;
-            }
-
-            y = (a * x) + b;
-
-            // Detect height in this particular pixel.
-            qreal currentHeight = pixelInfo(x, y);
-            if ((currentHeight > originHeight) && (currentHeight > targetHeight)) {
-                return false;
-            }
+    for (int i = 0; i < distance; ++i) {
+        if (x2 >= x1) {
+            // Prevent overlenghtening
+            if (x > x2)
+                break;
+            x = x1 + i;
+        } else {
+            // Prevent overlenghtening
+            if (x < x2)
+                break;
+            x = x1 - i;
         }
-        return true;
+
+        y = (a * x) + b;
+
+        // Detect height in this particular pixel.
+        qreal currentHeight = pixelInfo(x, y);
+        if ((currentHeight > originHeight) && (currentHeight > targetHeight)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /*!

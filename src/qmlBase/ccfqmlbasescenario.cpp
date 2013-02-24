@@ -5,7 +5,6 @@
 #include "qmlBase/ccfqmlbaseunit.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
 #include "logic/ccfscenariostate.h"
-#include "ccfterrain.h"
 
 #include <QVariant>
 #include <QPointF>

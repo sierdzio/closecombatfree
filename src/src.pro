@@ -27,7 +27,6 @@ HEADERS += \
     ccferror.h \
     ccfmain.h \
     ccfglobal.h \
-    ccfterrain.h \
     ccfgamemanager.h \
     config/ccfconfigdata.h \
     logic/ccfenginehelpers.h \
@@ -48,7 +47,6 @@ SOURCES += main.cpp \
     ccferror.cpp \
     ccfmain.cpp \
     ccfglobal.cpp \
-    ccfterrain.cpp \
     ccfgamemanager.cpp \
     config/ccfconfigdata.cpp \
     logic/ccfenginehelpers.cpp \

@@ -41,14 +41,8 @@ class CcfMain;
 /*!
   Base class for in-game Map objects.
 
-  Class used in QML to get terrain information, mostly from textures.
-
-  Application uses hipsometric map for terrain height. Value ("height")
-  is calculated by ADDING int values (0-255) of red, green and blue components.
-  This is then converted into meters by dividing by 10. This means,
-  that the maximum height available in game is 76.5 meters.
-  Should that not be enough, a different algorithm can easily be added
-  ot substituted.
+  Class used in QML to get terrain information, mostly from textures. It is also
+  responsible for drawing the map on screen, checking for terrain collisions, etc.
   */
 class CcfQmlBaseMap : public CcfObjectBase
 {
@@ -59,15 +53,22 @@ public:
       Stores background image. Preferably in PNG, although all
       QML formats are supported.
       */
-    Q_PROPERTY(QString backgroundImage READ getBackgroundImage WRITE setBackgroundImage NOTIFY backgroundImageChanged)
+    Q_PROPERTY(QString backgroundImage READ getBackgroundImagePath WRITE setBackgroundImagePath NOTIFY backgroundImageChanged)
 
     /*!
       Holds path to hipsometric map of the terrain.
       Terrain defined by intensity of color in the image.
       Should be the same size as backgroundImage. If it's not,
       it will be stretched to match background.
+
+      Application uses hipsometric map for terrain height. Value ("height")
+      is calculated by ADDING int values (0-255) of red, green and blue components.
+      This is then converted into meters by dividing by 10. This means,
+      that the maximum height available in game is 76.5 meters.
+      Should that not be enough, a different algorithm can easily be added
+      or substituted.
       */
-    Q_PROPERTY(QString hipsometricImage READ getHipsometricImage WRITE setHipsometricImage NOTIFY hipsometricImageChanged)
+    Q_PROPERTY(QString hipsometricImage READ getHipsometricImagePath WRITE setHipsometricImagePath NOTIFY hipsometricImageChanged)
 
     /*!
       Defines global opacity value.
@@ -81,17 +82,17 @@ public:
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *update);
 
     // Terrain info:
-    Q_INVOKABLE int pixelInfo(qreal x, qreal y);
-    Q_INVOKABLE int checkForTerrainInLOS(qreal x1, qreal y1,
-                                         qreal x2, qreal y2,
-                                         QObject *currentUnit);
-    Q_INVOKABLE bool isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2);
+    int pixelInfo(qreal x, qreal y);
+    int checkForTerrainInLOS(qreal x1, qreal y1,
+                             qreal x2, qreal y2,
+                             QObject *currentUnit);
+    bool isTargetVisible(qreal x1, qreal y1, qreal x2, qreal y2);
 
-    Q_INVOKABLE void setUnits(const QObjectList &units);
-    Q_INVOKABLE bool childExistsAt(qreal x, qreal y);
-    Q_INVOKABLE QObjectList getProps();
-    Q_INVOKABLE QVariantMap terrainInfo(qreal x, qreal y);
-    Q_INVOKABLE QString terrainInfoString(qreal x, qreal y);
+    void setUnits(const QObjectList &units);
+    bool childExistsAt(qreal x, qreal y);
+    QObjectList getProps();
+    QVariantMap terrainInfo(qreal x, qreal y);
+    QString terrainInfoString(qreal x, qreal y);
 
 signals:
     void backgroundImageChanged() const;
@@ -99,12 +100,12 @@ signals:
     void propOpacityChanged() const;
 
 public slots:
-    QString getBackgroundImage() const;
-    QString getHipsometricImage() const;
+    QString getBackgroundImagePath() const;
+    QString getHipsometricImagePath() const;
     qreal getPropOpacity() const;
 
-    void setBackgroundImage(const QString &path);
-    void setHipsometricImage(const QString &path);
+    void setBackgroundImagePath(const QString &path);
+    void setHipsometricImagePath(const QString &path);
     void setPropOpacity(qreal propOpacity);
     void checkForHits(qreal x, qreal y, int index);
 
@@ -120,7 +121,6 @@ private:
     QSGTexture *mHipsometricTexture;
     QImage mBackgroundImage;
     QImage mHipsometricImage;
-    QObjectList mUnits;
     CcfMain *mMainInstance;
 };
 
