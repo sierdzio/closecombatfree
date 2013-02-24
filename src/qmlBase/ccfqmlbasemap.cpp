@@ -59,7 +59,6 @@ void CcfQmlBaseMap::toggleBackgroundImage()
 QSGNode *CcfQmlBaseMap::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *update)
 {
     Q_UNUSED(update);
-    qDebug("Painting!");
 
     QSGSimpleTextureNode *node = static_cast<QSGSimpleTextureNode *>(oldNode);
 
@@ -178,7 +177,7 @@ void CcfQmlBaseMap::checkForHits(qreal x, qreal y, int index)
 bool CcfQmlBaseMap::childExistsAt(qreal x, qreal y)
 {
     QObject *child = childAt(x, y);
-    if (!child) // || (child == background) || (child == hipsometricMap))
+    if (!child)
         return false;
     else
         return true;
