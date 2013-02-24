@@ -39,7 +39,8 @@ HEADERS += \
     logic/ccfobjectbase.h \
     qmlBase/ccfqmlbasesoldier.h \
     qmlBase/ccfqmlbaserostermenu.h \
-    qmlBase/ccfqmlbasemap.h
+    qmlBase/ccfqmlbasemap.h \
+    logic/ccfglobalobjectbase.h
 
 SOURCES += main.cpp \
     config/ccfconfig.cpp \
@@ -72,7 +73,6 @@ OTHER_FILES += \
     ../qml/gui/DefenceSphere.qml \
     ../qml/gui/menuEntries/ContextMenuEntry.qml \
     ../qml/gui/ContextMenu.qml \
-    ../qml/maps/Map.qml \
     ../qml/scenarios/Scenario.qml \
     ../qml/effects/Effect.qml \
     ../qml/units/Unit.qml \

@@ -1,6 +1,7 @@
 #include "ccfqmlbasescenario.h"
 #include "ccfmain.h"
 #include "config/ccfconfig.h"
+#include "qmlBase/ccfqmlbasemap.h"
 #include "qmlBase/ccfqmlbaseunit.h"
 #include "qmlBase/ccfqmlbaserostermenu.h"
 #include "logic/ccfscenariostate.h"
@@ -25,7 +26,7 @@ CcfQmlBaseScenario::CcfQmlBaseScenario(QQuickItem *parent) : CcfObjectBase(paren
 
     mMainInstance = CcfMain::instance();
     mScenarioState = new CcfScenarioState(this);
-    mTerrain = new CcfTerrain(this);
+    mMapItem = NULL;
 
     mEffectsComponent = new QQmlComponent(mMainInstance->engine(),
                                           QUrl::fromLocalFile("qml/effects/Effect.qml"));
@@ -44,7 +45,6 @@ void CcfQmlBaseScenario::init()
         QObject *unitsLoader = child("unitsLoader");
         QObject *unitItem = unitsLoader->property("unitsItem").value<QObject *>();
         QObject *map = child("map");
-        QObject *mapItem = NULL;
 
         if (unitItem->objectName() != "Campaign") {
             // This is a single scenario
@@ -66,10 +66,10 @@ void CcfQmlBaseScenario::init()
                 }
             }
 
-            mapItem = map->property("mapItem").value<QObject *>();
+            mMapItem = map->property("mapItem").value<CcfQmlBaseMap *>();
 
-            if(mapItem != 0)
-                invoke(mapItem, "setUnits", Q_ARG(QVariant, QVariant::fromValue(mUnits) ));
+            if(mMapItem != 0)
+                mMapItem->setUnits(mUnits);
             else
                 mlogger->error("MapItem object was not properly initialised",
                                "Robin Hood is a jerk");
@@ -88,11 +88,6 @@ void CcfQmlBaseScenario::init()
         mRotationTimer = child("rotationTimer");
         mFollowingTimer = child("followingTimer");
         mMouseAreaMain = child("mouseAreaMain");
-
-        QObjectList mapItemKids = mapItem->children();
-        for (int i = 0; i < mapItemKids.length() - 2; ++i) {
-            mProps.append(mapItemKids.at(i + 2));
-        }
 
         mRoster = findChild<CcfQmlBaseRosterMenu *>("roster");
         mRoster->populateUnits(mUnits);
@@ -667,8 +662,8 @@ void CcfQmlBaseScenario::updateAimLine()
 
             // If obscuring should be turned off for some actions (movement)
             // an if clause here would do the trick.
-            qreal terrainObscure = mTerrain->checkForTerrainInLOS(x1, y1, x2, y2, unit);
-            qreal propsObscure = CcfEngineHelpers::checkForObstaclesInLOS(mProps,
+            qreal terrainObscure = mMapItem->checkForTerrainInLOS(x1, y1, x2, y2, unit);
+            qreal propsObscure = CcfEngineHelpers::checkForObstaclesInLOS(mMapItem->getProps(),
                                                                           x1, y1, x2, y2,
                                                                           new QObject());
 
@@ -1093,8 +1088,8 @@ void CcfQmlBaseScenario::updateUnitVisibility()
             qreal x2 = enemy->x() + enemy->getCenterX();
             qreal y2 = enemy->y() + enemy->getCenterY();
 
-            if (mTerrain->isTargetVisible(x1, y1, x2, y2)
-                    && !CcfEngineHelpers::isObstacleInLOS(mProps,
+            if (mMapItem->isTargetVisible(x1, y1, x2, y2)
+                    && !CcfEngineHelpers::isObstacleInLOS(mMapItem->getProps(),
                                                           x1, y1, x2, y2,
                                                           friendly)) {
                 mlogger->log("Now visible: " + enemy->objectName()
@@ -1228,16 +1223,7 @@ void CcfQmlBaseScenario::handlePressAndHoldLeft(QObject *mouse)
   */
 void CcfQmlBaseScenario::handlePressAndHoldRight(QObject *mouse)
 {
-    // TODO: transform Map.qml into C++ and simplify this code!
-    //    child("map")->property("mapItem").value<QObject *>()->children();
-    QObject *mapItem = child("map")->property("mapItem").value<QObject *>();
-    QString infoString;
-
-    metaObject()->invokeMethod(mapItem, "terrainInfoString", Q_RETURN_ARG(QString, infoString),
-                               Q_ARG(qreal, mouse->getReal("x")),
-                               Q_ARG(qreal, mouse->getReal("y")));
-
-    //    map.item.terrainInfoString(mouse.x, mouse.y);
+    QString infoString = mMapItem->terrainInfoString(mouse->getReal("x"), mouse->getReal("y"));
     child("terrainInfoText")->set("text", infoString);
 }
 
@@ -1276,8 +1262,7 @@ void CcfQmlBaseScenario::handleKeyPress(QObject *event)
     } else {
         // Development key bindings.
         if (key == Qt::Key_BracketRight) {
-            QObject *mapItem = child("map")->property("mapItem").value<QObject *>();
-            mapItem->set("hipsometricMapInFront", !mapItem->getBool("hipsometricMapInFront"));
+            mMapItem->toggleBackgroundImage();
         } else if (key == Qt::Key_BracketLeft) {
             togglePlayer();
         } else

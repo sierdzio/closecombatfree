@@ -97,6 +97,18 @@ BaseScenario {
                     }
                 }
 
+//            BaseMap {
+//                objectName: "map"
+//                id: map
+
+//                onBackgroundImageChanged: {
+//                    if (scenarioFile != "") {
+//                        height = map.item.height;
+//                        width = map.item.width;
+//                    }
+//                }
+//            }
+
                 Loader {
                     property alias unitsItem: unitsLoader.item
                     objectName: "unitsLoader"

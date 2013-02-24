@@ -56,7 +56,7 @@ CcfMain::CcfMain(CcfCommandLineParser *cmd, QWindow *parent) :
 {
     qmlRegisterType<CcfQmlBaseRosterMenu>("QmlBase", 0, 1, "BaseRosterMenu");
     qmlRegisterType<CcfQmlBaseScenario>("QmlBase", 0, 1, "BaseScenario");
-    qmlRegisterType<CcfQmlBaseMap>("QmlBase", 0, 1, "BaseMap");
+    qmlRegisterType<CcfQmlBaseMap>("QmlBase", 0, 1, "Map");
     qmlRegisterType<CcfQmlBaseUnit>("QmlBase", 0, 1, "BaseUnit");
     qmlRegisterType<CcfQmlBaseSoldier>("QmlBase", 0, 1, "Soldier");
 

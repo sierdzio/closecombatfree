@@ -16,7 +16,7 @@
 class CcfMain;
 class CcfQmlBaseRosterMenu;
 class CcfScenarioState;
-class CcfTerrain;
+class CcfQmlBaseMap;
 
 class QQmlComponent;
 class QQuickItem;
@@ -185,7 +185,7 @@ private:
 
     CcfMain *mMainInstance;
     CcfScenarioState *mScenarioState;
-    CcfTerrain *mTerrain;
+    CcfQmlBaseMap *mMapItem;
 
     QQmlComponent *mEffectsComponent;
     // TODO: maybe replace with particle system?
@@ -202,7 +202,6 @@ private:
     QObject *mMouseAreaMain;
 
     CcfQmlBaseRosterMenu *mRoster;
-    QObjectList mProps;
     // TODO: consider changing to QVector
     QMap<int, QObjectList > mUnitGroups;
 

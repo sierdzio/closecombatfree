@@ -19,14 +19,15 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
 import "../qml/maps"
 import "../qml/maps/props"
 import "../maps/props"
 import "../maps"
 
 Map {
-    backgroundImage: "../../img/maps/test2.png"
-    hipsometricImage: "../../img/maps/hipsometric_test1.png"
+    backgroundImage: "img/maps/test2.png"
+    hipsometricImage: "img/maps/hipsometric_test1.png"
 
     HouseBasic_tst {
         id: house1

@@ -19,13 +19,14 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QmlBase 0.1
 import "../qml/maps"
 import "../maps/props"
 import "../maps"
 
 Map {
-    backgroundImage: "../../img/maps/test1.png"
-    hipsometricImage: "../../img/maps/hipsometric_2sides.png"
+    backgroundImage: "img/maps/test1.png"
+    hipsometricImage: "img/maps/hipsometric_2sides.png"
 
     height: 1200
     width: 1200
