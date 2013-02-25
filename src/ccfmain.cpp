@@ -125,6 +125,14 @@ CcfGlobal *CcfMain::global()
 }
 
 /*!
+  Returns a pointer to CcfGlobal instance.
+  */
+CcfGameManager *CcfMain::gameManager()
+{
+    return mGameManager;
+}
+
+/*!
   Slot invoked when application is ordered to stop.
 
   This is not called when user terminates by the 'x' button on windowing

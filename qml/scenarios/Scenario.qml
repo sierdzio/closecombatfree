@@ -32,11 +32,6 @@ BaseScenario {
     anchors.left: parent.left
     anchors.top: parent.top
 
-    // This is a temp name to avoid name clash.
-    function saveGameToFile() {
-        GameManager.saveGame(units, unitsLoader.item.mapFile);
-    }
-
     Keys.onPressed: {
         handleKeyPress(event);
     }
@@ -96,18 +91,6 @@ BaseScenario {
                         width = map.item.width;
                     }
                 }
-
-//            BaseMap {
-//                objectName: "map"
-//                id: map
-
-//                onBackgroundImageChanged: {
-//                    if (scenarioFile != "") {
-//                        height = map.item.height;
-//                        width = map.item.width;
-//                    }
-//                }
-//            }
 
                 Loader {
                     property alias unitsItem: unitsLoader.item

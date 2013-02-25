@@ -99,7 +99,7 @@ class CcfObjectBase : public QQuickItem
 public:
     explicit CcfObjectBase(QQuickItem *parent = 0);
     
-    CcfQmlBaseUnit *ccfUnit(QObject *unitObject) const;
+    static CcfQmlBaseUnit *ccfUnit(QObject *unitObject);
     QQuickItem *item(const QString &objectName) const;
     QQuickItem *item(QObject *object);
     QObject *child(const QString &objectName) const;

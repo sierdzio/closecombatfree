@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "ccfgamemanager.h"
+#include "qmlBase/ccfqmlbaseunit.h"
 
 /*!
   Initialises the game manager. Pretty important code inside.
@@ -48,7 +49,7 @@ QString CcfGameManager::scenarioPath(int index)
 
   For now, it always uses file with name "saves/save1.qml".
   */
-void CcfGameManager::saveGame(const QQmlListReference &unitsList,
+void CcfGameManager::saveGame(const QObjectList &unitList,
                               const QString &mapFile,
                               const QString &saveFileName)
 {
@@ -77,19 +78,19 @@ void CcfGameManager::saveGame(const QQmlListReference &unitsList,
     fileContent.replace("%customImports%", "");
     fileContent.replace("%mapFile%", mapFile);
 
-    // Save units. Hope this will work. If not - convert units list to string list in JS.
+    // Save units. Hope this will work.
     QString units;
-    for (int i = 0; i < unitsList.count(); i++) {
+    foreach (QObject *obj, unitList) {
         // In release code, this needs to include order queue,
         // soldier states, damages etc.
-        QObject *unit = unitsList.at(i);
-        units += mTab + unit->property("unitFileName").toString() + " {\n"
+        CcfQmlBaseUnit *unit = CcfQmlBaseUnit::ccfUnit(obj);
+        units += mTab + unit->getUnitFileName() + " {\n"
                 + mTab + mTab + "objectName: \"" + unit->objectName() + "\"\n"
-                + mTab + mTab + "x: " + unit->property("x").toString() + "\n"
-                + mTab + mTab + "y: " + unit->property("y").toString() + "\n"
-                + mTab + mTab + "rotation: " + unit->property("rotation").toString() + "\n"
-                + mTab + mTab + "unitSide: \"" + unit->property("unitSide").toString() + "\"\n"
-                + mTab + mTab + "state: \"" + unit->property("state").toString() + "\"\n";
+                + mTab + mTab + "x: " + unit->getString("x") + "\n"
+                + mTab + mTab + "y: " + unit->getString("y") + "\n"
+                + mTab + mTab + "rotation: " + unit->getString("rotation") + "\n"
+                + mTab + mTab + "unitSide: \"" + unit->getUnitSide() + "\"\n"
+                + mTab + mTab + "state: \"" + unit->getString("state") + "\"\n";
         units += addSavePropertyIfExists(unit, "turretRotation");
         units += addSavePropertyIfExists(unit, "hullColor", true);
         units += mTab + "}\n";

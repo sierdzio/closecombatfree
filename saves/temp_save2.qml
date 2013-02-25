@@ -4,7 +4,7 @@ import "../qml/units"
 
 
 Item {
-    property string mapFile: "../maps/Map_tst1.qml"
+    property string mapFile: "maps/Map_tst1.qml"
 
     id: root
 

@@ -73,6 +73,7 @@ public:
     CcfLogger *logger();
     CcfConfig *config();
     CcfGlobal *global();
+    CcfGameManager *gameManager();
 
 public slots:
     void quit();

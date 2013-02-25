@@ -22,13 +22,13 @@
 #define CCFGAMEMANAGER_H
 
 #include <QObject>
+#include <QObjectList>
 #include <QString>
 #include <QStringList>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QTextStream>
-#include <QQmlListReference>
 
 #include "ccferror.h"
 
@@ -51,7 +51,7 @@ class CcfGameManager : public QObject, public CcfError
 public:
     explicit CcfGameManager(QObject *parent = 0);    
     Q_INVOKABLE QString scenarioPath(int index);
-    Q_INVOKABLE void saveGame(const QQmlListReference &unitsList,
+    Q_INVOKABLE void saveGame(const QObjectList &unitList,
                               const QString &mapFile,
                               const QString &saveFileName = "saves/save1.qml");
     Q_INVOKABLE QStringList qmlFileList(const QString &directoryToSearch);

@@ -114,6 +114,7 @@ public slots:
     void scheduleContextAction(const QString &operation);
     void handleUnitMovement(bool isMoving, int unitIndex);
     void actionFinished(int index, qreal targetX, qreal targetY);
+    void saveGame();
 
 signals:
     /*!

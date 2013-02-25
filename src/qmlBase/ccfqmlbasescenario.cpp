@@ -341,6 +341,16 @@ void CcfQmlBaseScenario::actionFinished(int index, qreal targetX, qreal targetY)
 }
 
 /*!
+  Schedules a game save.
+  */
+void CcfQmlBaseScenario::saveGame()
+{
+    QObject *unitsLoader = child("unitsLoader");
+    QObject *unitItem = unitsLoader->property("unitsItem").value<QObject *>();
+    mmain->gameManager()->saveGame(mUnits, unitItem->getString("mapFile"));
+}
+
+/*!
   Schedules action chosen in context menu (or through a keyboard shortcut).
   It is then used to add that order to queue.
   */
@@ -1460,7 +1470,7 @@ void CcfQmlBaseScenario::setScenarioFile(const QString &scenarioFile)
 
         connect(mmain->config(), &CcfConfig::windowWidthChanged, this, &CcfQmlBaseScenario::updateWidth);
         updateWidth();
-        connect(child("topMenu"), SIGNAL(save()), this, SLOT(saveGameToFile()));
+        connect(child("topMenu"), SIGNAL(save()), this, SLOT(saveGame()));
         connect(child("loadGame"), SIGNAL(gameEntryClicked(const QString &)),
                 this, SIGNAL(loadScenario(const QString &)));
     }

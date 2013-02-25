@@ -15,7 +15,7 @@ CcfObjectBase::CcfObjectBase(QQuickItem *parent) : QQuickItem(parent)
 
   \sa item, child
   */
-CcfQmlBaseUnit *CcfObjectBase::ccfUnit(QObject *unitObject) const
+CcfQmlBaseUnit *CcfObjectBase::ccfUnit(QObject *unitObject)
 {
     return qobject_cast<CcfQmlBaseUnit *>(unitObject);
 }
