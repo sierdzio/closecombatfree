@@ -1,6 +1,14 @@
 import QtQuick 2.0
+import "../../qml/gui"
 
-Rectangle {
+ListView {
+    id: root
     width: 100
-    height: 62
+    height: 250
+
+    delegate: ScenarioMenuEntry {
+        text: "Default text"
+    }
+
+    model: 5
 }
