@@ -24,7 +24,7 @@ import "../qml/menus"
 /*!
   \ingroup CloseCombatFree
 
-  \class QML_main
+  \class QmlMain
 
   Main QML file, starting point for everything QML-connected.
 

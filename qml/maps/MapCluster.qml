@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "../../qml/maps"
+import QmlBase 0.1
 import "../../qml/units"
 
 QtObject {

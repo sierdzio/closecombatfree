@@ -128,7 +128,9 @@ OTHER_FILES += \
     ../qml/effects/Shadow.qml \
     ../qml/menus/MainMenu.qml \
     ../maps/Map_tst4.qml \
-    ../qml/effects/GunFireEffect.qml
+    ../qml/effects/GunFireEffect.qml \
+    ../qml/campaigns/CampaignDescriptionGui.qml \
+    ../qml/campaigns/CampaignList.qml
 
 #RESOURCES += \
 #    skinResource.qrc \

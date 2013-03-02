@@ -7,8 +7,8 @@ Bugs & fixes:
 
 Code changes:
  - add necessary enums to CcfGlobal
- - investigate if CcfTerrain is leaking memory on Scenario change
  - make sure to update obstacle handling so that it uses the superb QQItem::contains
+ - add BorderItem, a QQuickItem subclass that would make a better base for menus
 
 New features:
  - add weather system
