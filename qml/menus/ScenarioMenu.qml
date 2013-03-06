@@ -59,7 +59,7 @@ Rectangle {
     color: "#5f5f5f"
 
     Component.onCompleted: {
-        var list = GameManager.scenariosList();
+        var list = GameManager.scenarioList();
         for (var i = 0; i < list.length; ++i) {
 //            var current = list[i];
             scenarioModel.append({"scenarioText": list[i]});

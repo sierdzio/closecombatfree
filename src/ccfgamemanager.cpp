@@ -32,16 +32,41 @@ CcfGameManager::CcfGameManager(QObject *parent) :
     mTab = "    ";
 
 //    QDir scenarioDir("scenarios");
-//    m_scenariosList = scenarioDir.entryList(QDir::Files);
-    mScenariosList = qmlFileList("scenarios");
+//    m_scenarioList = scenarioDir.entryList(QDir::Files);
+    mScenarioList = qmlFileList("scenarios");
+    mCampaignList = qmlFileList("campaigns");
 }
 
 /*!
   Returns a path for a given scenario from the list.
   */
-QString CcfGameManager::scenarioPath(int index)
+QString CcfGameManager::scenarioPath(int index) const
 {
-    return mScenariosList.at(index);
+    return mScenarioList.at(index);
+}
+
+/*!
+  Getter for scenarios' list.
+  */
+QStringList CcfGameManager::scenarioList() const
+{
+    return mScenarioList;
+}
+
+/*!
+  Returns a path for a given campaign from the list.
+  */
+QString CcfGameManager::campaignPath(int index) const
+{
+    return mCampaignList.at(index);
+}
+
+/*!
+  Getter for campaigns' list.
+  */
+QStringList CcfGameManager::campaignList() const
+{
+    return mCampaignList;
 }
 
 /*!
@@ -103,32 +128,24 @@ void CcfGameManager::saveGame(const QObjectList &unitList,
 }
 
 /*!
-  Returns a list of files in a given directory.
-
-  Useful in getting list of saved games, scenarios, campaigns etc.
-  */
-QStringList CcfGameManager::qmlFileList(const QString &directoryToSearch)
-{
-    QDir saveDir(directoryToSearch);
-    return saveDir.entryList(QDir::Files);
-}
-
-/*!
-  Getter for scenarios' list.
-  */
-QStringList CcfGameManager::scenariosList()
-{
-    return mScenariosList;
-}
-
-/*!
   Returns a a list of saved games.
   */
-QStringList CcfGameManager::savedGamesList()
+QStringList CcfGameManager::savedGamesList() const
 {
 //    QDir saveDir("saves");
 //    return saveDir.entryList(QDir::Files);
     return qmlFileList("saves");
+}
+
+/*!
+  Returns a list of files in a given directory.
+
+  Useful in getting list of saved games, scenarios, campaigns etc.
+  */
+QStringList CcfGameManager::qmlFileList(const QString &directoryToSearch) const
+{
+    QDir saveDir(directoryToSearch);
+    return saveDir.entryList(QDir::Files);
 }
 
 /*!
@@ -151,3 +168,4 @@ QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
     }
     return result;
 }
+

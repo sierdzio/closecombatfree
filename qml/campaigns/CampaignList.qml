@@ -7,8 +7,8 @@ ListView {
     height: 250
 
     delegate: ScenarioMenuEntry {
-        text: "Default text"
+        text: GameManager.campaignPath(index);
     }
 
-    model: 5
+    model: GameManager.campaignList();
 }

@@ -11,6 +11,10 @@ Code changes:
  - add BorderItem, a QQuickItem subclass that would make a better base for menus
 
 New features:
+ - add updater
+ - add mod installer
+ - add mod tool
+ - add multi-screen mode (separation of menus and game area)
  - add weather system
  - add unit shadows
  - add game menu
