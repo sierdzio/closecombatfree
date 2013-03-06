@@ -2,6 +2,7 @@ import QtQuick 2.0
 import "../../qml/units"
 import "../../qml/maps"
 
+// Should be in C++!
 QtObject {
     /*
         This still has to be thought out. Currently, I'll focus on implementing
