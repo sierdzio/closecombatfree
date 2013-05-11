@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QmlBase 0.1
-import "../../qml/gui/menuEntries"
+import "../../../qml/gui/menuEntries"
 
 Rectangle {
     property int entryWidth: 175

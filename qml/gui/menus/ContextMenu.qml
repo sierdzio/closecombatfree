@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import "../../qml/gui/menuEntries"
+import "../../../qml/gui/menuEntries"
 
 Rectangle {    
     property int buttonWidth: moveFastButton.width

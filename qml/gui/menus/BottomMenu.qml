@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import "../"
 
 Item {
     property bool open: trigger.poppedUp

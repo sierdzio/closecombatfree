@@ -21,8 +21,8 @@
 import QtQuick 2.0
 import QmlBase 0.1
 
-import "../../qml/gui/menuEntries"
-import "../../qml/units"
+import "../../../qml/gui/menuEntries"
+import "../../../qml/units"
 
 BaseRosterMenu {
     property int entryWidth: 175
