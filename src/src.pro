@@ -130,7 +130,10 @@ OTHER_FILES += \
     ../maps/Map_tst4.qml \
     ../qml/effects/GunFireEffect.qml \
     ../qml/campaigns/CampaignDescriptionGui.qml \
-    ../qml/campaigns/CampaignList.qml
+    ../qml/campaigns/CampaignList.qml \
+    ../qml/menus/SavedGamesMenu.qml \
+    ../qml/menus/CampaignMenu.qml \
+    ../qml/gui/menuEntries/CardMenuEntry.qml
 
 #RESOURCES += \
 #    skinResource.qrc \

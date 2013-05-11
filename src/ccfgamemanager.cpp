@@ -30,9 +30,6 @@ CcfGameManager::CcfGameManager(QObject *parent) :
     QObject(parent), CcfError()
 {
     mTab = "    ";
-
-//    QDir scenarioDir("scenarios");
-//    m_scenarioList = scenarioDir.entryList(QDir::Files);
     mScenarioList = qmlFileList("scenarios");
     mCampaignList = qmlFileList("campaigns");
 }

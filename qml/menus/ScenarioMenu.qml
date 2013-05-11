@@ -24,7 +24,7 @@ import "../../qml/gui/menuEntries"
 
 /*
   This file is in a sort of temporary state - everything is thrown in, just to
-  test other functionality. For any real release, whe whole game menu, including
+  test other functionality. For any real release, the whole game menu, including
   this ScenarioMenu, should be redesigned.
   */
 Rectangle {
@@ -61,13 +61,13 @@ Rectangle {
     Component.onCompleted: {
         var list = GameManager.scenarioList();
         for (var i = 0; i < list.length; ++i) {
-//            var current = list[i];
+            //            var current = list[i];
             scenarioModel.append({"scenarioText": list[i]});
         }
 
         var campaignList = GameManager.qmlFileList("campaigns");
         for (var j = 0; j < campaignList.length; ++j) {
-//            var current = campaignList[i];
+            //            var current = campaignList[i];
             campaignModel.append({"campaignText": campaignList[j]});
         }
 
@@ -89,29 +89,6 @@ Rectangle {
     }
 
     ListModel {
-        id: campaignModel
-    }
-/*
-    Component {
-        id: campaignDelegate
-
-        RosterMenuEntry {
-            entryText: camapignText
-            entryStatusText: campaignDescription
-            entryStatusColor: "#000000"
-            entryLogo: campaignLogo
-            backgroundColor: "#7e8c24"
-            mouseAreaEnabled: false
-            selected: false
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Component.onCompleted: {
-                entryClicked.connect(campaignEntryClicked);
-            }
-        }
-    }
-*/
-    ListModel {
         id: scenarioModel
     }
 
@@ -128,52 +105,13 @@ Rectangle {
         }
     }
 
-    Row {
-        id: entryBox
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-/*
-        ListView {
-            id: campaigns
-            height: 300
-            width: 400
-            spacing: 2
+    ListView {
+        id: scenarios
+        height: 50
+        spacing: 2
 
-            model: campaignModel
-            delegate: campaignDelegate
-        }
-*/
-        ListView {
-            id: scenarios
-            height: 50
-            spacing: 2
-
-            model: scenarioModel
-            delegate: scenarioDelegate
-        }
-
-        LoadGameEntries {
-            id: entries
-            height: entryBox.height
-        }
-    }
-
-    ScenarioMenuEntry {
-        id: quitButton
-        text: "Quit"
-        anchors.top: entryBox.bottom
-        anchors.topMargin: 20
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Text {
-        id: notice
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        text: "For now, player is assumed to be on \"neutral\" side.\nSide choosing will be added later."
-        font.pointSize: 10
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        model: scenarioModel
+        delegate: scenarioDelegate
     }
 
     Loader {
