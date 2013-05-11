@@ -19,8 +19,10 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import "../../qml/gui"
 import QmlBase 0.1
+import "../../qml/menus"
+import "../../qml/gui"
+import "../../qml/gui/menus"
 
 /*!
   Base component for displaying scenarios. Inherits from CcfQmlBaseScenario.

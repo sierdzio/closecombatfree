@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "../../qml/gui"
+import "../../qml/gui/menuEntries"
 
 ListView {
     id: root

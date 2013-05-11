@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Item {
+    signal clicked
     property string text: "Default:"
     property string imageSource: "../../../img/menus/CardMenuDefault.png"
 
@@ -21,7 +22,16 @@ Item {
             anchors.left: parent.left
             anchors.top: parent.bottom
 
-            source: root.imageSource
+            source: root.imageSource            
+            fillMode: Image.PreserveAspectFit
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        acceptedButtons: Qt.LeftButton
+        hoverEnabled: false
+        onClicked: root.clicked();
     }
 }

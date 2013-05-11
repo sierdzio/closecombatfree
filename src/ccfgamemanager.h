@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE QStringList savedGamesList() const;
 
     Q_INVOKABLE QStringList qmlFileList(const QString &directoryToSearch) const;
+    Q_INVOKABLE QString resolveGameFile(const QString &fileNameToResolve) const;
     
 private:
     QString addSavePropertyIfExists(const QObject *object,

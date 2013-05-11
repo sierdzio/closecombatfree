@@ -28,64 +28,29 @@ import "../../qml/gui/menuEntries"
   this ScenarioMenu, should be redesigned.
   */
 Rectangle {
-    property string __tempReloadPath: ""
+    property color backgroundColor: "#bb333232"
 
     signal scenarioEntryClicked (string scenarioPath)
     onScenarioEntryClicked: {
-        scenario.scenarioFile = "scenarios/" + scenarioPath;
-        scenario.source = "../../qml/scenarios/Scenario.qml";
-        root.state = "opened";
-    }
-
-    signal campaignEntryClicked (string campaignPath)
-    onCampaignEntryClicked: {
-        // Damn, what now?
-        // Most probably, a new QML thing has to go here:
-        // CampaignManager.qml, or something that would take over the control,
-        // and ensure that campaigns work as expected.
-        // For now, a dirty hack will probably be used.
-        scenario.scenarioFile = "campaigns/" + campaignPath;
-        scenario.source = "../../qml/scenarios/Scenario.qml";
-        root.state = "opened";
-    }
-
-    signal quitEntryClicked (string ignoreThisString)
-    onQuitEntryClicked: {
-        Qt.quit();
+        gameLoader.load(scenarioPath, false);
     }
 
     id: root
-    state: "closed"
-    color: "#5f5f5f"
+    color: backgroundColor
+    border.color: Qt.tint(backgroundColor, "#88aaaaaa")
+    border.width: 1
+    radius: 20
 
     Component.onCompleted: {
         var list = GameManager.scenarioList();
         for (var i = 0; i < list.length; ++i) {
-            //            var current = list[i];
             scenarioModel.append({"scenarioText": list[i]});
-        }
-
-        var campaignList = GameManager.qmlFileList("campaigns");
-        for (var j = 0; j < campaignList.length; ++j) {
-            //            var current = campaignList[i];
-            campaignModel.append({"campaignText": campaignList[j]});
         }
 
         scenarios.currentIndex = 0;
         scenarios.height = scenarioModel.count * scenarios.currentItem.height;
         scenarios.width = scenarioModel.count * scenarios.currentItem.width;
         scenarios.currentIndex = -1;
-        quitButton.entryClicked.connect(quitEntryClicked);
-        entries.entryClicked.connect(loadGame);
-    }
-
-    function closeScenario() {
-        root.state = "closed";
-    }
-
-    function loadGame(path) {
-        __tempReloadPath = "saves/" + path;
-        root.state = "loadingSavedGame";
     }
 
     ListModel {
@@ -107,108 +72,12 @@ Rectangle {
 
     ListView {
         id: scenarios
+        anchors.fill: parent
+        anchors.margins: 15
         height: 50
         spacing: 2
 
         model: scenarioModel
         delegate: scenarioDelegate
     }
-
-    Loader {
-        property string scenarioFile: ""
-
-        id: scenario
-        width: root.width
-        anchors.top: root.top
-        anchors.bottom: root.bottom
-        anchors.left: root.right
-
-        onLoaded: {
-            item.scenarioFile = scenarioFile;
-            item.closeScenario.connect(root.closeScenario);
-            item.loadScenario.connect(root.loadGame)
-            focus = true;
-        }
-    }
-
-    states: [
-        State {
-            name: "closed"
-            AnchorChanges {
-                target: scenario
-                anchors.left: root.right
-            }
-        },
-
-        State {
-            name: "opened"
-            AnchorChanges {
-                target: scenario
-                anchors.left: root.left
-            }
-        },
-
-        State {
-            name: "loadingSavedGame"
-            AnchorChanges {
-                target: scenario
-                anchors.left: root.right
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            to: "opened"
-
-            SequentialAnimation {
-                ScriptAction {
-                    script: {
-                        scenario.visible = true;
-                    }
-                }
-                AnchorAnimation {
-                    duration: 500
-                }
-            }
-        },
-
-        Transition {
-            from: "opened"
-            to: "closed"
-
-            SequentialAnimation {
-                AnchorAnimation {
-                    duration: 500
-                }
-                ScriptAction {
-                    script: {
-                        scenario.scenarioFile = "";
-                        scenario.source = "";
-                        scenario.visible = false;
-                    }
-                }
-            }
-        },
-
-        Transition {
-            to: "loadingSavedGame"
-
-            SequentialAnimation {
-                AnchorAnimation {
-                    duration: 500
-                }
-                ScriptAction {
-                    script: {
-                        scenario.scenarioFile = "";
-                        scenario.source = "";
-                        scenario.visible = false;
-                        scenario.scenarioFile = __tempReloadPath;
-                        scenario.source = "../../qml/scenarios/Scenario.qml";
-                        root.state = "opened";
-                    }
-                }
-            }
-        }
-    ]
 }

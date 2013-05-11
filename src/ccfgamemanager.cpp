@@ -146,6 +146,17 @@ QStringList CcfGameManager::qmlFileList(const QString &directoryToSearch) const
 }
 
 /*!
+  Checks whether file with that name exists in any known location, then returns
+  a proper path to the file.
+ */
+QString CcfGameManager::resolveGameFile(const QString &fileNameToResolve) const
+{
+    Q_UNUSED(fileNameToResolve);
+
+    return QString();
+}
+
+/*!
   Returns a string representing a QML property - if it existas n \a object.
   */
 QString CcfGameManager::addSavePropertyIfExists(const QObject *object,
