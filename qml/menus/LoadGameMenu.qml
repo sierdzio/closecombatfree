@@ -45,7 +45,8 @@ Rectangle {
 
     signal gameEntryClicked (string gamePath)
     onGameEntryClicked: {
-        toggleVisibility();
+        //toggleVisibility();
+        gameLoader.load(gamePath, true);
     }
 
     MouseArea {
