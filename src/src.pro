@@ -87,7 +87,8 @@ OTHER_FILES += \
     \
     ../qml/campaigns/CampaignMapList.qml \
     ../qml/campaigns/CampaignDescriptionGui.qml \
-    ../qml/campaigns/CampaignList.qml
+    ../qml/campaigns/CampaignList.qml \
+    ../qml/gui/menus/PreferencesMenu2.qml
 
 # Main menus:
 OTHER_FILES += \
