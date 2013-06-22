@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 
 QtObject {
     // Angle - 0-360 (degrees)

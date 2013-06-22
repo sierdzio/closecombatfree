@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import QmlBase 0.1
 import "../../qml/units"
 

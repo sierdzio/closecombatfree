@@ -18,7 +18,7 @@
 ** If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.1
 import "../"
 
 Item {
