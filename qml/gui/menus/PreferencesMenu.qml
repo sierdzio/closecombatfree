@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.1
+import QtQuick.Controls 1.0
 import "../../../qml/gui/menuEntries"
 
 Rectangle {
@@ -110,28 +111,58 @@ Rectangle {
             anchors.left: parent.left
             anchors.topMargin: 2
             anchors.bottom: parent.bottom
-            width: screenSize.width
+            width: screenSize.width + 40
 
-            PreferencesCheckboxEntry {
+//            PreferencesCheckboxEntry {
+//                property string modeToShow: Config.uiMode
+
+//                id: uimode
+//                text: "Ui mode: " + modeToShow;
+//                width: parent.width
+
+//                onCheckedChanged: {
+//                    var newUiMode = ((checked)? "DESKTOP" : "MOBILE");
+//                    modeToShow = newUiMode;
+//                }
+//            }
+
+//            PreferencesCheckboxEntry {
+//                id: maximised
+//                text: "Maximised"
+//                width: parent.width
+//            }
+
+//            PreferencesCheckboxEntry {
+//                id: rememberDimensions
+//                text: "Remember window dimensions on exit"
+//                width: parent.width
+//                enabled: !maximised.checked
+
+//                onEnabledChanged: {
+//                    if(!enabled)
+//                        checked = true;
+//                }
+//            }
+
+            CheckBox {
                 property string modeToShow: Config.uiMode
 
                 id: uimode
-                text: "Ui mode: " + modeToShow;
+                text: "Ui mode: " + modeToShow
                 width: parent.width
 
                 onCheckedChanged: {
-                    var newUiMode = ((checked)? "DESKTOP" : "MOBILE");
-                    modeToShow = newUiMode;
+                    modeToShow = ((checked)? "DESKTOP" : "MOBILE");
                 }
             }
 
-            PreferencesCheckboxEntry {
+            CheckBox {
                 id: maximised
                 text: "Maximised"
                 width: parent.width
             }
 
-            PreferencesCheckboxEntry {
+            CheckBox {
                 id: rememberDimensions
                 text: "Remember window dimensions on exit"
                 width: parent.width
