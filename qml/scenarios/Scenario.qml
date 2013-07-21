@@ -19,7 +19,9 @@
 ****************************************************************************/
 
 import QtQuick 2.1
+import QtGraphicalEffects 1.0
 import QmlBase 0.1
+
 import "../../qml/menus"
 import "../../qml/gui"
 import "../../qml/gui/menus"
@@ -112,7 +114,7 @@ BaseScenario {
                         }
                     }
 
-                    onLoaded: init();
+                    onLoaded: { init(); blurAnimation.start() }
                 }
 
                 MouseArea {
@@ -227,6 +229,20 @@ BaseScenario {
                     }
                 }
             }
+        }
+    }
+
+    FastBlur {
+        //id: blur
+        anchors.fill: gameArea
+        source: gameArea
+        radius: 50
+
+        NumberAnimation on radius {
+            duration: 2000
+            from: 50
+            to: 0
+            id: blurAnimation
         }
     }
 
