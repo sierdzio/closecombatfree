@@ -34,8 +34,7 @@
 /*!
   Initialises the object and sets properties to default values.
   */
-CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) :
-    CcfObjectBase(parent)
+CcfQmlBaseMap::CcfQmlBaseMap(QQuickItem *parent) : CcfObjectBase(parent)
 {
     setWidth(0.0);
     setHeight(0.0);
@@ -60,7 +59,6 @@ void CcfQmlBaseMap::toggleBackgroundImage()
     setFlags(QQuickItem::ItemHasContents);
     update();
 }
-
 
 /*!
   Paints the item.
@@ -283,7 +281,11 @@ QString CcfQmlBaseMap::terrainInfoString(qreal x, qreal y)
   */
 int CcfQmlBaseMap::pixelInfo(qreal x, qreal y)
 {
-    QRgb result(mHipsometricImage.pixel(QPoint((int) x, (int) y)));
+    // Need to scale the coordinates to the size of the hipsometric image
+    qreal scaleFactorX = mBackgroundImage.width() / mHipsometricImage.width();
+    qreal scaleFactorY = mBackgroundImage.height() / mHipsometricImage.height();
+
+    QRgb result(mHipsometricImage.pixel(QPoint((int) (x / scaleFactorX), (int) (y / scaleFactorY))));
     return qRed(result) + qGreen(result) + qBlue(result);
 }
 
